@@ -333,7 +333,7 @@ class BookingController extends Controller
             '(ed_time)' . $ed_time . 
             ('booking_status') . $booking_status);
 
-        Log::debug('ここでメールを送りたい。');
+        #Log::debug('ここでメールを送りたい。');
 
         return redirect('/admin/makebooking') -> with("success","予約を登録しました");
     }
