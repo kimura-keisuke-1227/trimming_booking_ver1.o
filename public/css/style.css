@@ -1,0 +1,20 @@
+.pc_container {
+  margin-left: 70px;
+}
+
+@media screen and (max-width: 780px) {
+  .pc_container {
+    margin-left: 0px;
+  }
+}
+.bg_color1 {
+  background-color: #ffc0cb !important;
+}
+
+.bg_color2 {
+  background-color: #87cefa !important;
+}
+
+.bg_color3 {
+  background-color: red;
+}/*# sourceMappingURL=style.css.map */

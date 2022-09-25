@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Owner;
+use App\Models\Pet;
+use App\Models\Dogtype;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+class PetController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $owner = Auth::user();
+        $pets = Pet::where('owner_id' , $owner -> id) -> get();
+
+        return view('pets.index',[
+            'owner' => $owner ,
+            'pets' => $pets
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {   
+        $dogTypes = Dogtype::all();
+        session([
+            'dogtypes' => $dogTypes
+        ]);
+        return view('pets.create',[
+            'dogtypes' => $dogTypes,
+        ]
+    );
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {   
+        $dogTypes = session('dogtypes');
+        
+        $pet = new Pet;
+
+        $request -> validate([
+            'name' =>['required', 'string' , 'max:255']
+        ]);
+
+        #$form = $request -> all();
+
+        #unset($form['_token']);
+        $owner = Auth::user();
+        $pet -> owner_id = $owner -> id ;
+        $pet -> name = $request -> name;
+        $pet -> dogtype_id = $request -> dogtype;
+        $pet ->  save();
+        
+        Log::debug('登録ペット情報：(owner_id)' . $request -> owner_id . ' (pet_name)' . $request -> pet_name . '(dog_type)' . $request -> dogtype );
+        return redirect('/pets') -> with('success','ペットを登録をしました。');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
