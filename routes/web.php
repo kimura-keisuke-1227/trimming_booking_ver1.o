@@ -41,7 +41,10 @@ Route::get('/',function(){
 
 Route::get('/admin',function(){
     return view('admin.index');
-});
+})
+-> middleware('auth')
+-> name('admin.route')
+;
 
 //ログイン画面
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -65,7 +68,8 @@ Route::resource('/pets',
 
 Route::get('/dog_register',
  [PetController::class,'create']
-) -> Middleware('auth');
+) -> Middleware('auth')
+-> name('user.dog_register');
 
 Route::post('/dog_register',
  [PetController::class,'addPet']
