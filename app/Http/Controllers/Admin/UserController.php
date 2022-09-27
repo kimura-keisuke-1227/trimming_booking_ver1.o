@@ -8,6 +8,7 @@ use App\Models\Salon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use  App\Http\Requests\Admin\StoreUserRequest;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -50,8 +51,10 @@ class UserController extends Controller
      //ユーザー登録処理
     public function store(StoreUserRequest $request)
     {
+        Log::debug($request);
         $validated = $request -> validated();
         $validated['password'] =Hash::make($validated['password']);
+        Log::debug($validated);
         User::create($validated);
 
         #return back() -> with('success','会員登録をしました。');
