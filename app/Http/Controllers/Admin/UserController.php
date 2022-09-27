@@ -54,7 +54,8 @@ class UserController extends Controller
         $validated['password'] =Hash::make($validated['password']);
         User::create($validated);
 
-        return back() -> with('success','会員登録をしました。');
+        #return back() -> with('success','会員登録をしました。');
+        return redirect('login') -> with('success','会員登録をしました。');
     }
 
     /**
