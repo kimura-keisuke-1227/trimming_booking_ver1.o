@@ -29,7 +29,7 @@ class ContactAdminMail extends Mailable
     public function build()
     {
         return $this
-        ->from('test@xs488546.xsrv.jp')
+        ->from('keisukekimura.create@gmail.com')
         ->subject('テストメルタイトル')
         ->text('email.bookingNotification.bookingNotification');
     }
