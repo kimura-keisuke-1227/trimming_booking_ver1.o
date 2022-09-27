@@ -70,13 +70,13 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">名前</label>
-                        <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" placeholder="予約" value="{{ old('name') }}">
-                        <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" placeholder="太郎" value="{{ old('name') }}">
+                        <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ old('name') }}">
+                        <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ old('name') }}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">フリガナ(全角カナ)</label>
-                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" placeholder="ヨヤク" value="{{ old('name') }}">
-                        <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" placeholder="タロウ" value="{{ old('name') }}">
+                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ old('name') }}">
+                        <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
                     </div>
 
                     <div class="mb-6">
