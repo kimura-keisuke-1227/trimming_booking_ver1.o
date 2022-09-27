@@ -19,6 +19,8 @@ use App\Http\Controllers\BookingController as ControllersBookingController;
 use App\Models\CourseMaster;
 use Symfony\Component\ErrorHandler\Debug;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactAdminMail;
 use function Psy\debug;
 
 class BookingController extends Controller
@@ -334,7 +336,8 @@ class BookingController extends Controller
             ('booking_status') . $booking_status);
 
         #Log::debug('ここでメールを送りたい。');
-
+        Mail::to('kim.ksuke@gmail.com')
+        ->send(new ContactAdminMail());
         return redirect('/admin/makebooking') -> with("success","予約を登録しました");
     }
 
@@ -573,7 +576,8 @@ class BookingController extends Controller
 
         $booking -> save();
         Log::debug('予約登録：(pet_id)' .session('pet') -> id . ' (course)' . session('course') -> id . '(date)' . session('date') ) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
-        Log::debug('ここでメールを送りたい。');
+        Mail::to('kim.ksuke@gmail.com')
+        ->send(new ContactAdminMail());
 
         return redirect('/bookings') -> with('success','予約を登録をしました。');
 

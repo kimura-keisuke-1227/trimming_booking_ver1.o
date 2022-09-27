@@ -28,6 +28,9 @@ class ContactAdminMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this
+        ->from('test@xs488546.xsrv.jp')
+        ->subject('テストメルタイトル')
+        ->text('email.bookingNotification.bookingNotification');
     }
 }
