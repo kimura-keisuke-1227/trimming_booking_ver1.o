@@ -328,7 +328,7 @@ class BookingController extends Controller
         $booking -> booking_status = $booking_status;
         $booking -> salon_id = $salon_id;
         $booking -> save();
-        Log::debug('管理者予約登録：(pet_id)' . $pet_id . 
+        Log::info('管理者予約登録：(pet_id)' . $pet_id . 
             ' (course)' . $course_id . 
             '(date)' . $date  . 
             '(st_time)' . $st_time . 
@@ -575,7 +575,7 @@ class BookingController extends Controller
         $booking -> salon_id = $salon_id;
 
         $booking -> save();
-        Log::debug('予約登録：(pet_id)' .session('pet') -> id . ' (course)' . session('course') -> id . '(date)' . session('date') ) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+        Log::info('予約登録：(pet_id)' .session('pet') -> id . ' (course)' . session('course') -> id . '(date)' . session('date') ) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         Mail::to('kim.ksuke@gmail.com')
         ->send(new ContactAdminMail());
 
@@ -627,6 +627,8 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $booking -> delete();
+        $user = Auth::user();
+        Log::info('User ' . $user -> id . 'canceled booking_id=' . $id .' '.$booking->getBookingInfo());
 
         return redirect('/bookings')
         -> with('success','予約のキャンセルに成功しました。');
