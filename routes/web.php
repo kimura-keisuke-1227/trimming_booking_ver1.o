@@ -79,7 +79,8 @@ Route::post('/dog_register',
 //予約の確認
 Route::get('/bookings',
  [BookingController::class,'index']
-) -> Middleware('auth');
+) -> Middleware('auth')
+-> name('user.bookings');
 
 //予約取り消し確認
 Route::get('/cancel/{bookingId}',
