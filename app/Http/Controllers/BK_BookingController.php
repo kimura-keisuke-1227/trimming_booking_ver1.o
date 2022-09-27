@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
-use App\Models\Owner;
+use App\Models\User;
 use App\Models\Pet;
 use App\Models\Course;
 
@@ -16,7 +16,7 @@ class BookingController extends Controller
     }
 
     public function selectpet(){
-        $owner = Owner::where('id',2) -> first();
+        $owner = User::where('id',2) -> first();
         session([
             'owner' => $owner,
         ]);
