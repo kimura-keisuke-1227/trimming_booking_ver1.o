@@ -8,7 +8,6 @@
     <form action="" method="post">
         @csrf
         <table class="table table-striped">
-            
             <tr>
                 <th>店舗選択</th>
                 <td>
@@ -17,17 +16,15 @@
                         <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
                         @endforeach
                     </select>
-
                 </td>
             </tr>
-
             <tr>
                 <th>開始日付</th>
                 <td><input type="date" name="st_date"></td>
             </tr>
             <tr>
                 <th>開始時間</th>
-                <td><input type="number" name="st_time"></td>
+                <td><input type="number" name="ed_hour" value="10">時<input type="number" name="ed_minute" value="0">分</td>
             </tr>
             <tr>
                 <th>終了日付</th>
@@ -35,14 +32,12 @@
             </tr>
             <tr>
                 <th>終了時間</th>
-                <td><input type="number" name="ed_time"></td>
+                <td><input type="number" name="ed_hour" value="20">時<input type="number" name="ed_minute" value=0>分</td>
             </tr>
             <tr>
                 <th>枠数</th>
                 <td><input type="number" name="capacity"></td>
             </tr>
-
-               
         </table>
         <input type="submit" value="登録">
     </form>

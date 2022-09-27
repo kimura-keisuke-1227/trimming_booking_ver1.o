@@ -49,16 +49,18 @@ class TempCapacityController extends Controller
         $tempCapacity = new TempCapacity();
         $salon_id = $request -> salon;
         $st_date = $request -> st_date;
-        $st_time = $request -> st_time;
+        $st_hour = $request -> st_hour;
+        $st_minute = $request -> st_time;
         $ed_date = $request -> ed_date;
-        $ed_time = $request -> ed_time;
+        $ed_hour = $request -> ed_hour;
+        $ed_minute = $request -> ed_minute;
         $capacity = $request -> capacity;
 
         $tempCapacity -> salon_id = $salon_id;
         $tempCapacity -> st_date = $st_date;
-        $tempCapacity -> st_time = $st_time;
+        $tempCapacity -> st_time = $st_hour * 60 + $st_minute;
         $tempCapacity -> ed_date = $ed_date;
-        $tempCapacity -> ed_time = $ed_time;
+        $tempCapacity -> ed_time = $ed_hour * 60 + $ed_minute;
         $tempCapacity -> capacity = $capacity;
 
         $tempCapacity -> save();
