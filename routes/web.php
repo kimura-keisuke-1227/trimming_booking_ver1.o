@@ -37,6 +37,7 @@ Route::get('/',function(){
 
     return view('index');
 })-> Middleware('auth')
+->name('main')
 ;
 
 Route::get('/admin',function(){
