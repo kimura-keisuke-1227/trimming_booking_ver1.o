@@ -24,7 +24,10 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
     return [
-        'name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'last_name_kana' => ['required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u'],
+        'first_name' => ['required', 'string', 'max:255'],
+        'first_name_kana' => ['required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         'phone' => ['required', 'string', 'max:255','regex:/^0(\d-?\d{4}|\d{2}-?\d{3}|\d{3}-?\d{2}|\d{4}-?\d|\d0-?\d{4})-?\d{4}$/'],
         'default_salon' => ['integer'],
