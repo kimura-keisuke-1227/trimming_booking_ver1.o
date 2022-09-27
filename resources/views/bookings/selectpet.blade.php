@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <p>こんにちは、{{$owner -> name}}さん</p>
+    <p>こんにちは、{{$owner -> getFullName()}}さん</p>
 
     <form action="{{Route('booking.selectCourse')}}" method="post">
         @csrf

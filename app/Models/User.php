@@ -56,6 +56,10 @@ class User extends Authenticatable
     }
 
     public function getUserInfo(){
-        return '[' . $this -> id .']' .$this -> name;
+        return '[' . $this -> id .']' .$this -> getFullName();
+    }
+
+    public function getFullName(){
+        return $this-> last_name . ' ' . $this->first_name;
     }
 }

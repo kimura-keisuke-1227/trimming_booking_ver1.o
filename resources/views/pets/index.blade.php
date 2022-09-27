@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-    <p>こんにちは、{{$owner -> name}}さん</p>
+    <p>こんにちは、{{$owner -> getFullName()}}さん</p>
     <table class="table table-striped">
         <tr>
             <td>犬種</td>

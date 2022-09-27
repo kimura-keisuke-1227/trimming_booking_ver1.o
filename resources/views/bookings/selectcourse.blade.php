@@ -8,7 +8,7 @@
 
         <div class="pt-4 px-4 overflow-x-auto">
 
-            <p>こんにちは、{{$owner -> name}}さん</p>
+            <p>こんにちは、{{$owner -> getFullName()}}さん</p>
             <br>
             <p>予約対象</p>
             <p>{{$pet -> getData()}}</p>

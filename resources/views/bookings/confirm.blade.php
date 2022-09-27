@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <p>{{$owner -> name}}様</p>
+    <p>{{$owner -> getFullName()}}様</p>
     <p>{{$pet -> getData()}}</p>
     <p>{{$course -> getCourseInfo()}}</p>
     <p>{{$date}}</p>
