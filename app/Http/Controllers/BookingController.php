@@ -631,7 +631,7 @@ class BookingController extends Controller
         Log::info('User ' . $user -> id . 'canceled booking_id=' . $id .' '.$booking->getBookingInfo());
 
         return redirect('/bookings')
-        -> with('success','予約のキャンセルに成功しました。');
+        -> with('success','予約をキャンセルしました。');
     }
 /*
      public static function bookingCheck(){
