@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\RegularHoliday;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this -> call(SalonsTableSeeder::class);
         $this -> call(Default_Capacities_TableSeeder::class);
         $this -> call(TempCapacities_TableSeeder::class);
+        $this -> call(RegularHolidaysTableSeeder::class);
     }
 }

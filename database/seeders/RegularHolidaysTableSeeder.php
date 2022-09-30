@@ -20,12 +20,18 @@ class RegularHolidaysTableSeeder extends Seeder
             'st_date' => '2022-09-01',
             'dayOfWeek' => 3,
         ];
-        DB::table('default_capacities') -> insert($param);
+        DB::table('regular_holidays') -> insert($param);
         $param =[
             'salon_id' => 2,
             'st_date' => '2022-09-01',
             'dayOfWeek' => 4,
         ];
-        DB::table('default_capacities') -> insert($param);
+        DB::table('regular_holidays') -> insert($param);
+        $param =[
+            'salon_id' => 1,
+            'st_date' => '2022-09-01',
+            'dayOfWeek' => 4,
+        ];
+        DB::table('regular_holidays') -> insert($param);
     }
 }
