@@ -200,6 +200,27 @@ class BookingController extends Controller
         ]);
     }
 
+    //削除する予約の確認画面
+    public function deleteConfirm($bookingID)
+    {
+        $owner = Auth::user();
+        $booking = Booking::find($bookingID);
+
+        $owner_id = $owner->id;
+        if (!is_null($booking)) {
+            $booking_owner_id = $booking->pet->user->id;
+        }
+
+        if ((is_null($booking) or ($owner_id != $booking_owner_id))) {
+            return redirect('/bookings')
+                ->with('error', '該当の予約が存在しません。');
+        }
+
+        return view('bookings.cancelConfirm', [
+            'booking' => $booking
+        ]);
+    }
+
     //予約のキャンセル処理
     public function destroy($id)
     {
@@ -212,109 +233,7 @@ class BookingController extends Controller
             ->with('success', '予約をキャンセルしました。');
     }
 
-    public function getAcceptableCount()
-    {
-        $acceptableCount = [];
-        $st_date = date('Y-m-d');
-        $salons = Salon::all();
-        $salon = $salons->find(1);
 
-
-        $ed_date = Util::addDays($st_date, 7);
-        $step_time = 30;
-
-        $allBookings = Booking::all();
-        $allDefaultCapacities = DefaultCapacity::all();
-        $allRegularHolidays = RegularHoliday::all();
-        $allTempCapacities = TempCapacity::all();
-
-        $times = [];
-        $timesNum = [];
-        $st_time = $salon->st_time;
-        $ed_time = $salon->ed_time;
-
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
-
-        //日付を開始日から終了日まで1日ずつ格納
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
-
-        $capacities =
-            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
-        #Log::debug($capacities);
-
-        return view('admin.bookings.acceptCount', [
-            'date' => date('Y-m-d'),
-            'times' => $times,
-            'days' => $days,
-            'capacities' => $capacities,
-            'timesNum' => $timesNum,
-            'salons' => $salons,
-            'selectedSalon' => $salon,
-        ]);
-    }
-
-    public function getAcceptableCountWithSalonDate(Request $request)
-    {
-        $acceptableCount = [];
-        $st_date = $request->st_date;
-        $salons = Salon::all();
-        $salon = $salons->find($request->salon);
-
-        $ed_date = Util::addDays($st_date, 7);
-        $step_time = 30;
-
-        $allBookings = Booking::all();
-        $allDefaultCapacities = DefaultCapacity::all();
-        $allTempCapacities = TempCapacity::all();
-        $allRegularHolidays = RegularHoliday::all();
-
-        $times = [];
-        $timesNum = [];
-        $st_time = $salon->st_time;
-        $ed_time = $salon->ed_time;
-
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
-
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
-
-
-        $capacities =
-            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
-
-        return view('admin.bookings.acceptCount', [
-            'date' => $st_date,
-            'times' => $times,
-            'days' => $days,
-            'capacities' => $capacities,
-            'timesNum' => $timesNum,
-            'salons' => $salons,
-            'selectedSalon' => $salon,
-        ]);
-    }
-    public function getBookingCountsOfMultiDaysFromStartDateToEndDate($bookings, $salon, $step_time, $st_date, $ed_date)
-    {
-        $bookingCountsOfMultiDaysFromStartDateToEndDate = [];
-
-        for ($day = $st_date; $day <= $ed_date; $day = Util::addDays($day, 1)) {
-            $countsForADay =  $this->getTimeTableFromSalonDay($bookings, $salon, $day, $step_time);
-            $bookingCountsOfMultiDaysFromStartDateToEndDate[$day] = $countsForADay;
-        }
-        return $bookingCountsOfMultiDaysFromStartDateToEndDate;
-    }
 
     /**************************************************************
      *
@@ -447,6 +366,100 @@ class BookingController extends Controller
     }
 
 
+    //管理者用　空き枠の取得
+    public function getAcceptableCount()
+    {
+        $acceptableCount = [];
+        $st_date = date('Y-m-d');
+        $salons = Salon::all();
+        $salon = $salons->find(1);
+
+
+        $ed_date = Util::addDays($st_date, 7);
+        $step_time = 30;
+
+        $allBookings = Booking::all();
+        $allDefaultCapacities = DefaultCapacity::all();
+        $allRegularHolidays = RegularHoliday::all();
+        $allTempCapacities = TempCapacity::all();
+
+        $times = [];
+        $timesNum = [];
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+            $timesNum[$str_time] = $time;
+        }
+
+        //日付を開始日から終了日まで1日ずつ格納
+        $days = [];
+        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
+            $days[$i] = $i;
+        }
+
+        $capacities =
+            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+        #Log::debug($capacities);
+
+        return view('admin.bookings.acceptCount', [
+            'date' => date('Y-m-d'),
+            'times' => $times,
+            'days' => $days,
+            'capacities' => $capacities,
+            'timesNum' => $timesNum,
+            'salons' => $salons,
+            'selectedSalon' => $salon,
+        ]);
+    }
+
+    public function getAcceptableCountWithSalonDate(Request $request)
+    {
+        $acceptableCount = [];
+        $st_date = $request->st_date;
+        $salons = Salon::all();
+        $salon = $salons->find($request->salon);
+
+        $ed_date = Util::addDays($st_date, 7);
+        $step_time = 30;
+
+        $allBookings = Booking::all();
+        $allDefaultCapacities = DefaultCapacity::all();
+        $allTempCapacities = TempCapacity::all();
+        $allRegularHolidays = RegularHoliday::all();
+
+        $times = [];
+        $timesNum = [];
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+            $timesNum[$str_time] = $time;
+        }
+
+        $days = [];
+        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
+            $days[$i] = $i;
+        }
+
+
+        $capacities =
+            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+
+        return view('admin.bookings.acceptCount', [
+            'date' => $st_date,
+            'times' => $times,
+            'days' => $days,
+            'capacities' => $capacities,
+            'timesNum' => $timesNum,
+            'salons' => $salons,
+            'selectedSalon' => $salon,
+        ]);
+    }
 
 
 
@@ -597,25 +610,6 @@ class BookingController extends Controller
      */
 
 
-    public function deleteConfirm($bookingID)
-    {
-        $owner = Auth::user();
-        $booking = Booking::find($bookingID);
-
-        $owner_id = $owner->id;
-        if (!is_null($booking)) {
-            $booking_owner_id = $booking->pet->user->id;
-        }
-
-        if ((is_null($booking) or ($owner_id != $booking_owner_id))) {
-            return redirect('/bookings')
-                ->with('error', '該当の予約が存在しません。');
-        }
-
-        return view('bookings.cancelConfirm', [
-            'booking' => $booking
-        ]);
-    }
 
     /**************************************************************
      *
@@ -874,5 +868,16 @@ class BookingController extends Controller
         }
 
         return $capacitiesFromMultiDays;
+    }
+
+    public function getBookingCountsOfMultiDaysFromStartDateToEndDate($bookings, $salon, $step_time, $st_date, $ed_date)
+    {
+        $bookingCountsOfMultiDaysFromStartDateToEndDate = [];
+
+        for ($day = $st_date; $day <= $ed_date; $day = Util::addDays($day, 1)) {
+            $countsForADay =  $this->getTimeTableFromSalonDay($bookings, $salon, $day, $step_time);
+            $bookingCountsOfMultiDaysFromStartDateToEndDate[$day] = $countsForADay;
+        }
+        return $bookingCountsOfMultiDaysFromStartDateToEndDate;
     }
 }
