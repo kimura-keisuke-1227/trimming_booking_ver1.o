@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('regular_holidays', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('salon_id');
+            $table->date('st_date');
+            $table->integer('capacity');
             $table->timestamps();
         });
     }
