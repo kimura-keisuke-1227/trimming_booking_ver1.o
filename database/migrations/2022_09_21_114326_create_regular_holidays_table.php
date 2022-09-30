@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('salon_id');
             $table->date('st_date');
-            $table->integer('capacity');
+            $table->integer('dayOfWeek');
             $table->timestamps();
         });
     }
