@@ -39,14 +39,12 @@ class BookingController extends Controller
         $owner_id = $owner -> id;
         if(! is_null($booking)){
             $booking_owner_id = $booking -> pet -> user -> id;
-            
         }
 
         if((is_null($booking) or ($owner_id != $booking_owner_id))){
             return redirect('/bookings')
             -> with('error' , '該当の予約が存在しません。');
         }
-
 
         return view('bookings.cancelConfirm',[
             'booking' => $booking
@@ -302,8 +300,6 @@ class BookingController extends Controller
         ->send(new ContactAdminMail());
         return redirect('/admin/makebooking') -> with("success","予約を登録しました");
     }
-
-
 
     public function index()
     {
@@ -705,25 +701,23 @@ class BookingController extends Controller
         $close_time = $salon -> ed_time;
         $capacitiesOfTheDay = [];
 
-        #Log::debug("(395)Date:" . $date . ' Salon:' . $salon -> salon_name);
-        #Log::debug("allTempCapacities:" . $allTempCapacities);
-
+        //指定日範囲内の臨時調整枠データを取得
         $tempCapacitiesOfTheDate = $allTempCapacities
             -> where('st_date' , '<=', $date)
             -> where('ed_date' , '>=', $date);
 
+        //定休日の設定を取得
         $regularHolidaysOfTheSalon = $allRegularHolidays ->where('salon_id', $salon -> id);    
         Log::debug('定休日:'.$regularHolidaysOfTheSalon);
 
-        #Log::debug('$date:' . $date);
-        #Log::debug('$tempCapacitiesOfTheDate :' . $tempCapacitiesOfTheDate);
-
         //DBから店舗のデフォルト受け入れ枠データ
+        //開店時間から閉店時間まで
         for($time = $open_time ; $time < $close_time; $time = $time + $step_time){
+            
+            //通常の受け入れ枠を設定
             $capacitiesOfTheDay[$time] 
             = ControllersBookingController::getDefaultCapacityOfTheDayAndSalon($allDefaultCapacities,$date,$salon);
 
-            
             foreach($regularHolidaysOfTheSalon as $regularHolidayOfTheSalon){
                 //定休日であればゼロに
                 if(date('w',strtotime($date))== $regularHolidayOfTheSalon->dayOfWeek){
@@ -731,7 +725,6 @@ class BookingController extends Controller
                 }
 
             }
-
 
             //臨時枠調整があれば上書き
             foreach($tempCapacitiesOfTheDate as $capacity){
@@ -749,8 +742,7 @@ class BookingController extends Controller
                 if($ed_time < $time){
                     $reWrite = false;
                 }
-                Log::debug(' ReWrite:' . $reWrite);
-                Log::debug($ed_time >= $time);
+                
                 if($reWrite){
                     Log::debug('$time:' . $time.' $st_time:' . $st_time .' $ed_time:' . $ed_time .' Rewirte:');
                     $capacitiesOfTheDay[$time] = $capacity -> capacity;
@@ -758,37 +750,13 @@ class BookingController extends Controller
                     Log::debug('$time:' . $time.' $st_time:' . $st_time .' $ed_time:' . $ed_time .' No Rewirte:');
                     
                 }
-
             }
-            /*
-            //サロンと日時を指定して、臨時の枠を取得する。
-            Log::debug('サロンと日時を指定して、臨時の枠を取得する。');
-            $tempCapacity = ControllersBookingController::getTempCapacityFromSalonDateTime($allTempCapacities, $salon , $date, $time);
-
-            Log::debug('$salon_id:'. $salon -> id .' $time:' . $time);
-            Log::debug('$tempCapacities:' . $tempCapacity);
-
-            if(($tempCapacity -> isEmpty() != true)) {
-                $capacitiesOfTheDay[$time] = $tempCapacity -> capacity;
-            }
-            */
-
         }
-
-        return $capacitiesOfTheDay;
-
-        $capacities = [];
-        
-        //臨時枠を取得
-        $tempCapacities = '';
-
-        //if(定休日){枠を全部ゼロ}else{デフォルトを入れる}
-
-        //臨時枠があればそちらを優先する。上書き。
 
         return $capacitiesOfTheDay;
      }
 
+    //特定の日付の空き枠を取得
     public static function getOtherCapacitiesOfTheDate($dateBookingsCount, $dateCapacitiesCount,$salon , $step_time){
         $otherCapacitiesOfTheDate = [];
         $st_time = $salon -> st_time;
@@ -804,6 +772,7 @@ class BookingController extends Controller
         return $otherCapacitiesOfTheDate;
     }
 
+    //指定期間内の空き枠を取得
     public static function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date){
         $getOtherCapacitiesOfMultiDate = [];
 
@@ -823,6 +792,7 @@ class BookingController extends Controller
         return $getOtherCapacitiesOfMultiDate;
     }
 
+    //予約可能な数を取得
     public static function getCanBookList($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course){
         Log::debug('(start) getCanBookList' );
         Log::debug('$course:' . $course ->id . ' minute:' . $course -> minute);
