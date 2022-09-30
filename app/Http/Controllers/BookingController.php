@@ -134,7 +134,7 @@ class BookingController extends Controller
 
         $capacities =
         ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
-        Log::debug($capacities);
+        #Log::debug($capacities);
 
 
 
@@ -182,7 +182,7 @@ class BookingController extends Controller
 
         $capacities =
         ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
-        Log::debug($capacities);
+        #Log::debug($capacities);
 
 
 
@@ -201,7 +201,7 @@ class BookingController extends Controller
         $defaultCapacities = DefaultCapacity::all();
         $salons = Salon::all();
         
-        Log::debug('defaultcapacity:' . $defaultCapacities );
+        #Log::debug('defaultcapacity:' . $defaultCapacities );
 
         $sdate = '2022-09-15';
         $edate = '2022-10-15';
@@ -332,6 +332,7 @@ class BookingController extends Controller
         $booking -> booking_status = $booking_status;
         $booking -> salon_id = $salon_id;
         $booking -> save();
+        
         Log::info('管理者予約登録：(pet_id)' . $pet_id . 
             ' (course)' . $course_id . 
             '(date)' . $date  . 
@@ -427,7 +428,7 @@ class BookingController extends Controller
 
         $capacities =
         ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
-        Log::debug($capacities);
+        #Log::debug($capacities);
 
         session([
             'course' => $course,
@@ -486,7 +487,7 @@ class BookingController extends Controller
 
         $capacities =
         ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
-        Log::debug($capacities);
+        #Log::debug($capacities);
 
         session([
             'course' => $course,
@@ -721,28 +722,28 @@ class BookingController extends Controller
      }
 
      //特定日付範囲の各日の枠数を取得
-     public static function getCapacitiesFromMultiDays($allDefaultCapacities, $allTempCapacities, $salon,$step_time,$st_date, $ed_date){
+     public static function getCapacitiesFromMultiDays($allDefaultCapacities,$allRegularHolidays, $allTempCapacities, $salon,$step_time,$st_date, $ed_date){
         $capacitiesFromMultiDays = [];
 
         for($date = $st_date; $date <= $ed_date ;  $date = Util::addDays($date,1)){
-            $capacitiesFromMultiDays[$date] =  ControllersBookingController::getCapacityFromDay($allDefaultCapacities,$allTempCapacities,$date, $salon,$step_time);
+            $capacitiesFromMultiDays[$date] =  ControllersBookingController::getCapacityFromDay($allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$date, $salon,$step_time);
         }
         return $capacitiesFromMultiDays;
      }
 
      //開始日と終了日を指定して店舗の枠数を取得
-    public static function getCapacitiesOfMultiDays($allDefaultCapacities,$allTempCapacities, $st_date , $ed_date, $salon , $step_time){
+    public static function getCapacitiesOfMultiDays($allDefaultCapacities,$allRegularHolidays,$allTempCapacities, $st_date , $ed_date, $salon , $step_time){
         $capacitiesFromMultiDays = [];
         for($date = $st_date; $date <= $ed_date ;  $date = Util::addDays($date,1)){
             $capacitiesFromMultiDays[$date] =
-            ControllersBookingController::getCapacityFromDay($allDefaultCapacities,$allTempCapacities, $date, $salon,$step_time);
+            ControllersBookingController::getCapacityFromDay($allDefaultCapacities,$allRegularHolidays,$allTempCapacities, $date, $salon,$step_time);
         }
 
         return $capacitiesFromMultiDays;
     }
 
      //店舗の1日の枠数を取得
-     public static function getCapacityFromDay($allDefaultCapacities,$allTempCapacities, $date, $salon , $step_time){
+     public static function getCapacityFromDay($allDefaultCapacities,$allRegularHolidays,$allTempCapacities, $date, $salon , $step_time){
         $open_time = $salon -> st_time;
         $close_time = $salon -> ed_time;
         $capacitiesOfTheDay = [];
@@ -754,6 +755,8 @@ class BookingController extends Controller
             -> where('st_date' , '<=', $date)
             -> where('ed_date' , '>=', $date);
 
+        $regularHolidaysOfTheSalon = $allRegularHolidays ->where('salon_id', $salon -> id);    
+        Log::debug('定休日:'.$regularHolidaysOfTheSalon);
 
         #Log::debug('$date:' . $date);
         #Log::debug('$tempCapacitiesOfTheDate :' . $tempCapacitiesOfTheDate);
@@ -763,9 +766,13 @@ class BookingController extends Controller
             $capacitiesOfTheDay[$time] 
             = ControllersBookingController::getDefaultCapacityOfTheDayAndSalon($allDefaultCapacities,$date,$salon);
 
-            //定休日であればゼロに
-            if(date('w',strtotime($date))==0){
-                $capacitiesOfTheDay[$time]  = 0;
+            
+            foreach($regularHolidaysOfTheSalon as $regularHolidayOfTheSalon){
+                //定休日であればゼロに
+                if(date('w',strtotime($date))== $regularHolidayOfTheSalon->dayOfWeek){
+                    $capacitiesOfTheDay[$time]  = 0;
+                }
+
             }
 
 
@@ -848,7 +855,7 @@ class BookingController extends Controller
             = ControllersBookingController::getBookingCountsOfMultiDaysFromStartDateToEndDate($allBookings,$salon,$step_time,$st_date,$ed_date)[$date];
         
             $dateCapacity 
-            =ControllersBookingController::getCapacitiesOfMultiDays($allDefaultCapacities,$allTempCapacities, $st_date,$ed_date, $salon,$step_time)[$date];
+            =ControllersBookingController::getCapacitiesOfMultiDays($allDefaultCapacities,$allRegularHolidays,$allTempCapacities, $st_date,$ed_date, $salon,$step_time)[$date];
 
             $otherCapacitiesOfTheDate 
                 = ControllersBookingController::getOtherCapacitiesOfTheDate($dateBookingCount, $dateCapacity, $salon, $step_time);
