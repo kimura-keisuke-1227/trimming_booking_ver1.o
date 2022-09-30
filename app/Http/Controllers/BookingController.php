@@ -757,6 +757,13 @@ class BookingController extends Controller
             $capacitiesOfTheDay[$time] 
             = ControllersBookingController::getDefaultCapacityOfTheDayAndSalon($allDefaultCapacities,$date,$salon);
 
+            //定休日であればゼロに
+            if(date('w',strtotime($date))==0){
+                $capacitiesOfTheDay[$time]  = 0;
+            }
+
+
+            //臨時枠調整があれば上書き
             foreach($tempCapacitiesOfTheDate as $capacity){
                 #Log::debug('$capacity:' . $capacity);
                 $st_time = $capacity -> st_time;
