@@ -25,24 +25,39 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function deleteConfirm($bookingID){
+    public function index()
+    {
+        //BookingController::bookingCheck();
+
         $owner = Auth::user();
-        $booking = Booking::find($bookingID);
-
-        $owner_id = $owner -> id;
-        if(! is_null($booking)){
-            $booking_owner_id = $booking -> pet -> user -> id;
-        }
-
-        if((is_null($booking) or ($owner_id != $booking_owner_id))){
-            return redirect('/bookings')
-            -> with('error' , '該当の予約が存在しません。');
-        }
-
-        return view('bookings.cancelConfirm',[
-            'booking' => $booking
+        
+        $bookings = Booking::orderBy('date')
+        -> orderBy('st_time')
+        -> get();
+        
+        return view('bookings.index',[
+            'owner' => $owner,
+            'bookings' => $bookings,
         ]);
     }
+
+    public function create()
+    {
+        $owner = Auth::user();
+        session([
+            'owner' => $owner,
+        ]);
+        $pets = Pet::where('owner_id' , $owner -> id) -> get();
+        session(['pets' => $pets]);
+        //return redirect('/selectcourse');
+
+        
+        return view('bookings.selectpet',[
+            'pets' => $pets,
+            'owner' => $owner,
+        ]);
+    }
+
 
     public function selectBookingCalender(Request $request, $date, $time){
         $owner = Auth::user();
@@ -287,21 +302,7 @@ class BookingController extends Controller
         return redirect('/admin/makebooking') -> with("success","予約を登録しました");
     }
 
-    public function index()
-    {
-        //BookingController::bookingCheck();
 
-        $owner = Auth::user();
-        
-        $bookings = Booking::orderBy('date')
-        -> orderBy('st_time')
-        -> get();
-        
-        return view('bookings.index',[
-            'owner' => $owner,
-            'bookings' => $bookings,
-        ]);
-    }
     
     public function selectCourse(Request $request){
         Log::debug('(function:selectCourse)');
@@ -474,22 +475,7 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $owner = Auth::user();
-        session([
-            'owner' => $owner,
-        ]);
-        $pets = Pet::where('owner_id' , $owner -> id) -> get();
-        session(['pets' => $pets]);
-        //return redirect('/selectcourse');
 
-        
-        return view('bookings.selectpet',[
-            'pets' => $pets,
-            'owner' => $owner,
-        ]);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -578,6 +564,25 @@ class BookingController extends Controller
 
         return redirect('/bookings')
         -> with('success','予約をキャンセルしました。');
+    }
+
+    public function deleteConfirm($bookingID){
+        $owner = Auth::user();
+        $booking = Booking::find($bookingID);
+
+        $owner_id = $owner -> id;
+        if(! is_null($booking)){
+            $booking_owner_id = $booking -> pet -> user -> id;
+        }
+
+        if((is_null($booking) or ($owner_id != $booking_owner_id))){
+            return redirect('/bookings')
+            -> with('error' , '該当の予約が存在しません。');
+        }
+
+        return view('bookings.cancelConfirm',[
+            'booking' => $booking
+        ]);
     }
 /*
      public static function bookingCheck(){
