@@ -40,5 +40,10 @@ class Booking extends Model
         return $this-> pet -> name . '('.$this-> course -> courseMaster -> course . ')';
     }
 
+    public function getBookingInfoForStaff(){
+        return  $this->pet->user->last_name .
+                $this->pet->name
+                . '('.$this-> course -> courseMaster -> course . ')';
+    }
 
 }

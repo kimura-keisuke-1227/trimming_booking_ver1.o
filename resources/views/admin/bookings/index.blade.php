@@ -67,7 +67,7 @@
                     @foreach($bookings as $booking)
                         @if($course->id == $booking->course->courseMaster->id)
                             @if($booking->st_time == $timesNums[$time])
-                                <td class="bg_color{{$course->id}}">{{$booking->getBookingInfo()}}</td>
+                                <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
                             @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
                                 <td class="bg_color{{$course->id}}">↓</td>
                             @else
