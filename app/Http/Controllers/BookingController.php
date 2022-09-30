@@ -13,11 +13,9 @@ use App\Models\TempCapacity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
-#use App\Http\Controllers\BookingController as ControllersBookingController;
 use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
-use function Psy\debug;
 
 class BookingController extends Controller
 {
