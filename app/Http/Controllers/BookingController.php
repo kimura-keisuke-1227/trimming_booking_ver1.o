@@ -80,6 +80,7 @@ class BookingController extends Controller
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $salon = Salon::find(2);
+        $allRegularHoliday = RegularHoliday::all();
         $st_date = "2022-09-21";
         $ed_date = "2022-09-27";
         $step_time = 30;
@@ -88,7 +89,7 @@ class BookingController extends Controller
         
         Log::debug('test:');
         Log::debug(
-            ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course)
+            ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course)
         );
         return (date('Y-m-d'));
 
@@ -132,7 +133,7 @@ class BookingController extends Controller
 
 
         $capacities =
-        ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
+        ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
         Log::debug($capacities);
 
 
@@ -160,6 +161,7 @@ class BookingController extends Controller
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
+        $allRegularHolidays = RegularHoliday::all();
         
         $times = [];
         $timesNum = [];
@@ -179,7 +181,7 @@ class BookingController extends Controller
 
 
         $capacities =
-        ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
+        ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
         Log::debug($capacities);
 
 
@@ -421,9 +423,10 @@ class BookingController extends Controller
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
+        $allRegularHoliday = RegularHoliday::all();
 
         $capacities =
-        ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
+        ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
         Log::debug($capacities);
 
         session([
@@ -479,9 +482,10 @@ class BookingController extends Controller
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
+        $allRegularHoliday = RegularHoliday::all();
 
         $capacities =
-        ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
+        ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course);
         Log::debug($capacities);
 
         session([
@@ -836,7 +840,7 @@ class BookingController extends Controller
         return $otherCapacitiesOfTheDate;
     }
 
-    public static function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date){
+    public static function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date){
         $getOtherCapacitiesOfMultiDate = [];
 
         for($date = $st_date; $date <= $ed_date ;  $date = Util::addDays($date,1)){
@@ -855,11 +859,11 @@ class BookingController extends Controller
         return $getOtherCapacitiesOfMultiDate;
     }
 
-    public static function getCanBookList($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course){
+    public static function getCanBookList($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course){
         Log::debug('(start) getCanBookList' );
         Log::debug('$course:' . $course ->id . ' minute:' . $course -> minute);
         $getOtherCapacitiesOfMultiDate 
-        = ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
+        = ControllersBookingController::getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities,$allRegularHolidays,$allTempCapacities,$salon , $step_time , $st_date, $ed_date);
         $cut_time = $course -> minute;
         $st_time = $salon -> st_time;
         $ed_time = $salon -> ed_time;
