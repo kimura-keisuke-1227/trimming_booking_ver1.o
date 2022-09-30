@@ -103,6 +103,7 @@ class BookingController extends Controller
             $timesNum[$str_time] = $time;
         }
 
+        //日付を開始日から終了日まで1日ずつ格納
         $days = [];
         for($i = $st_date; $i <= $ed_date ;  $i = Util::addDays($i,1)){
             $days[$i] = $i;
