@@ -110,6 +110,7 @@ class BookingController extends Controller
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
+        $allRegularHolidays = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         
         $times = [];
