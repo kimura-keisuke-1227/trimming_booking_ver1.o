@@ -74,27 +74,6 @@ class BookingController extends Controller
         ]);
     }
 
-    public function test(){
-        #return (date('Y-m-d'));
-        $allBookings = Booking::all();
-        $allDefaultCapacities = DefaultCapacity::all();
-        $allTempCapacities = TempCapacity::all();
-        $salon = Salon::find(2);
-        $allRegularHoliday = RegularHoliday::all();
-        $st_date = "2022-09-21";
-        $ed_date = "2022-09-27";
-        $step_time = 30;
-        $course = Course::find(2);
-
-        
-        Log::debug('test:');
-        Log::debug(
-            ControllersBookingController::getCanBookList($allBookings, $allDefaultCapacities,$allRegularHoliday,$allTempCapacities,$salon , $step_time , $st_date, $ed_date, $course)
-        );
-        return (date('Y-m-d'));
-
-    }
-
     public function showAllBookings(){
 
         return "すべての予約をみせます。";
@@ -196,28 +175,6 @@ class BookingController extends Controller
             'selectedSalon' => $salon,
         ]);
     }
-
-    public function test2(){
-        $defaultCapacities = DefaultCapacity::all();
-        $salons = Salon::all();
-        
-        #Log::debug('defaultcapacity:' . $defaultCapacities );
-
-        $sdate = '2022-09-15';
-        $edate = '2022-10-15';
-
-        foreach($salons as $salon){            
-            for($i = $sdate; $i <= $edate ;  $i = Util::addDays($i,1)){
-                $capacity = ControllersBookingController::getDefaultCapacityOfTheDayAndSalon( $defaultCapacities,$i,$salon -> id);
-                Log::debug('date:' . $i . ' salon:' . $salon -> salon_name .' capacity:' . $capacity);
-            }
-        }
-
-        Log::debug('defaultcapacity:' .$defaultCapacities);
-
-        return (date('Y-m-d'));
-    }
-
     public static function getBookingCountsOfMultiDaysFromStartDateToEndDate($bookings,$salon,$step_time,$st_date, $ed_date){
         $bookingCountsOfMultiDaysFromStartDateToEndDate = [];
 
@@ -250,7 +207,7 @@ class BookingController extends Controller
         if($request-> has('salon')){
             $salon = $salons -> find($request -> salon);
         } else{
-            $salon = $salons -> find(2);
+            $salon = $salons -> find(1);
         }
         
         if($request-> has('date')){
