@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Salon;
 use App\Models\DefaultCapacity;
+use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
 use App\Models\USer;
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +111,7 @@ class BookingController extends Controller
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
-        $allRegularHolidays = DefaultCapacity::all();
+        $allRegularHolidays = RegularHoliday::all();
         $allTempCapacities = TempCapacity::all();
         
         $times = [];
