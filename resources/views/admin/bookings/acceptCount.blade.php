@@ -29,7 +29,13 @@
         <tr>
             <th>日付</th>
             @foreach($days as $day)
-            <th>{{$day}}</th>
+            <th>
+                @php
+                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                    $dateStr = date('m月d日',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                    echo $dateStr; 
+                @endphp
+            </th>
             @endforeach
         </tr>
         
