@@ -71,10 +71,7 @@ class BookingController extends Controller
         $owner = Auth::user();
         $pets = session('pets');
         $pet_id = $request->pet;
-        Log::debug('pets:' . $pets);
-        Log::debug('pet_id:' . $pet_id);
         $pet = $pets->find($pet_id);
-        Log::debug('pet:' . $pet);
         $salons = Salon::all();
         $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
         session([
@@ -108,7 +105,6 @@ class BookingController extends Controller
         $step_time = 30;
 
         //初期値は本日より1週間分のデータを取得
-        $st_date = date('2022-10-22');
         $st_date = date('Y-m-d');
         $ed_date =  Util::addDays($st_date, 6);
 
