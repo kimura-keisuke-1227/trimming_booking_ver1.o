@@ -21,6 +21,9 @@ class Booking extends Model
         return $this -> belongsTo('App\Models\Salon');
     }
 
+    public function getBookingDate(){
+        return date('M月d日',$this->date);
+    }
 
     public function getStartTime(){
         $timeNum = $this -> st_time;

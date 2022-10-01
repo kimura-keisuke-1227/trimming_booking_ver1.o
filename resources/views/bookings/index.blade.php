@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-   <p>◆予約日から１週間を経過したデータは表示されません。</p>
+   <p>◆予約日から{{$showBookingsAfterNDays}}日を経過したデータは表示されません。</p>
 
     <table class="table table-striped">
         <tr>

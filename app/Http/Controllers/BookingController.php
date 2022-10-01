@@ -28,6 +28,24 @@ class BookingController extends Controller
 
     /**************************************************************
      *
+     *   テスト用
+     *
+     ***************************************************************/
+
+     public function test(){
+        $bookings = Booking::with('pet.user')
+        ->with('course.coursemaster')
+        ->with('pet.dogtype')
+        #->where('pet.user.id' ,2)
+        ->get();
+        Log::debug($bookings);
+        return view('test', [
+            'bookings' => $bookings
+        ]);
+    }
+
+    /**************************************************************
+     *
      *   ユーザー用
      *
      ***************************************************************/
@@ -38,14 +56,20 @@ class BookingController extends Controller
         //BookingController::bookingCheck();
 
         $owner = Auth::user();
+        $showBookingsAfterNDays = $this -> getSetting(30,'showBookingsAfterNDays',true);
 
-        $bookings = Booking::orderBy('date')
-            ->orderBy('st_time')
-            ->get();
+        $bookings = Booking::with('pet.user')
+        ->with('course.coursemaster')
+        ->with('pet.dogtype')
+        ->where('date' , '>' , Util::addDays(date('Y-m-d'),-$showBookingsAfterNDays))
+        ->orderBy('date')
+        ->orderBy('st_time')
+        ->get();
 
         return view('bookings.index', [
             'owner' => $owner,
             'bookings' => $bookings,
+            'showBookingsAfterNDays' => $showBookingsAfterNDays,
         ]);
     }
 
