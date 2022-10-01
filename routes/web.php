@@ -192,7 +192,9 @@ Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::cla
 Route::get('/admin/ownersInfo',[UserController::class,'index'])
 -> Middleware('auth');
 
-Route::get('/admin/setting',[SettingController::class,'index'])-> Middleware('auth');
+Route::get('/admin/setting',[SettingController::class,'index'])
+->name('admin.setting')
+-> Middleware('auth');
 
 /*****************************************************************
 *
