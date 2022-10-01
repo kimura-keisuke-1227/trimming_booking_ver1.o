@@ -153,7 +153,7 @@ class BookingController extends Controller
         ]);
     }
 
-    public function selectBookingCalender(Request $request, $date, $time)
+    public function confirmBooking(Request $request, $date, $time)
     {
         $owner = Auth::user();
         $pet =  session('pet');
@@ -176,6 +176,7 @@ class BookingController extends Controller
     }
 
     //予約の最終確認
+    /*
     public function confirm(Request $request)
     {
         $owner = Auth::user();
@@ -195,6 +196,7 @@ class BookingController extends Controller
             'time' => $time,
         ]);
     }
+    */
 
     //削除する予約の確認画面
     public function deleteConfirm($bookingID)

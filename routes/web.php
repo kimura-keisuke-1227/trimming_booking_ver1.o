@@ -127,7 +127,7 @@ Route::get('/selectCalenderCheck/{salon}/{st_date}',
 ;
 
 Route::get('/selectCalender/{date}/{time}',
-[BookingController::class,'selectBookingCalender']
+[BookingController::class,'confirmBooking']
 )
 -> Middleware('auth')
 -> name('booking.selectCalender.date');
