@@ -10,6 +10,7 @@ use App\Models\Salon;
 use App\Models\DefaultCapacity;
 use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
@@ -102,7 +103,8 @@ class BookingController extends Controller
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
 
-        $step_time = 30;
+        $step_time = $this -> getSetting(30,'step_time',true);
+
 
         //初期値は本日より1週間分のデータを取得
         $st_date = date('Y-m-d');
@@ -283,7 +285,7 @@ class BookingController extends Controller
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
-        $step_time = 30;
+        $step_time = $this -> getSetting(30,'step_time',true);
 
         $times = [];
         $timesNums = [];
@@ -374,7 +376,7 @@ class BookingController extends Controller
 
 
         $ed_date = Util::addDays($st_date, 7);
-        $step_time = 30;
+        $step_time = $this -> getSetting(30,'step_time',true);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
@@ -421,7 +423,7 @@ class BookingController extends Controller
         $salon = $salons->find($request->salon);
 
         $ed_date = Util::addDays($st_date, 7);
-        $step_time = 30;
+        $step_time = $this -> getSetting(30,'step_time',true);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
@@ -471,7 +473,7 @@ class BookingController extends Controller
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
 
-        $step_time = 30;
+        $step_time = $this -> getSetting(30,'step_time',true);
 
         //指定日より1週間分のデータを取得
         $ed_date =  Util::addDays($st_date, 6);
@@ -729,16 +731,16 @@ class BookingController extends Controller
             $isTimeOver = false;
 
             //当日以前なら予約できない
-            if($date <= date('Y-m-d')){
+            if ($date <= date('Y-m-d')) {
                 $isTimeOver = true;
             }
-            
-            
+
+
             //前日の閉店時刻を過ぎていたら予約できない。
             $nowTime = date('H') * 60 + date('i');
             Log::debug('$nowTime:' . $nowTime);
-            
-            if(($date == Util::addDays(date('Y-m-d'), 1))and($nowTime + 30 > $ed_time)){
+
+            if (($date == Util::addDays(date('Y-m-d'), 1)) and ($nowTime + 30 > $ed_time)) {
                 $isTimeOver = true;
             }
 
@@ -893,5 +895,23 @@ class BookingController extends Controller
             $bookingCountsOfMultiDaysFromStartDateToEndDate[$day] = $countsForADay;
         }
         return $bookingCountsOfMultiDaysFromStartDateToEndDate;
+    }
+
+    private function getSetting($default, $setting_name, $isInt)
+    {
+
+        $setting = Setting::where('setting_name',$setting_name) -> get();
+        Log::debug($setting);
+
+        $settingHere = $setting;
+        if ($settingHere -> count() == 0) {
+            return $default;
+        }
+
+        if ($isInt) {
+            return $settingHere->first() ->setting_int;
+        } else {
+            return $settingHere->first() ->setting_string;
+        }
     }
 }
