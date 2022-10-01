@@ -726,7 +726,23 @@ class BookingController extends Controller
 
         $canBookTimeListOfMultiDay = [];
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
-            if ($date <= date('Y-m-d')) {
+            $isTimeOver = false;
+
+            //当日以前なら予約できない
+            if($date <= date('Y-m-d')){
+                $isTimeOver = true;
+            }
+            
+            
+            //前日の閉店時刻を過ぎていたら予約できない。
+            $nowTime = date('H') * 60 + date('i');
+            Log::debug('$nowTime:' . $nowTime);
+            
+            if(($date == Util::addDays(date('Y-m-d'), 1))and($nowTime + 30 > $ed_time)){
+                $isTimeOver = true;
+            }
+
+            if ($isTimeOver) {
                 for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
                     $canBookTimeListOfADay[$time] = 0;
                 }
