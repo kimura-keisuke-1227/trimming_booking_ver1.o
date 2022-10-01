@@ -740,7 +740,8 @@ class BookingController extends Controller
             $nowTime = date('H') * 60 + date('i');
             Log::debug('$nowTime:' . $nowTime);
 
-            if (($date == Util::addDays(date('Y-m-d'), 1)) and ($nowTime + 30 > $ed_time)) {
+            $deadTimeForBooking = $this-> getSetting(30,'deadTimeForBooking',true);
+            if (($date == Util::addDays(date('Y-m-d'), 1)) and ($nowTime + $deadTimeForBooking > $ed_time)) {
                 $isTimeOver = true;
             }
 
@@ -752,7 +753,9 @@ class BookingController extends Controller
                 continue;
             }
 
-            if ($date >= Util::addDays(date('Y-m-d'), 30)) {
+            $untilTheDayAhead = $this -> getSetting(30,'untilTheDayAhead',true);
+
+            if ($date >= Util::addDays(date('Y-m-d'), $untilTheDayAhead)) {
                 for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
                     $canBookTimeListOfADay[$time] = 0;
                 }
