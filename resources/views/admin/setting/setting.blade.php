@@ -6,6 +6,7 @@
 
 <div class="container">
     <form action="{{Route('admin.checkBookings.dateAndSalon')}}">
+        @csrf
         <table class="table table-striped">
             <tr>
                 <th>設定内容</th>
