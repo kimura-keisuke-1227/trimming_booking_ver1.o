@@ -35,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $this -> call(Default_Capacities_TableSeeder::class);
         $this -> call(TempCapacities_TableSeeder::class);
         $this -> call(RegularHolidaysTableSeeder::class);
+        $this -> call(SettingTableSeeder::class);
     }
 }
