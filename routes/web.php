@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TempCapacityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\SettingController;
 use App\Models\TempCapacity;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -190,6 +191,8 @@ Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::cla
 //ユーザーの確認
 Route::get('/admin/ownersInfo',[UserController::class,'index'])
 -> Middleware('auth');
+
+Route::get('/admin/setting',[SettingController::class,'index'])-> Middleware('auth');
 
 /*****************************************************************
 *
