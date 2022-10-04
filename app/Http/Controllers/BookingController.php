@@ -82,6 +82,7 @@ class BookingController extends Controller
             'owner_first_name_kana' => $owner_first_name_kana,
             'pet_name' => $pet_name,
             'courses' => $courses,
+            'salons' => $salons,
         ]);
 
         return view('nonMember.nonMemberSelectcourse',[
@@ -100,12 +101,64 @@ class BookingController extends Controller
     public function startNonUserBookingSelectCalender(Request $request){
         
         $dogType =session('dogtype');
-        $salons = Salon::all();
+        $salons = session('salons');
+        $salon_id = $request -> salon;
+        $salon = $salons -> find($salon_id);
         
-        $course_id = $request -> course_id;
+        $course_id = $request -> course;
         $course = session('courses') -> find($course_id);
+        Log::debug(__FUNCTION__ . ' course_id:' . $course_id);
 
-        return ('犬種'.$dogType->type);
+        session([
+            'salon' => $salon,
+            'course' => $course,
+        ]);
+
+        $today = date('Y-m-d');
+
+        $beforeDate = Util::addDays($today,-7);
+        $afterDate = Util::addDays($today,7);
+
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+        $step_time = $this -> getSetting(30,'step_time',true);
+
+        $times = [];
+        $timesNum = [];
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+            $timesNum[$str_time] = $time;
+        }
+
+        $days = [];
+        for ($i = $today; $i <= Util::addDays($afterDate,-1); $i = Util::addDays($i, 1)) {
+            $days[$i] = $i;
+        }
+
+        $st_date = $today;
+        $ed_date = Util::addDays($afterDate,-1);
+
+        $allBookings = Booking::all();
+        $allDefaultCapacities = DefaultCapacity::all();
+        $allTempCapacities = TempCapacity::all();
+        $allRegularHoliday = RegularHoliday::all();
+
+        Log::debug(__FUNCTION__ . ' course' . $course_id);
+
+        $capacities =
+            $this->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+
+        return view('nonMember.nonMember_booking_calender',[
+            'salon' => $salon,
+            'dogtype' => $dogType,
+            'before_date' => $beforeDate,
+            'after_date' => $afterDate,
+            'days' => $days,
+            'times' => $times,
+            'timesNum' => $timesNum,
+            'capacities' =>$capacities
+        ]);
         /*
         return view('nonMember.nonMemberSelectcourse',[
             'salons' => $salons,
@@ -115,6 +168,8 @@ class BookingController extends Controller
         
         return view('nonMember.nonMemberBooking1',[
             'dogtype' => $dogType,
+            'before_date' => $beforeDate,
+            'after_date' => $afterDate,
         ]);
         
     }
@@ -661,7 +716,7 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
 
         $booking->save();
-        Log::info('予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+        Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         Mail::to('kim.ksuke@gmail.com')
             ->send(new ContactAdminMail());
 
@@ -730,7 +785,7 @@ class BookingController extends Controller
 
         //定休日の設定を取得
         $regularHolidaysOfTheSalon = $allRegularHolidays->where('salon_id', $salon->id);
-        Log::debug('定休日:' . $regularHolidaysOfTheSalon);
+        Log::debug(__FUNCTION__ . '定休日:' . $regularHolidaysOfTheSalon);
 
         //DBから店舗のデフォルト受け入れ枠データ
         //開店時間から閉店時間まで
@@ -765,10 +820,10 @@ class BookingController extends Controller
                 }
 
                 if ($reWrite) {
-                    Log::debug('$time:' . $time . ' $st_time:' . $st_time . ' $ed_time:' . $ed_time . ' Rewirte:');
+                    Log::debug(__FUNCTION__ . ' $time:' . $time . ' $st_time:' . $st_time . ' $ed_time:' . $ed_time . ' Rewirte:');
                     $capacitiesOfTheDay[$time] = $capacity->capacity;
                 } else {
-                    Log::debug('$time:' . $time . ' $st_time:' . $st_time . ' $ed_time:' . $ed_time . ' No Rewirte:');
+                    Log::debug(__FUNCTION__ . '$time:' . $time . ' $st_time:' . $st_time . ' $ed_time:' . $ed_time . ' No Rewirte:');
                 }
             }
         }
@@ -818,8 +873,8 @@ class BookingController extends Controller
     //開始日から終了日までの予約可能な枠数を取得
     public function getCanBookList($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course)
     {
-        Log::debug('(start) getCanBookList');
-        Log::debug('$course:' . $course->id . ' minute:' . $course->minute);
+        Log::debug(__FUNCTION__ . '(start)');
+        //Log::debug('$course:' . $course->id . ' minute:' . $course->minute);
         $getOtherCapacitiesOfMultiDate
             =  $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         $cut_time = $course->minute;
@@ -838,7 +893,7 @@ class BookingController extends Controller
 
             //前日の閉店時刻を過ぎていたら予約できない。
             $nowTime = date('H') * 60 + date('i');
-            Log::debug('$nowTime:' . $nowTime);
+            Log::debug(__FUNCTION__ . '$nowTime:' . $nowTime);
 
             $deadTimeForBooking = $this-> getSetting(30,'deadTimeForBooking',true);
             if (($date == Util::addDays(date('Y-m-d'), 1)) and ($nowTime + $deadTimeForBooking > $ed_time)) {
@@ -902,7 +957,7 @@ class BookingController extends Controller
             ->where('st_time', '<=', $time)
             ->where('ed_time', '>=', $time)->first();
 
-        Log::debug('salon:' . $salon->salon_name . ' date:' . $date . ' time:' . $time);
+        Log::debug(__FUNCTION__ . ' salon:' . $salon->salon_name . ' date:' . $date . ' time:' . $time);
 
         return $tempCapacities;
     }
@@ -1004,7 +1059,7 @@ class BookingController extends Controller
     {
 
         $setting = Setting::where('setting_name',$setting_name) -> get();
-        Log::debug($setting);
+        Log::debug(__FUNCTION__ . ' setting:' . $setting);
 
         $settingHere = $setting;
         if ($settingHere -> count() == 0) {
