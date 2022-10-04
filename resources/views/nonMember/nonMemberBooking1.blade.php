@@ -14,27 +14,27 @@
 
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">姓</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="owner_last_name" value="{{ old('name') }}">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">名</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="owner_first_name" value="{{ old('name') }}">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">姓（カナ）</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="owner_last_name_kana" value="{{ old('name') }}">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">名(カナ)</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="naowner_first_name_kaname" value="{{ old('name') }}">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">メールアドレス</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="mail" value="{{ old('name') }}">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium mb-2" for="name">電話番号</label>
-                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ old('name') }}">
                 </div>
 
                 <div class="flex px-6 pb-4 border-b">
@@ -72,7 +72,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">名前</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="pet_name" value="{{ old('name') }}">
                     </div>
 
                     <div class="ml-auto">
