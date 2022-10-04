@@ -159,19 +159,6 @@ class BookingController extends Controller
             'timesNum' => $timesNum,
             'capacities' =>$capacities
         ]);
-        /*
-        return view('nonMember.nonMemberSelectcourse',[
-            'salons' => $salons,
-            'courses' => $courses,
-        ]);
-        */
-        
-        return view('nonMember.nonMemberBooking1',[
-            'dogtype' => $dogType,
-            'before_date' => $beforeDate,
-            'after_date' => $afterDate,
-        ]);
-        
     }
 
 
