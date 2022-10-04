@@ -149,6 +149,18 @@ Route::post('/store',
 -> Middleware('auth')
 -> name('booking.store');
 ;
+/*****************************************************************
+*
+*   非会員用メニュー
+*
+******************************************************************/
+
+Route::get('/nonMember',
+[BookingController::class,'startNonUserBooking']
+)
+-> name('booking.selectCalender.salonAndDay');
+;
+
 
 
 /*****************************************************************

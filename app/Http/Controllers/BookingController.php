@@ -45,6 +45,18 @@ class BookingController extends Controller
     }
 
     /**************************************************************
+    *
+    *   非会員用
+    *
+    ***************************************************************/
+
+    public function startNonUserBooking(){
+
+        return view('nonMember.nonMemberBooking1');
+    }
+
+
+    /**************************************************************
      *
      *   ユーザー用
      *
