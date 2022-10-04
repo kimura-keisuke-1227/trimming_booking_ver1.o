@@ -22,15 +22,7 @@ return new class extends Migration
             $table->string('first_name_kana');
             $table->string('email');
             $table->string('phone');
-            $table->foreignId('dogtype_id');
             $table->string('name');
-            $table->date('date');
-            $table->integer('st_time');
-            $table->integer('ed_time');
-            $table->foreignId('course_id');
-            $table->foreignId('salon_id');
-            $table->integer('price');
-            $table->integer('booking_status');
             $table->timestamps();
         });
     }
