@@ -47,7 +47,7 @@
             <th>{{$time}}</th>
             @foreach($days as $day)
                 @if($capacities[$day][$timesNum[$time]] > 0)
-                <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">{{$capacities[$day][$timesNum[$time]]}}</a></td>
+                <td><a href="{{route('nonMember.booking.confirm' , ['date' => $day, 'time' => $timesNum[$time]])}}">{{$capacities[$day][$timesNum[$time]]}}</a></td>
                 @else
                 <td>×</td>
                 @endif

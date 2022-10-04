@@ -172,10 +172,10 @@ Route::post('/nonMember/SelectCalender',
 -> name('nonMember.booking.selectCalender');
 ;
 
-Route::post('/nonMember/confirm/{date}/{time}',
+Route::get('/nonMember/confirm/{date}/{time}',
 [NonMemberBookingController::class,'confirmNonUserBookingSelectCalender']
 )
--> name('nonMember.booking.selectCalender');
+-> name('nonMember.booking.confirm');
 ;
 
 
