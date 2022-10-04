@@ -131,6 +131,8 @@ class NonMemberBookingController extends Controller
             'course' => $course,
         ]);
 
+        $pet_name = session('pet_name');
+
         $today = date('Y-m-d');
         $util = new Util();
 
@@ -165,18 +167,34 @@ class NonMemberBookingController extends Controller
 
         return view('nonMember.nonMember_booking_calender',[
             'salon' => $salon,
-            'dogtype' => $dogType,
+            'dog_type' => $dogType,
             'before_date' => $beforeDate,
             'after_date' => $afterDate,
             'days' => $days,
             'times' => $times,
             'timesNum' => $timesNum,
-            'capacities' =>$capacities
+            'capacities' =>$capacities,
+            'pet_name' =>$pet_name,
+            'course' =>$course,
         ]);
     }
 
     public function confirmNonUserBookingSelectCalender(Request $request, $date, $st_time){
-        return view('nonMember.confirm');
+
+        $dogType =session('dogtype');
+        $salon =session('salon');
+        $pet_name = session('pet_name');
+        $course = session('course');
+        Log::debug(__FUNCTION__ . ' $date:'.$date);
+        $dateStr = Util::dateFormat(strtotime($request -> date));
+
+        return view('nonMember.confirm',[
+            'salon' => $salon,
+            'pet_name' => $pet_name,
+            'course' => $course,
+            'dog_type' => $dogType,
+            'date' => $dateStr,
+        ]);
     }
 
     public function saveNonMemberBooking(Request $request){
