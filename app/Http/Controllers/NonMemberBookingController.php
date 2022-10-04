@@ -76,11 +76,13 @@ class NonMemberBookingController extends Controller
         
         $dogtype = session('dogTypes') -> find($request ->dogtype);
 
-        $owner_last_name = $request ->dogtype;
-        $owner_first_name = $request ->dogtype;
-        $owner_last_name_kana = $request ->dogtype;
-        $owner_first_name_kana = $request ->dogtype;
-        $pet_name = $request ->dogtype;
+        $owner_last_name = $request ->owner_last_name;
+        $owner_first_name = $request ->owner_first_name;
+        $owner_last_name_kana = $request ->owner_last_name_kana;
+        $owner_first_name_kana = $request ->owner_first_name_kana;
+        $mail = $request ->mail;
+        $phone = $request ->phone;
+        $pet_name = $request -> pet_name;
         $salons = Salon::all();
 
         $courses = Course::where('dogtype_id', $dogtype->id) -> get();
@@ -94,7 +96,11 @@ class NonMemberBookingController extends Controller
             'pet_name' => $pet_name,
             'courses' => $courses,
             'salons' => $salons,
+            'mail' => $mail,
+            'phone' => $phone,
         ]);
+
+        Log::debug(__FUNCTION__ . session('phone'));
 
         return view('nonMember.nonMemberSelectcourse',[
             'salons' => $salons,
@@ -126,6 +132,7 @@ class NonMemberBookingController extends Controller
         ]);
 
         $today = date('Y-m-d');
+        $util = new Util();
 
         $beforeDate = Util::addDays($today,-7);
         $afterDate = Util::addDays($today,7);
@@ -134,18 +141,12 @@ class NonMemberBookingController extends Controller
         $ed_time = $salon->ed_time;
         $step_time = Util::getSetting(30,'step_time',true);
 
-        $times = [];
-        $timesNum = [];
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
+        $st_date = $today;
+        $ed_date = Util::addDays($afterDate,-1);
 
-        $days = [];
-        for ($i = $today; $i <= Util::addDays($afterDate,-1); $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
+        $days = $util -> getDaysList($st_date,$ed_date);
 
         $st_date = $today;
         $ed_date = Util::addDays($afterDate,-1);
