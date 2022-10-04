@@ -174,6 +174,10 @@ class NonMemberBookingController extends Controller
         ]);
     }
 
+    public function confirmNonUserBookingSelectCalender(Request $request, $date, $st_time){
+        return 'hoge';
+    }
+
     public function saveNonMemberBooking(Request $request){
         Log::debug(__FUNCTION__ . ' 登録なしの予約');
         return '予約する';
