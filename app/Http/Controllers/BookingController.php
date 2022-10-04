@@ -161,6 +161,11 @@ class BookingController extends Controller
         ]);
     }
 
+    public function saveNonMemberBooking(Request $request){
+        Log::debug(__FUNCTION__ . ' 登録なしの予約');
+        return '予約する';
+    }
+
 
     /**************************************************************
      *
