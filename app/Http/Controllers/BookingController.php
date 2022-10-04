@@ -17,6 +17,7 @@ use App\classes\Util;
 use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
+use App\Models\Dogtype;
 
 class BookingController extends Controller
 {
@@ -51,8 +52,10 @@ class BookingController extends Controller
     ***************************************************************/
 
     public function startNonUserBooking(){
-
-        return view('nonMember.nonMemberBooking1');
+        $dogTypes = Dogtype::all();
+        return view('nonMember.nonMemberBooking1',[
+            'dogtypes' => $dogTypes,
+        ]);
     }
 
 

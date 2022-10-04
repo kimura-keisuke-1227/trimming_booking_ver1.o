@@ -9,7 +9,36 @@
             <form action="{{Route('pets.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
-                    <h3 class="text-xl font-bold">ペット登録</h3>
+                    <h3 class="text-xl font-bold">飼い主様情報</h3>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">姓</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">名</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">姓（カナ）</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">名(カナ)</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">メールアドレス</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="name">電話番号</label>
+                    <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                </div>
+
+                <div class="flex px-6 pb-4 border-b">
+                    <h3 class="text-xl font-bold">ペット情報</h3>
                 </div>
 
                 <div class="pt-4 px-6">
@@ -46,13 +75,8 @@
                         <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
                     </div>
 
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">誕生日</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="birthday" value="{{ old('birthday') }}">
-                    </div>
-
                     <div class="ml-auto">
-                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
+                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">コースの選択へ</button>
                     </div>
                 </div>
             </form>
