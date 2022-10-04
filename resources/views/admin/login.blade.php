@@ -88,7 +88,8 @@
               <button type="submit" class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded">ログイン</button>
             </form>
           </div>
-          <a href="/register">新規登録</a>
+          <a href="{{ route('admin.users.create')}}">新規登録</a>
+          <a href="{{ route('nonMember.beginBooking')}}">登録なしに予約する方はこちら</a>
         </div>
       </div>
     </section>
