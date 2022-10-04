@@ -51,9 +51,9 @@
             @if($booking -> pet_id !== 0)
             <td>{{$booking -> pet -> user -> getUserInfo()}}</td>
             <td>{{$booking -> pet -> getData()}}</td>
-            @else            
-            <td>{{$booking -> nonMemberBooking -> where('booking_id', $booking ->id) -> first()}}</td>
-            <td></td>
+            @else   
+            <td>{{$booking -> getNonMemberOwner() }}</td>
+            <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
         </tr>
@@ -74,8 +74,14 @@
                             @if($booking->st_time == $timesNums[$time])
                                 @if($booking -> pet_id !== 0)
                                 <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
-                                @else
-                                <td class="bg_color{{$course->id}}"></td>
+                                @else        
+                                <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
+                                @endif
+                            @elseif($booking->st_time == $timesNums[$time]-30)
+                                @if($booking -> pet_id !== 0)
+                                <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
+                                @else        
+                                <td class="bg_color{{$course->id}}">{{$booking -> getDogTypeAndCourse() }}</td>
                                 @endif
                             @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
                                 <td class="bg_color{{$course->id}}">↓</td>

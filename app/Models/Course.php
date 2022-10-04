@@ -12,7 +12,7 @@ class Course extends Model
     public function courseMaster(){
         return $this -> belongsTo('App\Models\CourseMaster');
     }
-    public function dogType(){
+    public function dogtype(){
         return $this -> belongsTo('App\Models\Dogtype');
     }
 

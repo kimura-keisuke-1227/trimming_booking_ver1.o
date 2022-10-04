@@ -12,4 +12,16 @@ class NonMemberBooking extends Model
     public function booking(){
         return $this -> belongsTo('App\Models\Booking');
     }
+
+    public function dogtype(){
+        return $this -> belongsTo('App\Models\Dogtype');
+    }
+
+    public function getBookingInfo(){
+        return 'hoge';
+    }
+
+    private function getBooking(){
+        return $this-> where('booking_id', 1) -> first();
+    }
 }
