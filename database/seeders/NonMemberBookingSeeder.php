@@ -25,7 +25,7 @@ class NonMemberBookingSeeder extends Seeder
             'phone' => '022-222-2222',
             'name' => '非会員の犬',
         ];
-        DB::table('non_member_booking') -> insert($param);
+        DB::table('non_member_bookings') -> insert($param);
 
         $param =[
             'booking_id' => 2,
@@ -37,6 +37,6 @@ class NonMemberBookingSeeder extends Seeder
             'phone' => '022-222-2222',
             'name' => '非会員の犬',
         ];
-        DB::table('non_member_booking') -> insert($param);
+        DB::table('non_member_bookings') -> insert($param);
     }
 }
