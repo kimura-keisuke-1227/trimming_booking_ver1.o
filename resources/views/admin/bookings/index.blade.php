@@ -48,8 +48,13 @@
             <td>{{$booking -> date}}</td>
             <td>{{$booking -> getStartTime()}}</td>
             <td>{{$booking -> getEndTime()}}</td>
+            @if($booking -> pet_id !== 0)
             <td>{{$booking -> pet -> user -> getUserInfo()}}</td>
             <td>{{$booking -> pet -> getData()}}</td>
+            @else            
+            <td>{{$booking -> nonMemberBooking -> id}}</td>
+            <td></td>
+            @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
         </tr>
         @endforeach
@@ -67,7 +72,11 @@
                     @foreach($bookings as $booking)
                         @if($course->id == $booking->course->courseMaster->id)
                             @if($booking->st_time == $timesNums[$time])
+                                @if($booking -> pet_id !== 0)
                                 <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
+                                @else
+                                <td class="bg_color{{$course->id}}"></td>
+                                @endif
                             @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
                                 <td class="bg_color{{$course->id}}">↓</td>
                             @else
