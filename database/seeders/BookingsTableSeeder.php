@@ -17,7 +17,33 @@ class BookingsTableSeeder extends Seeder
     {
         
         $param = [
-            'date' => '2022-9-21' ,
+            'id' => 1,
+            'date' => '2022-10-10' ,
+            'st_time' =>  600,
+            'ed_time' =>  720,
+            'pet_id' => 0 ,
+            'course_id' => 2 ,
+            'salon_id' => 2,
+            'price' => 3000 ,
+            'booking_status' => 1 ,
+        ];
+        DB::table('bookings') -> insert($param);
+
+        $param = [
+            'id' => 2,
+            'date' => '2022-10-10' ,
+            'st_time' =>  600,
+            'ed_time' =>  750,
+            'pet_id' => 0 ,
+            'course_id' => 2 ,
+            'salon_id' => 2,
+            'price' => 3000 ,
+            'booking_status' => 1 ,
+        ];
+        DB::table('bookings') -> insert($param);
+
+        $param = [
+            'date' => '2022-10-05' ,
             'st_time' =>  600,
             'ed_time' =>  720,
             'pet_id' => 1 ,
@@ -29,7 +55,7 @@ class BookingsTableSeeder extends Seeder
         DB::table('bookings') -> insert($param);
 
         $param = [
-            'date' => '2022-9-21' ,
+            'date' => '2022-10-05' ,
             'st_time' =>  600,
             'ed_time' =>  750,
             'pet_id' => 2 ,
@@ -39,6 +65,5 @@ class BookingsTableSeeder extends Seeder
             'booking_status' => 1 ,
         ];
         DB::table('bookings') -> insert($param);
-
     }
 }
