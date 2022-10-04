@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class NonMemberBooking extends Model
 {
     use HasFactory;
+
+    public function booking(){
+        return $this -> belongsTo('App\Models\Booking');
+    }
 }

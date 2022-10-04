@@ -21,6 +21,10 @@ class Booking extends Model
         return $this -> belongsTo('App\Models\Salon');
     }
 
+    public function nonMemberBooking(){
+        return $this -> hasMany('App\Models\NonMemberBooking');
+    }
+
     public function getBookingDate(){
         return date('M月d日',$this->date);
     }
