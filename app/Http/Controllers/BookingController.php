@@ -658,6 +658,8 @@ class BookingController extends Controller
      *   内部関数
      *
      ***************************************************************/
+
+    /* 
     //店舗の1日の枠数を取得
     public function getCapacityFromDay($allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $date, $salon, $step_time)
     {
@@ -941,5 +943,5 @@ class BookingController extends Controller
         }
         return $bookingCountsOfMultiDaysFromStartDateToEndDate;
     }
-
+    */
 }
