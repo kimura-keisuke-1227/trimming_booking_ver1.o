@@ -104,7 +104,7 @@ class BookingController extends Controller
     //コースを選択する
     public function selectCourse(Request $request)
     {
-        Log::debug('(function:selectCourse)');
+        Log::debug(__FUNCTION__ . '(function:selectCourse)');
         $owner = Auth::user();
         $pets = session('pets');
         $pet_id = $request->pet;
@@ -141,23 +141,17 @@ class BookingController extends Controller
 
         $step_time = Util::getSetting(30,'step_time',true);
 
+        $util = new Util();
 
         //初期値は本日より1週間分のデータを取得
         $st_date = date('Y-m-d');
-        $ed_date =  Util::addDays($st_date, 6);
+        $ed_date =  $util -> addDays($st_date, 6);
+        
 
-        $times = [];
-        $timesNum = [];
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
 
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
+        $days = $util -> getDaysList($st_date,$ed_date);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
@@ -168,7 +162,6 @@ class BookingController extends Controller
         
         $capacities =
             $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
-        #Log::debug($capacities);
 
         session([
             'course' => $course,
@@ -214,29 +207,6 @@ class BookingController extends Controller
             'timeStr' => $timeStr,
         ]);
     }
-
-    //予約の最終確認
-    /*
-    public function confirm(Request $request)
-    {
-        $owner = Auth::user();
-        $pet =  session('pet');
-        $course =  session('course');
-        $date = $request->date;
-        $time = $request->time;
-        session([
-            'date' => $date,
-            'time' => $time,
-        ]);
-        return view('bookings.confirm', [
-            'owner' => $owner,
-            'pet' => $pet,
-            'course' => $course,
-            'date' => $date,
-            'time' => $time,
-        ]);
-    }
-    */
 
     //削除する予約の確認画面
     public function deleteConfirm($bookingID)
@@ -325,14 +295,10 @@ class BookingController extends Controller
         $ed_time = $salon->ed_time;
         $step_time = Util::getSetting(30,'step_time',true);
 
-        $times = [];
-        $timesNums = [];
+        $util = new Util();
 
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNums[$str_time] = $time;
-        }
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
 
         return view('admin.bookings.index', [
             'bookings' => $bookings,
@@ -340,7 +306,7 @@ class BookingController extends Controller
             'selectedSalon' => $salon,
             'salons' => $salons,
             'times' => $times,
-            'timesNums' => $timesNums,
+            'timesNums' => $timesNum,
             'courses' => $courses,
         ]);
     }
@@ -421,22 +387,12 @@ class BookingController extends Controller
         $allRegularHolidays = RegularHoliday::all();
         $allTempCapacities = TempCapacity::all();
 
-        $times = [];
-        $timesNum = [];
+        $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
-
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
-
-        //日付を開始日から終了日まで1日ずつ格納
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
+        $days = $util -> getDaysList($st_date,$ed_date);
 
         $bookingsCalc = new BookingsCalc();
         
@@ -470,22 +426,12 @@ class BookingController extends Controller
         $allTempCapacities = TempCapacity::all();
         $allRegularHolidays = RegularHoliday::all();
 
-        $times = [];
-        $timesNum = [];
+        $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
-
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
-
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
-
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
+        $days = $util -> getDaysList($st_date,$ed_date);
 
         $capacities =
             $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
@@ -518,18 +464,12 @@ class BookingController extends Controller
         //指定日より1週間分のデータを取得
         $ed_date =  Util::addDays($st_date, 6);
 
-        $times = [];
-        $timesNum = [];
-        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $str_time = Util::minuteToTime($time);
-            $times[$time] = $str_time;
-            $timesNum[$str_time] = $time;
-        }
-
-        $days = [];
-        for ($i = $st_date; $i <= $ed_date; $i = Util::addDays($i, 1)) {
-            $days[$i] = $i;
-        }
+        $util = new Util();
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+        $times = $util->getTimes($st_time,$ed_time,$step_time);
+        $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
+        $days = $util -> getDaysList($st_date,$ed_date);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
