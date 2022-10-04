@@ -131,7 +131,7 @@ class NonMemberBookingController extends Controller
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
         $times = [];
         $timesNum = [];

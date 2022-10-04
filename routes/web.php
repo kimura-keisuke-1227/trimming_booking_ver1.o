@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TempCapacityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\SettingController;
-use App\Models\TempCapacity;
+use App\Http\Controllers\NonMemberBookingController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;

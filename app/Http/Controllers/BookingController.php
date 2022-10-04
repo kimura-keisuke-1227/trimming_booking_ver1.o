@@ -66,7 +66,7 @@ class BookingController extends Controller
         //BookingController::bookingCheck();
 
         $owner = Auth::user();
-        $showBookingsAfterNDays = $this -> getSetting(30,'showBookingsAfterNDays',true);
+        $showBookingsAfterNDays = Util::getSetting(30,'showBookingsAfterNDays',true);
 
         $bookings = Booking::with('pet.user')
         ->with('course.coursemaster')
@@ -137,7 +137,7 @@ class BookingController extends Controller
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
 
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
 
         //初期値は本日より1週間分のデータを取得
@@ -319,7 +319,7 @@ class BookingController extends Controller
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
         $times = [];
         $timesNums = [];
@@ -410,7 +410,7 @@ class BookingController extends Controller
 
 
         $ed_date = Util::addDays($st_date, 7);
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
@@ -457,7 +457,7 @@ class BookingController extends Controller
         $salon = $salons->find($request->salon);
 
         $ed_date = Util::addDays($st_date, 7);
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
@@ -507,7 +507,7 @@ class BookingController extends Controller
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
 
-        $step_time = $this -> getSetting(30,'step_time',true);
+        $step_time = Util::getSetting(30,'step_time',true);
 
         //指定日より1週間分のデータを取得
         $ed_date =  Util::addDays($st_date, 6);
@@ -774,7 +774,7 @@ class BookingController extends Controller
             $nowTime = date('H') * 60 + date('i');
             Log::debug(__FUNCTION__ . '$nowTime:' . $nowTime);
 
-            $deadTimeForBooking = $this-> getSetting(30,'deadTimeForBooking',true);
+            $deadTimeForBooking = Util::getSetting(30,'deadTimeForBooking',true);
             if (($date == Util::addDays(date('Y-m-d'), 1)) and ($nowTime + $deadTimeForBooking > $ed_time)) {
                 $isTimeOver = true;
             }
@@ -787,7 +787,7 @@ class BookingController extends Controller
                 continue;
             }
 
-            $untilTheDayAhead = $this -> getSetting(30,'untilTheDayAhead',true);
+            $untilTheDayAhead = Util::getSetting(30,'untilTheDayAhead',true);
 
             if ($date >= Util::addDays(date('Y-m-d'), $untilTheDayAhead)) {
                 for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
@@ -934,21 +934,4 @@ class BookingController extends Controller
         return $bookingCountsOfMultiDaysFromStartDateToEndDate;
     }
 
-    private function getSetting($default, $setting_name, $isInt)
-    {
-
-        $setting = Setting::where('setting_name',$setting_name) -> get();
-        Log::debug(__FUNCTION__ . ' setting:' . $setting);
-
-        $settingHere = $setting;
-        if ($settingHere -> count() == 0) {
-            return $default;
-        }
-
-        if ($isInt) {
-            return $settingHere->first() ->setting_int;
-        } else {
-            return $settingHere->first() ->setting_string;
-        }
-    }
 }
