@@ -160,7 +160,7 @@ Route::get('/nonMember',
 -> name('nonMember.beginBooking');
 ;
 
-Route::post('/nonMember',
+Route::post('/nonMember/selectCourse',
 [NonMemberBookingController::class,'startNonUserBookingEntry']
 )
 -> name('nonMember.beginBookingEntry');
@@ -168,6 +168,12 @@ Route::post('/nonMember',
 
 Route::post('/nonMember/SelectCalender',
 [NonMemberBookingController::class,'startNonUserBookingSelectCalender']
+)
+-> name('nonMember.booking.selectCalender');
+;
+
+Route::post('/nonMember/confirm/{date}/{time}',
+[NonMemberBookingController::class,'confirmNonUserBookingSelectCalender']
 )
 -> name('nonMember.booking.selectCalender');
 ;
