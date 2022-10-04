@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
+use App\classes\BookingsCalc;
 use App\Models\Course;
 use App\Models\Salon;
 use App\Models\DefaultCapacity;
@@ -156,8 +157,10 @@ class NonMemberBookingController extends Controller
 
         Log::debug(__FUNCTION__ . ' course' . $course_id);
 
+        $bookingsCalc = new BookingsCalc();
+
         $capacities =
-            BookingController::getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+            $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
 
         return view('nonMember.nonMember_booking_calender',[
             'salon' => $salon,

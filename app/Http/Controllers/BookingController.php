@@ -17,6 +17,8 @@ use App\classes\Util;
 use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
+use App\classes\BookingsCalc;
+
 //use App\Models\Dogtype;
 
 class BookingController extends Controller
@@ -162,8 +164,10 @@ class BookingController extends Controller
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
 
+        $bookingsCalc = new BookingsCalc();
+        
         $capacities =
-            $this->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+            $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
         #Log::debug($capacities);
 
         session([
@@ -434,8 +438,10 @@ class BookingController extends Controller
             $days[$i] = $i;
         }
 
+        $bookingsCalc = new BookingsCalc();
+        
         $capacities =
-            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+            $bookingsCalc->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         #Log::debug($capacities);
 
         return view('admin.bookings.acceptCount', [
@@ -530,8 +536,10 @@ class BookingController extends Controller
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
 
+        $bookingsCalc = new BookingsCalc();
+
         $capacities =
-            $this->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+            $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
         #Log::debug($capacities);
 
         session([

@@ -12,6 +12,7 @@ class BookingsCalc
         return $dateBookings;
      }
 
+     
      public function getCanBookList($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course)
      {
          Log::debug(__FUNCTION__ . '(start)');
@@ -88,7 +89,7 @@ class BookingsCalc
          return $canBookTimeListOfMultiDay;
      }
 
-     private function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date)
+     public function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date)
      {
          $getOtherCapacitiesOfMultiDate = [];
  
