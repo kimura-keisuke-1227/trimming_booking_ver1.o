@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('non_member_booking', function (Blueprint $table) {
+        Schema::create('non_member_bookings', function (Blueprint $table) {
             $table->id();
             $table->integer('booking_id');
             $table->string('last_name');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('non_member_booking');
+        Schema::dropIfExists('non_member_bookings');
     }
 };
