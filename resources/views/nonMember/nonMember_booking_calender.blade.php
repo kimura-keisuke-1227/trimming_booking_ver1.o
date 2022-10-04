@@ -5,10 +5,6 @@
 
 @section('content')
 <div class="container">
-    <p>こんにちは、{{$owner -> getFullName()}}さん</p>
-    <p>{{$pet -> getData()}}</p>
-    <p>{{$course -> getCourseInfo()}}</p>
-    <p>{{$salon -> salon_name}}</p>
 
     <br>
     <br>
@@ -50,7 +46,6 @@
         <tr>
             <th>{{$time}}</th>
             @foreach($days as $day)
-                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
                 @if($capacities[$day][$timesNum[$time]] > 0)
                 <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">{{$capacities[$day][$timesNum[$time]]}}</a></td>
                 @else
