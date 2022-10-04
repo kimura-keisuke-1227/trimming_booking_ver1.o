@@ -55,7 +55,7 @@ class Booking extends Model
     }
 
     public function getBookingCourseAndDogTypeInfoForStaff(){
-        return 
+        return '    '.
         $this->pet->dogtype -> type .
         '('.
         $this-> course -> courseMaster -> course .
