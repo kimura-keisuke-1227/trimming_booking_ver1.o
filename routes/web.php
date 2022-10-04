@@ -156,19 +156,19 @@ Route::post('/store',
 ******************************************************************/
 
 Route::get('/nonMember',
-[BookingController::class,'startNonUserBooking']
+[NonMemberBookingController::class,'startNonUserBooking']
 )
 -> name('nonMember.beginBooking');
 ;
 
 Route::post('/nonMember',
-[BookingController::class,'startNonUserBookingEntry']
+[NonMemberBookingController::class,'startNonUserBookingEntry']
 )
 -> name('nonMember.beginBookingEntry');
 ;
 
 Route::post('/nonMember/SelectCalender',
-[BookingController::class,'startNonUserBookingSelectCalender']
+[NonMemberBookingController::class,'startNonUserBookingSelectCalender']
 )
 -> name('nonMember.booking.selectCalender');
 ;
