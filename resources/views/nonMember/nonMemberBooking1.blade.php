@@ -1,12 +1,12 @@
 @extends('layouts.user')
 
-@section('title' , 'ペット登録')
+@section('title' , '予約者情報登録')
 
 @section('content')
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('pets.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{Route('nonMember.beginBookingEntry')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">飼い主様情報</h3>

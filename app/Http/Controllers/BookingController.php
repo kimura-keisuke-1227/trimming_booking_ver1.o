@@ -53,9 +53,70 @@ class BookingController extends Controller
 
     public function startNonUserBooking(){
         $dogTypes = Dogtype::all();
+        session([
+            'dogTypes' => $dogTypes
+        ]);
         return view('nonMember.nonMemberBooking1',[
             'dogtypes' => $dogTypes,
         ]);
+    }
+
+    public function startNonUserBookingEntry(Request $request){
+        
+        $dogtype = session('dogTypes') -> find($request ->dogtype);
+
+        $owner_last_name = $request ->dogtype;
+        $owner_first_name = $request ->dogtype;
+        $owner_last_name_kana = $request ->dogtype;
+        $owner_first_name_kana = $request ->dogtype;
+        $pet_name = $request ->dogtype;
+        $salons = Salon::all();
+
+        $courses = Course::where('dogtype_id', $dogtype->id) -> get();
+        
+        session([
+            'dogtype' => $dogtype,
+            'owner_last_name' => $owner_last_name,
+            'owner_first_name' => $owner_first_name,
+            'owner_last_name_kana' => $owner_last_name_kana,
+            'owner_first_name_kana' => $owner_first_name_kana,
+            'pet_name' => $pet_name,
+            'courses' => $courses,
+        ]);
+
+        return view('nonMember.nonMemberSelectcourse',[
+            'salons' => $salons,
+            'courses' => $courses,
+            '$dogType' => $dogtype,
+        ]);
+
+        /*
+        return view('nonMember.nonMemberBooking1',[
+            'dogtypes' => $dogTypes,
+        ]);
+        */
+    }
+
+    public function startNonUserBookingSelectCalender(Request $request){
+        
+        $dogType =session('dogtype');
+        $salons = Salon::all();
+        
+        $course_id = $request -> course_id;
+        $course = session('courses') -> find($course_id);
+
+        return ('犬種'.$dogType->type);
+        /*
+        return view('nonMember.nonMemberSelectcourse',[
+            'salons' => $salons,
+            'courses' => $courses,
+        ]);
+        */
+        
+        return view('nonMember.nonMemberBooking1',[
+            'dogtype' => $dogType,
+        ]);
+        
     }
 
 

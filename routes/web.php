@@ -158,9 +158,20 @@ Route::post('/store',
 Route::get('/nonMember',
 [BookingController::class,'startNonUserBooking']
 )
--> name('booking.selectCalender.salonAndDay');
+-> name('nonMember.beginBooking');
 ;
 
+Route::post('/nonMember',
+[BookingController::class,'startNonUserBookingEntry']
+)
+-> name('nonMember.beginBookingEntry');
+;
+
+Route::post('/nonMember/SelectCalender',
+[BookingController::class,'startNonUserBookingSelectCalender']
+)
+-> name('nonMember.booking.selectCalender');
+;
 
 
 /*****************************************************************
