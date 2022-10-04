@@ -175,7 +175,7 @@ class NonMemberBookingController extends Controller
     }
 
     public function confirmNonUserBookingSelectCalender(Request $request, $date, $st_time){
-        return 'hoge';
+        return view('nonMember.confirm');
     }
 
     public function saveNonMemberBooking(Request $request){
