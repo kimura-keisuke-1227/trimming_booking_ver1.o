@@ -52,7 +52,7 @@
             <td>{{$booking -> pet -> user -> getUserInfo()}}</td>
             <td>{{$booking -> pet -> getData()}}</td>
             @else            
-            <td>{{$booking -> nonMemberBooking -> id}}</td>
+            <td>{{$booking -> nonMemberBooking -> where('booking_id', $booking ->id) -> first()}}</td>
             <td></td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
