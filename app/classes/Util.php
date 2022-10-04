@@ -43,4 +43,31 @@ class Util
             return $settingHere->first() ->setting_string;
         }
     }
+
+    public function getDaysList($st_date,$ed_date){
+        $days = [];
+        for ($i = $st_date; $i <= $ed_date; $i = $this -> addDays($i, 1)) {
+            $days[$i] = $i;
+        }
+
+        return $days;
+    }
+
+    public function getTimes($st_time,$ed_time,$step_time){
+        $times = [];
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+        }
+        return $times;
+    }
+    public function getTimesNum($st_time,$ed_time,$step_time){
+        $timesNum = [];
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+            $timesNum[$str_time] = $time;
+        }
+        return $timesNum;
+    }
 }
