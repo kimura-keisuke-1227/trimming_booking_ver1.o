@@ -250,9 +250,10 @@ class BookingController extends Controller
 
         $bookings = $bookings
             ->sortBy(['salon_id'], ['date'], ['st_time']);
-
+        $step_time = Util::getSetting(30,'step_time',true);
         return view('admin.bookings.index', [
             'bookings' => $bookings,
+            'step_time' => $step_time,
         ]);
     }
 
@@ -299,6 +300,7 @@ class BookingController extends Controller
             'times' => $times,
             'timesNums' => $timesNum,
             'courses' => $courses,
+            'step_time' => $step_time,
         ]);
     }
 

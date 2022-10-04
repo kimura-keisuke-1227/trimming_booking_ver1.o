@@ -77,7 +77,7 @@
                                 @else        
                                 <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
                                 @endif
-                            @elseif($booking->st_time == $timesNums[$time]-$stem_time)
+                            @elseif($booking->st_time == $timesNums[$time]-$step_time)
                                 @if($booking -> pet_id !== 0)
                                 <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
                                 @else        
