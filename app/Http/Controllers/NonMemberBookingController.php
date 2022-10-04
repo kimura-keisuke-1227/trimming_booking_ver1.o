@@ -157,7 +157,7 @@ class NonMemberBookingController extends Controller
         Log::debug(__FUNCTION__ . ' course' . $course_id);
 
         $capacities =
-            $this->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+            BookingController::getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
 
         return view('nonMember.nonMember_booking_calender',[
             'salon' => $salon,
