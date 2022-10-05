@@ -185,8 +185,9 @@ class NonMemberBookingController extends Controller
         $salon =session('salon');
         $pet_name = session('pet_name');
         $course = session('course');
-        Log::debug(__FUNCTION__ . ' $date:'.$date);
-        $dateStr = Util::dateFormat(strtotime($request -> date));
+        $date = $request->date;
+        $dateStr = Util::dateFormat($date);
+        $timeStr = Util::minuteToTime($st_time);
 
         return view('nonMember.confirm',[
             'salon' => $salon,
@@ -194,6 +195,7 @@ class NonMemberBookingController extends Controller
             'course' => $course,
             'dog_type' => $dogType,
             'date' => $dateStr,
+            'time' => $timeStr,
         ]);
     }
 
