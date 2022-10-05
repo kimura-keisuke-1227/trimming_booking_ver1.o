@@ -17,7 +17,7 @@ use App\classes\Util;
 use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
-use app\classes\BookingsCalc;
+use App\classes\BookingsCalc;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
