@@ -51,7 +51,9 @@ class TempCapacityController extends Controller
         $st_date = $request -> st_date;
         $st_hour = $request -> st_hour;
         $st_minute = $request -> st_time;
-        $ed_date = $request -> ed_date;
+        //将来的には終了日も指定できるように
+        //$ed_date = $request -> ed_date;
+        $ed_date = $st_date;
         $ed_hour = $request -> ed_hour;
         $ed_minute = $request -> ed_minute;
         $capacity = $request -> capacity;

@@ -19,24 +19,21 @@
                 </td>
             </tr>
             <tr>
-                <th>開始日付</th>
-                <td><input type="date" name="st_date"></td>
+                <th>日付</th>
+                <td><input type="date" name="st_date" value="{{date('Y-m-d')}}"></td>
             </tr>
             <tr>
                 <th>開始時間</th>
                 <td><input type="number" name="ed_hour" value="10">時<input type="number" name="ed_minute" value="0">分</td>
             </tr>
-            <tr>
-                <th>終了日付</th>
-                <td><input type="date" name="ed_date"></td>
-            </tr>
+
             <tr>
                 <th>終了時間</th>
                 <td><input type="number" name="ed_hour" value="20">時<input type="number" name="ed_minute" value=0>分</td>
             </tr>
             <tr>
                 <th>枠数</th>
-                <td><input type="number" name="capacity"></td>
+                <td><input type="number" name="capacity" value=0></td>
             </tr>
         </table>
         <input type="submit" value="登録">
