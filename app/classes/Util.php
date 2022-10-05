@@ -12,7 +12,7 @@ class Util
         return $hour . '時' . $minute . '分';
     }
 
-    public static function imeToMinute($hour,$minute){
+    public static function timeToMinute($hour,$minute){
         return $hour * 60 + $minute;
     }
 
@@ -22,8 +22,20 @@ class Util
         return date('Y-m-d',strtotime($time,strtotime($baseDay)));
     }
     
+    /*
     public static function dateFormat($date){
-        return $date('m') . '月' . $date('d') . '日';
+        Log::debug(__FUNCTION__ . ' $date(m):' );
+        Log::debug(__FUNCTION__ . ' $date(d):' );
+        return '';
+        return str($date('m')) . '月' . str($date('d')) . '日';
+    }
+    */
+
+    public static function dateFormat($date){
+        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+        $dateStr = date('m/d',strtotime($date)) .'('. $week[ date('w',strtotime($date))] . ')';
+
+        return $dateStr;
     }
     
     public static function getSetting($default, $setting_name, $isInt)
