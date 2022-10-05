@@ -7,7 +7,7 @@
     <p>{{$salon -> salon_name}}</p>
      <p>{{$pet_name . '[' . $dog_type -> type . ']'}} </p>
      <p>{{$course -> getCourseInfo()}}</p>
-     <p>{{$date}}</p>
+     <p>{{$date . ' ' . $time}}</p>
     {{--
         <p>{{$owner -> getFullName()}}様</p>
         <p>{{$pet -> getData()}}</p>
