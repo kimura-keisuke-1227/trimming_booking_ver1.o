@@ -54,7 +54,7 @@
         @endforeach
     </table>
  
-    <a href="/new_booking">新規予約へ</a>
+    <a href="{{Route('admin.makebooking')}}">新規予約へ</a>
 </div>
 
 @endsection
