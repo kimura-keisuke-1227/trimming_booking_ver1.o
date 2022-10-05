@@ -9,6 +9,7 @@ use App\Models\User;
 Use App\Models\UserToken;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
+use app\classes\Util;
 
 class UserResetPasswordMail extends Mailable
 {
@@ -44,8 +45,9 @@ class UserResetPasswordMail extends Mailable
 
         // 48時間後を期限とした署名付きURLを生成
         $url = URL::temporarySignedRoute('password_reset.edit', $now->addHours(48), $tokenParam);
-
-        return $this->from('kim.ksuke@gmail.com', '送信元の名前')
+        $mailAddressFromSalon = Util::getSetting('test@gmail.com','mailFromSalon',false);
+        $mailSenderName = Util::getSetting('管理者','mailSenderName',false);
+        return $this->from($mailAddressFromSalon, $mailSenderName)
             ->to($this->user->email)
             ->subject('パスワードをリセットする')
             ->view('mails.password_reset_mail')
