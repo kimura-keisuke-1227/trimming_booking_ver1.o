@@ -21,19 +21,21 @@ class NonMemberBookingController extends Controller
 {
     //
     public function store(Request $request){
-        Log::info(__FUNCTION__ );
+        Log::info(__FUNCTION__ . 'start');
 
         //予約　pet_id = 0 とする　→ pet_id=0ならば登録なしと判定する
+        
         $booking = new Booking();
-
+        
         $date = $request->date;
         $st_hour = $request->st_hour;
         $st_minute = $request->st_minute;
         $ed_hour = $request->ed_hour;
         $ed_minute = $request->ed_minute;
-        $pet_id = $request->pet;
+        $pet_id = 0;
         $course_id = $request->course;
-        $price =  $request->price;
+        $course = session('course') -> find($course_id);
+        $price =  $course -> price;
         $salon_id = $request->salon;
         $booking_status = 1;
 
@@ -49,17 +51,21 @@ class NonMemberBookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
 
-        $booking -> save();
+        Log::debug(__FUNCTION__ . $booking);
+
+        #$booking -> save();
         Log::info(__FUNCTION__ . 'Booking is saved for non member booking!');
 
         $booking_id = $booking ->id;
         //非会員の予約を登録
-        $nonMemberBooking = new NonMemberBooking();
+        #$nonMemberBooking = new NonMemberBooking();
 
-        $nonMemberBooking -> save();
+        #$nonMemberBooking -> save();
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Log::info(__FUNCTION__ . 'session delete for non member booking!');
+
+        return '予約完了・';
     }
 
     public function startNonUserBooking(){
