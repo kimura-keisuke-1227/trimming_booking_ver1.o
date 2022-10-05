@@ -240,6 +240,11 @@ class BookingController extends Controller
      *
      ***************************************************************/
 
+    public function adminDeleteBooking(){
+
+        return __FUNCTION__;
+    }
+
     public function getTodayAllBookings()
     {
         $bookings = Booking::orderBy('salon_id')
