@@ -32,7 +32,7 @@
 
     <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $before_date])}}">前週へ</a>
     <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $after_date])}}">次週へ</a>
-    <table class="table table-striped">
+    <table class="table table-striped pc_only">
         <tr>
             <th>日付</th>
             @foreach($days as $day)
@@ -40,6 +40,39 @@
                 @php
                     $week = array( "日", "月", "火", "水", "木", "金", "土" );
                     $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                    echo $dateStr; 
+                @endphp
+            </th>
+            @endforeach
+        </tr>
+        
+        @foreach($times as $time)
+        <tr>
+            <th>{{$time}}</th>
+            @foreach($days as $day)
+                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
+                @if($capacities[$day][$timesNum[$time]] > 0)
+                <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">{{$capacities[$day][$timesNum[$time]]}}</a></td>
+                @else
+                <td>×</td>
+                @endif
+            @endforeach
+        </tr>
+        @endforeach
+    </table>
+    <table class="table table-striped sp_only">
+        <tr>
+            <th>日付</th>
+            @foreach($days as $day)
+            <th>
+                @php
+                    $dateStr = date('d',strtotime($day));
+                    echo $dateStr; 
+                @endphp
+                <br>
+                @php
+                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                    $dateStr ='('. $week[ date('w',strtotime($day))] . ')';
                     echo $dateStr; 
                 @endphp
             </th>
