@@ -10,9 +10,10 @@
         <form method="POST" action="{{ route('password_reset.update') }}">
             @csrf
             <input type="hidden" name="reset_token" value="{{ $userToken->token }}">
-            <div class="input-group">
-                <label for="password" class="label">パスワード</label>
-                <input type="password" name="password" class="input {{ $errors->has('password') ? 'incorrect' : '' }}">
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="password">パスワード</label>
+                <input id="password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded input {{ $errors->has('password') ? 'incorrect' : '' }}" type="password" name="password">
                 @error('password')
                     <div class="error">{{ $message }}</div>
                 @enderror
@@ -20,11 +21,14 @@
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="input-group">
-                <label for="password_confirmation" class="label">パスワードを再入力</label>
-                <input type="password" name="password_confirmation" class="input {{ $errors->has('password_confirmation') ? 'incorrect' : '' }}">
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="password">パスワードを再入力</label>
+                <input id="password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded input {{ $errors->has('password_confirmation') ? 'incorrect' : '' }}" type="password" name="password_confirmation">
             </div>
-            <button type="submit">パスワードを再設定</button>
+            <div class="ml-auto">
+                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">パスワードを再設定</button>
+            </div>
         </form>
     </div>
 @endsection
