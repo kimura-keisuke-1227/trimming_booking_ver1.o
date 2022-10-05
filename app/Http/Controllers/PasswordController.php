@@ -56,8 +56,8 @@ class PasswordController extends Controller
             Log::info(__METHOD__ . '...ID:' . $user->id . 'のユーザーにパスワード再設定用メールを送信しました。');
         } catch(Exception $e) {
             Log::error(__METHOD__ . '...ユーザーへのパスワード再設定用メール送信に失敗しました。 request_email = ' . $request->email . ' error_message = ' . $e);
-            return redirect()->route('user.password_reset.email_form')
-                ->with('flash_message', '処理に失敗しました。時間をおいて再度お試しください。');
+            return redirect()->route('password_reset.email.form')
+                ->with('error', '処理に失敗しました。時間をおいて再度お試しください。');
         }
         // メール送信完了画面への不正アクセスを防ぐためのセッションキー
         session()->put(self::MAIL_SENDED_SESSION_KEY, 'user_reset_password_send_email');
