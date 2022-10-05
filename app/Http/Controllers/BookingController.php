@@ -240,7 +240,7 @@ class BookingController extends Controller
      *
      ***************************************************************/
 
-    public function adminDeleteBooking(){
+    public function adminDeleteBookingConfirm(){
 
         return __FUNCTION__;
     }
