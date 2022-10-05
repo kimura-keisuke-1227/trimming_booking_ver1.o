@@ -59,18 +59,6 @@
         </div>
     </div>
 </section>
-<!-- <form method="POST" action="{{route('pets.store')}}">
-    @csrf
-    <input type="integer" name="owner_id">
-    <input type="text" name="pet_name">
-    <select name="dogtype" id="">
-        @foreach($dogtypes as $dogtype)
-        <option value="{{$dogtype -> id}}">{{$dogtype -> type}}</option>    
-        @endforeach
-    </select>
-    <input type="submit">
-</form> -->
-
 @endsection
 
 @section('footer')
