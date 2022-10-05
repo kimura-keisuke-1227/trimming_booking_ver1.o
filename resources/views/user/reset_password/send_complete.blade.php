@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.guest')
 
 @section('title')
     パスワードリセットメール送信完了

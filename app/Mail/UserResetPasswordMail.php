@@ -9,7 +9,7 @@ use App\Models\User;
 Use App\Models\UserToken;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
-use app\classes\Util;
+use App\classes\Util;
 
 class UserResetPasswordMail extends Mailable
 {
@@ -49,7 +49,7 @@ class UserResetPasswordMail extends Mailable
         $mailSenderName = Util::getSetting('管理者','mailSenderName',false);
         return $this->from($mailAddressFromSalon, $mailSenderName)
             ->to($this->user->email)
-            ->subject('パスワードをリセットする')
+            ->subject('パスワードのリセットメール')
             ->view('mails.password_reset_mail')
             ->with([
                 'user' => $this->user,

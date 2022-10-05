@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use app\classes\Util;
 
 class ContactAdminMail extends Mailable
 {
@@ -28,9 +29,12 @@ class ContactAdminMail extends Mailable
      */
     public function build()
     {
+        $mailAddressFromSalon = Util::getSetting('test@gmail.com','mailFromSalon',false);
+        $mailSenderName = Util::getSetting('管理者','mailSenderName',false);
+
         return $this
-        ->from('keisukekimura.create@gmail.com')
-        ->subject('テストメルタイトル')
+        ->from($mailAddressFromSalon, $mailSenderName)
+        ->subject('予約を受付けました。')
         ->text('email.bookingNotification.bookingNotification');
     }
 }
