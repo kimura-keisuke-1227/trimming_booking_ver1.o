@@ -202,13 +202,15 @@ Route::get('/admin/allbookings',[BookingController::class,'getAllBookingsOfSalon
 -> name('admin.checkBookings.dateAndSalon');
 
 Route::get('/admin/makebooking',[BookingController::class,'adminMakeBooking'])
--> Middleware('auth');
+-> Middleware('auth')
+-> name('admin.makebooking');
 Route::post('/admin/makebooking',[BookingController::class,'adminMakeBookingSave'])
 -> Middleware('auth');
 
 //臨時予約枠調整
 Route::get('/admin/capacitysetting',[TempCapacityController::class,'index'])
--> Middleware('auth');
+-> Middleware('auth')
+-> name('admin.adjustCapacity');
 Route::get('/admin/newtempcapacitycreate',[TempCapacityController::class,'create'])
 -> Middleware('auth')
 -> name('admin.newtempcapacitycreate');
@@ -218,7 +220,8 @@ Route::post('/admin/newtempcapacitycreate',[TempCapacityController::class,'store
 
 //空き枠数の確認
 Route::get('/admin/checkcapacities',[BookingController::class,'getAcceptableCount'])
--> Middleware('auth');
+-> Middleware('auth')
+-> name('admin.checkCapacity');
 
 Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::class,'getAcceptableCountWithSalonDate'])
 -> Middleware('auth');
