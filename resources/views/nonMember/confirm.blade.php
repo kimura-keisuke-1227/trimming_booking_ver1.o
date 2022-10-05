@@ -16,7 +16,7 @@
         --}}
     <p>上記下の内容で予約を行いますか？</p>
 
-    <form action="{{Route('booking.store')}}" method="post">
+    <form action="{{Route('nonMember.booking.store')}}" method="post">
         @csrf
         <input type="submit" name="" id="" value="予約する">
     </form>
