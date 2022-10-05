@@ -20,7 +20,14 @@
         @foreach($bookings as $booking)
             @if($booking->pet->user->id == $owner->id)
             <tr>
-                <td>{{$booking -> date}}</td>
+                <td>
+                @php
+                    $day = $booking -> date;
+                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                    $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                    echo $dateStr; 
+                @endphp
+                </td>
                 <td>{{$booking -> getStartTime()}}</td>
                 
                 <td>{{$booking -> pet -> getData()}}</td>
@@ -44,7 +51,13 @@
         <tr><th>予約一覧</th></tr>
     @foreach($bookings as $booking)
         <tr><td>
-            予約日：{{$booking -> date}} <br>
+            予約日： 
+            @php
+                $day = $booking -> date;
+                $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                echo $dateStr; 
+            @endphp<br>
             開始時間：{{$booking -> getStartTime()}} <br>
             ペット：{{$booking -> pet -> getData()}} <br>
             予約店舗：{{$booking -> salon -> salon_name}} <br>
