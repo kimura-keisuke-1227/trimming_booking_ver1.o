@@ -32,7 +32,7 @@
     <br>
 
     <h3>{{$selectedSalon -> salon_name .' ' . $checkdate}}</h3>
-    <table class="table table-striped">
+    <table class="table table-striped pc_only">
         <tr>
             <th>店舗名</th>
             <th>日付</th>
@@ -63,39 +63,67 @@
 
     </table>
 
-    <br>
-    <br>
-    <h3>タイムテーブル</h3>
-    <table class="table table-striped">
-        @foreach($times as $time)
-            <tr>
-                <th class="fixed01">{{$time}}</th>
-                @foreach($courses as $course)
-                    @foreach($bookings as $booking)
-                        @if($course->id == $booking->course->courseMaster->id)
-                            @if($booking->st_time == $timesNums[$time])
-                                @if($booking -> pet_id !== 0)
-                                <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
-                                @else        
-                                <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
-                                @endif
-                            @elseif($booking->st_time == $timesNums[$time]-$step_time)
-                                @if($booking -> pet_id !== 0)
-                                <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
-                                @else        
-                                <td class="bg_color{{$course->id}}">{{$booking -> getDogTypeAndCourse() }}</td>
-                                @endif
-                            @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
-                                <td class="bg_color{{$course->id}}">↓</td>
-                            @else
-                                <td></td>
-                            @endif
-                        @endif
-                    @endforeach
-                @endforeach
-            </tr>
+    <table class="table table-striped sp_only">
+        <tr>
+            <th>予約情報</th>
+        </tr>
+        @foreach($bookings as $booking)
+        <tr>
+            <td>
+                {{$booking -> date}} <br>
+                {{$booking -> getStartTime()}}　〜
+                {{$booking -> getEndTime()}}<br>
+                @if($booking -> pet_id !== 0)
+                {{$booking -> pet -> user -> getUserInfo()}} <br>
+                {{$booking -> pet -> getData()}} <br>
+                @else   
+                {{$booking -> getNonMemberOwner() }}<br>
+                {{$booking -> getPetNameOfNoMemberBooking() }}<br>
+                @endif
+                {{$booking -> course -> courseMaster -> course}}<br>
+                <a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">キャンセル</a> <br>
+
+            </td>
+        </tr>
         @endforeach
     </table>
+
+    <br>
+    <br>
+    <section class="pc_only timetable">
+
+        <h3>タイムテーブル</h3>
+        <table class="table table-striped">
+            @foreach($times as $time)
+                <tr>
+                    <th class="fixed01">{{$time}}</th>
+                    @foreach($courses as $course)
+                        @foreach($bookings as $booking)
+                            @if($course->id == $booking->course->courseMaster->id)
+                                @if($booking->st_time == $timesNums[$time])
+                                    @if($booking -> pet_id !== 0)
+                                    <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
+                                    @else        
+                                    <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
+                                    @endif
+                                @elseif($booking->st_time == $timesNums[$time]-$step_time)
+                                    @if($booking -> pet_id !== 0)
+                                    <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
+                                    @else        
+                                    <td class="bg_color{{$course->id}}">{{$booking -> getDogTypeAndCourse() }}</td>
+                                    @endif
+                                @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
+                                    <td class="bg_color{{$course->id}}">↓</td>
+                                @else
+                                    <td></td>
+                                @endif
+                            @endif
+                        @endforeach
+                    @endforeach
+                </tr>
+            @endforeach
+        </table>
+    </section>
 </div>
 
 @endsection
