@@ -7,7 +7,7 @@
 <div class="container">
    <p>◆予約日から{{$showBookingsAfterNDays}}日を経過したデータは表示されません。</p>
 
-    <table class="table table-striped">
+    <table class="table table-striped pc_only">
         <tr>
             <td>日付</td>
             <td>時間</td>
@@ -38,6 +38,24 @@
             @endif
         @endforeach
         
+    </table>
+
+    <table class="table table-striped sp_only">
+        <tr><th>予約一覧</th></tr>
+    @foreach($bookings as $booking)
+        <tr><td>
+            予約日：{{$booking -> date}} <br>
+            開始時間：{{$booking -> getStartTime()}} <br>
+            ペット：{{$booking -> pet -> getData()}} <br>
+            予約店舗：{{$booking -> salon -> salon_name}} <br>
+            コース：{{$booking -> getCourse()}} <br>
+            @if($booking -> date > date('Y-m-d'))
+                <a href="{{route('booking.cancelConfirm' , ['bookingId' => $booking->id ])}}">[キャンセル]</a>
+            @else
+                キャンセル不可
+            @endif
+        </td></tr>
+    @endforeach
     </table>
 
     <a href="/new_booking">新規予約へ</a>
