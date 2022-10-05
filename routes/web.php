@@ -178,6 +178,11 @@ Route::get('/nonMember/confirm/{date}/{time}',
 -> name('nonMember.booking.confirm');
 ;
 
+Route::post('/nonMember/store',
+[NonMemberBookingController::class,'store']
+)
+-> name('nonMember.booking.store');
+;
 
 /*****************************************************************
 *
