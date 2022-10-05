@@ -2,9 +2,23 @@
   margin-left: 20rem;
 }
 
+.pc_only {
+  display: block;
+}
+
+.sp_only {
+  display: none;
+}
+
 @media screen and (max-width: 780px) {
   .pc_container {
     margin-left: 0px;
+  }
+  .pc_only {
+    display: none;
+  }
+  .sp_only {
+    display: block;
   }
 }
 .bg_color1 {
