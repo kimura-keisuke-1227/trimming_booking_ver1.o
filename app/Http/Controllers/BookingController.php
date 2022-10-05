@@ -67,6 +67,7 @@ class BookingController extends Controller
         ->with('course.coursemaster')
         ->with('pet.dogtype')
         ->where('date' , '>' , Util::addDays(date('Y-m-d'),-$showBookingsAfterNDays))
+        ->where('pet_id' , '>' , 0)
         ->orderBy('date')
         ->orderBy('st_time')
         ->get();
