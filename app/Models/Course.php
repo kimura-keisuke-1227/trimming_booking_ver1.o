@@ -29,7 +29,10 @@ class Course extends Model
         if($this -> price == -9999){
             $price = '金額要相談';
         }
-        
-        return $this -> courseMaster -> course . '[' .' ' .$this -> minute . '分　(' . $price .')]';
+        $text = $this -> dogtype -> type;
+        $text = $text . ':';
+        $text = $text . $this -> courseMaster -> course . '[' .' ' .$this -> minute . '分　(' . $price .')]';
+        return $text;
     }
+
 }
