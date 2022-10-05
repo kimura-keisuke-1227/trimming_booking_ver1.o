@@ -51,7 +51,7 @@ class SettingTableSeeder extends Seeder
             'order' => 50 ,
             'setting_name' => 'mailSenderName' ,
             'explain' => '自動送信のメールの差出人名称' ,
-            'setting_str' =>  'テスト管理者',
+            'setting_string' =>  'テスト管理者',
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
@@ -59,7 +59,7 @@ class SettingTableSeeder extends Seeder
             'order' => 60 ,
             'setting_name' => 'mailFromSalon' ,
             'explain' => '自動送信のメールアドレス' ,
-            'setting_str' =>  'kim.ksuke@gmail.com',
+            'setting_string' =>  'kim.ksuke@gmail.com',
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
