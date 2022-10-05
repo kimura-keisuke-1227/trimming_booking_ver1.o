@@ -210,7 +210,8 @@ Route::post('/admin/makebooking',[BookingController::class,'adminMakeBookingSave
 Route::get('/admin/capacitysetting',[TempCapacityController::class,'index'])
 -> Middleware('auth');
 Route::get('/admin/newtempcapacitycreate',[TempCapacityController::class,'create'])
--> Middleware('auth');
+-> Middleware('auth')
+-> name('admin.newtempcapacitycreate');
 Route::post('/admin/newtempcapacitycreate',[TempCapacityController::class,'store'])
 -> Middleware('auth');
 

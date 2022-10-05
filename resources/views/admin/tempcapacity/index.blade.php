@@ -26,7 +26,7 @@
         @endforeach
 
     </table>
-    <a href="/admin/newtempcapacitycreate">新規臨時枠数登録</a>
+    <a href="{{ Route('admin.newtempcapacitycreate') }}">新規臨時枠数登録</a>
 </div>
 
 @endsection
