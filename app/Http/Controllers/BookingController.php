@@ -426,8 +426,10 @@ class BookingController extends Controller
         $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
         $days = $util -> getDaysList($st_date,$ed_date);
 
+        $bookingCalcs = new BookingsCalc;
+
         $capacities =
-            $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+        $bookingCalcs -> getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
 
         return view('admin.bookings.acceptCount', [
             'date' => $st_date,
