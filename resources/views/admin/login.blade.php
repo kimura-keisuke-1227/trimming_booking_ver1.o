@@ -90,6 +90,7 @@
           </div>
           <a href="{{ route('admin.users.create')}}">新規登録</a>
           <a href="{{ route('nonMember.beginBooking')}}">登録なしに予約する方はこちら</a>
+          <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
         </div>
       </div>
     </section>

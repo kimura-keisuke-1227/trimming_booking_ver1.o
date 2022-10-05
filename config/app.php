@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //パスワードリセットのための追加
+        App\Providers\RepositoryServiceProvider::class,
+
     ],
 
     /*

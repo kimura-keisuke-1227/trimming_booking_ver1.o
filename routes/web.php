@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
+use App\Http\Controllers\PasswordController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -234,6 +235,29 @@ Route::get('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBookingConfirm']
 ) -> Middleware('auth')
 -> name('admin.cancelConfirm');
+
+/*****************************************************************
+*
+*   パスワードリセット
+*
+******************************************************************/
+Route::prefix('password_reset')->name('password_reset.')->group(function () {
+    Route::prefix('email')->name('email.')->group(function () {
+        // パスワードリセットメール送信フォームページ
+        Route::get('/', [PasswordController::class, 'emailFormResetPassword'])->name('form');
+        // メール送信処理
+        Route::post('/', [PasswordController::class, 'sendEmailResetPassword'])->name('send');
+        // メール送信完了ページ
+        Route::get('/send_complete', [PasswordController::class, 'sendComplete'])->name('send_complete');
+    });
+    // パスワード再設定ページ
+    Route::get('/edit', [PasswordController::class, 'edit'])->name('edit');
+    // パスワード更新処理
+    Route::post('/update', [PasswordController::class, 'update'])->name('update');
+    // パスワード更新終了ページ
+    Route::get('/edited', [PasswordController::class, 'edited'])->name('edited');
+});
+
 
 /*****************************************************************
 *
