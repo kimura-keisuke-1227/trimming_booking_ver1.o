@@ -230,7 +230,7 @@ Route::get('/admin/setting',[SettingController::class,'index'])
 -> Middleware('auth');
 
 //管理画面からの削除
-Route::get('/admin/cancel',
+Route::get('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBookingConfirm']
 ) -> Middleware('auth')
 -> name('admin.cancelConfirm');

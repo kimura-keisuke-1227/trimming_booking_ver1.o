@@ -57,7 +57,7 @@
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
-            <td><a href="">キャンセル</a></td>
+            <td><a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">キャンセル</a></td>
         </tr>
         @endforeach
 
