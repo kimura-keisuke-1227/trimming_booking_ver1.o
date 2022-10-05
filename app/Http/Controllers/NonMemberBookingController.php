@@ -49,16 +49,25 @@ class NonMemberBookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
 
-        Log::debug(__FILE__ .__FUNCTION__ .' $booking:' . $booking);
+        Log::debug(__FUNCTION__ .' $booking:' . $booking);
 
         $booking -> save();
-        Log::info(__FILE__ .__FUNCTION__ . 'Booking is saved for non member booking!');
-
         $booking_id = $booking ->id;
-        //非会員の予約を登録
-        #$nonMemberBooking = new NonMemberBooking();
+        Log::info(__FUNCTION__ . 'Booking is saved for non member booking! booking_id is (' . $booking_id .')');
 
-        #$nonMemberBooking -> save();
+        //非会員の予約を登録
+        $nonMemberBooking = new NonMemberBooking();
+
+        $nonMemberBooking -> booking_id = $booking_id;
+        $nonMemberBooking -> last_name = session('owner_last_name');
+        $nonMemberBooking -> last_name_kana = session('owner_last_name_kana');
+        $nonMemberBooking -> first_name = session('owner_first_name');
+        $nonMemberBooking -> first_name_kana = session('owner_first_name_kana');
+        $nonMemberBooking -> email = session('mail');
+        $nonMemberBooking -> phone = session('phone');
+        $nonMemberBooking -> name = session('pet_name');
+
+        $nonMemberBooking -> save();
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Log::info(__FUNCTION__ . 'session delete for non member booking!');
