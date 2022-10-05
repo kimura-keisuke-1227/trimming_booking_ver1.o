@@ -44,38 +44,42 @@
         </div>
         
         <!-- ▲▲▲▲共通サイドナビ▲▲▲▲　-->
-        <div class="mx-auto lg:ml-80">
-            <!-- ▼▼▼▼共通ヘッダー(PC)▼▼▼▼　-->
-            <!-- <section class="py-5 px-6 bg-white shadow hidden lg:block">
-                <div class="flex items-center justify-end">
-                    <span class="text-sm text-gray-500">店長</span>
-                    <img class="ml-3 w-10 h-10 rounded-full object-cover object-right" src="/images/placeholders/admin/user.jpg" alt="">
-                </div>
-            </section> -->
-            <!-- ▲▲▲▲共通ヘッダー(PC)▲▲▲▲　-->
 
-            <main class="py-4 px-6">
-                @if(session()->has('success'))
-                <!-- ▼▼▼▼登録完了メッセージ(全ページで共通)▼▼▼▼　-->
-                <div class="mb-4 text-right">
-                    <div class="pl-6 pr-16 py-4 bg-white border-l-4 border-green-500 shadow-md rounded-r-lg inline-block ml-auto">
-                        <div class="flex items-center">
-                            <span class="inline-block mr-2">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" fill="#17BB84"></path>
-                                </svg>
-                            </span>
-                            <p class="text-green-800 font-medium">{{ session('success') }}</p>
+        <div class="container">
+
+            <div class="mx-auto lg:ml-80">
+                <!-- ▼▼▼▼共通ヘッダー(PC)▼▼▼▼　-->
+                <!-- <section class="py-5 px-6 bg-white shadow hidden lg:block">
+                    <div class="flex items-center justify-end">
+                        <span class="text-sm text-gray-500">店長</span>
+                        <img class="ml-3 w-10 h-10 rounded-full object-cover object-right" src="/images/placeholders/admin/user.jpg" alt="">
+                    </div>
+                </section> -->
+                <!-- ▲▲▲▲共通ヘッダー(PC)▲▲▲▲　-->
+    
+                <main class="py-4 px-6">
+                    @if(session()->has('success'))
+                    <!-- ▼▼▼▼登録完了メッセージ(全ページで共通)▼▼▼▼　-->
+                    <div class="mb-4 text-right">
+                        <div class="pl-6 pr-16 py-4 bg-white border-l-4 border-green-500 shadow-md rounded-r-lg inline-block ml-auto">
+                            <div class="flex items-center">
+                                <span class="inline-block mr-2">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM14.2 8.3L9.4 13.1C9 13.5 8.4 13.5 8 13.1L5.8 10.9C5.4 10.5 5.4 9.9 5.8 9.5C6.2 9.1 6.8 9.1 7.2 9.5L8.7 11L12.8 6.9C13.2 6.5 13.8 6.5 14.2 6.9C14.6 7.3 14.6 7.9 14.2 8.3Z" fill="#17BB84"></path>
+                                    </svg>
+                                </span>
+                                <p class="text-green-800 font-medium">{{ session('success') }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
-                @endif
-
-                <!-- ▼▼▼▼ページ毎の個別内容▼▼▼▼　-->
-                @yield('content')
-                <!-- ▲▲▲▲ページ毎の個別内容▲▲▲▲　-->
-            </main>
+                    <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
+                    @endif
+    
+                    <!-- ▼▼▼▼ページ毎の個別内容▼▼▼▼　-->
+                    @yield('content')
+                    <!-- ▲▲▲▲ページ毎の個別内容▲▲▲▲　-->
+                </main>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
