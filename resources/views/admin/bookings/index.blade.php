@@ -69,7 +69,7 @@
     <table class="table table-striped">
         @foreach($times as $time)
             <tr>
-                <th>{{$time}}</th>
+                <th class="fixed01">{{$time}}</th>
                 @foreach($courses as $course)
                     @foreach($bookings as $booking)
                         @if($course->id == $booking->course->courseMaster->id)
