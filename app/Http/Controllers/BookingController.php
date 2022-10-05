@@ -20,6 +20,7 @@ use App\Mail\ContactAdminMail;
 use App\classes\BookingsCalc;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
+use Symfony\Component\ErrorHandler\Debug;
 
 //use App\Models\Dogtype;
 
@@ -59,10 +60,9 @@ class BookingController extends Controller
     public function index()
     {
         //BookingController::bookingCheck();
-
+        Log::info(__METHOD__ . '(start)');
         $owner = Auth::user();
         $showBookingsAfterNDays = Util::getSetting(30,'showBookingsAfterNDays',true);
-
         $bookings = Booking::with('pet.user')
         ->with('course.coursemaster')
         ->with('pet.dogtype')
@@ -70,6 +70,7 @@ class BookingController extends Controller
         ->orderBy('date')
         ->orderBy('st_time')
         ->get();
+        Log::debug(__METHOD__ . ' $bookings:' . $bookings);
 
         return view('bookings.index', [
             'owner' => $owner,
