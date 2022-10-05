@@ -20,27 +20,25 @@ use App\Models\Dogtype;
 class NonMemberBookingController extends Controller
 {
     //
-    public function store(Request $request){
+    public function store(Request $request ){
         Log::info(__FUNCTION__ . 'start');
 
         //予約　pet_id = 0 とする　→ pet_id=0ならば登録なしと判定する
         
         $booking = new Booking();
-        
-        $date = $request->date;
-        $st_hour = $request->st_hour;
-        $st_minute = $request->st_minute;
-        $ed_hour = $request->ed_hour;
-        $ed_minute = $request->ed_minute;
         $pet_id = 0;
-        $course_id = $request->course;
-        $course = session('course') -> find($course_id);
+        $course = session('course');
+        $date = session('date');
+        $st_time = session('time');
+        $salon = session('salon');
+        $course_id = $course -> id;
+        #Log::debug(__FILE__ . __FUNCTION__ . ' course_id:' . $course_id);
+        Log::debug(__FILE__ .__FUNCTION__ . ' course:' . $course);
         $price =  $course -> price;
-        $salon_id = $request->salon;
+        $salon_id = $salon -> id;
         $booking_status = 1;
 
-        $st_time = $st_hour * 60 + $st_minute;
-        $ed_time = $ed_hour * 60 + $ed_minute;
+        $ed_time = $st_time + $course-> minute;
 
         $booking->date = $date;
         $booking->st_time = $st_time;
@@ -51,10 +49,10 @@ class NonMemberBookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
 
-        Log::debug(__FUNCTION__ . $booking);
+        Log::debug(__FILE__ .__FUNCTION__ .' $booking:' . $booking);
 
-        #$booking -> save();
-        Log::info(__FUNCTION__ . 'Booking is saved for non member booking!');
+        $booking -> save();
+        Log::info(__FILE__ .__FUNCTION__ . 'Booking is saved for non member booking!');
 
         $booking_id = $booking ->id;
         //非会員の予約を登録
@@ -194,6 +192,11 @@ class NonMemberBookingController extends Controller
         $date = $request->date;
         $dateStr = Util::dateFormat($date);
         $timeStr = Util::minuteToTime($st_time);
+
+        session([
+            'date' => $date,
+            'time' => $st_time,
+        ]);
 
         return view('nonMember.confirm',[
             'salon' => $salon,
