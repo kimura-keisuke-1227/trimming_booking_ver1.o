@@ -183,7 +183,7 @@ class BookingsCalc
 
         //定休日の設定を取得
         $regularHolidaysOfTheSalon = $allRegularHolidays->where('salon_id', $salon->id);
-        Log::debug(__FUNCTION__ . '定休日:' . $regularHolidaysOfTheSalon);
+        //Log::debug(__FUNCTION__ . ' 定休日:' . $regularHolidaysOfTheSalon);
 
         //DBから店舗のデフォルト受け入れ枠データ
         //開店時間から閉店時間まで
