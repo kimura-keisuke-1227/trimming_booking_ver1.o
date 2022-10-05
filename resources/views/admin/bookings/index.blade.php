@@ -41,6 +41,7 @@
             <th>飼い主</th>
             <th>ペット</th>
             <th>コース</th>
+            <th></th>
         </tr>
         @foreach($bookings as $booking)
         <tr>
@@ -56,6 +57,7 @@
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
+            <td><a href="">キャンセル</a></td>
         </tr>
         @endforeach
 
