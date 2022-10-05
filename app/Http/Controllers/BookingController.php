@@ -18,6 +18,8 @@ use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
 use App\classes\BookingsCalc;
+use App\Models\NonMemberBooking;
+use Illuminate\Support\Facades\Redis;
 
 //use App\Models\Dogtype;
 
@@ -240,8 +242,20 @@ class BookingController extends Controller
      *
      ***************************************************************/
 
-    public function adminDeleteBookingConfirm(){
+    public function adminDeleteBookingConfirm(Request $request, $bookingID){
+        Log::info(__FUNCTION__ . '(start)');
+        $booking = Booking::find($bookingID);
+        Log::debug($booking);
+        //非会員の予約の場合、そちらも削除が必要。
+        $booking -> delete();
 
+        if($booking -> pet_id == 0){
+            Log::info(__FUNCTION__ . ': This booking is by non member. Need to delete non member booking!');
+            $nonMemberBooking = NonMemberBooking::where('booking_id' , $bookingID)-> first();
+            Log::debug(__FUNCTION__ . ' Deleting non member booking:' . $nonMemberBooking);
+            $nonMemberBooking -> delete();
+        }
+        
         return __FUNCTION__;
     }
 
