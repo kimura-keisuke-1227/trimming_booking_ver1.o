@@ -6,27 +6,34 @@
 
 <div class="container">
     <form action="{{Route('admin.checkBookings.dateAndSalon')}}">
-        <label for="salon">
-            ◆店舗(選択)
-            <select name="salon" id="">
-                @foreach($salons as $salon)
-                    <option value="{{$salon -> id}}" 
-                @if($salon->id == $selectedSalon->id)
-                    selected
-                @endif
-                >{{$salon -> salon_name}}</option>
-            @endforeach
-            </select>
-        </label>
+
+        <div class="mb-6">
+            <label class="block text-sm font-medium mb-2" for="salon">店舗を選択してください</label>
+            <div class="flex">
+                <select id="salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="salon">
+                    @foreach($salons as $salon)
+                    <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
         <br>
         <br>
-        <label for="date">
-            日付（入力）
-            <input type="date" name="date" id="" value="{{$checkdate}}">
-        </label>
+
+        <div class="mb-6">
+            <label class="block text-sm font-medium mb-2" for="date">日付</label>
+            <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ date('Y-m-d') }}">
+        </div>
         <br>
         <br>
-        <input type="submit" name="" id="" value="表示">
+        <div class="ml-auto">
+            <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">表示</button>
+        </div>
     </form>
     <br>
     <br>
@@ -52,7 +59,7 @@
             @if($booking -> pet_id !== 0)
             <td>{{$booking -> pet -> user -> getUserInfo()}}</td>
             <td>{{$booking -> pet -> getData()}}</td>
-            @else   
+            @else
             <td>{{$booking -> getNonMemberOwner() }}</td>
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
@@ -76,7 +83,7 @@
                 @if($booking -> pet_id !== 0)
                 {{$booking -> pet -> user -> getUserInfo()}} <br>
                 {{$booking -> pet -> getData()}} <br>
-                @else   
+                @else
                 {{$booking -> getNonMemberOwner() }}<br>
                 {{$booking -> getPetNameOfNoMemberBooking() }}<br>
                 @endif
@@ -95,32 +102,32 @@
         <h3>タイムテーブル</h3>
         <table class="table table-striped">
             @foreach($times as $time)
-                <tr>
-                    <th class="fixed01">{{$time}}</th>
-                    @foreach($courses as $course)
-                        @foreach($bookings as $booking)
-                            @if($course->id == $booking->course->courseMaster->id)
-                                @if($booking->st_time == $timesNums[$time])
-                                    @if($booking -> pet_id !== 0)
-                                    <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
-                                    @else        
-                                    <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
-                                    @endif
-                                @elseif($booking->st_time == $timesNums[$time]-$step_time)
-                                    @if($booking -> pet_id !== 0)
-                                    <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
-                                    @else        
-                                    <td class="bg_color{{$course->id}}">{{$booking -> getDogTypeAndCourse() }}</td>
-                                    @endif
-                                @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
-                                    <td class="bg_color{{$course->id}}">↓</td>
-                                @else
-                                    <td></td>
-                                @endif
-                            @endif
-                        @endforeach
+            <tr>
+                <th class="fixed01">{{$time}}</th>
+                @foreach($courses as $course)
+                @foreach($bookings as $booking)
+                @if($course->id == $booking->course->courseMaster->id)
+                @if($booking->st_time == $timesNums[$time])
+                @if($booking -> pet_id !== 0)
+                <td class="bg_color{{$course->id}}">{{$booking->getBookingInfoForStaff()}}</td>
+                @else
+                <td class="bg_color{{$course->id}}">{{$booking -> getNonMemberPetForTable() }}</td>
+                @endif
+                @elseif($booking->st_time == $timesNums[$time]-$step_time)
+                @if($booking -> pet_id !== 0)
+                <td class="bg_color{{$course->id}}">{{$booking->getBookingCourseAndDogTypeInfoForStaff()}}</td>
+                @else
+                <td class="bg_color{{$course->id}}">{{$booking -> getDogTypeAndCourse() }}</td>
+                @endif
+                @elseif(($timesNums[$time]>$booking->st_time) and ($timesNums[$time]<$booking->ed_time))
+                    <td class="bg_color{{$course->id}}">↓</td>
+                    @else
+                    <td></td>
+                    @endif
+                    @endif
                     @endforeach
-                </tr>
+                    @endforeach
+            </tr>
             @endforeach
         </table>
     </section>
