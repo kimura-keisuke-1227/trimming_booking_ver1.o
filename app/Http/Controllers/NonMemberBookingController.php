@@ -71,8 +71,12 @@ class NonMemberBookingController extends Controller
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Log::info(__FUNCTION__ . 'session delete for non member booking!');
-        session()->flush();
-        return '予約完了・';
+        // 現在使っているセッションを無効化(セキュリティ対策のため)
+        $request->session()->invalidate();
+
+        // セッションを無効化を再生成(セキュリティ対策のため)
+        $request->session()->regenerateToken();
+        return redirect('login') -> with('success','予約を受け付けました。');
     }
 
     public function startNonUserBooking(){
