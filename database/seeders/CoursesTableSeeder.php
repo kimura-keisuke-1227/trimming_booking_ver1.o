@@ -18,7 +18,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 1,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 3300,
             'st_date' => ('2022-09-01'),
         ];
@@ -26,7 +26,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 2,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 3850,
             'st_date' => ('2022-09-01'),
         ];
@@ -34,7 +34,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 3,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 4400,
             'st_date' => ('2022-09-01'),
         ];
@@ -42,7 +42,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 4,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 3850,
             'st_date' => ('2022-09-01'),
         ];
@@ -50,7 +50,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 5,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 4400,
             'st_date' => ('2022-09-01'),
         ];
@@ -58,7 +58,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 6,
-            'minute' => 120,
+            'minute' => 90,
             'price' => 4950,
             'st_date' => ('2022-09-01'),
         ];
@@ -66,7 +66,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 7,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 5500,
             'st_date' => ('2022-09-01'),
         ];
@@ -74,7 +74,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 8,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 5500,
             'st_date' => ('2022-09-01'),
         ];
@@ -82,7 +82,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 9,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -90,7 +90,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 10,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 5500,
             'st_date' => ('2022-09-01'),
         ];
@@ -98,7 +98,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 11,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -106,7 +106,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 12,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -114,7 +114,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 13,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -122,7 +122,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 14,
-            'minute' => 150,
+            'minute' => 90,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -130,7 +130,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 15,
-            'minute' => 150,
+            'minute' => 120,
             'price' => 6600,
             'st_date' => ('2022-09-01'),
         ];
@@ -138,7 +138,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 16,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 6600,
             'st_date' => ('2022-09-01'),
         ];
@@ -146,7 +146,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 17,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 8250,
             'st_date' => ('2022-09-01'),
         ];
@@ -154,7 +154,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 18,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 9350,
             'st_date' => ('2022-09-01'),
         ];
@@ -162,7 +162,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 19,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 9900,
             'st_date' => ('2022-09-01'),
         ];
@@ -170,7 +170,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 1,
             'dogtype_id' => 20,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 10450,
             'st_date' => ('2022-09-01'),
         ];
@@ -178,7 +178,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 1,
-            'minute' => 150,
+            'minute' => 9999,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
@@ -186,7 +186,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 2,
-            'minute' => 150,
+            'minute' => 9999,
             'price' => 4950,
             'st_date' => ('2022-09-01'),
         ];
@@ -194,7 +194,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 3,
-            'minute' => 150,
+            'minute' => 120,
             'price' => 5500,
             'st_date' => ('2022-09-01'),
         ];
@@ -202,7 +202,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 4,
-            'minute' => 150,
+            'minute' => 9999,
             'price' => 4950,
             'st_date' => ('2022-09-01'),
         ];
@@ -210,7 +210,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 5,
-            'minute' => 150,
+            'minute' => 120,
             'price' => 5500,
             'st_date' => ('2022-09-01'),
         ];
@@ -218,7 +218,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 6,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 6050,
             'st_date' => ('2022-09-01'),
         ];
@@ -226,7 +226,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 7,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 6600,
             'st_date' => ('2022-09-01'),
         ];
@@ -234,7 +234,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 8,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 6600,
             'st_date' => ('2022-09-01'),
         ];
@@ -242,7 +242,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 9,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 7150,
             'st_date' => ('2022-09-01'),
         ];
@@ -250,7 +250,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 10,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 7150,
             'st_date' => ('2022-09-01'),
         ];
@@ -258,7 +258,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 11,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 7150,
             'st_date' => ('2022-09-01'),
         ];
@@ -266,7 +266,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 12,
-            'minute' => 180,
+            'minute' => 120,
             'price' => 7150,
             'st_date' => ('2022-09-01'),
         ];
@@ -282,7 +282,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 14,
-            'minute' => 210,
+            'minute' => 180,
             'price' => 7700,
             'st_date' => ('2022-09-01'),
         ];
@@ -290,7 +290,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 15,
-            'minute' => 210,
+            'minute' => 180,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
@@ -298,7 +298,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 16,
-            'minute' => 210,
+            'minute' => 180,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
@@ -306,7 +306,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 17,
-            'minute' => 210,
+            'minute' => 180,
             'price' => 10450,
             'st_date' => ('2022-09-01'),
         ];
@@ -314,7 +314,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 18,
-            'minute' => 210,
+            'minute' => 180,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
@@ -322,7 +322,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 19,
-            'minute' => 210,
+            'minute' => 180,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
@@ -330,7 +330,7 @@ class CoursesTableSeeder extends Seeder
         $param =[
             'course_master_id' => 2,
             'dogtype_id' => 20,
-            'minute' => 210,
+            'minute' => 180,
             'price' => -9999,
             'st_date' => ('2022-09-01'),
         ];
