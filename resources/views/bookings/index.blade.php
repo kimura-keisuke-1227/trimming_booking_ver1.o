@@ -50,6 +50,7 @@
     <table class="table table-striped sp_only">
         <tr><th>予約一覧</th></tr>
     @foreach($bookings as $booking)
+        @if($booking->pet->user->id == $owner->id)
         <tr><td>
             予約日： 
             @php
@@ -68,6 +69,7 @@
                 キャンセル不可
             @endif
         </td></tr>
+        @endif
     @endforeach
     </table>
 
