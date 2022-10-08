@@ -93,9 +93,9 @@ class NonMemberBookingController extends Controller
 
         $validate_rule = [
             'owner_last_name' => ['required', 'string', 'max:255'],
-            'owner_last_name_kana' => 'required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u',
+            'owner_last_name_kana' => ['required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u'],
             'owner_first_name' =>  ['required', 'string', 'max:255'],
-            'owner_first_name_kana' => 'required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u',
+            'owner_first_name_kana' => ['required', 'string', 'max:255','regex:/\A[ァ-ヴー]+\z/u'],
             'mail' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:255','regex:/^0(\d-?\d{4}|\d{2}-?\d{3}|\d{3}-?\d{2}|\d{4}-?\d|\d0-?\d{4})-?\d{4}$/'],
             'pet_name' => ['required', 'string', 'max:255'],
