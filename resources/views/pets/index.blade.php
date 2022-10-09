@@ -8,14 +8,16 @@
     <p>こんにちは、<br class="sp_only">{{$owner -> getFullName()}}さん</p>
     <table class="table table-striped pc_only">
         <tr>
-            <th>犬種</th>
             <th>名前</th>
+            <th>犬種</th>
+            <th>体重(kg)</th>
             <th>生年月日</th>
         </tr>
         @foreach($pets as $pet)
         <tr>
+            <td>{{$pet -> name}}</td>
             <td>{{$pet -> dogtype -> type}}</td>
-            <td>{{$pet -> getData()}}</td>
+            <td>{{$pet -> weight}}</td>
             <td>{{$pet -> birthday}}</td>
         </tr>
         @endforeach
