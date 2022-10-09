@@ -107,13 +107,11 @@ class BookingController extends Controller
         $pet = $pets->find($pet_id);
         $salons = Salon::all();
         $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
-        $message = $request -> message;
 
         session([
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
-            'message' => $message
         ]);
 
         return view('bookings.selectcourse', [
@@ -138,6 +136,8 @@ class BookingController extends Controller
         session(['salon' => $salon]);
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
+
+        $message = $request->message;
 
         $step_time = Util::getSetting(30,'step_time',true);
 
@@ -166,6 +166,7 @@ class BookingController extends Controller
         session([
             'course' => $course,
             'salon' => $salon,
+            'message' => $message,
         ]);
 
         $beforeDate = Util::addDays($st_date, -7);
@@ -183,6 +184,7 @@ class BookingController extends Controller
             'days' => $days,
             'capacities' => $capacities,
             'timesNum' => $timesNum,
+            'message' => $message,
         ]);
     }
 
@@ -191,6 +193,7 @@ class BookingController extends Controller
         $owner = Auth::user();
         $pet =  session('pet');
         $course =  session('course');
+        $message =  session('message');
         $date = $request->date;
         $time = $request->time;
         $timeStr = Util::minuteToTime($time);
@@ -205,6 +208,7 @@ class BookingController extends Controller
             'date' => $date,
             'time' => $time,
             'timeStr' => $timeStr,
+            'message' => $message,
         ]);
     }
 
@@ -591,6 +595,7 @@ class BookingController extends Controller
         $price =  session('course')->price;
         $salon_id = session('salon')->id;
         $booking_status = 1;
+        $message = session('message');
 
         $booking->date = $date;
         $booking->st_time = $st_time;
@@ -601,6 +606,7 @@ class BookingController extends Controller
         $booking->price = $price;
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
+        $booking->message = $message;
 
         $booking->save();
         Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
