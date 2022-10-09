@@ -10,11 +10,11 @@
     <p>{{$date}}</p>
     <p>{{$timeStr}}</p>
 
-    <p>上記の予約をキャンセルしますか？</p>
+    <p>上記の予約を取り消しますか？</p>
 
     <form action="{{Route('booking.store')}}" method="post">
         @csrf
-        <input type="submit" name="" id="" value="キャンセルする">
+        <input type="submit" name="" id="" value="予約する">
     </form>
 </div>
 @endsection
