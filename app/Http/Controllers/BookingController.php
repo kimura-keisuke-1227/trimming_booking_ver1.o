@@ -107,10 +107,13 @@ class BookingController extends Controller
         $pet = $pets->find($pet_id);
         $salons = Salon::all();
         $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
+        $message = $request -> message;
+
         session([
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
+            'message' => $message
         ]);
 
         return view('bookings.selectcourse', [
@@ -118,6 +121,7 @@ class BookingController extends Controller
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
+            'message' => $message,
         ]);
     }
 
