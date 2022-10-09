@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('name');
-            $table->string('message') ->nullable();
+            $table->text('message') ->nullable();
             $table->float('weight');
             $table->timestamps();
         });

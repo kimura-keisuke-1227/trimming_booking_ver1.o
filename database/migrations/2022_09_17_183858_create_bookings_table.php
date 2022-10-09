@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('salon_id');
             $table->integer('price');
             $table->integer('booking_status');
-            $table->string('message') ->nullable();
+            $table->text('message') ->nullable();
             #$table->string('booking_number');
             #$table->integer('booking_express');
             $table->timestamps();
