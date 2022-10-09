@@ -240,9 +240,16 @@ Route::get('/admin/cancel/{bookingId}',
 ) -> Middleware('auth')
 -> name('admin.cancelConfirm');
 
+/*
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
 ) -> Middleware('auth')
+-> name('admin.cancel');
+*/
+
+Route::post('/admin/cancel/{bookingId}',
+[BookingController::class,'adminDeleteBooking']
+) -> middleware('auth')
 -> name('admin.cancel');
 
 /*****************************************************************
