@@ -26,6 +26,7 @@ class BookingsTableSeeder extends Seeder
             'course_id' => 2 ,
             'salon_id' => 2,
             'price' => 3000 ,
+            'message' => '予約時のメッセージ' ,
             'booking_status' => 1 ,
         ];
         DB::table('bookings') -> insert($param);
@@ -53,6 +54,7 @@ class BookingsTableSeeder extends Seeder
             'course_id' => 2 ,
             'salon_id' => 2,
             'price' => 3000 ,
+            'message' => '予約時のメッセージ' ,
             'booking_status' => 1 ,
         ];
         DB::table('bookings') -> insert($param);
@@ -66,6 +68,7 @@ class BookingsTableSeeder extends Seeder
             'course_id' => 2 ,
             'salon_id' => 2,
             'price' => 3000 ,
+            'message' => '予約時のメッセージ' ,
             'booking_status' => 1 ,
         ];
         DB::table('bookings') -> insert($param);
