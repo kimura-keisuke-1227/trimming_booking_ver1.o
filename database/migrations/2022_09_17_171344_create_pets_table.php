@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('dogtype_id');
             $table->string('name');
             $table->date('birthday') -> nullable() -> default(null);
+            $table->float('weight');
             $table->timestamps();
         });
     }
