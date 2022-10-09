@@ -71,8 +71,9 @@ class BookingController extends Controller
         ->orderBy('date')
         ->orderBy('st_time')
         ->get();
-        Log::debug(__METHOD__ . ' $bookings:' . $bookings);
-
+        #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
+        
+        Log::info(__METHOD__ . '(end)');
         return view('bookings.index', [
             'owner' => $owner,
             'bookings' => $bookings,
@@ -229,11 +230,13 @@ class BookingController extends Controller
     //予約のキャンセル処理
     public function destroy($id)
     {
+        Log::info(__METHOD__ . '(start)');
         $booking = Booking::findOrFail($id);
         $booking->delete();
         $user = Auth::user();
         Log::info('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
-
+        
+        Log::info(__METHOD__ . '(end)');
         return redirect('/bookings')
             ->with('success', '予約をキャンセルしました。');
     }
