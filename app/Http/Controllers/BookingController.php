@@ -206,6 +206,7 @@ class BookingController extends Controller
     //削除する予約の確認画面
     public function deleteConfirm($bookingID)
     {
+        Log::info(__METHOD__ . '(start)');
         $owner = Auth::user();
         $booking = Booking::find($bookingID);
 
@@ -219,6 +220,7 @@ class BookingController extends Controller
                 ->with('error', '該当の予約が存在しません。');
         }
 
+        Log::info(__METHOD__ . '(end)');
         return view('bookings.cancelConfirm', [
             'booking' => $booking
         ]);
