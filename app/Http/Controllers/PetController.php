@@ -67,6 +67,8 @@ class PetController extends Controller
         $pet -> owner_id = $owner -> id ;
         $pet -> name = $request -> name;
         $pet -> dogtype_id = $request -> dogtype;
+        $pet -> birthday = $request -> birthday;
+        $pet -> weight = $request -> weight;
         $pet ->  save();
         
         Log::debug('登録ペット情報：(owner_id)' . $request -> owner_id . ' (pet_name)' . $request -> pet_name . '(dog_type)' . $request -> dogtype );
