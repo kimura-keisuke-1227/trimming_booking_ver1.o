@@ -21,7 +21,7 @@ class Course extends Model
         if($this -> price == -9999){
             $price = '金額要相談';
         }
-        return $this -> courseMaster -> course . '[' . $this -> minute . '分　(' . $price .')]'; 
+        return $this -> courseMaster -> course . '[' . $this -> minute_for_show . '分]'; 
     }
 
     public function getCourseInfoForAdminBookingMaking(){
