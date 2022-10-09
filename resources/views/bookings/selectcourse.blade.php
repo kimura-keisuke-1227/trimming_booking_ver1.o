@@ -34,14 +34,9 @@
                         </div>
                     </div>
                     <br><br>
-                    <label for="salon">◆コースを選択してください。</label><br>
-                    <select name="course">
-                        @foreach($courses as $course)
-                        <option value="{{$course -> id}}">{{$course -> getCourseInfo()}}</option>
-                        @endforeach
                     </select>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="category">カテゴリ</label>
+                        <label class="block text-sm font-medium mb-2" for="course">◆コースを選択してください。</label>
                         <div class="flex">
                             <select id="course" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="course">
                                 @foreach($courses as $course)
