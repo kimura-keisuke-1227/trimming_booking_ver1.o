@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('course_master_id');
             $table->foreignId('dogtype_id');
             $table->integer('minute');
+            $table->integer('minute_for_show');
             $table->integer('price');
             $table->date('st_date');
             $table->timestamps();
