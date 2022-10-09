@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('st_time');
             $table->integer('ed_time');
+            $table->integer('ed_time_for_show');
             $table->foreignId('pet_id');
             $table->foreignId('course_id');
             $table->foreignId('salon_id');
