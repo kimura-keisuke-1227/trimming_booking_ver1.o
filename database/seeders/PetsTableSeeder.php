@@ -20,6 +20,7 @@ class PetsTableSeeder extends Seeder
             'owner_id' => 2,
             'dogtype_id' => 1 ,
             'name' => 'テスト犬１号',
+            'weight' => 10,
             'birthday' => '2020-3-31',
         ];
         DB::table('pets') -> insert($param);
@@ -27,12 +28,14 @@ class PetsTableSeeder extends Seeder
             'owner_id' => 2,
             'dogtype_id' => 20,
             'name' => 'テスト犬2号',
+            'weight' => 10,
             'birthday' => '2020-3-31',
         ];
         DB::table('pets') -> insert($param);
         $param =[
             'owner_id' => 3,
             'dogtype_id' => 10 ,
+            'weight' => 10,
             'name' => 'テスト犬3号',
         ];
         DB::table('pets') -> insert($param);
