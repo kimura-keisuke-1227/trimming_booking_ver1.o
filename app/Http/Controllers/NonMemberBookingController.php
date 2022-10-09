@@ -102,7 +102,7 @@ class NonMemberBookingController extends Controller
             'mail' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:255','regex:/^0(\d-?\d{4}|\d{2}-?\d{3}|\d{3}-?\d{2}|\d{4}-?\d|\d0-?\d{4})-?\d{4}$/'],
             'pet_name' => ['required', 'string', 'max:255'],
-            'weight' => ['numeric'|'between:0,100'],
+            'weight' => ['numeric'],
         ];
 
         $this->validate($request, $validate_rule);
