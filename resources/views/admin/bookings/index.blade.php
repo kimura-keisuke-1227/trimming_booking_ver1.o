@@ -45,6 +45,7 @@
             <th>日付</th>
             <th>開始時間</th>
             <th>終了時間</th>
+            <th>終了時間(お客様向け)</th>
             <th>飼い主</th>
             <th>ペット</th>
             <th>コース</th>
@@ -56,6 +57,7 @@
             <td>{{$booking -> date}}</td>
             <td>{{$booking -> getStartTime()}}</td>
             <td>{{$booking -> getEndTime()}}</td>
+            <td>{{$booking -> getEndTimeForOwner()}}</td>
             @if($booking -> pet_id !== 0)
             <td>{{$booking -> pet -> user -> getUserInfo()}}</td>
             <td>{{$booking -> pet -> getData()}}</td>
@@ -80,6 +82,7 @@
                 {{$booking -> date}} <br>
                 {{$booking -> getStartTime()}}　〜
                 {{$booking -> getEndTime()}}<br>
+                {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
                 {{$booking -> pet -> user -> getUserInfo()}} <br>
                 {{$booking -> pet -> getData()}} <br>
