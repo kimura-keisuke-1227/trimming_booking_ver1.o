@@ -12,7 +12,7 @@
     <p>終了時間:{{$booking -> getEndTime()}}</p>
     <p>上記の予約を取り消しますか？</p>
 
-    <form action="{{Route('booking.store')}}" method="post">
+    <form action="{{Route('admin.cancel')}}" method="post">
         @csrf
         <input type="submit" name="" id="" value="キャンセルする">
     </form>
