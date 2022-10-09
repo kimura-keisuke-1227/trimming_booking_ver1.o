@@ -31,7 +31,7 @@ class Course extends Model
         }
         $text = $this -> dogtype -> type;
         $text = $text . ':';
-        $text = $text . $this -> courseMaster -> course . '[' .' ' .$this -> minute . '分]';
+        $text = $text . $this -> courseMaster -> course . '[' .' ' .$this -> minute_for_show . '分]';
         return $text;
     }
 
