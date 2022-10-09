@@ -51,7 +51,10 @@ class Booking extends Model
 
     public function getBookingInfoForStaff(){
         return  $this->pet->user->last_name .
-                $this->pet->name;
+                $this->pet->name.
+                '('.
+                $this->pet->weight.
+                'kg)';
     }
 
     public function getBookingCourseAndDogTypeInfoForStaff(){
