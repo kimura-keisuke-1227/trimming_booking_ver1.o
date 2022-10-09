@@ -245,21 +245,28 @@ class BookingController extends Controller
      ***************************************************************/
 
     public function adminDeleteBookingConfirm(Request $request, $bookingID){
+
+        $booking = Booking::find($bookingID);
+        return view('admin.bookings.deleteConfirm',[
+            'booking' => $booking
+        ]);
+    }
+
+    public function adminDeleteBooking(Request $request, $bookingID){
         Log::info(__FUNCTION__ . '(start)');
         $booking = Booking::find($bookingID);
         Log::debug($booking);
-        //非会員の予約の場合、そちらも削除が必要。
         $booking -> delete();
-
+        
+        //非会員の予約の場合、そちらも削除が必要。
         if($booking -> pet_id == 0){
             Log::info(__FUNCTION__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id' , $bookingID)-> first();
             Log::debug(__FUNCTION__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking -> delete();
         }
-        
-        return __FUNCTION__;
     }
+
 
     public function getTodayAllBookings()
     {
@@ -388,6 +395,24 @@ class BookingController extends Controller
         return redirect('/admin/makebooking')->with("success", "予約を登録しました");
     }
 
+        //削除する予約の確認画面
+        public function deleteConfirmForStaff($bookingID)
+        {
+            $booking = Booking::find($bookingID);
+    
+            if (!is_null($booking)) {
+                $booking_owner_id = $booking->pet->user->id;
+            }
+    
+            if ((is_null($booking))) {
+                return redirect('/bookings')
+                    ->with('error', '該当の予約が存在しません。');
+            }
+    
+            return view('admin.bookings.cancelConfirm', [
+                'booking' => $booking
+            ]);
+        }
 
     //管理者用　空き枠の取得
     public function getAcceptableCount()
