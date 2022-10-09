@@ -11,9 +11,11 @@
 
     <p>上記の予約を取り消しますか？</p>
 
-    <form action="{{Route('booking.store')}}" method="post">
+    <form action="{{Route('booking.delete', [
+            'bookingId' => $booking-> id,
+        ])}}" method="post">
         @csrf
-        <input type="submit" name="" id="" value="予約する">
+        <input type="submit" name="" id="" value="キャンセルする">
     </form>
 </div>
 @endsection
