@@ -254,6 +254,8 @@ class BookingController extends Controller
 
     public function adminDeleteBooking(Request $request, $bookingID){
         Log::info(__FUNCTION__ . '(start)');
+
+        return '管理者による削除';
         $booking = Booking::find($bookingID);
         Log::debug($booking);
         $booking -> delete();
