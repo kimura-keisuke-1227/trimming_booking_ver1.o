@@ -119,7 +119,6 @@ class BookingController extends Controller
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
-            'message' => $message,
         ]);
     }
 
