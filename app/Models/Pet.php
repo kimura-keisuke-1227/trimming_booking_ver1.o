@@ -21,7 +21,7 @@ class Pet extends Model
     }
 
     public function getData(){
-        return $this -> name . '('.$this -> dogtype -> type . ' 体重:'.$this->weight .'kg )';
+        return $this -> name . '('.$this -> dogtype -> type .' )';
     }
 
     public function getDataWithOwner(){
