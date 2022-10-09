@@ -4,17 +4,17 @@
 
 @section('content')
 <div class="container">
-    <p>{{$owner -> getFullName()}}様</p>
-    <p>{{$pet -> getData()}}</p>
-    <p>{{$course -> getCourseInfo()}}</p>
-    <p>{{$date}}</p>
-    <p>{{$timeStr}}</p>
-
+    <p>予約ID:{{$booking ->id}}</p>
+    <p>ペット:{{$booking -> getBookingInfoForStaff()}}</p>
+    <p>コース:{{$booking -> getBookingCourseAndDogTypeInfoForStaff()}}</p>
+    <p>日付:{{$booking -> date }}</p>
+    <p>開始時間:{{$booking -> getStartTime()}}</p>
+    <p>終了時間:{{$booking -> getEndTime()}}</p>
     <p>上記の予約を取り消しますか？</p>
 
     <form action="{{Route('booking.store')}}" method="post">
         @csrf
-        <input type="submit" name="" id="" value="予約する">
+        <input type="submit" name="" id="" value="キャンセルする">
     </form>
 </div>
 @endsection
