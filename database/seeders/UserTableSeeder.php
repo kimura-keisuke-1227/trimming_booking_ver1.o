@@ -25,6 +25,7 @@ class UserTableSeeder extends Seeder
             'first_name_kana' => 'イチゴウ',
             'email' => '000@gmail.com' ,
             'phone' => '0120-000-000' ,
+            'auth' => 1,
             'password' => $password,
             'default_salon' => 1,
         ];
@@ -41,6 +42,7 @@ class UserTableSeeder extends Seeder
             'phone' => '0120-222-222' ,
             'password' => $password,
             'default_salon' => 2,
+            'auth' => 0,
         ];
         DB::table('users') -> insert($param);
         
@@ -55,6 +57,7 @@ class UserTableSeeder extends Seeder
             'phone' => '0120-333-333' ,
             'password' => $password,
             'default_salon' => 3,
+            'auth' => 0,
         ];
         DB::table('users') -> insert($param);
         
@@ -69,6 +72,7 @@ class UserTableSeeder extends Seeder
             'phone' => '0120-444-444' ,
             'password' => $password,
             'default_salon' => 3,
+            'auth' => 0,
         ];
         DB::table('users') -> insert($param);
 
