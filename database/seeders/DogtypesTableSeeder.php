@@ -115,5 +115,20 @@ class DogtypesTableSeeder extends Seeder
             'order' => 200
         ];
         DB::table('dogtypes') -> insert($param);
+        $param =[
+            'type' => 'その他(小型犬)',
+            'order' => 210
+        ];
+        DB::table('dogtypes') -> insert($param);
+        $param =[
+            'type' => 'その他(中型犬)',
+            'order' => 220
+        ];
+        DB::table('dogtypes') -> insert($param);
+        $param =[
+            'type' => 'その他(大型犬)',
+            'order' => 230
+        ];
+        DB::table('dogtypes') -> insert($param);
     }
 }
