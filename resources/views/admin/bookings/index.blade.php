@@ -49,6 +49,7 @@
             <th>飼い主</th>
             <th>ペット</th>
             <th>コース</th>
+            <th>コメント</th>
             <th></th>
         </tr>
         @foreach($bookings as $booking)
@@ -66,6 +67,7 @@
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
+            <td>コメント</td>
             <td><a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">キャンセル</a></td>
         </tr>
         @endforeach
@@ -82,6 +84,7 @@
                 {{$booking -> date}} <br>
                 {{$booking -> getStartTime()}}　〜
                 {{$booking -> getEndTime()}}<br>
+                {{$booking -> getEndTimeForOwner()}}<br>
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
                 {{$booking -> pet -> user -> getUserInfo()}} <br>
