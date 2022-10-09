@@ -10,8 +10,8 @@
     <table class="table table-striped pc_only">
         <tr>
             <td>日付</td>
-            <td>時間</td>
-            
+            <td>開始時間</td>
+            <td>終了時間</td>            
             <td>ペット名</td>
             <td>店舗名</td>
             <td>コース</td>
@@ -29,7 +29,7 @@
                 @endphp
                 </td>
                 <td>{{$booking -> getStartTime()}}</td>
-                
+                <td>{{$booking -> getEndTimeForOwner()}}</td>                
                 <td>{{$booking -> pet -> getData()}}</td>
                 <td>{{$booking -> salon -> salon_name}}</td>
                 <td>{{$booking -> getCourse()}}</td>

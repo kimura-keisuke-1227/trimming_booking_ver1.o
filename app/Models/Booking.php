@@ -33,6 +33,10 @@ class Booking extends Model
         $timeNum = $this -> st_time;
         return Util::minuteToTime($timeNum);
     }
+    public function getEndTimeForOwner(){
+        $timeNum = $this -> ed_time_for_show;
+        return Util::minuteToTime($timeNum);
+    }
 
     public function getEndTime(){
         $timeNum = $this -> ed_time;
