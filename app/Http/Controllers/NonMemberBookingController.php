@@ -39,10 +39,12 @@ class NonMemberBookingController extends Controller
         $booking_status = 1;
 
         $ed_time = $st_time + $course-> minute;
+        $ed_time_fow_show = $st_time + $course-> minute_for_show;
 
         $booking->date = $date;
         $booking->st_time = $st_time;
         $booking->ed_time = $ed_time;
+        $booking->ed_time_for_show = $ed_time_fow_show;
         $booking->pet_id = $pet_id;
         $booking->course_id = $course_id;
         $booking->price = $price;

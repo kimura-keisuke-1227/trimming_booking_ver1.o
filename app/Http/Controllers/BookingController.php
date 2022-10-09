@@ -351,6 +351,8 @@ class BookingController extends Controller
         $st_minute = $request->st_minute;
         $ed_hour = $request->ed_hour;
         $ed_minute = $request->ed_minute;
+        $ed_hour_for_show = $request->ed_hour_for_show;
+        $ed_minute_for_show = $request->ed_minute_for_show;
         $pet_id = $request->pet;
         $course_id = $request->course;
         $price =  $request->price;
@@ -359,10 +361,13 @@ class BookingController extends Controller
 
         $st_time = $st_hour * 60 + $st_minute;
         $ed_time = $ed_hour * 60 + $ed_minute;
+        $ed_time_for_show = $ed_hour_for_show * 60 + $ed_minute_for_show;
+
 
         $booking->date = $date;
         $booking->st_time = $st_time;
         $booking->ed_time = $ed_time;
+        $booking->ed_time_for_show = $ed_time_for_show;
         $booking->pet_id = $pet_id;
         $booking->course_id = $course_id;
         $booking->price = $price;
@@ -542,7 +547,9 @@ class BookingController extends Controller
         $date = session('date');
         $st_time = session('time');
         $cut_time = session('course')->minute;
+        $cut_time_for_show = session('course')->minute_for_show;
         $ed_time = $st_time + $cut_time;
+        $ed_time_for_show = $st_time + $cut_time_for_show;
         $pet_id = session('pet')->id;
         $course_id = session('course')->id;
         $price =  session('course')->price;
@@ -552,6 +559,7 @@ class BookingController extends Controller
         $booking->date = $date;
         $booking->st_time = $st_time;
         $booking->ed_time = $ed_time;
+        $booking->ed_time_for_show = $ed_time_for_show;
         $booking->pet_id = $pet_id;
         $booking->course_id = $course_id;
         $booking->price = $price;
