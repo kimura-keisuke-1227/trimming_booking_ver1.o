@@ -21,10 +21,14 @@ class Pet extends Model
     }
 
     public function getData(){
-        return $this -> name . '('.$this -> dogtype -> type . ')';
+        return $this -> name . '('.$this -> dogtype -> type . ' 体重:'.$this->weight .'kg )';
     }
 
     public function getDataWithOwner(){
         return $this -> user -> getUserInfo() . ' ー ' . $this -> getData();
     } 
+
+    public function getNameAndWeightForTimeTable(){
+        return $this -> user -> last_name . $this-> name ;
+    }
 }
