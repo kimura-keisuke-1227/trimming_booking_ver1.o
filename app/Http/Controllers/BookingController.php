@@ -511,7 +511,7 @@ class BookingController extends Controller
     public function gettest($bookingId){
         Log::info(__METHOD__ . '(start)');
 
-        $booking = Booking::find($bookingId);
+        $booking = Booking::with('pet') ->find($bookingId);
 
         if (!is_null($booking)) {
             $booking_owner_id = $booking->pet->user->id;
