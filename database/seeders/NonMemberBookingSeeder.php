@@ -23,6 +23,7 @@ class NonMemberBookingSeeder extends Seeder
             'first_name_kana' => 'タロウ',
             'email' => 'hikaiin1@gmail.com',
             'phone' => '022-222-2222',
+            'weight' => 10,
             'name' => '非会員の犬',
         ];
         DB::table('non_member_bookings') -> insert($param);
@@ -35,6 +36,8 @@ class NonMemberBookingSeeder extends Seeder
             'first_name_kana' => 'タロウ',
             'email' => 'hikaiin1@gmail.com',
             'phone' => '022-222-2222',
+
+            'weight' => 10,
             'name' => '非会員の犬',
         ];
         DB::table('non_member_bookings') -> insert($param);
