@@ -508,6 +508,22 @@ class BookingController extends Controller
     }
 
 
+    public function gettest($bookingId){
+        Log::info(__METHOD__ . '(start)');
+
+        $booking = Booking::find($bookingId);
+
+        if (!is_null($booking)) {
+            $booking_owner_id = $booking->pet->user->id;
+        }
+
+        Log::info(__METHOD__ . '(end)');
+        return view('admin.bookings.showBookingDetail', [
+            'booking' => $booking
+        ]);
+        Log::info(__METHOD__ . '(end)');
+        return ('hoge') ;
+    }
 
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
     {
