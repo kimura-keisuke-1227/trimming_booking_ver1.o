@@ -252,6 +252,11 @@ Route::post('/admin/cancel/{bookingId}',
 ) -> middleware('auth')
 -> name('admin.cancel');
 
+Route::get('/admin/bookingDetail/{bookingId}',
+    [BookingController::class,'gettest'])
+->middleware('auth')
+->name('admin.showBookingDetail');
+
 /*****************************************************************
 *
 *   パスワードリセット
