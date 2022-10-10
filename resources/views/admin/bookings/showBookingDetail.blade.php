@@ -6,7 +6,7 @@
 <div class="container">
     <p>{{$booking -> id}}</p>
 
-    <p>上記の予約を取り消しますか？</p>
+    <button type="button" onClick="history.back()">戻る</button>
 
 </div>
 @endsection
