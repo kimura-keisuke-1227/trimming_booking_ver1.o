@@ -4,13 +4,36 @@
 
 @section('content')
 <div class="container">
-    <p>予約ID:{{$booking ->id}}</p>
-    <p>ペット:{{$booking -> getBookingInfoForStaff()}}</p>
-    <p>コース:{{$booking -> getBookingCourseAndDogTypeInfoForStaff()}}</p>
-    <p>日付:{{$booking -> date }}</p>
-    <p>開始時間:{{$booking -> getStartTime()}}</p>
-    <p>終了時間:{{$booking -> getEndTime()}}</p>
-    <p>上記の予約を取り消しますか？</p>
+<table class="table table-striped">
+        <tr>
+            <td>予約ID</td>
+            <td>{{$booking -> id}}</td>
+        </tr>
+        <tr>
+            <td>ペット</td>
+            <td>{{$booking -> getBookingInfoForStaff()}}</td>
+        </tr>
+        <tr>
+            <td>日付</td>
+            <td>{{$booking -> date}}</td>
+        </tr>
+        <tr>
+            <td>開始時間</td>
+            <td>{{$booking -> getStartTime()}}</td>
+        </tr>
+        <tr>
+            <td>終了時間</td>
+            <td>{{$booking -> getEndTime()}}</td>
+        </tr>
+        <tr>
+            <td>お客様向け終了時間</td>
+            <td>{{$booking -> getEndTimeForOwner()}}</td>
+        </tr>
+        <tr>
+            <td>メッセージ</td>
+            <td>{{$booking -> getBookingMessage()}}</td>
+        </tr>
+    </table>
 
     <form action="{{Route('booking.delete', [
             'bookingId' => $booking-> id,
