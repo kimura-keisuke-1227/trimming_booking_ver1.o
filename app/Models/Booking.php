@@ -69,6 +69,10 @@ class Booking extends Model
         ')';
     }
 
+    public function getBookingMessage(){
+        return $this -> message;
+    }
+
     /****************************************************************************************
     *
     *   非会員の予約に関する情報を取得
