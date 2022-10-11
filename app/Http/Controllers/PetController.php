@@ -18,9 +18,11 @@ class PetController extends Controller
      */
     public function index()
     {
+        Log::info(__METHOD__ . '(start)');
         $owner = Auth::user();
         $pets = Pet::where('owner_id' , $owner -> id) -> get();
-
+        
+        Log::info(__METHOD__ . '(end)');
         return view('pets.index',[
             'owner' => $owner ,
             'pets' => $pets
@@ -34,10 +36,12 @@ class PetController extends Controller
      */
     public function create()
     {   
+        Log::info(__METHOD__ . '(start)');
         $dogTypes = Dogtype::all();
         session([
             'dogtypes' => $dogTypes
         ]);
+        Log::info(__METHOD__ . '(end)');
         return view('pets.create',[
             'dogtypes' => $dogTypes,
         ]
@@ -52,17 +56,18 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {   
+        Log::info(__METHOD__ . '(start)');
         $dogTypes = session('dogtypes');
         
         $pet = new Pet;
-
+        
         $request -> validate([
             'name' =>['required', 'string' , 'max:255'],
             'weight' => ['numeric'],
         ]);
-
+        
         #$form = $request -> all();
-
+        
         #unset($form['_token']);
         $owner = Auth::user();
         $pet -> owner_id = $owner -> id ;
@@ -73,6 +78,7 @@ class PetController extends Controller
         $pet ->  save();
         
         Log::debug('登録ペット情報：(owner_id)' . $request -> owner_id . ' (pet_name)' . $request -> pet_name . '(dog_type)' . $request -> dogtype );
+        Log::info(__METHOD__ . '(end)');
         return redirect('/pets') -> with('success','ペットを登録をしました。');
     }
 

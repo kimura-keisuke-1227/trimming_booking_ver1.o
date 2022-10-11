@@ -37,6 +37,8 @@ class PasswordController extends Controller
     */
     public function emailFormResetPassword()
     {
+        Log::info(__METHOD__ . '(start)');
+        Log::info(__METHOD__ . '(end)');
         return view('user.reset_password.email_form');
     }
 
@@ -47,7 +49,7 @@ class PasswordController extends Controller
     * @return \Illuminate\Http\RedirectResponse
     */
     public function sendEmailResetPassword(SendEmailRequest $request)
-    {   
+    {   Log::info(__METHOD__ . '(start)');
         try {
             $user = $this->userRepository->findFromEmail($request->email);
             $userToken = $this->userTokenRepository->updateOrCreateUserToken($user->id);
@@ -57,11 +59,12 @@ class PasswordController extends Controller
         } catch(Exception $e) {
             Log::error(__METHOD__ . '...ユーザーへのパスワード再設定用メール送信に失敗しました。 request_email = ' . $request->email . ' error_message = ' . $e);
             return redirect()->route('password_reset.email.form')
-                ->with('error', '処理に失敗しました。時間をおいて再度お試しください。');
+            ->with('error', '処理に失敗しました。時間をおいて再度お試しください。');
         }
         // メール送信完了画面への不正アクセスを防ぐためのセッションキー
         session()->put(self::MAIL_SENDED_SESSION_KEY, 'user_reset_password_send_email');
-
+        
+        Log::info(__METHOD__ . '(end)');
         return redirect()->route('password_reset.email.send_complete');
     }
 
@@ -72,15 +75,17 @@ class PasswordController extends Controller
     */
     public function sendComplete()
     {
-       // メール送信処理で保存したセッションキーに値がなければアクセスできないようにすることで不正アクセスを防ぐ
+        Log::info(__METHOD__ . '(start)');
+        // メール送信処理で保存したセッションキーに値がなければアクセスできないようにすることで不正アクセスを防ぐ
         if (session()->pull(self::MAIL_SENDED_SESSION_KEY) !== 'user_reset_password_send_email') {
             return redirect()->route('password_reset.email.form')
-                ->with('flash_message', '不正なリクエストです。');
+            ->with('flash_message', '不正なリクエストです。');
         }
-
+        
+        Log::info(__METHOD__ . '(end)');
         return view('user.reset_password.send_complete');
     }
-
+    
         /**
     * ユーザーのパスワード再設定フォーム画面
     *
@@ -89,6 +94,7 @@ class PasswordController extends Controller
     */
     public function edit(Request $request)
     {
+        Log::info(__METHOD__ . '(start)');
         if (!$request->hasValidSignature()) {
             abort(403, 'URLの有効期限が過ぎたためエラーが発生しました。パスワードリセットメールを再発行してください。');
         }
@@ -98,9 +104,10 @@ class PasswordController extends Controller
         } catch (Exception $e) {
             Log::error(__METHOD__ . ' UserTokenの取得に失敗しました。 error_message = ' . $e);
             return redirect()->route('password_reset.email.form')
-                ->with('flash_message', __('パスワードリセットメールに添付されたURLから遷移してください。'));
+            ->with('flash_message', __('パスワードリセットメールに添付されたURLから遷移してください。'));
         }
-
+        
+        Log::info(__METHOD__ . '(end)');
         return view('user.reset_password.edit')
             ->with('userToken', $userToken);
     }
@@ -114,6 +121,7 @@ class PasswordController extends Controller
     */
     public function update(ResetPasswordRequest $request)
     {
+        Log::info(__METHOD__ . '(start)');
         try {
             $userToken = $this->userTokenRepository->getUserTokenfromToken($request->reset_token);
             $this->userRepository->updateUserPassword($request->password, $userToken->user_id);
@@ -121,27 +129,30 @@ class PasswordController extends Controller
         } catch (Exception $e) {
             Log::error(__METHOD__ . '...ユーザーのパスワードの更新に失敗しました。...error_message = ' . $e);
             return redirect()->route('password_reset.email_form')
-                ->with('flash_message', __('処理に失敗しました。時間をおいて再度お試しください。'));
+            ->with('flash_message', __('処理に失敗しました。時間をおいて再度お試しください。'));
         }
         // パスワードリセット完了画面への不正アクセスを防ぐためのセッションキー
         $request->session()->put(self::UPDATE_PASSWORD_SESSION_KEY, 'user_update_password');
-
+        
+        Log::info(__METHOD__ . '(end)');
         return redirect()->route('password_reset.edited');
     }
-
-        /**
+    
+    /**
     * パスワードリセット完了ページ
     *
     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
     */
     public function edited()
     {
+        Log::info(__METHOD__ . '(start)');
         // パスワード更新処理で保存したセッションキーに値がなければアクセスできないようにすることで不正アクセスを防ぐ
         if (session()->pull(self::UPDATE_PASSWORD_SESSION_KEY) !== 'user_update_password') {
             return redirect()->route('password_reset.email.form')
-                ->with('flash_message', '不正なリクエストです。');
+            ->with('flash_message', '不正なリクエストです。');
         }
-
+        
+        Log::info(__METHOD__ . '(end)');
         return view('user.reset_password.edited');
     }
 }

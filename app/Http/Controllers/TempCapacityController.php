@@ -16,9 +16,11 @@ class TempCapacityController extends Controller
      */
     public function index()
     {
+        Log::info(__METHOD__ . '(start)');
         $tempCapacities = TempCapacity::all();
         $salons = Salon::all();
         
+        Log::info(__METHOD__ . '(end)');
         return view('admin.tempcapacity.index',[
             'tempcapacities' => $tempCapacities,
             '$salons' => $salons,
@@ -32,7 +34,9 @@ class TempCapacityController extends Controller
      */
     public function create()
     {
+        Log::info(__METHOD__ . '(start)');
         $salons = Salon::all();
+        Log::info(__METHOD__ . '(end)');
         return view('admin.tempcapacity.create',[
             'salons' => $salons,
         ]);
@@ -46,6 +50,7 @@ class TempCapacityController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info(__METHOD__ . '(start)');
         $tempCapacity = new TempCapacity();
         $salon_id = $request -> salon;
         $st_date = $request -> st_date;
@@ -57,16 +62,17 @@ class TempCapacityController extends Controller
         $ed_hour = $request -> ed_hour;
         $ed_minute = $request -> ed_minute;
         $capacity = $request -> capacity;
-
+        
         $tempCapacity -> salon_id = $salon_id;
         $tempCapacity -> st_date = $st_date;
         $tempCapacity -> st_time = $st_hour * 60 + $st_minute;
         $tempCapacity -> ed_date = $ed_date;
         $tempCapacity -> ed_time = $ed_hour * 60 + $ed_minute;
         $tempCapacity -> capacity = $capacity;
-
+        
         $tempCapacity -> save();
         Log::debug($tempCapacity);
+        Log::info(__METHOD__ . '(end)');
         return redirect('/admin/capacitysetting');
 
     }
