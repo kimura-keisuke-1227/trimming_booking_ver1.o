@@ -598,6 +598,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $booking = new Booking();
+        $owner = Auth::user();
 
         $date = session('date');
         $st_time = session('time');
@@ -625,7 +626,9 @@ class BookingController extends Controller
 
         $booking->save();
         Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
-        Mail::to('kim.ksuke@gmail.com')
+        Mail::to($owner->email)
+            ->send(new ContactAdminMail());
+        Mail::to(session('salon')->email)
             ->send(new ContactAdminMail());
 
         return redirect('/bookings')->with('success', '予約を登録をしました。');
