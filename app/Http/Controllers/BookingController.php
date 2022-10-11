@@ -17,6 +17,7 @@ use App\classes\Util;
 use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
+use App\Mail\BookingNotificationForSalon;
 use App\classes\BookingsCalc;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
@@ -629,7 +630,7 @@ class BookingController extends Controller
         Mail::to($owner->email)
             ->send(new ContactAdminMail());
         Mail::to(session('salon')->email)
-            ->send(new ContactAdminMail());
+            ->send(new BookingNotificationForSalon());
 
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
