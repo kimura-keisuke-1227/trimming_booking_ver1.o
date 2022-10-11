@@ -64,7 +64,7 @@ class BookingsCalc
                  = $getOtherCapacitiesOfMultiDate[$date];
  
              $canBookTimeListOfADay = [];
-             for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+             for ($time = $st_time; $time + $cut_time< $ed_time; $time = $time + $step_time) {
  
                  //カットの終了時間が閉店時間を超えたら枠0扱い
                  $cutting_ed_time = $time + $cut_time;
