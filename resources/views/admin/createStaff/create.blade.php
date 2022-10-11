@@ -48,7 +48,7 @@
                 --}}
         @endif
         <div class="py-4 bg-white rounded">
-            <form action="{{route('admin.users.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('admin.users.storeStaff')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">スタッフ登録</h3>
