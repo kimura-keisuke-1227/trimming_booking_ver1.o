@@ -27,7 +27,7 @@ class SalonsTableSeeder extends Seeder
         DB::table('salons') -> insert($param);
 
         $param = [
-            'salon_name' => '研究学園店' ,
+            'salon_name' => '万博公園店' ,
             'prefecture' =>  '茨城県',
             'address1' =>  'つくば市流星台',
             'address2' =>  '234-567',
