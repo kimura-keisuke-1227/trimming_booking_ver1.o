@@ -53,7 +53,7 @@ class ContactAdminMail extends Mailable
         $salon = session('salon');
 
         return $this->from($salon->email) 
-        ->subject('予約がありました。')
+        ->subject('予約を受付けました。')
         ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
             'user' => $user,
             'pet' => $pet,
