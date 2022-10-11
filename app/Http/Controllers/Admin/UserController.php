@@ -74,15 +74,24 @@ class UserController extends Controller
 
     public function storeStaff(StoreUserRequest $request)
     {
+        Log::info(__METHOD__.'(start)');
         Log::debug($request);
         $validated = $request -> validated();
         $validated['password'] =Hash::make($validated['password']);
         $validated['auth'] =1;
+        Log::debug(__METHOD__. ' $validated:');
         Log::debug($validated);
-        User::create($validated);
-
+        $user = User::create($validated);
+        Log::debug(__METHOD__ . ' user_id');
+        Log::debug($user->id);
+        $user = User::find($user->id);
+        $user -> auth = 1;
+        $user -> save();
+        Log::info(__METHOD__.'(end)');
         #return back() -> with('success','会員登録をしました。');
-        return redirect('login') -> with('success','会員登録をしました。');
+
+
+        return redirect('login') -> with('success','スタッフ登録をしました。');
     }
 
     /**
