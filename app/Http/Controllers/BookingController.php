@@ -614,6 +614,8 @@ class BookingController extends Controller
         $booking_status = 1;
         $message = session('message');
 
+        Log::debug(__METHOD__ . ' message：' . $message);
+
         $booking->date = $date;
         $booking->st_time = $st_time;
         $booking->ed_time = $ed_time;
@@ -627,10 +629,14 @@ class BookingController extends Controller
 
         $booking->save();
         Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+        /*
         Mail::to($owner->email)
             ->send(new ContactAdminMail());
+        */
+        
         Mail::to(session('salon')->email)
             ->send(new BookingNotificationForSalon());
+        
 
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
