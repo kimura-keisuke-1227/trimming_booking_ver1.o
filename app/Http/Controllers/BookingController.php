@@ -544,8 +544,6 @@ class BookingController extends Controller
         return view('admin.bookings.showBookingDetail', [
             'booking' => $booking
         ]);
-        Log::info(__METHOD__ . '(end)');
-        return ('hoge') ;
     }
 
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
