@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td>ペット</td>
-            <td>{{$booking -> getBookingInfoForStaff()}}</td>
+            <td>ペット情報</td>
         </tr>
         <tr>
             <td>日付</td>
