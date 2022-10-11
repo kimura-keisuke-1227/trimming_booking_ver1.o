@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+use App\classes\Util;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -58,9 +60,9 @@ class BookingNotificationForSalon extends Mailable
             'salon' => $salon,
             'course' => $course,
             'message_text' => $message,
-            'date' => $date,
-            'st_time' => $st_time,
-            'ed_time_for_show' => $ed_time_for_show,
+            'date' => Util::dbDateToStrDate($date),
+            'st_time' => Util::minuteToTime($st_time),
+            'ed_time_for_show' => Util::minuteToTime($ed_time_for_show),
         ]);
     }
 }

@@ -5,6 +5,13 @@ use App\Models\Setting;
 
 class Util
 {
+    public static function dbDateToStrDate($date){
+        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+        $dateStr = date('m/d',strtotime($date)) .'('. $week[ date('w',strtotime($date))] . ')';
+
+        return $dateStr;
+    }
+
     public static function minuteToTime($timeNum){
         $hour = (string) floor($timeNum / 60);
         $minute = (string) $timeNum % 60;
