@@ -1,5 +1,7 @@
 @extends('layouts.guest')
 
+@section('title', 'スタッフ登録')
+
 @section('content')
 <section class="py-8">
     <div class="container px-4 mx-auto">
