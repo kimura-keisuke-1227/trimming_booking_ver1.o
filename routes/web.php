@@ -32,7 +32,7 @@ Route::get('/', function () {
 Route::get('/',function(){
     $user =  Auth::user();
 
-    if($user->id == 1){
+    if($user->auth == 1){
         return redirect('/admin');
     }
 
