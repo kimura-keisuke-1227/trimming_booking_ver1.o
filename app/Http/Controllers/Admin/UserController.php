@@ -55,6 +55,30 @@ class UserController extends Controller
         $validated = $request -> validated();
         $validated['password'] =Hash::make($validated['password']);
         Log::debug($validated);
+        $validated['auth'] =0;
+        User::create($validated);
+
+        #return back() -> with('success','会員登録をしました。');
+        return redirect('login') -> with('success','会員登録をしました。');
+    }
+
+
+    //スタッフ登録
+    public function createStaff()
+    {
+        $salons = Salon::all();
+        return view('admin.createStaff.create',[
+            'salons' => $salons
+        ]);
+    }
+
+    public function storeStaff(StoreUserRequest $request)
+    {
+        Log::debug($request);
+        $validated = $request -> validated();
+        $validated['password'] =Hash::make($validated['password']);
+        $validated['auth'] =1;
+        Log::debug($validated);
         User::create($validated);
 
         #return back() -> with('success','会員登録をしました。');
