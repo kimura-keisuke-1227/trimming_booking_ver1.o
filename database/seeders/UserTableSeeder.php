@@ -43,6 +43,7 @@ class UserTableSeeder extends Seeder
             'password' => $password,
             'default_salon' => 2,
             'auth' => 0,
+            'cameBefore' => 1
         ];
         DB::table('users') -> insert($param);
         

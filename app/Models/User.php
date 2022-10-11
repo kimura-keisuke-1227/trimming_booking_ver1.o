@@ -26,6 +26,8 @@ class User extends Authenticatable
         'phone',
         'default_salon',
         'password',
+        'cameBefore',
+        'auth'
     ];
 
     /**
