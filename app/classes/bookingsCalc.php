@@ -64,6 +64,7 @@ class BookingsCalc
                  = $getOtherCapacitiesOfMultiDate[$date];
  
              $canBookTimeListOfADay = [];
+             //20221012 現在時間+カット時間が閉店時刻よりも前の場合に表示
              for ($time = $st_time; $time + $cut_time< $ed_time; $time = $time + $step_time) {
  
                  //カットの終了時間が閉店時間を超えたら枠0扱い
