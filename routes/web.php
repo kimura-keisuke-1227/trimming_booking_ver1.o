@@ -257,6 +257,17 @@ Route::get('/admin/bookingDetail/{bookingId}',
 ->middleware('auth')
 ->name('admin.showBookingDetail');
 
+
+//スタッフ追加
+Route::get('/admin/createStaff',[BookingController::class,'gettest']);
+
+Route::get('/admin/createStaff',
+[UserController::class,'createStaff']) -> name('admin.users.createStaff')
+->middleware('auth');
+Route::post('/admin/createStaff',[UserController::class,'storeStaff']) 
+-> name('admin.users.storeStaff')
+-> middleware('auth');
+
 /*****************************************************************
 *
 *   パスワードリセット
