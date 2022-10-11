@@ -28,9 +28,10 @@ class ContactAdminMail extends Mailable
      * @return $this
      */
     public function build()
-    {
-        $mailAddressFromSalon = Util::getSetting('test@gmail.com','mailFromSalon',false);
-        $mailSenderName = Util::getSetting('管理者','mailSenderName',false);
+    {   
+        $salon = session('salon');
+        $mailAddressFromSalon = $salon -> email;
+        $mailSenderName = 'con affetto ' . $salon -> salon_name;
 
         return $this
         ->from($mailAddressFromSalon, $mailSenderName)
