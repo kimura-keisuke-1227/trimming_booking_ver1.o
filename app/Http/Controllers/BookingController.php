@@ -268,28 +268,35 @@ class BookingController extends Controller
      ***************************************************************/
 
     public function adminDeleteBookingConfirm(Request $request, $bookingID){
-
+        Log::info(__FUNCTION__ . '(start)');
+        
         $booking = Booking::find($bookingID);
+        Log::info(__FUNCTION__ . '(end)');
         return view('admin.bookings.deleteConfirm',[
             'booking' => $booking
         ]);
     }
 
     public function adminDeleteBooking(Request $request, $bookingID){
-        Log::info(__FUNCTION__ . '(start)');
-
-        return '管理者による削除';
+        Log::info(__METHOD__ . '(start)');
+        $staff = Auth::user();
         $booking = Booking::find($bookingID);
         Log::debug($booking);
+
         $booking -> delete();
+        Log::info(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id .')');
+        Log::info(__METHOD__ . '(end)');
         
         //非会員の予約の場合、そちらも削除が必要。
         if($booking -> pet_id == 0){
-            Log::info(__FUNCTION__ . ': This booking is by non member. Need to delete non member booking!');
+            Log::info(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id' , $bookingID)-> first();
-            Log::debug(__FUNCTION__ . ' Deleting non member booking:' . $nonMemberBooking);
+            Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking -> delete();
         }
+
+        return redirect() -> route('admin.checkBookings.dateAndSalon')
+        ->with("success", "予約をキャンセルしました");
     }
 
 
@@ -528,14 +535,10 @@ class BookingController extends Controller
     }
 
 
-    public function gettest($bookingId){
+    public function adminShowBookingDetail($bookingId){
         Log::info(__METHOD__ . '(start)');
 
         $booking = Booking::with('pet') ->find($bookingId);
-
-        if (!is_null($booking)) {
-            $booking_owner_id = $booking->pet->user->id;
-        }
 
         Log::info(__METHOD__ . '(end)');
         return view('admin.bookings.showBookingDetail', [

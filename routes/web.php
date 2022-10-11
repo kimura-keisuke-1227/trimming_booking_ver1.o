@@ -253,7 +253,7 @@ Route::post('/admin/cancel/{bookingId}',
 -> name('admin.cancel');
 
 Route::get('/admin/bookingDetail/{bookingId}',
-    [BookingController::class,'gettest'])
+    [BookingController::class,'adminShowBookingDetail'])
 ->middleware('auth')
 ->name('admin.showBookingDetail');
 
