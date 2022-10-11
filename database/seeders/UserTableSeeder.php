@@ -16,14 +16,14 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {   
-        $password = '12345678';
+        $password = 'admin_password';
         $password = Hash::make($password);
         $param =[
-            'last_name' => '管理者',
-            'last_name_kana' => '１号',
-            'first_name' => 'カンリシャ',
-            'first_name_kana' => 'イチゴウ',
-            'email' => '000@gmail.com' ,
+            'last_name' => '管理',
+            'last_name_kana' => '者',
+            'first_name' => 'カンリ',
+            'first_name_kana' => 'シャ',
+            'email' => 'admin' ,
             'phone' => '0120-000-000' ,
             'auth' => 1,
             'password' => $password,
