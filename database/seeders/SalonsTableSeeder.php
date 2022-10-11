@@ -23,7 +23,7 @@ class SalonsTableSeeder extends Seeder
             'phone' => '0120-444-444' ,
             'email' => 'con.affetto.tsukuba@gmail.com' ,
             'st_time' => 600 ,
-            'ed_time' => 1200 ,
+            'ed_time' => 1080 ,
         ];
         DB::table('salons') -> insert($param);
 
@@ -35,7 +35,7 @@ class SalonsTableSeeder extends Seeder
             'phone' => '0120-444-444' ,
             'email' => 'con.affetto.tsukuba@gmail.com' ,
             'st_time' => 600 ,
-            'ed_time' => 1200 ,
+            'ed_time' => 1080 ,
         ];
         DB::table('salons') -> insert($param);
 
