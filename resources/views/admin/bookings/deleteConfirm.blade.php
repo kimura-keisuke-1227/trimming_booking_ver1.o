@@ -35,7 +35,7 @@
         </tr>
     </table>
 
-    <form action="{{Route('booking.delete', [
+    <form action="{{Route('admin.cancel', [
             'bookingId' => $booking-> id,
         ])}}" method="post">
         @csrf
