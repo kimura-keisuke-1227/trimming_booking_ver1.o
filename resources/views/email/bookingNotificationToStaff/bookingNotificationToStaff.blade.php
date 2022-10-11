@@ -1,4 +1,4 @@
-{{ $user }} 様
+{{ $user->last_name .$user ->first_name }} 様
 
 以下の通り、予約を受付けました。
 

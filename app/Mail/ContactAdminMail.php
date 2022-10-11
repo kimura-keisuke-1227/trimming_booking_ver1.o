@@ -13,7 +13,7 @@ use App\classes\Util;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class BookingNotificationForSalon extends Mailable
+class ContactAdminMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -54,7 +54,7 @@ class BookingNotificationForSalon extends Mailable
 
         return $this->from($salon->email) 
         ->subject('予約がありました。')
-        ->text('email.bookingNotification.bookingNotification',[
+        ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
             'user' => $user,
             'pet' => $pet,
             'salon' => $salon,
