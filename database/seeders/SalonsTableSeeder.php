@@ -21,6 +21,7 @@ class SalonsTableSeeder extends Seeder
             'address1' =>  'つくば市流星台',
             'address2' =>  '123-456',
             'phone' => '0120-444-444' ,
+            'email' => 'con.affetto.tsukuba@gmail.com' ,
             'st_time' => 600 ,
             'ed_time' => 1200 ,
         ];
@@ -32,6 +33,7 @@ class SalonsTableSeeder extends Seeder
             'address1' =>  'つくば市流星台',
             'address2' =>  '234-567',
             'phone' => '0120-444-444' ,
+            'email' => 'con.affetto.tsukuba@gmail.com' ,
             'st_time' => 600 ,
             'ed_time' => 1200 ,
         ];
@@ -43,6 +45,7 @@ class SalonsTableSeeder extends Seeder
             'address1' =>  '越谷市東越谷',
             'address2' =>  '345-678',
             'phone' => '0120-444-444' ,
+            'email' => 'con.affetto.koshigaya@gmail.com' ,
             'st_time' => 600 ,
             'ed_time' => 1200 ,
         ];
