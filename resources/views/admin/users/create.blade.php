@@ -86,6 +86,14 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="email">過去に当店の利用がありますか？</label>
+                        <select name="beforeCame">
+                            <option value="1">ない</option>
+                            <option value="2">ある</option>
+                        </select>
+                    </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">メールアドレス</label>
                         <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ old('email') }}">
