@@ -113,6 +113,9 @@ class BookingController extends Controller
         $pet = $pets->find($pet_id);
         $salons = Salon::all();
         $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
+        $message_before = $pet ->message;
+
+        Log::debug(__METHOD__ . '( before message is "' . $message_before . '"');
         
         session([
             'pet' => $pet,
@@ -126,6 +129,7 @@ class BookingController extends Controller
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
+            'message_before' => $message_before
         ]);
     }
 
