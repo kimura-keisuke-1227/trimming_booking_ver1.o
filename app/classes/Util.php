@@ -11,6 +11,11 @@ class Util
 
         return $dateStr;
     }
+    public static function dbDateToStrDateForBirthday($date){
+        $dateStr = date('Y年m月d日',strtotime($date));
+
+        return $dateStr;
+    }
 
     public static function minuteToTime($timeNum){
         $hour = (string) floor($timeNum / 60);
