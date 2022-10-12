@@ -116,9 +116,12 @@ class NonMemberBookingController extends Controller
         $mail = $request ->mail;
         $phone = $request ->phone;
         $pet_name = $request -> pet_name;
+        $weight = $request -> weight;
         $salons = Salon::all();
 
         $courses = Course::where('dogtype_id', $dogtype->id) -> get();
+        
+
         
         session([
             'dogtype' => $dogtype,
@@ -131,6 +134,7 @@ class NonMemberBookingController extends Controller
             'salons' => $salons,
             'mail' => $mail,
             'phone' => $phone,
+            'weight' => $weight,
         ]);
 
         Log::debug(__FUNCTION__ . session('phone'));
