@@ -9,7 +9,7 @@
     <form action="{{Route('booking.selectCourse')}}" method="post">
         @csrf
         <div class="mb-6">
-            <label class="block text-sm font-medium mb-2" for="category">◆予約するペットを選択してください。</label>
+            <label class="block text-sm font-medium mb-2" for="category">◆予約するペットを選択してください。<br>(ペットが登録されていない場合は先に登録してください。)</label>
             <div class="flex">
                 <select id="pet" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="pet">
                     @foreach($pets as $pet)
