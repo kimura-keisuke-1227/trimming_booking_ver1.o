@@ -17,6 +17,10 @@ class NonMemberBooking extends Model
         return $this -> belongsTo('App\Models\Dogtype');
     }
 
+    public function getDogNameWithLastName(){
+        return $this -> name;
+    }
+
     public function getBookingInfo(){
         return 'hoge';
     }

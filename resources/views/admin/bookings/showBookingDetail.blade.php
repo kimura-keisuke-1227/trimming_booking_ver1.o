@@ -11,7 +11,13 @@
         </tr>
         <tr>
             <td>ペット</td>
-            <td>ペット情報</td>
+            @if($booking -> pet_id ==0)
+            
+            <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
+            @else
+            <td>{{$booking -> getBookingInfoForStaff()}}</td>
+
+            @endif
         </tr>
         <tr>
             <td>日付</td>
