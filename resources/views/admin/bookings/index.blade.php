@@ -55,7 +55,7 @@
         @foreach($bookings as $booking)
         <tr>
             <td>{{$booking -> salon -> salon_name}}</td>
-            <td>{{$booking -> date}}</td>
+            <td>{{$booking -> getBookingDate()}}</td>
             <td>{{$booking -> getStartTime()}}</td>
             <td>{{$booking -> getEndTime()}}</td>
             <td>{{$booking -> getEndTimeForOwner()}}</td>
