@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.admin')
 
 @section('title', 'スタッフ登録')
 
