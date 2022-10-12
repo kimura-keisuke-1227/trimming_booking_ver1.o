@@ -1,6 +1,6 @@
-@extends('layouts.guest')
+@extends('layouts.admin')
 
-@section('title', '新規会員登録')
+@section('title', '会員情報)
 
 @section('content')
 <section class="py-8">
@@ -51,7 +51,7 @@
             <form action="{{route('admin.users.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
-                    <h3 class="text-xl font-bold">ユーザ登録</h3>
+                    <h3 class="text-xl font-bold">会員情報</h3>
                 </div>
 
                 <div class="pt-4 px-6">
