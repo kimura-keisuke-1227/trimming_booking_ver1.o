@@ -657,6 +657,13 @@ class BookingController extends Controller
         $booking->save();
         Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         
+        Log::info(__METHOD__ . ' start save default message of pet id('.$pet_id .') -> "' .$message);
+        
+        $pet = Pet::find($pet_id);
+        $pet->message = $message;
+        $pet -> save();
+        Log::info(__METHOD__ . ' end save default message of pet id('.$pet_id .') -> "' .$message);
+
         Mail::to($owner->email)
         ->send(new ContactAdminMail());
         
