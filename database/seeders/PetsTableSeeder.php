@@ -22,6 +22,7 @@ class PetsTableSeeder extends Seeder
             'name' => 'テスト犬１号',
             'weight' => 10,
             'birthday' => '2020-3-31',
+            'message' => '初期値メッセージテスト',
         ];
         DB::table('pets') -> insert($param);
         $param =[

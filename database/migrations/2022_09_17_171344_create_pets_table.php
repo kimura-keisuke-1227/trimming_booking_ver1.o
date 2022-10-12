@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('birthday') -> nullable() -> default(null);
             $table->float('weight');
+            $table->text('message') ->nullable();
             $table->timestamps();
         });
     }
