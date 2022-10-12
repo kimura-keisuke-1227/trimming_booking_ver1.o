@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.guest')
 
 @section('title' , 'コース選択')
 

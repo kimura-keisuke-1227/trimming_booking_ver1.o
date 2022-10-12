@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.guest')
 
 @section('title', '予約内容の確認')
 

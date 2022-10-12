@@ -1,5 +1,5 @@
 
-@extends('layouts.user')
+@extends('layouts.guest')
 
 @section('title','予約日時選択')
 
