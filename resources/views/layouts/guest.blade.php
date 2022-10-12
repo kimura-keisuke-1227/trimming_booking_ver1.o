@@ -17,6 +17,8 @@
 </head>
 
 <body class="antialiased bg-body text-body font-body">
+
+{{-- 
     <div>
         <!-- ▼▼▼▼共通ヘッダー(SP)▼▼▼▼　-->
         <nav class="lg:hidden py-6 px-6 bg-gray-800">
@@ -44,6 +46,7 @@
         </div>
         
         <!-- ▲▲▲▲共通サイドナビ▲▲▲▲　-->
+ --}}
 
         <div class="container">
 
