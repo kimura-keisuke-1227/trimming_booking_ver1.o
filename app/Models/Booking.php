@@ -26,7 +26,7 @@ class Booking extends Model
     }
 
     public function getBookingDate(){
-        return date('M月d日',$this->date);
+        return Util::dbDateToStrDate($this -> date);
     }
 
     public function getStartTime(){
@@ -69,9 +69,20 @@ class Booking extends Model
         ')';
     }
 
+    public function getMemberName(){
+        $user = $this -> pet -> user;
+        $user_name = $user -> last_name . $user -> first_name;
+        return $user_name;
+    }
+
+    public function getNoMemberName(){
+        $noMemberBooking = $this -> nonMemberBooking ->first();
+    }
+
     public function getBookingMessage(){
         return $this -> message;
     }
+
 
     /****************************************************************************************
     *
