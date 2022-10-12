@@ -10,6 +10,15 @@
             <td>{{$booking -> id}}</td>
         </tr>
         <tr>
+            <td>飼い主様</td>
+            @if($booking -> pet_id ==0)
+
+            <td>{{$booking -> getNonMemberOwner() }}</td>
+            @else
+            <td>{{$booking -> getMemberName()}}</td>
+
+            @endif
+        <tr>
             <td>ペット</td>
             @if($booking -> pet_id ==0)
             
@@ -20,8 +29,18 @@
             @endif
         </tr>
         <tr>
+            <td>コース</td>
+            @if($booking -> pet_id ==0)
+            
+            <td>{{$booking -> getDogTypeAndCourse() }}</td>
+            @else
+            <td>{{$booking -> getBookingCourseAndDogTypeInfoForStaff()}}</td>
+
+            @endif
+        </tr>
+        <tr>
             <td>日付</td>
-            <td>{{$booking -> date}}</td>
+            <td>{{$booking -> getBookingDate()}}</td>
         </tr>
         <tr>
             <td>開始時間</td>
