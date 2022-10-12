@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\classes\Util;
 
 class Pet extends Model
 {
@@ -30,5 +31,9 @@ class Pet extends Model
 
     public function getNameAndWeightForTimeTable(){
         return $this -> user -> last_name . $this-> name ;
+    }
+
+    public function getPetBirthday(){
+        return Util::dbDateToStrDateForBirthday($this->birthday);
     }
 }
