@@ -18,7 +18,7 @@
             <td>{{$pet -> name}}</td>
             <td>{{$pet -> dogtype -> type}}</td>
             <td>{{$pet -> weight}}</td>
-            <td>{{$pet -> birthday}}</td>
+            <td>{{$pet -> getPetBirthday()}}</td>
         </tr>
         @endforeach
 
