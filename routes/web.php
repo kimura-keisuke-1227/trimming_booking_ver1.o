@@ -257,6 +257,10 @@ Route::get('/admin/bookingDetail/{bookingId}',
 ->middleware('auth')
 ->name('admin.showBookingDetail');
 
+//会員情報確認
+Route::get('admin/ownerInfo/{userID}',[UserController::class,'show'])
+->middleware('auth')
+->name('admin.showUserInfo');
 
 //スタッフ追加
 Route::get('/admin/createStaff',[BookingController::class,'gettest']);
