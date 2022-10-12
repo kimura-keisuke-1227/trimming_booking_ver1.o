@@ -23,7 +23,7 @@ class UserTableSeeder extends Seeder
             'last_name_kana' => '者',
             'first_name' => 'カンリ',
             'first_name_kana' => 'シャ',
-            'email' => 'admin' ,
+            'email' => 'admin@admin.co.jp' ,
             'phone' => '0120-000-000' ,
             'auth' => 1,
             'password' => $password,
