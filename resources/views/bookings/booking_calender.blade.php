@@ -50,7 +50,6 @@
         <tr>
             <th>{{$time}}</th>
             @foreach($days as $day)
-                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
                 @if($capacities[$day][$timesNum[$time]] > 0)
                 <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
                 @else
