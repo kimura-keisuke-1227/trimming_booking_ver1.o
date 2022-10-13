@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('auth')->default(0);
             $table->string('phone');
-            $table->integer('default_salon')->nullable();
+            $table->integer('salon_id')->nullable();
             $table->integer('cameBefore') -> default(0);
             $table->rememberToken();
             $table->timestamps();
