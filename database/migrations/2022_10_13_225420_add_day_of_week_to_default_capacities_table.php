@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('default_capacities', function (Blueprint $table) {
-            //
+            $table -> integer('dayOfWeek');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('default_capacities', function (Blueprint $table) {
-            //
+            $table->dropColumn('dayOfWeek');
         });
     }
 };
