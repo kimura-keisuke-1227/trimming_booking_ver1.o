@@ -50,7 +50,7 @@ class User extends Authenticatable
     ];
 
     public function salon(){
-        return $this -> belongsTo('App\Models\Salon');
+        return $this -> belongsTo('App\Models\Salon','default_salon');
     }
 
     public function pets(){
@@ -66,7 +66,7 @@ class User extends Authenticatable
     }
 
     public function getUsualSalon(){
-        return $this-> salon;
+        return $this-> salon -> salon_name;
     
     }
 }
