@@ -346,7 +346,7 @@ class BookingController extends Controller
         ->orderBy('st_time')
         ->get();
         
-        Log::debug('salon_id:' . $salon->id . ' date:' . $date);
+        Log::debug(__METHOD__.'salon_id:' . $salon->id . ' date:' . $date);
         
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
