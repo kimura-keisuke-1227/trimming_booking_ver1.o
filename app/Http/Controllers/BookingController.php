@@ -446,7 +446,9 @@ class BookingController extends Controller
         $booking->price = $price;
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
+        
         $booking->save();
+        Log::info(__METHOD__ . ' staff:user_id(' .$staff->id . ') saved booking. Booking ID is ('.$booking->id .')');
 
         Log::debug('管理者予約登録：(pet_id)' . $pet_id .
             ' (course)' . $course_id .
@@ -695,14 +697,17 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
         $booking->message = $message;
         
-        $booking->save();
-        Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+        $booking->save();        
+        Log::info(__METHOD__ . '  owner user_id(' .$owner->id . ') saved Booking, id(' . $booking->id .')');
         
+        Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
         
         $pet = Pet::find($pet_id);
         $pet->message = $message;
         $pet->save();
+        Log::info(__METHOD__ . '  owner user_id(' .$owner->id . ') saved message, pet id(' . $pet->id .')');
+
         Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
         
         Mail::to($owner->email)
@@ -711,8 +716,6 @@ class BookingController extends Controller
 
         Mail::to(session('salon')->email)
         ->send(new BookingNotificationForSalon());
-        
-        
         
         Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
