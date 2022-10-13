@@ -109,20 +109,36 @@ class UserController extends Controller
         
         if($user->cameBefore ==1){
             $cameBefore = true;
+            Log::info(__METHOD__ . ' This user('. $user->id .') came before she or he registered.');
+            
         } else{
-            $pets = Pet::where('owner_id',$user->id) -> get();
-            $bookings = Booking::whereIn('pet_id', $pets) -> get();
+            Log::info(__METHOD__ . ' This user('. $user->id .') did not came before she or he registered.');
+            $pets = Pet::select('id')->where('owner_id',$user->id) -> get();
+            $bookings = Booking::whereIn('pet_id', $pets)->where('date','<',date('Y-m-d')) -> get();
             Log::debug(__METHOD__ . '(pets)' . $pets);
-        }
+            Log::debug(__METHOD__ . '(bookings)' . $bookings);
+            
+            if($bookings->count()>0){
+                $cameBefore = true;
+                Log::info(__METHOD__ . ' This user('. $user->id .') came before because of checking Booking data.');
+            } else{
+                Log::info(__METHOD__ . ' This user('. $user->id .') did not came before because of checking Booking data.');
 
+            }
+            
+        }
+        
         if($cameBefore){
             $cameBefore = '来店歴あり';
+            
         } else{
+            
             $cameBefore = '来店歴なし';
         }
-
+        
         return view('admin.users.show',[
             'user' => $user,
+            'cameBefore' => $cameBefore
         ]);
     }
 
