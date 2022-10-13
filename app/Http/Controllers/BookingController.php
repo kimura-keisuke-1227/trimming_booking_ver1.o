@@ -40,13 +40,13 @@ class BookingController extends Controller
      ***************************************************************/
 
      public function test(){
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $bookings = Booking::with('pet.user')
         ->with('course.coursemaster')
         ->with('pet.dogtype')
         #->where('pet.user.id' ,2)
         ->get();
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         Log::debug($bookings);
         return view('test', [
             'bookings' => $bookings
@@ -62,9 +62,10 @@ class BookingController extends Controller
     //ログイン中のユーザーの予約一覧を表示
     public function index()
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::info(__METHOD__ . 'starts user_id:');
+        Log::debug(__METHOD__ . '(start)');
         //BookingController::bookingCheck();
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $showBookingsAfterNDays = Util::getSetting(30,'showBookingsAfterNDays',true);
         $bookings = Booking::with('pet.user')
@@ -77,7 +78,7 @@ class BookingController extends Controller
         ->get();
         #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.index', [
             'owner' => $owner,
             'bookings' => $bookings,
@@ -88,7 +89,7 @@ class BookingController extends Controller
     //予約するペットを選択する
     public function create()
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         session([
             'owner' => $owner,
@@ -96,7 +97,7 @@ class BookingController extends Controller
         $pets = Pet::where('owner_id', $owner->id)->get();
         session(['pets' => $pets]);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.selectpet', [
             'pets' => $pets,
             'owner' => $owner,
@@ -106,7 +107,7 @@ class BookingController extends Controller
     //コースを選択する
     public function selectCourse(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $pets = session('pets');
         $pet_id = $request->pet;
@@ -123,7 +124,7 @@ class BookingController extends Controller
             'salons' => $salons,
         ]);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.selectcourse', [
             'owner' => $owner,
             'pet' => $pet,
@@ -135,7 +136,7 @@ class BookingController extends Controller
 
     public function selectCalender(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $pet =  session('pet');
         
@@ -183,7 +184,7 @@ class BookingController extends Controller
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.booking_calender', [
             'date' => $st_date,
             'before_date' => $beforeDate,
@@ -202,7 +203,7 @@ class BookingController extends Controller
 
     public function confirmBooking(Request $request, $date, $time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $pet =  session('pet');
         $course =  session('course');
@@ -214,7 +215,7 @@ class BookingController extends Controller
             'date' => $date,
             'time' => $time,
         ]);
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.confirm', [
             'owner' => $owner,
             'pet' => $pet,
@@ -229,7 +230,7 @@ class BookingController extends Controller
     //削除する予約の確認画面
     public function deleteConfirm($bookingID)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $booking = Booking::find($bookingID);
 
@@ -243,7 +244,7 @@ class BookingController extends Controller
                 ->with('error', '該当の予約が存在しません。');
         }
 
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.cancelConfirm', [
             'booking' => $booking
         ]);
@@ -252,13 +253,13 @@ class BookingController extends Controller
     //予約のキャンセル処理
     public function destroy($id)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $booking = Booking::findOrFail($id);
         $booking->delete();
         $user = Auth::user();
-        Log::info('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
+        Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return redirect('/bookings')
             ->with('success', '予約をキャンセルしました。');
     }
@@ -272,28 +273,28 @@ class BookingController extends Controller
      ***************************************************************/
 
     public function adminDeleteBookingConfirm(Request $request, $bookingID){
-        Log::info(__FUNCTION__ . '(start)');
+        Log::debug(__FUNCTION__ . '(start)');
         
         $booking = Booking::find($bookingID);
-        Log::info(__FUNCTION__ . '(end)');
+        Log::debug(__FUNCTION__ . '(end)');
         return view('admin.bookings.deleteConfirm',[
             'booking' => $booking
         ]);
     }
 
     public function adminDeleteBooking(Request $request, $bookingID){
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $staff = Auth::user();
         $booking = Booking::find($bookingID);
         Log::debug($booking);
 
         $booking -> delete();
-        Log::info(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id .')');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id .')');
+        Log::debug(__METHOD__ . '(end)');
         
         //非会員の予約の場合、そちらも削除が必要。
         if($booking -> pet_id == 0){
-            Log::info(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
+            Log::debug(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id' , $bookingID)-> first();
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking -> delete();
@@ -324,7 +325,7 @@ class BookingController extends Controller
     //管理者用　サロンと日付を指定して1日の予約を取得
     public function getAllBookingsOfSalonAndDate(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $salons = Salon::all();
         $courses = CourseMaster::all();
         
@@ -357,7 +358,7 @@ class BookingController extends Controller
         $times = $util->getTimes($st_time,$ed_time,$step_time);
         $timesNum = $util->getTimesNum($st_time,$ed_time,$step_time);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('admin.bookings.index', [
             'bookings' => $bookings,
             'checkdate' => $date,
@@ -389,7 +390,7 @@ class BookingController extends Controller
     //管理者による予約の登録　保存処理
     public function adminMakeBookingSave(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $booking = new Booking();
         
         $date = $request->date;
@@ -421,7 +422,7 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
         $booking->save();
         
-        Log::info('管理者予約登録：(pet_id)' . $pet_id .
+        Log::debug('管理者予約登録：(pet_id)' . $pet_id .
         ' (course)' . $course_id .
         '(date)' . $date  .
             '(st_time)' . $st_time .
@@ -431,13 +432,13 @@ class BookingController extends Controller
         #Log::debug('ここでメールを送りたい。');
         Mail::to('kim.ksuke@gmail.com')
         ->send(new ContactAdminMail());
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
             return redirect('/admin/makebooking')->with("success", "予約を登録しました");
         }
         
         //削除する予約の確認画面
         public function deleteConfirmForStaff($bookingID)
-        {   Log::info(__METHOD__ . '(start)');
+        {   Log::debug(__METHOD__ . '(start)');
             $booking = Booking::find($bookingID);
             
             if (!is_null($booking)) {
@@ -449,7 +450,7 @@ class BookingController extends Controller
                 ->with('error', '該当の予約が存在しません。');
             }
             
-            Log::info(__METHOD__ . '(end)');
+            Log::debug(__METHOD__ . '(end)');
             return view('admin.bookings.cancelConfirm', [
                 'booking' => $booking
             ]);
@@ -458,7 +459,7 @@ class BookingController extends Controller
         //管理者用　空き枠の取得
         public function getAcceptableCount()
         {
-            Log::info(__METHOD__ . '(start)');
+            Log::debug(__METHOD__ . '(start)');
             $acceptableCount = [];
             $st_date = date('Y-m-d');
             $salons = Salon::all();
@@ -486,7 +487,7 @@ class BookingController extends Controller
             $bookingsCalc->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
             #Log::debug($capacities);
             
-            Log::info(__METHOD__ . '(end)');
+            Log::debug(__METHOD__ . '(end)');
             return view('admin.bookings.acceptCount', [
                 'date' => date('Y-m-d'),
             'times' => $times,
@@ -500,7 +501,7 @@ class BookingController extends Controller
 
     public function getAcceptableCountWithSalonDate(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $acceptableCount = [];
         $st_date = $request->st_date;
         $salons = Salon::all();
@@ -526,7 +527,7 @@ class BookingController extends Controller
         $capacities =
         $bookingCalcs -> getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('admin.bookings.acceptCount', [
             'date' => $st_date,
             'times' => $times,
@@ -540,11 +541,11 @@ class BookingController extends Controller
 
 
     public function adminShowBookingDetail($bookingId){
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
 
         $booking = Booking::with('pet') ->find($bookingId);
 
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('admin.bookings.showBookingDetail', [
             'booking' => $booking
         ]);
@@ -552,7 +553,7 @@ class BookingController extends Controller
 
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $owner = Auth::user();
         $pet =  session('pet');
         $course = session('course');
@@ -592,7 +593,7 @@ class BookingController extends Controller
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return view('bookings.booking_calender', [
             'date' => $st_date,
             'before_date' => $beforeDate,
@@ -624,7 +625,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $booking = new Booking();
         $owner = Auth::user();
         
@@ -655,14 +656,14 @@ class BookingController extends Controller
         $booking->message = $message;
         
         $booking->save();
-        Log::info(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+        Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         
-        Log::info(__METHOD__ . ' start save default message of pet id('.$pet_id .') -> "' .$message);
+        Log::debug(__METHOD__ . ' start save default message of pet id('.$pet_id .') -> "' .$message);
         
         $pet = Pet::find($pet_id);
         $pet->message = $message;
         $pet -> save();
-        Log::info(__METHOD__ . ' end save default message of pet id('.$pet_id .') -> "' .$message);
+        Log::debug(__METHOD__ . ' end save default message of pet id('.$pet_id .') -> "' .$message);
 
         Mail::to($owner->email)
         ->send(new ContactAdminMail());
@@ -672,7 +673,7 @@ class BookingController extends Controller
         ->send(new BookingNotificationForSalon());
         
         
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
     
