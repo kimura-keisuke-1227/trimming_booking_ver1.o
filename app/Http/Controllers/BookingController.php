@@ -266,7 +266,11 @@ class BookingController extends Controller
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $booking = Booking::findOrFail($id);
+        
         $booking->delete();
+        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id .')');
+        Log::info(' deleted booking:' . $booking);
+
         $user = Auth::user();
         Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
 
@@ -300,20 +304,24 @@ class BookingController extends Controller
     public function adminDeleteBooking(Request $request, $bookingID)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' . $staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $booking = Booking::find($bookingID);
         Log::debug($booking);
-
+        
         $booking->delete();
+        Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id .')');
+        Log::info(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
-
-
+        
+        
         //非会員の予約の場合、そちらも削除が必要。
         if ($booking->pet_id == 0) {
             Log::debug(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id', $bookingID)->first();
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking->delete();
+            Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id .')');
+            Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
         }
 
         Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
@@ -469,7 +477,7 @@ class BookingController extends Controller
     public function deleteConfirmForStaff($bookingID)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' . $staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $booking = Booking::find($bookingID);
         
         if (!is_null($booking)) {
@@ -482,7 +490,7 @@ class BookingController extends Controller
         }
         
         
-        Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
+        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
         return view('admin.bookings.cancelConfirm', [
             'booking' => $booking
         ]);
@@ -492,7 +500,7 @@ class BookingController extends Controller
     public function getAcceptableCount()
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
         $acceptableCount = [];
         $st_date = date('Y-m-d');
         $salons = Salon::all();
@@ -521,7 +529,7 @@ class BookingController extends Controller
         #Log::debug($capacities);
         
         
-        Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
         return view('admin.bookings.acceptCount', [
             'date' => date('Y-m-d'),
             'times' => $times,
@@ -536,7 +544,7 @@ class BookingController extends Controller
     public function getAcceptableCountWithSalonDate(Request $request)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
         $acceptableCount = [];
         $st_date = $request->st_date;
         $salons = Salon::all();
@@ -563,7 +571,7 @@ class BookingController extends Controller
         $bookingCalcs->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         
         
-        Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
         return view('admin.bookings.acceptCount', [
             'date' => $st_date,
             'times' => $times,
@@ -579,7 +587,7 @@ class BookingController extends Controller
     public function adminShowBookingDetail($bookingId)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
         
         $booking = Booking::with('pet')->find($bookingId);
         
@@ -593,7 +601,7 @@ class BookingController extends Controller
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
         $owner = Auth::user();
         $pet =  session('pet');
         $course = session('course');
@@ -634,7 +642,7 @@ class BookingController extends Controller
         $afterDate = Util::addDays($st_date, 7);
         
         
-        Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
         return view('bookings.booking_calender', [
             'date' => $st_date,
             'before_date' => $beforeDate,
@@ -667,7 +675,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by owner user_id(' .$staff->id . ')');
         $booking = new Booking();
         $owner = Auth::user();
         
@@ -717,7 +725,7 @@ class BookingController extends Controller
         Mail::to(session('salon')->email)
         ->send(new BookingNotificationForSalon());
         
-        Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' ends by owner user_id(' .$owner->id . ')');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
     
