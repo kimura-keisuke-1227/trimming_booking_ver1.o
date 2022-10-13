@@ -66,7 +66,7 @@ class User extends Authenticatable
     }
 
     public function getUsualSalon(){
-        return $this-> salon -> salon_name;
+        return $this-> salon;
     
     }
 }
