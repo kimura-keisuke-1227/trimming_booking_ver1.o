@@ -27,7 +27,7 @@
 
         <div class="mb-6">
             <label class="block text-sm font-medium mb-2" for="date">日付</label>
-            <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ date('Y-m-d') }}">
+            <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ $checkdate }}">
         </div>
         <br>
         <br>
