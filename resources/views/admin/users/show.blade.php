@@ -80,7 +80,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
-                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $user-> first_name }}">
+                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $user-> getUsualSalon() }}">
                     </div>
 
                     <div class="mb-6">
