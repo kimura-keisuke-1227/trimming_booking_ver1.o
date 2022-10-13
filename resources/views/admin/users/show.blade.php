@@ -82,13 +82,10 @@
                         <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
                         <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $user-> getUsualSalon() }}">
                     </div>
-
+                    
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">過去に当店の利用がありますか？</label>
-                        <select name="beforeCame">
-                            <option value="0">ない</option>
-                            <option value="1">ある</option>
-                        </select>
+                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $cameBefore }}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">メールアドレス</label>
