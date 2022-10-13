@@ -20,8 +20,8 @@ class UserTableSeeder extends Seeder
         $password = Hash::make($password);
         $param =[
             'last_name' => '管理',
-            'last_name_kana' => '者',
-            'first_name' => 'カンリ',
+            'last_name_kana' => 'カンリ',
+            'first_name' => '者',
             'first_name_kana' => 'シャ',
             'email' => 'admin@admin.co.jp' ,
             'phone' => '0120-000-000' ,
@@ -35,9 +35,9 @@ class UserTableSeeder extends Seeder
         $password = Hash::make($password);
         $param =[
             'last_name' => 'テストユーザー',
-            'last_name_kana' => '２号',
-            'first_name' => 'テストユーザー',
-            'first_name_kana' => 'ニ「ゴウ',
+            'last_name_kana' => 'テストユーザー',
+            'first_name' => '２号',
+            'first_name_kana' => 'ニゴウ',
             'email' => '222@gmail.com' ,
             'phone' => '0120-222-222' ,
             'password' => $password,
@@ -66,8 +66,8 @@ class UserTableSeeder extends Seeder
         $password = Hash::make($password);
         $param =[
             'last_name' => 'テストユーザー',
-            'last_name_kana' => '4号',
-            'first_name' => 'テストユーザー',
+            'last_name_kana' => 'テストユーザー',
+            'first_name' => '４号',
             'first_name_kana' => 'ヨンゴウ',
             'email' => '444@gmail.com' ,
             'phone' => '0120-444-444' ,

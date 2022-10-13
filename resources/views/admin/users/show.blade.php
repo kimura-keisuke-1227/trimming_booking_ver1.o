@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', '会員情報)
+@section('title', '会員情報')
 
 @section('content')
 <section class="py-8">
@@ -69,22 +69,18 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="last_name">名前</label>
-                        <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ old('name') }}">
-                        <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ old('name') }}">
+                        <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $user-> last_name }}">
+                        <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $user-> first_name }}}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="first_name">フリガナ(全角カナ)</label>
-                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ old('name') }}">
-                        <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
+                        <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $user-> last_name_kana }}}">
+                        <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $user-> first_name_kana }}">
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
-                        <select name="default_salon">
-                            @foreach($salons as $salon)
-                            <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
-                            @endforeach
-                        </select>
+                        <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $user-> first_name }}">
                     </div>
 
                     <div class="mb-6">
@@ -96,27 +92,11 @@
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">メールアドレス</label>
-                        <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ old('email') }}">
+                        <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ $user-> email }}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">電話番号</label>
-                        <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ old('email') }}">
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="password">パスワード</label>
-                        <input id="password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="password" name="password">
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="password_confirmation">パスワード(確認)</label>
-                        <input id="password_confirmation" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="password" name="password_confirmation">
-                    </div>
-
-                    <div class="flex px-6 pb-4 border-b">
-                        <div class="ml-auto">
-                            <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
-                        </div>
+                        <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ $user-> phone }}">
                     </div>
 
 
