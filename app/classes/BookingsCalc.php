@@ -22,10 +22,10 @@ class BookingsCalc
 
     public function getCanBookList($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course)
     {
-        Log::infdeo(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
 
-        //Log::debug('$course:' . $course->id . ' minute:' . $course->minute);
+        Log::debug('$course:' . $course->id . ' minute:' . $course->minute);
         $getOtherCapacitiesOfMultiDate
             =  $this->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         $cut_time = $course->minute;
