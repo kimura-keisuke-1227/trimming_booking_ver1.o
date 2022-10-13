@@ -64,4 +64,9 @@ class User extends Authenticatable
     public function getFullName(){
         return $this-> last_name . ' ' . $this->first_name;
     }
+
+    public function getUsualSalon(){
+        return $this-> salon -> salon_name;
+    
+    }
 }
