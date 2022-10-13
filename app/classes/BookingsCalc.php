@@ -8,21 +8,21 @@ class BookingsCalc
 {
     public static function getAllBookingsByDate($bookings, $date)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $dateBookings = $bookings
             ->where('date', $date)
             ->sortBy('st_time');
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
         return $dateBookings;
     }
 
 
     public function getCanBookList($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::infdeo(__METHOD__ . '(start)');
         $start = microtime(true);
 
         //Log::debug('$course:' . $course->id . ' minute:' . $course->minute);
@@ -97,15 +97,15 @@ class BookingsCalc
             $canBookTimeListOfMultiDay[$date] = $canBookTimeListOfADay;
         }
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
 
         return $canBookTimeListOfMultiDay;
     }
 
     public function getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $getOtherCapacitiesOfMultiDate = [];
 
@@ -122,15 +122,15 @@ class BookingsCalc
             $getOtherCapacitiesOfMultiDate[$date] = $otherCapacitiesOfTheDate;
         }
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
 
         return $getOtherCapacitiesOfMultiDate;
     }
 
     private function getBookingCountsOfMultiDaysFromStartDateToEndDate($bookings, $salon, $step_time, $st_date, $ed_date)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $bookingCountsOfMultiDaysFromStartDateToEndDate = [];
 
@@ -138,15 +138,15 @@ class BookingsCalc
             $countsForADay =  $this->getTimeTableFromSalonDay($bookings, $salon, $day, $step_time);
             $bookingCountsOfMultiDaysFromStartDateToEndDate[$day] = $countsForADay;
         }
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
         return $bookingCountsOfMultiDaysFromStartDateToEndDate;
     }
 
     private function getCapacitiesOfMultiDays($allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $st_date, $ed_date, $salon, $step_time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $capacitiesFromMultiDays = [];
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
@@ -155,15 +155,15 @@ class BookingsCalc
         }
 
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
         return $capacitiesFromMultiDays;
     }
 
 
     private static function getOtherCapacitiesOfTheDate($dateBookingsCount, $dateCapacitiesCount, $salon, $step_time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $otherCapacitiesOfTheDate = [];
         $st_time = $salon->st_time;
@@ -177,15 +177,15 @@ class BookingsCalc
         }
 
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
 
         return $otherCapacitiesOfTheDate;
     }
 
     private function getTimeTableFromSalonDay($bookings, $salon, $date, $step_time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $counts = [];
 
@@ -202,17 +202,17 @@ class BookingsCalc
 
             $time = $time + $step_time;
         }
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . '(end)');
 
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
         return $counts;
     }
 
     //店舗の1日の枠数を取得
     private function getCapacityFromDay($allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $date, $salon, $step_time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         $open_time = $salon->st_time;
         $close_time = $salon->ed_time;
@@ -268,15 +268,15 @@ class BookingsCalc
             }
         }
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
         return $capacitiesOfTheDay;
     }
 
     //$cutTimeは、終了時間を算出するために必要
     public static function getBookingCountFromSalonDayTimeMinute($bookings, $salon_id, $date, $time)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         //DBへの繰り返しアクセスを防ぐため、予約データを呼び出し時に受け取るようにする。
 
@@ -288,33 +288,33 @@ class BookingsCalc
             ->where('ed_time', '>', $time)
             ->count();
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
 
         return $count;
     }
 
     private function getDefaultCapacityOfTheDayAndSalon($allDefaultCapacities, $date, $salon)
     {
-        Log::info(__METHOD__ . '(start)');
+        Log::debug(__METHOD__ . '(start)');
         $start = microtime(true);
         //DBへの繰り返しアクセスを防ぐため、デフォルトデータを呼び出し時に受け取るようにする。
         $salon_id = $salon->id;
         $dayOfWeekFromDate = date('w', strtotime($date));
 
-        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' date:' . $date . ' dayOfWeek:' . $dayOfWeekFromDate);
+        #Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' date:' . $date . ' dayOfWeek:' . $dayOfWeekFromDate);
 
         $capacity =
             $allDefaultCapacities
             ->where('salon_id', $salon_id)
             ->where('st_date', '<=', $date)
-            ->where('dayOfWeek', $dayOfWeekFromDate)
+            #->where('dayOfWeek', $dayOfWeekFromDate)
             ->sortByDesc('st_date')
             ->first();
 
         $end = microtime(true);
-        Log::info(__METHOD__ . ' '.$end - $start .'(s)');
-        Log::info(__METHOD__ . '(end)');
+        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . '(end)');
         return $capacity->capacity;
     }
 }
