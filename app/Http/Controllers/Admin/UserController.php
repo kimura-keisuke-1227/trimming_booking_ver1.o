@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Salon;
+use App\Models\Booking;
+use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use  App\Http\Requests\Admin\StoreUserRequest;
@@ -103,6 +105,21 @@ class UserController extends Controller
     public function show(User $user ,$userID)
     {
         $user = User::find($userID);
+        $cameBefore = false;
+        
+        if($user->cameBefore ==1){
+            $cameBefore = true;
+        } else{
+            $pets = Pet::where('owner_id',$user->id) -> get();
+            $bookings = Booking::whereIn('pet_id', $pets) -> get();
+            Log::debug(__METHOD__ . '(pets)' . $pets);
+        }
+
+        if($cameBefore){
+            $cameBefore = '来店歴あり';
+        } else{
+            $cameBefore = '来店歴なし';
+        }
 
         return view('admin.users.show',[
             'user' => $user,
