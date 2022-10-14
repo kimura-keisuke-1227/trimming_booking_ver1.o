@@ -16,7 +16,7 @@
 
             <td>{{$booking -> getNonMemberOwner() }}</td>
             @else
-            <td>{{$booking -> getMemberName()}}</td>
+            <td><a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> </td>
 
             @endif
         <tr>
@@ -60,6 +60,9 @@
             <td>{{$booking -> getBookingMessage()}}</td>
         </tr>
     </table>
+
+    <a href="javascript:history.back()">[戻る]</a>
+    <br><br>
 
     <form action="{{Route('admin.cancel', [
             'bookingId' => $booking-> id,
