@@ -39,7 +39,7 @@ class NonMemberBookingMailToSalon extends Mailable
         $date = Util::getYMDWFromDbDate($booking->date);
         return $this->from($salon->email) 
         ->subject('会員でないユーザーから予約がありました。')
-        ->text('email.bookingNotificationToSalon.bookingNotificationFromNoMember',[
+        ->text('email.bookingNotificationToStaff.bookingNotificationFromNoMember',[
             'nonMemberBooking' => $nonMemberBooking,
             'salon' => $salon,
             'booking' => $booking,
