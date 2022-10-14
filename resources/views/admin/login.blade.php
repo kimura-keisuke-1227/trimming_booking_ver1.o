@@ -53,13 +53,15 @@
       </div>
       {{--
 
-                    <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
-                --}}
+        <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
+        --}}
       @endif
       <div class="container px-4 mx-auto">
         <div class="flex max-w-md mx-auto flex-col text-center">
           <div class="mt-12 mb-8 p-8 bg-white rounded shadow">
             <h1 class="mb-6 text-3xl">con affetto<br>予約システム</h1>
+            <a href="{{ route('admin.users.create')}}" class="new_entry">新規登録はこちらから</a>
+            <br><br>
             <p>メールアドレス・パスワードを入力して<br>ログインしてください。</p>
             <br>
             @if($errors->any())
@@ -70,7 +72,7 @@
 
             <form action="{{ route('login') }}" method="POST">
               @csrf
-              
+
               <div class="flex mb-4 px-4 bg-blueGray-50 rounded">
                 <input class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none" type="email" placeholder="メールアドレス" name="email" value="{{ old('email') }}">
                 <svg class="h-6 w-6 ml-4 my-auto text-blueGray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
@@ -78,7 +80,7 @@
                 </svg>
               </div>
 
-              
+
               <div class="flex mb-6 px-4 bg-blueGray-50 rounded">
                 <input class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none" type="password" placeholder="パスワード" name="password">
                 <button class="ml-4">
@@ -91,7 +93,6 @@
               <button type="submit" class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded">ログイン</button>
             </form>
           </div>
-          <a href="{{ route('admin.users.create')}}">新規登録</a>
           <a href="{{ route('nonMember.beginBooking')}}">登録なしに予約する方はこちら</a>
           <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
         </div>
