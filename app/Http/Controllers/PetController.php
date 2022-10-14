@@ -18,11 +18,11 @@ class PetController extends Controller
      */
     public function index()
     {
-        Log::info(__METHOD__ . '(start)');
         $owner = Auth::user();
+        Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pets = Pet::where('owner_id' , $owner -> id) -> get();
         
-        Log::info(__METHOD__ . '(end)');
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('pets.index',[
             'owner' => $owner ,
             'pets' => $pets
@@ -36,12 +36,14 @@ class PetController extends Controller
      */
     public function create()
     {   
-        Log::info(__METHOD__ . '(start)');
+        $owner = Auth::user();
+        Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
+        
         $dogTypes = Dogtype::all();
         session([
             'dogtypes' => $dogTypes
         ]);
-        Log::info(__METHOD__ . '(end)');
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('pets.create',[
             'dogtypes' => $dogTypes,
         ]
@@ -56,7 +58,9 @@ class PetController extends Controller
      */
     public function store(Request $request)
     {   
-        Log::info(__METHOD__ . '(start)');
+        $owner = Auth::user();
+        Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
+        
         $dogTypes = session('dogtypes');
         
         $pet = new Pet;
@@ -76,9 +80,11 @@ class PetController extends Controller
         $pet -> birthday = $request -> birthday;
         $pet -> weight = $request -> weight;
         $pet ->  save();
+        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') saved a pet id(' . $pet -> id .')');
         
         Log::debug('登録ペット情報：(owner_id)' . $request -> owner_id . ' (pet_name)' . $request -> pet_name . '(dog_type)' . $request -> dogtype );
-        Log::info(__METHOD__ . '(end)');
+        
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return redirect('/pets') -> with('success','ペットを登録をしました。');
     }
 
