@@ -38,7 +38,7 @@ class NonMemberCancelNotificationToNonmember extends Mailable
     public function build()
     {
         $booking = session('booking');
-        $owner = session('owner');
+        $nonMemberBooking = session('nonMemberBooking');
 
         $user = Auth::user();
         $date = $booking -> date;
@@ -58,7 +58,7 @@ class NonMemberCancelNotificationToNonmember extends Mailable
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')
         ->text('email.bookingCancelEmail.bookingCancel',[
-            'user' => $owner,
+            'nonMemberBooking' => $nonMemberBooking,
             'pet' => $pet,
             'salon' => $salon,
             'course' => $course,
