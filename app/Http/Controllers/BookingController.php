@@ -720,11 +720,12 @@ class BookingController extends Controller
         
         Mail::to($owner->email)
         ->send(new ContactAdminMail());
-        
+        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
 
         Mail::to(session('salon')->email)
         ->send(new BookingNotificationForSalon());
-        
+        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id .') whose mail address ="' .  session('salon')->email .'"');
+
         Log::info(__METHOD__ . ' ends by owner user_id(' .$owner->id . ')');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
