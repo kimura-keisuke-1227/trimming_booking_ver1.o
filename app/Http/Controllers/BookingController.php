@@ -20,9 +20,11 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
 use App\Mail\BookingNotificationForSalon;
 use App\Mail\CancelMailToUser;
+use App\Mail\NonMemberCancelNotificationToSalon;
 use App\Mail\CancelNotificationToSalon;
 use App\classes\BookingsCalc;
 use App\Mail\CancelNotificationToUser;
+use App\Mail\NonMemberCancelNotificationToNonmember;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
@@ -334,16 +336,30 @@ class BookingController extends Controller
             'booking'=>$booking,
         ]);
         
+        $salon = Salon::find($booking->salon_id);
+
         //非会員の予約の場合、そちらも削除が必要。
         if ($booking->pet_id == 0) {
             Log::debug(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id', $bookingID)->first();
+            
+            session([
+                'nonMemberBooking'=>$nonMemberBooking,
+            ]);
+            
             $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             #$nonMemberBooking->delete();
             Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id .')');
             Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
             Log::debug(__METHOD__ . ' non user email:' . $email);
+
+            Mail::to($salon -> email)
+            ->send(new NonMemberCancelNotificationToNonmember);
+            Mail::to($email)
+            ->send(new NonMemberCancelNotificationToNonmember);
+
+            
         } else{
             $owner = User::find($booking->pet->user->id);
             $email = $owner -> email;
@@ -353,7 +369,7 @@ class BookingController extends Controller
             Mail::to($email)
             ->send(new CancelNotificationToUser);
             Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
-            $salon = Salon::find($booking->salon_id);
+            
             Mail::to($salon -> email)
             ->send(new CancelNotificationToUser);
             Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
