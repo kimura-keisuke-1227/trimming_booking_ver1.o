@@ -27,7 +27,14 @@ class Util
 
     public static function minuteToTime($timeNum){
         $hour = (string) floor($timeNum / 60);
-        $minute = (string) $timeNum % 60;
+        $minute = (string) ($timeNum % 60);
+
+        return $hour . '時' . $minute . '分';
+    }
+
+    public static function minuteNumToTime($time){
+        $hour = (string) floor($time / 60);
+        $minute = (string) $time % 60;
 
         return $hour . '時' . $minute . '分';
     }
