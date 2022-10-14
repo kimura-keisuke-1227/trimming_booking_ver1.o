@@ -7,6 +7,7 @@ use App\Models\Pet;
 use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Salon;
+use App\Models\User;
 use App\Models\DefaultCapacity;
 use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
@@ -20,6 +21,7 @@ use App\Mail\ContactAdminMail;
 use App\Mail\BookingNotificationForSalon;
 use App\Mail\CancelMailToUser;
 use App\classes\BookingsCalc;
+use App\Mail\CancelNotificationToUser;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
@@ -282,7 +284,7 @@ class BookingController extends Controller
 
         Mail::to($salon->email)
         ->send(new CancelMailToUser());
-        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id .') whose mail address ="' .  session('salon')->email .'"');
+        Log::debug(__METHOD__ . 'system sent a message to salon (' . $salon->id .') whose mail address ="' .  $salon->email .'"');
         
 
         $user = Auth::user();
@@ -322,21 +324,36 @@ class BookingController extends Controller
         $booking = Booking::find($bookingID);
         Log::debug($booking);
         
-        $booking->delete();
+        #$booking->delete();
         Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id .')');
         Log::info(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
         
+        session([
+            'booking'=>$booking,
+        ]);
         
         //非会員の予約の場合、そちらも削除が必要。
         if ($booking->pet_id == 0) {
             Log::debug(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id', $bookingID)->first();
+            $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
-            $nonMemberBooking->delete();
+            #$nonMemberBooking->delete();
             Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id .')');
             Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
+            Log::debug(__METHOD__ . ' non user email:' . $email);
+        } else{
+            $owner = User::find($booking->pet->user->id);
+            $email = $owner -> email;
+            Log::debug(__METHOD__ . ' delete only a booking because it has user:');
+            Log::debug(__METHOD__ . ' user email:' . $email);
+            Mail::to($email)
+            ->send(new CancelMailToUser);
+            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
         }
+
+
 
         Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
         return redirect()->route('admin.checkBookings.dateAndSalon')
