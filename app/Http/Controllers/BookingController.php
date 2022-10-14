@@ -556,6 +556,10 @@ class BookingController extends Controller
         $nonMemberBooking = NonMemberBooking::where('booking_id',$bookingId)->first();
         Log::debug($nonMemberBooking);
         Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
+        
+        return view('',[
+            'nonMemberBooking'=> $nonMemberBooking,
+        ]);
         return __METHOD__;
     }
 
