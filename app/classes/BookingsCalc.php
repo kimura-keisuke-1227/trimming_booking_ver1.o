@@ -4,6 +4,7 @@ namespace app\classes;
 
 use App\Models\Salon;
 use Illuminate\Support\Facades\Log;
+use App\classes\Util;
 
 class BookingsCalc
 {
