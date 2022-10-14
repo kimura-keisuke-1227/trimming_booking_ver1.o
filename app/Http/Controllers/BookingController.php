@@ -272,6 +272,16 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id .')');
         Log::info(' deleted booking:' . $booking);
 
+        /*
+        Mail::to($owner->email)
+        ->send(new ContactAdminMail());
+        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
+
+        Mail::to(session('salon')->email)
+        ->send(new BookingNotificationForSalon());
+        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id .') whose mail address ="' .  session('salon')->email .'"');
+        */
+
         $user = Auth::user();
         Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
 
