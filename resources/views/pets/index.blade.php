@@ -36,7 +36,7 @@
         </td></tr>
         @endforeach
     </table>
-    <a href="/dog_register">ペット登録へ</a>
+    <a href="{{ Route('user.dog_register')}}">ペット登録へ</a>
 
 </div>
 @endsection
