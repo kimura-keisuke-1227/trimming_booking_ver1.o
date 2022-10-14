@@ -80,7 +80,7 @@ class NonMemberBookingController extends Controller
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Mail::to(session('mail'))
-        ->send(new NonMemberBookingMailToSalon());
+        ->send(new NonMemberBookingMail());
 
         Mail::to($salon->email)
         ->send(new NonMemberBookingMailToSalon());
