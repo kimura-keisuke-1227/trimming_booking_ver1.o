@@ -8,6 +8,7 @@
      <p>{{$pet_name . '[' . $dog_type -> type . ']'}} </p>
      <p>{{$course -> getCourseInfo()}}</p>
      <p>{{$date . ' ' . $time}}</p>
+     <p>{{ $message }}</p>
     {{--
         <p>{{$owner -> getFullName()}}様</p>
         <p>{{$pet -> getData()}}</p>

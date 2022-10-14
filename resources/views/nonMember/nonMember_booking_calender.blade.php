@@ -29,6 +29,7 @@
      <p>{{$salon -> salon_name}}</p>
      <p>{{$pet_name . '[' . $dog_type -> type . ']'}} </p>
      <p>{{$course -> getCourseInfo()}}</p>
+     <p>{{$message}}</p>
 
     <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $before_date])}}">前週へ</a>
     <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $after_date])}}">次週へ</a>

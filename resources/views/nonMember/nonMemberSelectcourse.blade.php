@@ -48,6 +48,13 @@
                     <br>
                     <br>
 
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">メッセージ</label>
+                        <p>持病・ワクチン・複数頭のご予約、その他ご要望や連絡事項がございましたらご記入ください。</p>
+                        <p>ミックス犬の場合は犬種をご記入ください。</p>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="message" rows="5"></textarea>
+                    </div>
+
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">日程選択へ</button>
                     </div>

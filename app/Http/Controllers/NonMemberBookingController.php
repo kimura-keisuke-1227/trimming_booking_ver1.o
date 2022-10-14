@@ -34,6 +34,7 @@ class NonMemberBookingController extends Controller
         $date = session('date');
         $st_time = session('time');
         $salon = session('salon');
+        $message = session('message');
         $course_id = $course -> id;
         #Log::debug(__FILE__ . __FUNCTION__ . ' course_id:' . $course_id);
         Log::debug(__FILE__ .__FUNCTION__ . ' course:' . $course);
@@ -53,6 +54,7 @@ class NonMemberBookingController extends Controller
         $booking->price = $price;
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
+        $booking->message = $message;
 
         Log::debug(__FUNCTION__ .' $booking:' . $booking);
 
@@ -170,6 +172,7 @@ class NonMemberBookingController extends Controller
         $salons = session('salons');
         $salon_id = $request -> salon;
         $salon = $salons -> find($salon_id);
+        $message = $request-> message;
         
         $course_id = $request -> course;
         $course = session('courses') -> find($course_id);
@@ -178,6 +181,7 @@ class NonMemberBookingController extends Controller
         session([
             'salon' => $salon,
             'course' => $course,
+            'message' => $message,
         ]);
 
         $pet_name = session('pet_name');
@@ -225,6 +229,7 @@ class NonMemberBookingController extends Controller
             'capacities' =>$capacities,
             'pet_name' =>$pet_name,
             'course' =>$course,
+            'message' => $message,
         ]);
     }
 
@@ -234,6 +239,7 @@ class NonMemberBookingController extends Controller
         $salon =session('salon');
         $pet_name = session('pet_name');
         $course = session('course');
+        $message = session('message');
         $date = $request->date;
         $dateStr = Util::dateFormat($date);
         $timeStr = Util::minuteToTime($st_time);
@@ -250,6 +256,7 @@ class NonMemberBookingController extends Controller
             'dog_type' => $dogType,
             'date' => $dateStr,
             'time' => $timeStr,
+            'message' => $message,
         ]);
     }
 
