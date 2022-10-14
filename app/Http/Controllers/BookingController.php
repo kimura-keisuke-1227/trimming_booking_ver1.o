@@ -400,7 +400,7 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
         return view('admin.bookings.index', [
             'bookings' => $bookings,
-            'checkdate' => $date,
+            'checkdate' => $util->getYMDWFromDbDate($date),
             'selectedSalon' => $salon,
             'salons' => $salons,
             'times' => $times,
