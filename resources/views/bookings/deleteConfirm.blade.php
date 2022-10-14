@@ -14,7 +14,7 @@
 
     <form action="{{Route('booking.store')}}" method="post">
         @csrf
-        <input type="submit" name="" id="" value="予約する">
+        <input type="submit" name="" id="" value="キャンセルする">
     </form>
 </div>
 @endsection

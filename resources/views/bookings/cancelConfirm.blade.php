@@ -10,7 +10,7 @@
     <p>{{$booking -> date}}</p>
     <p>{{$booking -> getStartTime()}}</p>
 
-    <p>上記下の内容で予約を行いますか？</p>
+    <p>上記の予約を取り消しますか？</p>
 
     <form action="{{Route('booking.delete', [
             'bookingId' => $booking-> id,
