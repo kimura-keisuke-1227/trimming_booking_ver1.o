@@ -28,6 +28,17 @@ class NonMemberBookingMailToSalon extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $nonMemberBooking = session('nonMemberBooking');
+
+        $salon = session('salon');
+        $booking = session('booking');
+
+        return $this->from($salon->email) 
+        ->subject('会員でないユーザーから予約がありました。')
+        ->text('email.bookingNotification.bookingNotificationFromNoMember',[
+            'nonMemberBooking' => $nonMemberBooking,
+            'salon' => $salon,
+            'booking' => $booking
+        ]);
     }
 }
