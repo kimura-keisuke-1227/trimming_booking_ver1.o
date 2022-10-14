@@ -59,8 +59,9 @@
       <div class="container px-4 mx-auto">
         <div class="flex max-w-md mx-auto flex-col text-center">
           <div class="mt-12 mb-8 p-8 bg-white rounded shadow">
-            <h1 class="mb-6 text-3xl">ログイン</h1>
-
+            <h1 class="mb-6 text-3xl">con affetto<br>予約システム</h1>
+            <p>以下にメールアドレス・パスワードを入力して<br>ログインしてください。</p>
+            <br>
             @if($errors->any())
             <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
               <p class="text-red-400">ログインに失敗しました</p>
@@ -69,6 +70,7 @@
 
             <form action="{{ route('login') }}" method="POST">
               @csrf
+              
               <div class="flex mb-4 px-4 bg-blueGray-50 rounded">
                 <input class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none" type="email" placeholder="メールアドレス" name="email" value="{{ old('email') }}">
                 <svg class="h-6 w-6 ml-4 my-auto text-blueGray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
@@ -76,6 +78,7 @@
                 </svg>
               </div>
 
+              
               <div class="flex mb-6 px-4 bg-blueGray-50 rounded">
                 <input class="w-full py-4 text-xs placeholder-blueGray-400 font-semibold leading-none bg-blueGray-50 outline-none" type="password" placeholder="パスワード" name="password">
                 <button class="ml-4">
