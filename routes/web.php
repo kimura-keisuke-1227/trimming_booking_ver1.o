@@ -36,8 +36,8 @@ Route::get('/',function(){
     if($user->auth == 1){
         return redirect('/admin');
     }
-
-    return view('index');
+    
+    return redirect('/new_booking');
 })-> Middleware('auth')
 ->name('main')
 ;
