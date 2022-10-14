@@ -18,6 +18,7 @@ use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
 use App\Mail\BookingNotificationForSalon;
+use App\Mail\CancelMailToUser;
 use App\classes\BookingsCalc;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
@@ -269,15 +270,20 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id .')');
         Log::info(' deleted booking:' . $booking);
 
-        /*
+        session([
+            'booking' => $booking,            
+        ]);
+        
+        $salon = Salon::find($booking->salon_id);
+
         Mail::to($owner->email)
-        ->send(new ContactAdminMail());
+        ->send(new CancelMailToUser());
         Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
 
-        Mail::to(session('salon')->email)
-        ->send(new BookingNotificationForSalon());
+        Mail::to($salon->email)
+        ->send(new CancelMailToUser());
         Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id .') whose mail address ="' .  session('salon')->email .'"');
-        */
+        
 
         $user = Auth::user();
         Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
