@@ -10,6 +10,10 @@
   display: none;
 }
 
+.new_entry {
+  font-size: 50px;
+}
+
 @media screen and (max-width: 780px) {
   .pc_container {
     margin-left: 0px;

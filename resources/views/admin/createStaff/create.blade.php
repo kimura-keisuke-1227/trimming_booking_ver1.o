@@ -29,7 +29,7 @@
             @endif
             @if(session()->has('error'))
             {{--
-    
+
                         <!-- ▼▼▼▼エラーメッセージ(全ページで共通)▼▼▼▼　-->
                     --}}
             <div class="mb-4 text-right">
@@ -45,7 +45,7 @@
                 </div>
             </div>
             {{--
-    
+
                         <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
                     --}}
             @endif
@@ -55,7 +55,7 @@
                     <div class="flex px-6 pb-4 border-b">
                         <h3 class="text-xl font-bold">スタッフ登録</h3>
                     </div>
-    
+
                     <div class="pt-4 px-6">
                         <!-- ▼▼▼▼エラーメッセージ▼▼▼▼　-->
                         @if($errors->any())
@@ -68,7 +68,7 @@
                         </div>
                         @endif
                         <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
-    
+
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="last_name">名前</label>
                             <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ old('name') }}">
@@ -79,7 +79,7 @@
                             <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ old('name') }}">
                             <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
                         </div>
-    
+
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
                             <select name="default_salon">
@@ -88,6 +88,8 @@
                                 @endforeach
                             </select>
                         </div>
+                        <input type="hidden" name="beforeCame" value="1">
+
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">メールアドレス</label>
                             <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ old('email') }}">
@@ -96,24 +98,24 @@
                             <label class="block text-sm font-medium mb-2" for="email">電話番号</label>
                             <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ old('email') }}">
                         </div>
-    
+
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="password">パスワード</label>
                             <input id="password" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="password" name="password">
                         </div>
-    
+
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="password_confirmation">パスワード(確認)</label>
                             <input id="password_confirmation" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="password" name="password_confirmation">
                         </div>
-    
+
                         <div class="flex px-6 pb-4 border-b">
                             <div class="ml-auto">
                                 <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
                             </div>
                         </div>
-    
-    
+
+
                         <!-- <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="image">画像</label>
                             <div class="flex items-end">
@@ -132,7 +134,7 @@
             </div>
         </div>
     </section>
-    
+
     <script>
         // 画像プレビュー
         document.getElementById('image').addEventListener('change', e => {
