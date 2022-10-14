@@ -94,4 +94,24 @@ class Util
         }
         return $timesNum;
     }
+    public static function getAge($date, $birthday){
+        $birthdayYear = date('Y', strtotime($birthday));
+        $birthdayMonth = date('m', strtotime($birthday));
+        $birthdayDay = date('d', strtotime($birthday));
+
+        $year = date('Y', strtotime($date));
+        $month = date('m', strtotime($date));
+        $day = date('d', strtotime($date));
+
+        $age =  $year - $birthdayYear-1;
+
+        $birth_month_year = $birthdayMonth*100 + $birthdayDay;
+        $month_year = $month*100 + $day;
+
+        if($month_year >= $birth_month_year){
+            $age  = $age+1;
+        }
+
+        return (string) $age . '歳';
+    }
 }
