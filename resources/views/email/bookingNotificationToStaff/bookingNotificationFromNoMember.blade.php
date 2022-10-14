@@ -9,7 +9,8 @@
 コース: {{ $booking-> course -> courseMaster -> course}}
 予約日：{{ $booking -> date }}
 開始時刻：{{ $booking -> getStTimeFromNumber }}
-終了予定時刻：{{ $booking -> getEdTimeForCustomerFromNumber }}
+終了時刻：{{ $booking -> getEdTimeFromNumber }}
+終了予定時刻(お客様向け)：{{ $booking -> getEdTimeForCustomerFromNumber }}
 メッセージ:
 {{ $booking -> message }}
 

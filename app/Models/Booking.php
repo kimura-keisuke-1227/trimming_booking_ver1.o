@@ -51,6 +51,15 @@ class Booking extends Model
         return $this-> pet -> name . '('.$this-> course -> courseMaster -> course . ')';
     }
 
+    public function getStTimeFromNumber(){
+        return Util::minuteToTime($this->st_time);
+    }
+    public function getEdTimeFromNumber(){
+        return Util::minuteToTime($this->ed_time);
+    }
+    public function getEdTimeForCustomerFromNumber(){
+        return Util::minuteToTime($this->ed_time_for_show);
+    }
 
 
     public function getBookingInfoForStaff(){
