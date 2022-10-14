@@ -68,13 +68,15 @@
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="last_name">名前</label>
+                        <label class="block text-sm font-medium mb-2" for="last_name">姓</label>
                         <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ old('name') }}">
+                        <label class="block text-sm font-medium mb-2" for="first_name">名</label>
                         <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ old('name') }}">
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="first_name">フリガナ(全角カナ)</label>
+                        <label class="block text-sm font-medium mb-2" for="last_name_kana">姓（フリガナ　全角カタカナ）</label>
                         <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ old('name') }}">
+                        <label class="block text-sm font-medium mb-2" for="first_name_kana">名（フリガナ　全角カタカナ）</label>
                         <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
                     </div>
 
