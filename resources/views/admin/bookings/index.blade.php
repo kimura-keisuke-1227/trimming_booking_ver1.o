@@ -62,7 +62,7 @@
             <td><a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> </td>
             <td>{{$booking -> pet -> getData()}}</td>
             @else
-            <td><a href="">{{$booking -> getNonMemberOwner() }}</a></td>
+            <td><a href="">【非会員】{{$booking -> getNonMemberOwner() }}</a></td>
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
             @endif
             <td>{{$booking -> course -> courseMaster -> course}}</td>
