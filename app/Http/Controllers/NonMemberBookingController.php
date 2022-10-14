@@ -16,6 +16,9 @@ use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
 use App\Models\Setting;
 use App\Models\Dogtype;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NonMemberBookingMail;
+use App\Mail\NonMemberBookingMailToSalon;
 
 class NonMemberBookingController extends Controller
 {
@@ -69,9 +72,15 @@ class NonMemberBookingController extends Controller
         $nonMemberBooking -> phone = session('phone');
         $nonMemberBooking -> name = session('pet_name');
         $nonMemberBooking -> weight = session('weight');
-
+        session(['nonMemberBooking' => $nonMemberBooking]);
         $nonMemberBooking -> save();
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
+
+        Mail::to(session('mail'))
+        ->send(new NonMemberBookingMail());
+
+        Mail::to(session('mail'))
+        ->send(new NonMemberBookingMailToSalon());
 
         Log::info(__FUNCTION__ . 'session delete for non member booking!');
         // 現在使っているセッションを無効化(セキュリティ対策のため)
