@@ -51,8 +51,9 @@ class BookingNotificationForSalon extends Mailable
         Log::debug(__METHOD__ . ' message：' . $message);
 
         $salon = session('salon');
+        $mailFrom = 'support@conaffetto-saitama.com';
 
-        return $this->from($salon->email) 
+        return $this->from($mailFrom) 
         ->subject('予約がありました。')
         ->text('email.bookingNotification.bookingNotification',[
             'user' => $user,
