@@ -7,10 +7,10 @@
 犬種:{{ $booking -> course -> dogtype -> type}}
 予約店舗: {{ $salon -> salon_name }}
 コース: {{ $booking-> course -> courseMaster -> course}}
-予約日：{{ $booking -> date }}
-開始時刻：{{ $booking -> getStTimeFromNumber }}
-終了時刻：{{ $booking -> getEdTimeFromNumber }}
-終了予定時刻(お客様向け)：{{ $booking -> getEdTimeForCustomerFromNumber }}
+予約日：{{ $date }}
+開始時刻：{{ $st_time }}
+終了時刻：{{ $ed_time }}
+お客様向け終了予定時刻：{{ $ed_time_for_show }}
 メッセージ:
 {{ $booking -> message }}
 
