@@ -2,7 +2,7 @@
 
 以下の通り、予約を受付けました。
 
-【お問い合わせ内容】
+【予約内容】
 ペットのお名前:{{ $pet -> name}}
 犬種:{{ $pet -> dogtype -> type}}
 予約店舗: con affetto　{{ $salon -> salon_name }}
