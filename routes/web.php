@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\DefaultCapacityController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
