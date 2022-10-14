@@ -41,17 +41,15 @@ class BookingController extends Controller
 
     public function test()
     {
+        $birthday = '2000-07-01';
+        $st_date = '2001-06-30';
+        $ed_date = '2001-07-02';
 
-        $bookings = Booking::with('pet.user')
-            ->with('course.coursemaster')
-            ->with('pet.dogtype')
-            #->where('pet.user.id' ,2)
-            ->get();
+        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
+            Log::debug(' date:' . $date . ' age:' . Util::getAge($date, $birthday));
+        }
 
-        Log::debug($bookings);
-        return view('test', [
-            'bookings' => $bookings
-        ]);
+
     }
 
     /**************************************************************
@@ -787,6 +785,15 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(start)');
         $debugString = __METHOD__ . ' salonID:' . $salonId . ' date:' .$date .' time:' . $time;
         Log::debug($debugString);
+
+        $salon = Salon::find($salonId);
+        Log::debug($salon);
+        $bookingsCalc = new BookingsCalc();
+        
+        $date = date('Y-m-d');
+        $step_time = Util::getSetting(30, 'step_time', true);
+        $capacities =
+        $bookingsCalc->test($salon,$date,$date,$step_time);
         Log::debug(__METHOD__ . '(end)');
         return $debugString;
     }
