@@ -273,6 +273,10 @@ Route::post('/admin/createStaff',[UserController::class,'storeStaff'])
 -> name('admin.users.storeStaff')
 -> middleware('auth');
 
+//予約画面から非会員の情報を取得
+Route::get('/admin/showNonMember/{bookingId}',[BookingController::class,'showNonMember'])
+->name('admin.showNonMemberInfo')
+-> middleware('auth');
 /*****************************************************************
 *
 *   パスワードリセット
