@@ -36,4 +36,20 @@ class Pet extends Model
     public function getPetBirthday(){
         return Util::dbDateToStrDateForBirthday($this->birthday);
     }
+
+    public function getPetInfoForBookingListMobile(){
+        $getPetInfoForBookingListMobile = $this -> name;
+    }
+
+    public function getAgeOfPet(){
+        $birthday = $this -> birthday;
+        if(is_null($birthday)){
+            return '誕生日未登録';
+        }
+
+        
+
+        return '誕生日あり';
+
+    }
 }
