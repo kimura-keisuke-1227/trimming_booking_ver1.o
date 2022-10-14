@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <th>利用歴</th>
-                <td>{{ $user-> last_name_kana . $user-> first_name_kana}}</td>
+                <td>{{ $cameBefore}}</td>
             </tr>
             <tr>
                 <th>メール</th>
