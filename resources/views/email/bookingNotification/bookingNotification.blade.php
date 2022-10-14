@@ -4,7 +4,7 @@
 
 【お問い合わせ内容】
 ペットのお名前:{{ $pet -> name}}
-犬種:{{ $pet -> name}}
+犬種:{{ $pet -> dogtype -> type}}
 予約店舗: con affetto　{{ $salon -> salon_name }}
 コース: {{ $course -> courseMaster -> course}}
 予約日：{{ $date }}
