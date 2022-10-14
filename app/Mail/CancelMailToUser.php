@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Salon;
+use App\Models\Course;
 
 use App\classes\Util;
 
@@ -34,29 +36,25 @@ class CancelMailToUser extends Mailable
      */
     public function build()
     {
-        $user = Auth::user();
-        $date = session('date');
-        $st_time = session('time');
-        $cut_time = session('course')->minute;
-        $cut_time_for_show = session('course')->minute_for_show;
-        $ed_time = $st_time + $cut_time;
-        $ed_time_for_show = $st_time + $cut_time_for_show;
-        $pet = session('pet');
-        $course = session('course');
-        $price =  session('course')->price;
-        $salon = session('salon')->id;
-        $booking_status = 1;
-        $message = session('message');
+        $booking = session('booking');
 
+        $user = Auth::user();
+        $date = $booking -> date;
+        $st_time = $booking -> time;
+        $pet = $booking -> pet;
+        $salon = $booking->salon;
+        $course = $booking->course;
+        $message = $booking->message;
+
+       
         Log::debug(__METHOD__ . ' message：' . $message);
 
-        $salon = session('salon');
-
         $mailFrom = 'support@conaffetto-saitama.com';
+        $mailFrom = $salon -> email;
 
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')
-        ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
+        ->text('email.bookingCancelEmail.bookingCancel',[
             'user' => $user,
             'pet' => $pet,
             'salon' => $salon,
@@ -64,7 +62,6 @@ class CancelMailToUser extends Mailable
             'message_text' => $message,
             'date' => Util::dbDateToStrDate($date),
             'st_time' => Util::minuteToTime($st_time),
-            'ed_time_for_show' => Util::minuteToTime($ed_time_for_show),
         ]);
     }
 }
