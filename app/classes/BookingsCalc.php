@@ -308,7 +308,7 @@ class BookingsCalc
             $allDefaultCapacities
             ->where('salon_id', $salon_id)
             ->where('st_date', '<=', $date)
-            #->where('dayOfWeek', $dayOfWeekFromDate)
+            ->where('dayOfWeek', $dayOfWeekFromDate)
             ->sortByDesc('st_date')
             ->first();
 
