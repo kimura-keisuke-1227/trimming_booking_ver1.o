@@ -267,6 +267,7 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $booking = Booking::findOrFail($id);
         
+        //キャンセルのメールを送りたい
         $booking->delete();
         Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id .')');
         Log::info(' deleted booking:' . $booking);
