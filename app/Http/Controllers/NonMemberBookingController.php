@@ -82,7 +82,7 @@ class NonMemberBookingController extends Controller
         Mail::to(session('mail'))
         ->send(new NonMemberBookingMailToSalon());
 
-        Mail::to(session('mail'))
+        Mail::to($salon->email)
         ->send(new NonMemberBookingMailToSalon());
 
         Log::info(__FUNCTION__ . 'session delete for non member booking!');
