@@ -52,7 +52,9 @@ class ContactAdminMail extends Mailable
 
         $salon = session('salon');
 
-        return $this->from($salon->email) 
+        $mailFrom = 'support@conaffetto-saitama.com';
+
+        return $this->from($mailFrom) 
         ->subject('予約を受付けました。')
         ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
             'user' => $user,
