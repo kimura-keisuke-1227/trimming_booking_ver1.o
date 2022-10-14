@@ -318,3 +318,7 @@ Route::get('/admin/acceptable' ,
 Route::post('/admin/acceptable' , 
 [BookingController::class,'getAcceptableCountWithSalonDate'])
 -> name('admin.getAcceptableCountWithSalonDate');
+
+Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'testAdjust'])
+->middleware('auth')
+->name('admin.adjust');

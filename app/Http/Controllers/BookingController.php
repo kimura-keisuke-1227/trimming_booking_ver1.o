@@ -781,4 +781,13 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    public function testAdjust(Request $request, $salonId,$date,$time){
+        Log::debug(__METHOD__ . '(start)');
+        $debugString = __METHOD__ . ' salonID:' . $salonId . ' date:' .$date .' time:' . $time;
+        Log::debug($debugString);
+        Log::debug(__METHOD__ . '(end)');
+        return $debugString;
+    }
 }
