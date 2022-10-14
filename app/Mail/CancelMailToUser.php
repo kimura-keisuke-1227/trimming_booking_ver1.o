@@ -42,10 +42,11 @@ class CancelMailToUser extends Mailable
         $date = $booking -> date;
         $st_time = $booking -> st_time;
         $pet = $booking -> pet;
-        $salon = $booking->salon;
+        $salon_id = $booking->salon_id;
         $course = $booking->course;
         $message = $booking->message;
-
+        
+        $salon = Salon::find($salon_id);
        
         Log::debug(__METHOD__ . ' message：' . $message);
 
