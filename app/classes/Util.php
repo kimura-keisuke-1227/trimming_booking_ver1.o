@@ -5,7 +5,7 @@ use App\Models\Setting;
 
 class Util
 {
-    public function getYMDWFromDbDate($date){
+    public static function getYMDWFromDbDate($date){
         $dateStr = date('Y年m月d日',strtotime($date));
         $week = array( "日", "月", "火", "水", "木", "金", "土" );
 
