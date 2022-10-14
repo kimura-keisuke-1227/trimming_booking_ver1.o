@@ -2,6 +2,7 @@
 
 namespace app\classes;
 
+use App\Models\Salon;
 use Illuminate\Support\Facades\Log;
 
 class BookingsCalc
@@ -317,5 +318,42 @@ class BookingsCalc
         Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
         Log::debug(__METHOD__ . '(end)');
         return $capacity->capacity;
+    }
+
+    /************************************* 
+    *
+    *　スタッフが○×を切り替えれるように
+    *
+    **************************************************************/
+    public function test($salonId,$st_date,$ed_date,$step_time){
+        $acceptableCountsForMultiDays = [];
+        $ed_date = Util::addDays($st_date, 7);
+        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
+            $acceptableCountsForMultiDays[$date] = $this->test2($salonId,$date,$step_time);
+            Log::debug($date);
+        }
+
+        Log::debug($acceptableCountsForMultiDays);
+    }
+
+    private function test2($salonId,$date,$step_time){
+        Log::debug(__METHOD__ . '(start)');
+        $salon = Salon::find($salonId)->first();
+        $st_time = $salon -> st_time;
+        $ed_time = $salon -> ed_time;
+        $step_time = Util::getSetting(30,'step_time',true);
+
+        #Log::debug(__METHOD__ . ' salon:' .  $salon);
+        #Log::debug(__METHOD__ . ' st_time:' . (string)$st_time.' ed_time:'.(string)$ed_time);
+
+        $acceptableCounts = [];
+        for($time = $st_time;$time<$ed_time;$time = $time + $step_time){
+
+            $acceptableCounts[$time] = 1;
+        }
+        #Log::debug( $acceptableCounts);
+        Log::debug(__METHOD__ . '(end)');
+
+        return $acceptableCounts;
     }
 }
