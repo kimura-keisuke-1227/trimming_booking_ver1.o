@@ -41,13 +41,12 @@ class BookingController extends Controller
 
     public function test()
     {
-        $birthday = '2000-07-01';
-        $st_date = '2001-06-30';
-        $ed_date = '2001-07-02';
-
-        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
-            Log::debug(' date:' . $date . ' age:' . Util::getAge($date, $birthday));
-        }
+        $salonId=2;
+        $st_date=date('Y-m-d');
+        $ed_date=date('Y-m-d');
+        $step_time=30;
+        $bookingsCalc = new BookingsCalc();
+        $bookingsCalc->test($salonId,$st_date,$ed_date,$step_time);
 
 
     }
