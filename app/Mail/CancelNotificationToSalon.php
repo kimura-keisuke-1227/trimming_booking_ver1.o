@@ -7,6 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+use App\Models\Salon;
+use App\Models\Course;
+
+use App\classes\Util;
+
 class CancelNotificationToSalon extends Mailable
 {
     use Queueable, SerializesModels;

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactAdminMail;
 use App\Mail\BookingNotificationForSalon;
 use App\Mail\CancelMailToUser;
+use App\Mail\CancelNotificationToSalon;
 use App\classes\BookingsCalc;
 use App\Mail\CancelNotificationToUser;
 use App\Models\NonMemberBooking;
@@ -346,10 +347,15 @@ class BookingController extends Controller
         } else{
             $owner = User::find($booking->pet->user->id);
             $email = $owner -> email;
+            session(['owner'=>$owner]);
             Log::debug(__METHOD__ . ' delete only a booking because it has user:');
             Log::debug(__METHOD__ . ' user email:' . $email);
             Mail::to($email)
-            ->send(new CancelMailToUser);
+            ->send(new CancelNotificationToUser);
+            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
+            $salon = Salon::find($booking->salon_id);
+            Mail::to($salon -> email)
+            ->send(new CancelNotificationToUser);
             Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
         }
 
