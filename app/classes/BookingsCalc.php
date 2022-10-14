@@ -220,6 +220,7 @@ class BookingsCalc
 
         //指定日範囲内の臨時調整枠データを取得
         $tempCapacitiesOfTheDate = $allTempCapacities
+            ->where('salon_id', '=', $salon->id)
             ->where('st_date', '<=', $date)
             ->where('ed_date', '>=', $date);
 
