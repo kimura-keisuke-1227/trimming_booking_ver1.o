@@ -72,12 +72,15 @@ class NonMemberBookingController extends Controller
         $nonMemberBooking -> phone = session('phone');
         $nonMemberBooking -> name = session('pet_name');
         $nonMemberBooking -> weight = session('weight');
-        session(['nonMemberBooking' => $nonMemberBooking]);
+        session([
+            'nonMemberBooking' => $nonMemberBooking,
+            'booking' => $booking,
+        ]);
         $nonMemberBooking -> save();
         Log::info(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Mail::to(session('mail'))
-        ->send(new NonMemberBookingMail());
+        ->send(new NonMemberBookingMailToSalon());
 
         Mail::to(session('mail'))
         ->send(new NonMemberBookingMailToSalon());
