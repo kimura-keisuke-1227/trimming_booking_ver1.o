@@ -14,7 +14,7 @@
             <td>飼い主様</td>
             @if($booking -> pet_id ==0)
 
-            <td>{{$booking -> getNonMemberOwner() }}</td>
+            <td><a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a></td>
             @else
             <td><a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> </td>
 
@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <td>メッセージ</td>
-            <td>{{$booking -> getBookingMessage()}}</td>
+            <td>{{$booking -> getBookingMessage()}}</td>１
         </tr>
     </table>
 
