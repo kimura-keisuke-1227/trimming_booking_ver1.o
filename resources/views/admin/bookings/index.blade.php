@@ -88,7 +88,7 @@
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
                 <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> <br>
-                {{$booking -> pet -> getData()}} <br>
+                {{$booking -> getBookingInfoForStaff()}} <br>
                 @else
                 {{$booking -> getNonMemberOwner() }}<br>
                 {{$booking -> getPetNameOfNoMemberBooking() }}<br>
