@@ -550,6 +550,15 @@ class BookingController extends Controller
         ]);
     }
 
+    public function showNonMember($bookingId){
+        $staff = Auth::user();
+        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
+        $nonMemberBooking = NonMemberBooking::where('booking_id',$bookingId)->first();
+        Log::debug($nonMemberBooking);
+        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
+        return __METHOD__;
+    }
+
     public function getAcceptableCountWithSalonDate(Request $request)
     {
         $staff = Auth::user();
