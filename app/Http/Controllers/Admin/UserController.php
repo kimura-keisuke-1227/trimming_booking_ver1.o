@@ -113,8 +113,11 @@ class UserController extends Controller
             
         } else{
             Log::info(__METHOD__ . ' This user('. $user->id .') did not came before she or he registered.');
+            
+            //飼い主に紐づくペットを取得→その予約の内、当日より前のものを取得して数える。
             $pets = Pet::select('id')->where('owner_id',$user->id) -> get();
             $bookings = Booking::whereIn('pet_id', $pets)->where('date','<',date('Y-m-d')) -> get();
+            
             Log::debug(__METHOD__ . '(pets)' . $pets);
             Log::debug(__METHOD__ . '(bookings)' . $bookings);
             
