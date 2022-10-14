@@ -5,10 +5,8 @@
 【予約内容】
 ペットのお名前:{{ $pet -> name}}
 犬種:{{ $pet -> dogtype -> type}}
-予約店舗: con affetto　{{ $salon -> salon_name }}
+予約店舗: {{ $salon -> salon_name }}
 コース: {{ $course -> courseMaster -> course}}
-予約日：{{ $date }}
-開始時刻:{{ $date }}
 予約日：{{ $date }}
 開始時刻：{{ $st_time }}
 終了予定時刻：{{ $ed_time_for_show }}

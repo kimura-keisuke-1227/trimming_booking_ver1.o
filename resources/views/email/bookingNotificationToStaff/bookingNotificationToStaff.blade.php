@@ -7,8 +7,7 @@
 犬種:{{ $pet -> dogtype -> type}}
 予約店舗: {{ $salon -> salon_name }}
 コース: {{ $course -> courseMaster -> course}}
-予約日：{{ $date }}
-開始時刻:{{ $st_time }}
+cg
 終了予定時刻：{{ $ed_time_for_show }}
 メッセージ:
 {{ $message_text }}
