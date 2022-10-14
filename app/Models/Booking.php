@@ -58,7 +58,7 @@ class Booking extends Model
                 $this->pet->name.
                 '('.
                 $this->pet->weight.
-                'kg - '.
+                'kg / '.
                 Util::getAge(date('Y-m-d'),$this -> pet -> birthday) .
                 ')'
                 ;
