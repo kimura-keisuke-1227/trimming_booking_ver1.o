@@ -80,11 +80,11 @@
         </tr>
         @foreach($bookings as $booking)
         <tr>
-            <>
+            <td>
                 {{$booking -> date}} <br>
                 {{$booking -> getStartTime()}}　〜
-                {{$booking -> getEndTime()}}<br>
-                {{$booking -> getEndTimeForOwner()}}<br>
+                {{$booking -> getEndTime()}}<br><br>
+                (お客様表示終了時間)<br>
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
                 <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> <br>
