@@ -557,7 +557,7 @@ class BookingController extends Controller
         Log::debug($nonMemberBooking);
         Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
         
-        return view('',[
+        return view('admin.users.showNonMember',[
             'nonMemberBooking'=> $nonMemberBooking,
         ]);
         return __METHOD__;

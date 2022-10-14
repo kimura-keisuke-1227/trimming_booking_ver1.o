@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+ƒ@extends('layouts.admin')
 
 @section('title', '会員情報')
 
@@ -57,36 +57,29 @@
         <table class="table table-striped">
             <tr>
                 <th>お客様名</th>
-                <td>{{ $user-> last_name . $user-> first_name}}</td>
+                <td>{{ $nonMemberBooking-> last_name . $nonMemberBooking-> first_name}}</td>
             </tr>
             <tr>
                 <th>フリガナ</th>
-                <td>{{ $user-> last_name_kana . $user-> first_name_kana}}</td>
+                <td>{{ $nonMemberBooking-> last_name_kana . $nonMemberBooking-> first_name_kana}}</td>
             </tr>
-            <tr>
-                <th>通常利用店舗</th>
-                <td>{{ $user-> getUsualSalon() }}</td>
-            </tr>
-            <tr>
-                <th>利用歴</th>
-                <td>{{ $cameBefore}}</td>
-            </tr>
+
             <tr>
                 <th>メール</th>
                 <td>
-                    <a href="mailto:{{ $user-> email }}">{{ $user-> email }}</a>
+                    <a href="mailto:{{ $nonMemberBooking-> email }}">{{ $nonMemberBooking-> email }}</a>
                 </td>
             </tr>
             <tr>
                 <th>電話</th>
-                <td><a href="tel:{{ $user-> phone }}">{{ $user-> phone }}</a></td>
+                <td><a href="tel:{{ $nonMemberBooking-> phone }}">{{ $nonMemberBooking-> phone }}</a></td>
             </tr>
         </table>
         <a href="javascript:history.back()">[戻る]</a>
 
         {{-- 
             <div class="py-4 bg-white rounded">
-                <form action="{{route('admin.users.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('admin.nonMemberBookings.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="flex px-6 pb-4 border-b">
                         <h3 class="text-xl font-bold">会員情報</h3>
@@ -107,18 +100,18 @@
     
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="last_name">名前</label>
-                            <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $user-> last_name }}">
-                            <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $user-> first_name }}}">
+                            <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $nonMemberBooking-> last_name }}">
+                            <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $nonMemberBooking-> first_name }}}">
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="first_name">フリガナ(全角カナ)</label>
-                            <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $user-> last_name_kana }}}">
-                            <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $user-> first_name_kana }}">
+                            <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ $nonMemberBooking-> last_name_kana }}}">
+                            <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ $nonMemberBooking-> first_name_kana }}">
                         </div>
     
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
-                            <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $user-> getUsualSalon() }}">
+                            <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ $nonMemberBooking-> getUsualSalon() }}">
                         </div>
     
                         <div class="mb-6">
@@ -127,11 +120,11 @@
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">メールアドレス</label>
-                            <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ $user-> email }}">
+                            <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="email" name="email" value="{{ $nonMemberBooking-> email }}">
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">電話番号</label>
-                            <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ $user-> phone }}">
+                            <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ $nonMemberBooking-> phone }}">
                         </div>
     
     
