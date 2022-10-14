@@ -5,6 +5,14 @@ use App\Models\Setting;
 
 class Util
 {
+    public function getYMDWFromDbDate($date){
+        $dateStr = date('Y年m月d日',strtotime($date));
+        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+
+        $dateStr = $dateStr . '('. $week[ date('w',strtotime($date))] . ')';
+        return $dateStr;
+    }
+
     public static function dbDateToStrDate($date){
         $week = array( "日", "月", "火", "水", "木", "金", "土" );
         $dateStr = date('m/d',strtotime($date)) .'('. $week[ date('w',strtotime($date))] . ')';
