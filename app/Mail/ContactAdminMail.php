@@ -53,6 +53,7 @@ class ContactAdminMail extends Mailable
         $salon = session('salon');
 
         $mailFrom = 'support@conaffetto-saitama.com';
+        $mailFrom = $salon -> email;
 
         return $this->from($mailFrom) 
         ->subject('予約を受付けました。')
