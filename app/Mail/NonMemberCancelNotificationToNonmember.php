@@ -57,8 +57,9 @@ class NonMemberCancelNotificationToNonmember extends Mailable
 
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')
-        ->text('email.bookingCancelEmail.bookingCancel',[
+        ->text('email.bookingCancelEmail.bookingCancelForNonUser',[
             'nonMemberBooking' => $nonMemberBooking,
+            'booking' => $booking,
             'pet' => $pet,
             'salon' => $salon,
             'course' => $course,

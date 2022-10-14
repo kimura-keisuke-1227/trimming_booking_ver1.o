@@ -1,12 +1,12 @@
-{{ $user->last_name .$user ->first_name }} 様
+{{ $nonMemberBooking->last_name .$nonMemberBooking ->first_name }} 様
 
 以下の予約をキャンセルしました。
 
 【予約内容】
-ペットのお名前:{{ $pet -> name}}
-犬種:{{ $pet -> dogtype -> type}}
+ペットのお名前:{{ $nonMemberBooking -> name}}
+犬種:{{ $booking -> course -> dogtype -> type}}
 予約店舗: {{ $salon -> salon_name }}
-コース: {{ $course -> courseMaster -> course}}
+コース: {{ $booking-> course -> courseMaster -> course}}
 予約日: {{ $date}}
 開始時刻: {{ $st_time }}
 メッセージ:
