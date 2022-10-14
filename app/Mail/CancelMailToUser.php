@@ -40,7 +40,7 @@ class CancelMailToUser extends Mailable
 
         $user = Auth::user();
         $date = $booking -> date;
-        $st_time = $booking -> time;
+        $st_time = $booking -> st_time;
         $pet = $booking -> pet;
         $salon = $booking->salon;
         $course = $booking->course;
