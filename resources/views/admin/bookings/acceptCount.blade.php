@@ -45,7 +45,7 @@
             @foreach($days as $day)
                 <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
                 @if($capacities[$day][$timesNum[$time]] > 0)
-                <td>{{$capacities[$day][$timesNum[$time]]}}</td>
+                <td>○</td>
                 @else
                 <td>×</td>
                 @endif
