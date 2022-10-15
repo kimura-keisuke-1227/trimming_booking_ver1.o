@@ -39,23 +39,7 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    /**************************************************************
-     *
-     *   テスト用
-     *
-     ***************************************************************/
 
-    public function test()
-    {
-        $salonId=2;
-        $st_date=date('Y-m-d');
-        $ed_date=date('Y-m-d');
-        $step_time=30;
-        $bookingsCalc = new BookingsCalc();
-        $bookingsCalc->test($salonId,$st_date,$ed_date,$step_time);
-
-
-    }
 
     /**************************************************************
      *
@@ -850,8 +834,26 @@ class BookingController extends Controller
         $date = date('Y-m-d');
         $step_time = Util::getSetting(30, 'step_time', true);
         $capacities =
-        $bookingsCalc->test($salon,$date,$date,$step_time);
+        $bookingsCalc->getCapacitiesOfMultiDaysForOX($salon,$date,$date,$step_time);
         Log::debug(__METHOD__ . '(end)');
         return $debugString;
+    }
+
+    /**************************************************************
+     *
+     *   テスト用
+     *
+     ***************************************************************/
+
+    public function test()
+    {
+        $salonId=2;
+        $st_date=date('Y-m-d');
+        $ed_date=date('Y-m-d');
+        $step_time=$step_time = Util::getSetting(30,'step_time',true);
+        $bookingsCalc = new BookingsCalc();
+        $bookingsCalc->getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time);
+
+
     }
 }
