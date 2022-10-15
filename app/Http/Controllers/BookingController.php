@@ -539,7 +539,7 @@ class BookingController extends Controller
         $acceptableCount = [];
         $st_date = date('Y-m-d');
         $salons = Salon::all();
-        $salon = $salons->find(1);
+        $salon = $salons->find($staff -> default_salon);
 
 
         $ed_date = Util::addDays($st_date, 7);
