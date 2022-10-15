@@ -343,7 +343,6 @@ class BookingsCalc
         
         
         $acceptableCountsForMultiDays = [];
-        $ed_date = Util::addDays($st_date, 7);
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
             $acceptableCountsForMultiDays[$date] = 
             $this->getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities);
