@@ -253,26 +253,26 @@ class BookingController extends Controller
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $booking = Booking::findOrFail($id);
-        
+
         //キャンセルのメールを送りたい
         $booking->delete();
-        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id .')');
+        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
         Log::info(' deleted booking:' . $booking);
 
         session([
-            'booking' => $booking,            
+            'booking' => $booking,
         ]);
-        
+
         $salon = Salon::find($booking->salon_id);
 
         Mail::to($owner->email)
-        ->send(new CancelMailToUser());
-        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
+            ->send(new CancelMailToUser());
+        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
 
         Mail::to($salon->email)
-        ->send(new CancelMailToUser());
-        Log::debug(__METHOD__ . 'system sent a message to salon (' . $salon->id .') whose mail address ="' .  $salon->email .'"');
-        
+            ->send(new CancelMailToUser());
+        Log::debug(__METHOD__ . 'system sent a message to salon (' . $salon->id . ') whose mail address ="' .  $salon->email . '"');
+
 
         $user = Auth::user();
         Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
@@ -310,53 +310,51 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $booking = Booking::find($bookingID);
         Log::debug($booking);
-        
+
         #$booking->delete();
-        Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id .')');
+        Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
         Log::info(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
-        
+
         session([
-            'booking'=>$booking,
+            'booking' => $booking,
         ]);
-        
+
         $salon = Salon::find($booking->salon_id);
 
         //非会員の予約の場合、そちらも削除が必要。
         if ($booking->pet_id == 0) {
             Log::debug(__METHOD__ . ': This booking is by non member. Need to delete non member booking!');
             $nonMemberBooking = NonMemberBooking::where('booking_id', $bookingID)->first();
-            
+
             session([
-                'nonMemberBooking'=>$nonMemberBooking,
+                'nonMemberBooking' => $nonMemberBooking,
             ]);
-            
+
             $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             #$nonMemberBooking->delete();
-            Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id .')');
+            Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
             Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
             Log::debug(__METHOD__ . ' non user email:' . $email);
 
-            Mail::to($salon -> email)
-            ->send(new NonMemberCancelNotificationToNonmember);
+            Mail::to($salon->email)
+                ->send(new NonMemberCancelNotificationToNonmember);
             Mail::to($email)
-            ->send(new NonMemberCancelNotificationToNonmember);
-
-            
-        } else{
+                ->send(new NonMemberCancelNotificationToNonmember);
+        } else {
             $owner = User::find($booking->pet->user->id);
-            $email = $owner -> email;
-            session(['owner'=>$owner]);
+            $email = $owner->email;
+            session(['owner' => $owner]);
             Log::debug(__METHOD__ . ' delete only a booking because it has user:');
             Log::debug(__METHOD__ . ' user email:' . $email);
             Mail::to($email)
-            ->send(new CancelNotificationToUser);
-            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
-            
-            Mail::to($salon -> email)
-            ->send(new CancelNotificationToUser);
-            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
+                ->send(new CancelNotificationToUser);
+            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
+
+            Mail::to($salon->email)
+                ->send(new CancelNotificationToUser);
+            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
         }
 
 
@@ -491,9 +489,9 @@ class BookingController extends Controller
         $booking->price = $price;
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
-        
+
         $booking->save();
-        Log::info(__METHOD__ . ' staff:user_id(' .$staff->id . ') saved booking. Booking ID is ('.$booking->id .')');
+        Log::info(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
 
         Log::debug('管理者予約登録：(pet_id)' . $pet_id .
             ' (course)' . $course_id .
@@ -516,17 +514,17 @@ class BookingController extends Controller
         $staff = Auth::user();
         Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $booking = Booking::find($bookingID);
-        
+
         if (!is_null($booking)) {
             $booking_owner_id = $booking->pet->user->id;
         }
-        
+
         if ((is_null($booking))) {
             return redirect('/bookings')
-            ->with('error', '該当の予約が存在しません。');
+                ->with('error', '該当の予約が存在しません。');
         }
-        
-        
+
+
         Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
         return view('admin.bookings.cancelConfirm', [
             'booking' => $booking
@@ -537,21 +535,21 @@ class BookingController extends Controller
     public function getAcceptableCount()
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $acceptableCount = [];
         $st_date = date('Y-m-d');
         $salons = Salon::all();
         $salon = $salons->find(1);
-        
-        
+
+
         $ed_date = Util::addDays($st_date, 7);
         $step_time = Util::getSetting(30, 'step_time', true);
-        
+
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allRegularHolidays = RegularHoliday::all();
         $allTempCapacities = TempCapacity::all();
-        
+
         $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
@@ -560,13 +558,13 @@ class BookingController extends Controller
         $days = $util->getDaysList($st_date, $ed_date);
 
         $bookingsCalc = new BookingsCalc();
-        
+
         $capacities =
-        $bookingsCalc->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+            $bookingsCalc->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
         #Log::debug($capacities);
-        
-        
-        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
+
+
+        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
         return view('admin.bookings.acceptCount', [
             'date' => date('Y-m-d'),
             'times' => $times,
@@ -578,15 +576,16 @@ class BookingController extends Controller
         ]);
     }
 
-    public function showNonMember($bookingId){
+    public function showNonMember($bookingId)
+    {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
-        $nonMemberBooking = NonMemberBooking::where('booking_id',$bookingId)->first();
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
+        $nonMemberBooking = NonMemberBooking::where('booking_id', $bookingId)->first();
         Log::debug($nonMemberBooking);
-        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
-        
-        return view('admin.users.showNonMember',[
-            'nonMemberBooking'=> $nonMemberBooking,
+        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
+
+        return view('admin.users.showNonMember', [
+            'nonMemberBooking' => $nonMemberBooking,
         ]);
         return __METHOD__;
     }
@@ -594,7 +593,7 @@ class BookingController extends Controller
     public function getAcceptableCountWithSalonDate(Request $request)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $acceptableCount = [];
         $st_date = $request->st_date;
         $salons = Salon::all();
@@ -602,26 +601,26 @@ class BookingController extends Controller
 
         $ed_date = Util::addDays($st_date, 7);
         $step_time = Util::getSetting(30, 'step_time', true);
-        
+
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $allRegularHolidays = RegularHoliday::all();
-        
+
         $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
         $days = $util->getDaysList($st_date, $ed_date);
-        
+
         $bookingCalcs = new BookingsCalc;
-        
+
         $capacities =
-        $bookingCalcs->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
-        
-        
-        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
+            $bookingCalcs->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
+
+
+        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
         return view('admin.bookings.acceptCount', [
             'date' => $st_date,
             'times' => $times,
@@ -632,17 +631,17 @@ class BookingController extends Controller
             'selectedSalon' => $salon,
         ]);
     }
-    
-    
+
+
     public function adminShowBookingDetail($bookingId)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
-        
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
+
         $booking = Booking::with('pet')->find($bookingId);
-        
-        
-        Log::info(__METHOD__ . ' ends by user_id(' .$staff->id . ')');
+
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
         return view('admin.bookings.showBookingDetail', [
             'booking' => $booking
         ]);
@@ -651,7 +650,7 @@ class BookingController extends Controller
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $owner = Auth::user();
         $pet =  session('pet');
         $course = session('course');
@@ -664,35 +663,35 @@ class BookingController extends Controller
 
         //指定日より1週間分のデータを取得
         $ed_date =  Util::addDays($st_date, 6);
-        
+
         $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
         $days = $util->getDaysList($st_date, $ed_date);
-        
+
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
-        
+
         $bookingsCalc = new BookingsCalc();
-        
+
         $capacities =
-        $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+            $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
         #Log::debug($capacities);
-        
+
         session([
             'course' => $course,
             'salon' => $salon,
         ]);
-        
+
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
-        
-        
-        Log::info(__METHOD__ . ' ends by staff user_id(' .$staff->id . ')');
+
+
+        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
         return view('bookings.booking_calender', [
             'date' => $st_date,
             'before_date' => $beforeDate,
@@ -725,10 +724,10 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by owner user_id(' .$staff->id . ')');
+        Log::info(__METHOD__ . ' starts by owner user_id(' . $staff->id . ')');
         $booking = new Booking();
         $owner = Auth::user();
-        
+
         $date = session('date');
         $st_time = session('time');
         $cut_time = session('course')->minute;
@@ -741,9 +740,9 @@ class BookingController extends Controller
         $salon_id = session('salon')->id;
         $booking_status = 1;
         $message = session('message');
-        
+
         Log::debug(__METHOD__ . ' message：' . $message);
-        
+
         $booking->date = $date;
         $booking->st_time = $st_time;
         $booking->ed_time = $ed_time;
@@ -754,32 +753,32 @@ class BookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
         $booking->message = $message;
-        
-        $booking->save();        
-        Log::info(__METHOD__ . '  owner user_id(' .$owner->id . ') saved Booking, id(' . $booking->id .')');
-        
+
+        $booking->save();
+        Log::info(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
+
         Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
-        
+
         $pet = Pet::find($pet_id);
         $pet->message = $message;
         $pet->save();
-        Log::info(__METHOD__ . '  owner user_id(' .$owner->id . ') saved message, pet id(' . $pet->id .')');
+        Log::info(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
 
         Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
-        
+
         Mail::to($owner->email)
-        ->send(new ContactAdminMail());
-        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id .') whose mail address ="' .  $owner->email .'"');
+            ->send(new ContactAdminMail());
+        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
 
         Mail::to(session('salon')->email)
-        ->send(new BookingNotificationForSalon());
-        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id .') whose mail address ="' .  session('salon')->email .'"');
+            ->send(new BookingNotificationForSalon());
+        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
 
-        Log::info(__METHOD__ . ' ends by owner user_id(' .$owner->id . ')');
+        Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -822,19 +821,20 @@ class BookingController extends Controller
      */
 
 
-    public function testAdjust(Request $request, $salonId,$date,$time){
+    public function testAdjust(Request $request, $salonId, $date, $time)
+    {
         Log::debug(__METHOD__ . '(start)');
-        $debugString = __METHOD__ . ' salonID:' . $salonId . ' date:' .$date .' time:' . $time;
+        $debugString = __METHOD__ . ' salonID:' . $salonId . ' date:' . $date . ' time:' . $time;
         Log::debug($debugString);
 
         $salon = Salon::find($salonId);
         Log::debug($salon);
         $bookingsCalc = new BookingsCalc();
-        
+
         $date = date('Y-m-d');
         $step_time = Util::getSetting(30, 'step_time', true);
         $capacities =
-        $bookingsCalc->getCapacitiesOfMultiDaysForOX($salon,$date,$date,$step_time);
+            $bookingsCalc->getCapacitiesOfMultiDaysForOX($salon, $date, $date, $step_time);
         Log::debug(__METHOD__ . '(end)');
         return $debugString;
     }
@@ -845,15 +845,19 @@ class BookingController extends Controller
      *
      ***************************************************************/
 
-    public function test()
+    public function test($st_date)
     {
-        $salonId=2;
-        $st_date=date('Y-m-d');
-        $ed_date=date('Y-m-d');
-        $step_time=$step_time = Util::getSetting(30,'step_time',true);
+        Log::debug(__METHOD__ . '(starts)');
+        $salonId = 2;
+        $st_date = date('Y-m-d');
+        $ed_date = date('Y-m-d');
+        $step_time = $step_time = Util::getSetting(30, 'step_time', true);
         $bookingsCalc = new BookingsCalc();
-        $bookingsCalc->getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time);
+        Log::debug(__METHOD__.'('.__LINE__.')'.' call getCapacitiesOfMultiDaysForOX');
+        Log::debug(
+            $bookingsCalc->getCapacitiesOfMultiDaysForOX($salonId, $st_date, $ed_date, $step_time)
+        );
 
-
+        Log::debug(__METHOD__ . '(ends)');
     }
 }
