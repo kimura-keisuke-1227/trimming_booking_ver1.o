@@ -312,7 +312,7 @@ Route::get('/admin/bookings',
             [BookingController::class,'getAllBookings']) 
             -> name('admin.all_bookings');
 
-Route::get('/test/{st_date}' , 
+Route::get('/test/{salon_id}/{st_date}' , 
 [BookingController::class,'test']);
 
 Route::get('/admin/acceptable' , 
