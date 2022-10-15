@@ -360,7 +360,10 @@ class BookingsCalc
         $st_time = $salon -> st_time;
         $ed_time = $salon -> ed_time;
 
-        $dateTempCapacities = $allTempCapacities -> where('st_date',$date);
+        $dateTempCapacities = $allTempCapacities 
+        -> where('st_date',$date)
+        -> where('salon_id',$salon->id)
+        ;
 
         Log::debug(__METHOD__ . 'dateTempCapacities:');
         Log::debug($dateTempCapacities);

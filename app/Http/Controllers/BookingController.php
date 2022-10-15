@@ -311,7 +311,7 @@ class BookingController extends Controller
         $booking = Booking::find($bookingID);
         Log::debug($booking);
 
-        #$booking->delete();
+        $booking->delete();
         Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
         Log::info(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
@@ -333,7 +333,7 @@ class BookingController extends Controller
 
             $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
-            #$nonMemberBooking->delete();
+            $nonMemberBooking->delete();
             Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
             Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
             Log::debug(__METHOD__ . ' non user email:' . $email);
