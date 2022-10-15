@@ -845,19 +845,25 @@ class BookingController extends Controller
      *
      ***************************************************************/
 
-    public function test($st_date)
+    public function test($salon_id , $st_date)
     {
         Log::debug(__METHOD__ . '(starts)');
         $salonId = 2;
-        $st_date = date('Y-m-d');
-        $ed_date = date('Y-m-d');
+        $ed_date = Util::addDays($st_date,6);
         $step_time = $step_time = Util::getSetting(30, 'step_time', true);
         $bookingsCalc = new BookingsCalc();
         Log::debug(__METHOD__.'('.__LINE__.')'.' call getCapacitiesOfMultiDaysForOX');
+        /*
         Log::debug(
             $bookingsCalc->getCapacitiesOfMultiDaysForOX($salonId, $st_date, $ed_date, $step_time)
         );
+        */
 
+        Log::debug(__METHOD__.'('.__LINE__.')' . 'getCapacitiesOfMultiDaysForOX with st_date:' . $st_date . ' ed_date:' . $ed_date);
+        $capacitiesOfMultiDaysFoxOX = $bookingsCalc->getCapacitiesOfMultiDaysForOX($salonId, $st_date, $ed_date, $step_time);
+        #Log::debug(__METHOD__.'('.__LINE__.')'.' $capacitiesOfMultiDaysFoxOX:');
+        #Log::debug($capacitiesOfMultiDaysFoxOX);
         Log::debug(__METHOD__ . '(ends)');
+        return $capacitiesOfMultiDaysFoxOX;
     }
 }
