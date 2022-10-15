@@ -5,6 +5,7 @@ namespace app\classes;
 use App\Models\Salon;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
+use App\Models\TempCapacity;
 
 class BookingsCalc
 {
@@ -327,31 +328,46 @@ class BookingsCalc
     *
     **************************************************************/
     public function test($salonId,$st_date,$ed_date,$step_time){
+        $allTempCapacities = TempCapacity::where('salon_id', $salonId)
+        -> get();
+
+        Log::debug('allTempCapacities:');
+        Log::debug($allTempCapacities);
+        $salon = Salon::find($salonId)->first();
+
+        $step_time = Util::getSetting(30,'step_time',true);
+
+
         $acceptableCountsForMultiDays = [];
         $ed_date = Util::addDays($st_date, 7);
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
-            $acceptableCountsForMultiDays[$date] = $this->test2($salonId,$date,$step_time);
+            $acceptableCountsForMultiDays[$date] = 
+            $this->test2($salon,$date,$step_time,$allTempCapacities);
             Log::debug($date);
         }
 
         Log::debug($acceptableCountsForMultiDays);
     }
 
-    private function test2($salonId,$date,$step_time){
+    private function test2($salon,$date,$step_time,$allTempCapacities){
         Log::debug(__METHOD__ . '(start)');
-        $salon = Salon::find($salonId)->first();
         $st_time = $salon -> st_time;
         $ed_time = $salon -> ed_time;
-        $step_time = Util::getSetting(30,'step_time',true);
+
+        $dateTempCapacities = $allTempCapacities -> where('st_date',$date);
 
         #Log::debug(__METHOD__ . ' salon:' .  $salon);
         #Log::debug(__METHOD__ . ' st_time:' . (string)$st_time.' ed_time:'.(string)$ed_time);
 
         $acceptableCounts = [];
         for($time = $st_time;$time<$ed_time;$time = $time + $step_time){
-
             $acceptableCounts[$time] = 1;
         }
+
+        foreach($dateTempCapacities as $dateTempCapacity){
+            Log::debug($dateTempCapacity);
+        }
+
         #Log::debug( $acceptableCounts);
         Log::debug(__METHOD__ . '(end)');
 
