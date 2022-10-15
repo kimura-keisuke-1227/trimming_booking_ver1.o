@@ -539,7 +539,8 @@ class BookingController extends Controller
         $acceptableCount = [];
         $st_date = date('Y-m-d');
         $salons = Salon::all();
-        $salon = $salons->find($staff -> default_salon);
+        $salon_id = $staff -> default_salon;
+        $salon = $salons->find($salon_id);
 
 
         $ed_date = Util::addDays($st_date, 7);
@@ -558,13 +559,20 @@ class BookingController extends Controller
         $days = $util->getDaysList($st_date, $ed_date);
 
         $bookingsCalc = new BookingsCalc();
-
+        /*
+        
         $capacities =
             $bookingsCalc->getOtherCapacitiesOfMultiDate($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date);
-        #Log::debug($capacities);
+        Log::debug(__METHOD__.'('.__LINE__.')' . ' old default capacities:');
+        Log::debug($capacities);
+        */
+        $capacities = $this -> test($salon_id,$st_date);
+        Log::debug(__METHOD__.'('.__LINE__.')' . ' old default capacities:');
+        Log::debug($capacities);
 
 
         Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
+        return __METHOD__;
         return view('admin.bookings.acceptCount', [
             'date' => date('Y-m-d'),
             'times' => $times,
