@@ -335,7 +335,7 @@ class BookingsCalc
         -> get();
         
         Log::debug('allTempCapacities:');
-        Log::debug($allTempCapacities);
+        #Log::debug($allTempCapacities);
         $salon = Salon::find($salonId)->first();
         
         Log::debug(__METHOD__ . ' get Setting Step time.') ;
@@ -350,7 +350,7 @@ class BookingsCalc
             Log::debug($date);
         }
         
-        Log::debug($acceptableCountsForMultiDays);
+        #Log::debug($acceptableCountsForMultiDays);
         Log::debug(__METHOD__ . '(ends)');
 
         return $acceptableCountsForMultiDays;
