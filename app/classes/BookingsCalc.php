@@ -327,13 +327,8 @@ class BookingsCalc
     *　スタッフが○×を切り替えれるように
     *
     **************************************************************/
-    public function test($salonId,$st_date,$ed_date,$step_time){
 
-        Log::debug(__METHOD__ . ' start.') ;
-        $this->getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time);
-        Log::debug(__METHOD__ . ' end.') ;
-    }
-    private function getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time){
+    public function getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time){
         Log::debug(__METHOD__ . '(starts)');
         Log::debug(__METHOD__ . ' get Setting TempCapacities by salon_id.') ;
         $allTempCapacities = TempCapacity::where('salon_id', $salonId)
@@ -344,7 +339,7 @@ class BookingsCalc
         $salon = Salon::find($salonId)->first();
         
         Log::debug(__METHOD__ . ' get Setting Step time.') ;
-        $step_time = Util::getSetting(30,'step_time',true);
+        
         
         
         $acceptableCountsForMultiDays = [];
