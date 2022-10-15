@@ -543,7 +543,7 @@ class BookingController extends Controller
         $salon = $salons->find($salon_id);
 
 
-        $ed_date = Util::addDays($st_date, 7);
+        $ed_date = Util::addDays($st_date, 6);
         $step_time = Util::getSetting(30, 'step_time', true);
 
         $allBookings = Booking::all();
@@ -572,7 +572,7 @@ class BookingController extends Controller
 
 
         Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
-        return __METHOD__;
+        #return __METHOD__;
         return view('admin.bookings.acceptCount', [
             'date' => date('Y-m-d'),
             'times' => $times,
