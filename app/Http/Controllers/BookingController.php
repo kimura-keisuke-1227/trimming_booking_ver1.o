@@ -599,7 +599,7 @@ class BookingController extends Controller
         $salons = Salon::all();
         $salon = $salons->find($request->salon);
 
-        $ed_date = Util::addDays($st_date, 7);
+        $ed_date = Util::addDays($st_date, 6);
         $step_time = Util::getSetting(30, 'step_time', true);
 
         $allBookings = Booking::all();
