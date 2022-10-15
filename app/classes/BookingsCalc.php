@@ -329,18 +329,24 @@ class BookingsCalc
     **************************************************************/
     public function test($salonId,$st_date,$ed_date,$step_time){
 
+        Log::debug(__METHOD__ . ' start.') ;
+        $this->getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time);
+        Log::debug(__METHOD__ . ' end.') ;
+    }
+    private function getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time){
+        Log::debug(__METHOD__ . '(starts)');
         Log::debug(__METHOD__ . ' get Setting TempCapacities by salon_id.') ;
         $allTempCapacities = TempCapacity::where('salon_id', $salonId)
         -> get();
-
+        
         Log::debug('allTempCapacities:');
         Log::debug($allTempCapacities);
         $salon = Salon::find($salonId)->first();
-
+        
         Log::debug(__METHOD__ . ' get Setting Step time.') ;
         $step_time = Util::getSetting(30,'step_time',true);
-
-
+        
+        
         $acceptableCountsForMultiDays = [];
         $ed_date = Util::addDays($st_date, 7);
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
@@ -348,10 +354,13 @@ class BookingsCalc
             $this->getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities);
             Log::debug($date);
         }
-
+        
         Log::debug($acceptableCountsForMultiDays);
-    }
+        Log::debug(__METHOD__ . '(ends)');
 
+        return $acceptableCountsForMultiDays;
+    }
+    
     private function getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities){
         Log::debug(__METHOD__ . '(start)');
         $st_time = $salon -> st_time;
