@@ -328,6 +328,8 @@ class BookingsCalc
     *
     **************************************************************/
     public function test($salonId,$st_date,$ed_date,$step_time){
+
+        Log::debug(__METHOD__ . ' get Setting TempCapacities by salon_id.') ;
         $allTempCapacities = TempCapacity::where('salon_id', $salonId)
         -> get();
 
@@ -335,6 +337,7 @@ class BookingsCalc
         Log::debug($allTempCapacities);
         $salon = Salon::find($salonId)->first();
 
+        Log::debug(__METHOD__ . ' get Setting Step time.') ;
         $step_time = Util::getSetting(30,'step_time',true);
 
 
@@ -342,20 +345,22 @@ class BookingsCalc
         $ed_date = Util::addDays($st_date, 7);
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
             $acceptableCountsForMultiDays[$date] = 
-            $this->test2($salon,$date,$step_time,$allTempCapacities);
+            $this->getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities);
             Log::debug($date);
         }
 
         Log::debug($acceptableCountsForMultiDays);
     }
 
-    private function test2($salon,$date,$step_time,$allTempCapacities){
+    private function getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities){
         Log::debug(__METHOD__ . '(start)');
         $st_time = $salon -> st_time;
         $ed_time = $salon -> ed_time;
 
         $dateTempCapacities = $allTempCapacities -> where('st_date',$date);
 
+        Log::debug(__METHOD__ . 'dateTempCapacities:');
+        Log::debug($dateTempCapacities);
         #Log::debug(__METHOD__ . ' salon:' .  $salon);
         #Log::debug(__METHOD__ . ' st_time:' . (string)$st_time.' ed_time:'.(string)$ed_time);
 
@@ -365,7 +370,10 @@ class BookingsCalc
         }
 
         foreach($dateTempCapacities as $dateTempCapacity){
+            Log::debug(__METHOD__ . ' dateTempCapacity:');
             Log::debug($dateTempCapacity);
+            Log::debug(' st_time:' . $dateTempCapacity->st_date . ' ed_time:'. $dateTempCapacity->st_time);
+            $acceptableCounts[$dateTempCapacity->st_time] = $dateTempCapacity->capacity;
         }
 
         #Log::debug( $acceptableCounts);
