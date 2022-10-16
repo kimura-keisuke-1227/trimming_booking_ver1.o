@@ -330,3 +330,13 @@ Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'tes
 
 
 Route::get('/test3',[OpenCloseSalonController::class,'testOX']);
+
+Route::get('/checkOpenClose',[OpenCloseSalonController::class,'index'])
+->name('admin.checkOpenClose');
+
+Route::get('/checkOpenClose/{salon}/{course}/{date}',[OpenCloseSalonController::class,'index2'])
+->name('admin.checkOpenCloseWithDate');
+
+Route::get('/switchOX/{salon}/{course}/{date}/{time}/{st_date}/{count}'
+,[OpenCloseSalonController::class,'switchOX'])
+->name('admin.switchOX');

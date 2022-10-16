@@ -8,6 +8,8 @@ use App\Models\OpenCloseSalon;
 use App\classes\BookingsCalc;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
+use App\Models\Salon;
+use App\Models\CourseMaster;
 use Illuminate\Support\Facades\Auth;
 
 class OpenCloseSalonController extends Controller
@@ -19,7 +21,21 @@ class OpenCloseSalonController extends Controller
      */
     public function index()
     {
-        //
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+        $salon_id = 1;
+        $date = date('Y-m-d');
+        $course_id = 1;
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
+
+        return $this->getOXwithParam($salon_id,$course_id,$date);
+    }
+
+    public function index2($salon,$course_id,$date)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start! with param salon_id:'. $salon . ' date:' . $date);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
+
+        return $this->getOXwithParam($salon,$course_id,$date);
     }
 
     /**
@@ -88,94 +104,118 @@ class OpenCloseSalonController extends Controller
         //
     }
 
-    public function testOX(){
-        Log::debug(__METHOD__.'('.__LINE__.') start!');
-
-        //関数を呼ぶためのパラメータ
-        $salon_id = 1;
-        $couse_id = 1;
-        $st_date = '2022-10-20';
-        $ed_date = Util::addDays($st_date,6);
-        $st_time = 600;
-        $ed_time = 1140;
-        $step_time = 30;
-
-
+    public function getOXwithParam($salon_id,$course_id,$date)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
         $user = Auth::user();
-        #Log::info(__METHOD__.'('.__LINE__.') user_id('.$user->id . ')getOpenCloseSalon all database.');
-        $allOpenCloseSalonBySalonIdAndCourseId 
-        =  $this-> getAllOpenCloseSalonBySalonIdAndCourseId($salon_id,$couse_id);
+
+        //フォームに表示させるためのサロンとコースマスター（SとSC)
+        Log::info(__METHOD__ . '(' . __LINE__ . ') get salons info from DB!');
+        $salons = Salon::all();
+        Log::info(__METHOD__ . '(' . __LINE__ . ') get courses info from DB!');
+        $courseMasters = CourseMaster::all();
         
+        //関数を呼ぶためのパラメータ
+        $salon = $salons->find($salon_id);
+        $st_date = $date;
+        $ed_date = Util::addDays($st_date, 6);
+        $before_start_day = Util::addDays($st_date, -7);
+        $next_start_day = Util::addDays($ed_date, 1);
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+        Log::info(__METHOD__ . '(' . __LINE__ . ') get setting info of step_time from DB!');
+        $step_time = Util::getSetting(30, 'step_time', true);
+
+
+        #Log::info(__METHOD__.'('.__LINE__.') user_id('.$user->id . ')getOpenCloseSalon all database.');
+        $allOpenCloseSalonBySalonIdAndCourseId
+            =  $this->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_id);
+
         $util = new Util();
-        $days = $util -> getDaysList($st_date,$ed_date);
-        $times = $util -> getTimes($st_time,$ed_time,$step_time);
-        $timesNum = $util -> getTimesNum($st_time,$ed_time,$step_time);
+        $days = $util->getDaysList($st_date, $ed_date);
+        $times = $util->getTimes($st_time, $ed_time, $step_time);
+        $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
 
-        $OpenCloseListFromStdateToEddate = [];
-        for($date = $st_date;$date<=$ed_date; $date = Util::addDays($date,1)){
-            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date,$st_time,$ed_time,$step_time,$allOpenCloseSalonBySalonIdAndCourseId);
-        }
+        $OXListOfStartToEndDate = $this->makeOpenCloseListFromStdateToEddate($salon_id, $course_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
 
-        $OXListOfOneDay = $this->makeOpenCloseListFromStdateToEddate($salon_id,$couse_id,$st_date,$ed_date,$st_time,$ed_time,$step_time,$allOpenCloseSalonBySalonIdAndCourseId);
-        Log::debug(__METHOD__.'('.__LINE__.') end!');
-
-        return view('admin.openclose.index',[
-            'days'=> $days,
+        return view('admin.openclose.index', [
+            'st_date' => $st_date,
+            'days' => $days,
             'times' => $times,
             'timesNum' => $timesNum,
-            'capacities' => $OXListOfOneDay,
+            'capacities' => $OXListOfStartToEndDate,
+            'salons' => $salons,
+            'selectedSalon' => $salon_id,
+            'courses' => $courseMasters,
+            'before_start_day'=> $before_start_day,
+            'next_start_day'=>$next_start_day,
+            'course_id' => $course_id,
         ]);
-        return $OpenCloseListFromStdateToEddate;
     }
 
-    private function makeOpenCloseListFromStdateToEddate($salon_id,$couse_id,$st_date,$ed_date,$st_time,$ed_time,$step_time,$allOpenCloseSalonBySalonIdAndCourseId){
-        Log::debug(__METHOD__.'('.__LINE__.') start!');
+    public function switchOX($salon,$course,$date,$time,$st_date,$count){
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
+        return redirect(Route('admin.checkOpenCloseWithDate',[
+            'salon' => $salon,
+            'course' => $course,
+            'date' => $st_date,
+        ]));
+        return __METHOD__;
+    }
+
+    private function makeOpenCloseListFromStdateToEddate($salon_id, $couse_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
         $OpenCloseListFromStdateToEddate = [];
-        for($date = $st_date;$date<=$ed_date; $date = Util::addDays($date,1)){
-            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date,$st_time,$ed_time,$step_time,$allOpenCloseSalonBySalonIdAndCourseId);
+        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
+            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
         }
-        Log::debug(__METHOD__.'('.__LINE__.') end!');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $OpenCloseListFromStdateToEddate;
     }
 
-    private function makeOXListOfOneDay($date,$st_time,$ed_time,$step_time,$allOpenCloseSalonBySalonIdAndCourseId){
-        Log::debug(__METHOD__.'('.__LINE__.') start!');
-        $OXListOfOneDay =[];
+    private function makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start! date:' . Util::getYMDWFromDbDate($date));
+        $OXListOfOneDay = [];
 
-        for($time = $st_time;$time < $ed_time;$time = $time + $step_time){
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
             $OXListOfOneDay[$time] = 1;
         }
 
-        $dateOpenCloseSalonBySalonIdAndCourseId 
-        = $allOpenCloseSalonBySalonIdAndCourseId->where('date',$date);
-        Log::debug(__METHOD__.'('.__LINE__.') $dateOpenCloseSalonBySalonIdAndCourseId:');
+        $dateOpenCloseSalonBySalonIdAndCourseId
+            = $allOpenCloseSalonBySalonIdAndCourseId->where('date', $date);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') $dateOpenCloseSalonBySalonIdAndCourseId:');
         Log::debug($dateOpenCloseSalonBySalonIdAndCourseId);
 
-        foreach($dateOpenCloseSalonBySalonIdAndCourseId as $eachOpenCloseSalonBySalonIdAndCourseId){
+        foreach ($dateOpenCloseSalonBySalonIdAndCourseId as $eachOpenCloseSalonBySalonIdAndCourseId) {
             $rewrite = true;
-            if($eachOpenCloseSalonBySalonIdAndCourseId->date !== $date){
+            if ($eachOpenCloseSalonBySalonIdAndCourseId->date !== $date) {
                 $rewrite = false;
             }
 
-            $OXListOfOneDay[$eachOpenCloseSalonBySalonIdAndCourseId->time] 
-            = $eachOpenCloseSalonBySalonIdAndCourseId -> isOpen;
+            $OXListOfOneDay[$eachOpenCloseSalonBySalonIdAndCourseId->time]
+                = $eachOpenCloseSalonBySalonIdAndCourseId->isOpen;
         }
 
-        Log::debug(__METHOD__.'('.__LINE__.') end!');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $OXListOfOneDay;
     }
 
-    private function getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $couse_id){
-        Log::debug(__METHOD__.'('.__LINE__.') start!');
+    private function getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $couse_id)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
 
         $user = Auth::user();
         #Log::info(__METHOD__.'('.__LINE__.') user_id('.$user->id . ')getOpenCloseSalon all database.');
-        $allOpenCloseSalonBySalonIdAndCourseId = OpenCloseSalon::where('salon_id',$salon_id)
-        ->where('course_id' , $couse_id)
-        ->get();
+        $allOpenCloseSalonBySalonIdAndCourseId = OpenCloseSalon::where('salon_id', $salon_id)
+            ->where('course_id', $couse_id)
+            ->get();
 
-        Log::debug(__METHOD__.'('.__LINE__.') end!');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $allOpenCloseSalonBySalonIdAndCourseId;
-
     }
 }

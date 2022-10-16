@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-    {{-- 
+
 
     <form action="{{Route('admin.getAcceptableCountWithSalonDate')}}" method="post">
         @csrf
@@ -13,21 +13,55 @@
         <select name="salon" id="">
             @foreach($salons as $salon)
             <option value="{{$salon -> id}}" 
-            @if($salon->id == $selectedSalon->id)
+            @if($salon->id == $selectedSalon)
                 selected
             @endif
             >{{$salon -> salon_name}}</option>
             @endforeach
         </select>
-        <input type="date" name="st_date" value="{{$date}}">
+        <select name="course" id="course">
+            @foreach($courses as $course)
+            <option value="{{$course -> id}}" 
+            @if($course_id == $course -> id)
+            selected
+            @endif
+            >{{$course -> course}}</option>
+            @endforeach
+        </select>
+        <input type="date" name="st_date" value="{{$st_date}}">
         <input type="submit" value="表示">
     </form>
 
     <br>
 
     <br>
-    <h3>{{$selectedSalon->salon_name}}</h3>
-    --}}
+    <h3>{{$salons->find($selectedSalon)->salon_name}}</h3>
+
+    <a href="{{Route('admin.checkOpenCloseWithDate', [
+        'salon' =>    $selectedSalon, 
+        'course' => $course_id,
+        'date'=>$before_start_day,
+        ])}}">前週へ</a>
+    <a href="{{Route('admin.checkOpenCloseWithDate', [
+        'salon' =>    $selectedSalon, 
+        'course' => $course_id,
+        'date'=>$next_start_day,
+        ])}}">次週へ</a>
+
+    @php
+        if($course_id==2){
+            $another_course_id = 1;
+        } else{
+            
+            $another_course_id = 2;
+        }
+
+    @endphp
+    <a href="{{Route('admin.checkOpenCloseWithDate', [
+        'salon' =>    $selectedSalon, 
+        'course' => $another_course_id,
+        'date'=>$st_date,
+        ])}}">コース切り替え</a>
     <table class="table table-striped">
         <tr>
             <th>日付</th>
@@ -47,10 +81,33 @@
             <th>{{$time}}</th>
             @foreach($days as $day)
                 <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
-                @if($capacities[$day][$timesNum[$time]] > 0)
-                <td>{{$capacities[$day][$timesNum[$time]]}}</td>
+                @if($capacities[$day][$timesNum[$time]] == 1)
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">○</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == 2)
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">○</a></td>
                 @else
-                <td>×</td>
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">×</a></td>
                 @endif
             @endforeach
         </tr>
