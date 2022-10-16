@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOpenCloseSalonRequest;
 use App\Http\Requests\UpdateOpenCloseSalonRequest;
 use App\Models\OpenCloseSalon;
+use App\classes\BookingsCalc;
 
 class OpenCloseSalonController extends Controller
 {
@@ -82,5 +83,9 @@ class OpenCloseSalonController extends Controller
     public function destroy(OpenCloseSalon $openCloseSalon)
     {
         //
+    }
+
+    public function test(){
+        
     }
 }
