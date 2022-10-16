@@ -370,6 +370,7 @@ class BookingsCalc
         #Log::debug(__METHOD__ . ' salon:' .  $salon);
         #Log::debug(__METHOD__ . ' st_time:' . (string)$st_time.' ed_time:'.(string)$ed_time);
 
+        //とりあえず、設定がない場合は空き枠とする
         $acceptableCounts = [];
         for($time = $st_time;$time<$ed_time;$time = $time + $step_time){
             $acceptableCounts[$time] = 1;
