@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\DefaultCapacityController;
+use App\Http\Controllers\OpenCloseSalonController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -328,4 +329,4 @@ Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'tes
 ->name('admin.adjust');
 
 
-Route::get('/test3'.[BookingCalc::class,'getAcceptableCountWithSalonDate']);
+Route::get('/test3',[OpenCloseSalonController::class,'testOX']);
