@@ -9,6 +9,7 @@
     <p>{{$pet -> getData()}}</p>
     <p>{{$course -> getCourseInfo()}}</p>
     <p>{{$salon -> salon_name}}</p>
+    <p>{{$message}}</p>
 
     <br>
     <br>

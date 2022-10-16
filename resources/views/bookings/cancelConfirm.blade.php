@@ -9,6 +9,7 @@
     <p>{{$booking -> course -> getCourseInfo()}}</p>
     <p>{{$booking -> date}}</p>
     <p>{{$booking -> getStartTime()}}</p>
+    <p>{{$booking ->message}}</p>
 
     <p>上記の予約を取り消しますか？</p>
 

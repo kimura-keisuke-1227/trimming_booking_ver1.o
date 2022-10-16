@@ -9,6 +9,7 @@
     <p>{{$course -> getCourseInfo()}}</p>
     <p>{{$date}}</p>
     <p>{{$timeStr}}</p>
+    <p>{{$message}}</p>
 
     <p>上記下の内容で予約を行いますか？</p>
 
