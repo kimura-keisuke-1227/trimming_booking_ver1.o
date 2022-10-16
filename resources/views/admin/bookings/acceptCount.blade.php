@@ -25,7 +25,7 @@
 
     <br>
     <h3>{{$selectedSalon->salon_name}}</h3>
-    <table class="table table-striped">
+    <table class="table table-striped pc_only">
         <tr>
             <th>日付</th>
             @foreach($days as $day)
@@ -33,6 +33,35 @@
                 @php
                     $week = array( "日", "月", "火", "水", "木", "金", "土" );
                     $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                    echo $dateStr; 
+                @endphp
+            </th>
+            @endforeach
+        </tr>
+        
+        @foreach($times as $time)
+        <tr>
+            <th>{{$time}}</th>
+            @foreach($days as $day)
+                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
+                @if($capacities[$day][$timesNum[$time]] > 0)
+                <td>{{$capacities[$day][$timesNum[$time]]}}</td>
+                @else
+                <td>×</td>
+                @endif
+            @endforeach
+        </tr>
+        @endforeach
+    </table>
+
+    <table class="table table-striped sp_only">
+        <tr>
+            <th>日付</th>
+            @foreach($days as $day)
+            <th>
+                @php
+                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                    $dateStr = date('d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
                     echo $dateStr; 
                 @endphp
             </th>
