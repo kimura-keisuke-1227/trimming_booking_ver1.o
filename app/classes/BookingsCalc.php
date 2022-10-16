@@ -6,6 +6,7 @@ use App\Models\Salon;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
 use App\Models\TempCapacity;
+use App\Http\Controllers\OpenCloseSalonController;
 
 class BookingsCalc
 {
@@ -17,11 +18,63 @@ class BookingsCalc
             ->where('date', $date)
             ->sortBy('st_time');
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
         return $dateBookings;
     }
 
+    public function getCanBookList2($salon_id, $course_master_id, $st_date, $ed_date, $step_time, $st_time, $ed_time, $needed_time)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') starts.');
+        $openCloseSalonController = new OpenCloseSalonController();
+
+        $openCloseSalonController = new OpenCloseSalonController();
+        $allOpenCloseSalonBySalonIdAndCourseId
+            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_master_id);
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master_id: ' . $course_master_id);
+
+        $openCloseList =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+
+        #Log::debug(__METHOD__ . '(' . __LINE__ . ')  $openCloseList with salon_id:' . $salon_id . ' course_master_id:' .$course_master_id . ' st_date:' . $st_date .' ed_date:'.$ed_date );
+        #Log::debug($openCloseList);
+        $canBookList = [];
+        for($day = $st_date; $day<=$ed_date;$day = Util::addDays($day,1)){
+            for($time = $st_time; $time<$ed_time;$time=$time+$step_time){
+                for($cutting_time = $time; $cutting_time< $time+ $needed_time; $cutting_time = $cutting_time + $step_time){
+                    if($openCloseList[$day][$cutting_time] == 0){
+                        Log::debug($day . ' ' . $time . ' closed!');
+                        continue;
+                    }
+                    Log::debug('  $cutting_time:' . $cutting_time );
+                }
+                Log::debug(' $day:' . $day . ' $checkTime:' . $time);
+                
+            }
+        }
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') day:' .$day );
+
+        /*
+        $canBookTable=[];
+        for($date = $st_date; $date<=$ed_date;$date = Util::addDays($date,1)){
+            $canBookTheDate = [];
+            for($time =$st_time;$time<$ed_time;$time = $time + $step_time){
+                $count = 1;
+                for($checkTime = $time;$checkTime<$time+$needed_time;$checkTime =$checkTime + $step_time){
+                    if(true){
+                        $canBookTheDate = [$time] = 0;
+                        continue;
+                    }
+                }
+                $canBookTable[$date] = $canBookTheDate;
+            }
+        }
+        */
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')  $canBookTable');
+        #Log::debug($canBookTable);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') ends.');
+    }
 
     public function getCanBookList($allBookings, $allDefaultCapacities, $allRegularHolidays, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course)
     {
@@ -100,7 +153,7 @@ class BookingsCalc
             $canBookTimeListOfMultiDay[$date] = $canBookTimeListOfADay;
         }
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
 
         return $canBookTimeListOfMultiDay;
@@ -125,7 +178,7 @@ class BookingsCalc
             $getOtherCapacitiesOfMultiDate[$date] = $otherCapacitiesOfTheDate;
         }
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
 
         return $getOtherCapacitiesOfMultiDate;
@@ -143,7 +196,7 @@ class BookingsCalc
         }
         Log::debug(__METHOD__ . '(end)');
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         return $bookingCountsOfMultiDaysFromStartDateToEndDate;
     }
 
@@ -158,7 +211,7 @@ class BookingsCalc
         }
 
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
         return $capacitiesFromMultiDays;
     }
@@ -180,7 +233,7 @@ class BookingsCalc
         }
 
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
 
         return $otherCapacitiesOfTheDate;
@@ -208,7 +261,7 @@ class BookingsCalc
         Log::debug(__METHOD__ . '(end)');
 
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         return $counts;
     }
 
@@ -272,7 +325,7 @@ class BookingsCalc
             }
         }
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
         return $capacitiesOfTheDay;
     }
@@ -292,7 +345,7 @@ class BookingsCalc
             ->where('ed_time', '>', $time)
             ->count();
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
 
         return $count;
@@ -317,53 +370,54 @@ class BookingsCalc
             ->first();
 
         $end = microtime(true);
-        Log::debug(__METHOD__ . ' '.$end - $start .'(s)');
+        Log::debug(__METHOD__ . ' ' . $end - $start . '(s)');
         Log::debug(__METHOD__ . '(end)');
         return $capacity->capacity;
     }
 
     /**************************************************************
-    *
-    *　スタッフが○×を切り替えれるように
-    *
-    **************************************************************/
+     *
+     *　スタッフが○×を切り替えれるように
+     *
+     **************************************************************/
 
-    public function getCapacitiesOfMultiDaysForOX($salonId,$st_date,$ed_date,$step_time){
+    public function getCapacitiesOfMultiDaysForOX($salonId, $st_date, $ed_date, $step_time)
+    {
         Log::debug(__METHOD__ . '(starts)');
-        Log::debug(__METHOD__ . ' get Setting TempCapacities by salon_id.') ;
+        Log::debug(__METHOD__ . ' get Setting TempCapacities by salon_id.');
         $allTempCapacities = TempCapacity::where('salon_id', $salonId)
-        -> get();
-        
+            ->get();
+
         Log::debug('allTempCapacities:');
         #Log::debug($allTempCapacities);
         $salon = Salon::find($salonId)->first();
-        
-        Log::debug(__METHOD__ . ' get Setting Step time.') ;
-        
-        
-        
+
+        Log::debug(__METHOD__ . ' get Setting Step time.');
+
+
+
         $acceptableCountsForMultiDays = [];
-        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
-            $acceptableCountsForMultiDays[$date] = 
-            $this->getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities);
+        for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
+            $acceptableCountsForMultiDays[$date] =
+                $this->getTempCapacityOfTheDay($salon, $date, $step_time, $allTempCapacities);
             Log::debug($date);
         }
-        
+
         #Log::debug($acceptableCountsForMultiDays);
         Log::debug(__METHOD__ . '(ends)');
 
         return $acceptableCountsForMultiDays;
     }
-    
-    private function getTempCapacityOfTheDay($salon,$date,$step_time,$allTempCapacities){
-        Log::debug(__METHOD__ . '(start)');
-        $st_time = $salon -> st_time;
-        $ed_time = $salon -> ed_time;
 
-        $dateTempCapacities = $allTempCapacities 
-        -> where('st_date',$date)
-        -> where('salon_id',$salon->id)
-        ;
+    private function getTempCapacityOfTheDay($salon, $date, $step_time, $allTempCapacities)
+    {
+        Log::debug(__METHOD__ . '(start)');
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+
+        $dateTempCapacities = $allTempCapacities
+            ->where('st_date', $date)
+            ->where('salon_id', $salon->id);
 
         Log::debug(__METHOD__ . 'dateTempCapacities:');
         Log::debug($dateTempCapacities);
@@ -372,14 +426,14 @@ class BookingsCalc
 
         //とりあえず、設定がない場合は空き枠とする
         $acceptableCounts = [];
-        for($time = $st_time;$time<$ed_time;$time = $time + $step_time){
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
             $acceptableCounts[$time] = 1;
         }
 
-        foreach($dateTempCapacities as $dateTempCapacity){
+        foreach ($dateTempCapacities as $dateTempCapacity) {
             Log::debug(__METHOD__ . ' dateTempCapacity:');
             Log::debug($dateTempCapacity);
-            Log::debug(' st_time:' . $dateTempCapacity->st_date . ' ed_time:'. $dateTempCapacity->st_time);
+            Log::debug(' st_time:' . $dateTempCapacity->st_date . ' ed_time:' . $dateTempCapacity->st_time);
             $acceptableCounts[$dateTempCapacity->st_time] = $dateTempCapacity->capacity;
         }
 

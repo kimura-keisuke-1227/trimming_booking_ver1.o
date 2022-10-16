@@ -132,7 +132,6 @@ class BookingController extends Controller
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pet =  session('pet');
-
         $courses = session('courses');
         $course = $courses->find($request->course);
         session(['course' => $course]);
@@ -143,9 +142,10 @@ class BookingController extends Controller
         $ed_time = $salon->ed_time;
 
         $message = $request->message;
+        session('message' , $message);
 
         $step_time = Util::getSetting(30, 'step_time', true);
-
+        session('step_time' , $step_time);
         $util = new Util();
 
         //初期値は本日より1週間分のデータを取得
@@ -165,17 +165,27 @@ class BookingController extends Controller
 
         $bookingsCalc = new BookingsCalc();
 
-        $capacities =
-            $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+        $salon_id = $salon->id;
+        $course_master_id = $course -> courseMaster -> id;
+        $needed_time = $course -> minute;
+        Log::debug(__METHOD__.'('.__LINE__.') salon_id:' . $salon_id);
 
-        /*
+
+        
         //2022_1016_2043 テスト
         $openCloseSalonController = new OpenCloseSalonController();
+        $course_master_id = $course -> courseMaster -> id;
         $allOpenCloseSalonBySalonIdAndCourseId
-            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course->id);
+            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
+        
+        Log::debug(__METHOD__.'('.__LINE__.') course_master_id: ' . $course_master_id);
+        
+        $salon_id = $salon -> id;
+        //$needed_time = $course->minute;
+        //$bookingsCalc->getCanBookList2($salon_id, $course_master_id, $st_date, $ed_date,$step_time,$st_time,$ed_time,$needed_time);
+
         $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon->id, $course->id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
-        */
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
         
         session([
             'course' => $course,
@@ -667,38 +677,63 @@ class BookingController extends Controller
 
     public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
     {
-        $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $owner = Auth::user();
+        Log::info(__METHOD__ . '('.__LINE__.')'.' starts by owner user_id(' . $owner->id . ')');
+       
         $pet =  session('pet');
         $course = session('course');
         $salon = session('salon');
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
+        $message = session('message');
 
-        $step_time = Util::getSetting(30, 'step_time', true);
+        $step_time = session('step_time');
 
         //指定日より1週間分のデータを取得
         $ed_date =  Util::addDays($st_date, 6);
-
+        Log::debug(__METHOD__.'('.__LINE__.')');
         $util = new Util();
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
+        $step_time = Util::getSetting(30,'step_time',true);
+        Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time:'.$ed_time.' step_time:' .session('step_time'));
+        
         $times = $util->getTimes($st_time, $ed_time, $step_time);
+        Log::debug(__METHOD__.'('.__LINE__.')');
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
+        Log::debug(__METHOD__.'('.__LINE__.')');
         $days = $util->getDaysList($st_date, $ed_date);
-
+        Log::debug(__METHOD__.'('.__LINE__.')');
+        $bookingCalc = new BookingsCalc();
+        $salon_id = $salon -> id;
+        $course_master_id = $course -> courseMaster -> id;
+        $needed_time = $course -> minute;
+        //$bookingCalc -> getCanBookList2($salon_id, $course_master_id, $st_date, $ed_date, $step_time, $st_time, $ed_time, $needed_time);
+        //return __METHOD__;
+        /*
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
-
+        */
         $bookingsCalc = new BookingsCalc();
-
+        Log::debug(__METHOD__.'('.__LINE__.')');
+        /*
         $capacities =
             $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
-        #Log::debug($capacities);
+        */
+        
+            #Log::debug($capacities);
+        $openCloseSalonController = new OpenCloseSalonController();
+
+        Log::debug(__METHOD__.'('.__LINE__.')');
+        $allOpenCloseSalonBySalonIdAndCourseId
+        =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
+        
+        Log::debug(__METHOD__.'('.__LINE__.')');
+        $capacities =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
 
         session([
             'course' => $course,
@@ -709,7 +744,7 @@ class BookingController extends Controller
         $afterDate = Util::addDays($st_date, 7);
 
 
-        Log::info(__METHOD__ . ' ends by staff user_id(' . $staff->id . ')');
+        Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
         return view('bookings.booking_calender', [
             'date' => $st_date,
             'before_date' => $beforeDate,
@@ -722,6 +757,7 @@ class BookingController extends Controller
             'days' => $days,
             'capacities' => $capacities,
             'timesNum' => $timesNum,
+            'message' => $message,
         ]);
     }
 
@@ -883,5 +919,9 @@ class BookingController extends Controller
         #Log::debug($capacitiesOfMultiDaysFoxOX);
         Log::debug(__METHOD__ . '(ends)');
         return $capacitiesOfMultiDaysFoxOX;
+    }
+
+    public function testAddMonth($date,$addMonth){
+        return Util::getEndOfTheMonth($date,$addMonth);
     }
 }

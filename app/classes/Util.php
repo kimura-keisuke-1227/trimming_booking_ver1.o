@@ -97,6 +97,7 @@ class Util
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
             $str_time = Util::minuteToTime($time);
             $times[$time] = $str_time;
+            Log::debug(__METHOD__.'('.__LINE__.')');
         }
         return $times;
     }
@@ -128,5 +129,11 @@ class Util
         }
 
         return (string) $age . '歳';
+    }
+
+    public static function getEndOfTheMonth($date, $addMonth){
+
+        
+        return date("Y-m-t", strtotime($date. (string) $addMonth ."month"));
     }
 }

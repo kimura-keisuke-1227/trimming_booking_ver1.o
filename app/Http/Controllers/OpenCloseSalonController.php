@@ -204,7 +204,7 @@ class OpenCloseSalonController extends Controller
         return __METHOD__;
     }
 
-    private function makeOpenCloseListFromStdateToEddate($salon_id, $couse_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
+    public function makeOpenCloseListFromStdateToEddate($salon_id, $couse_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
         $OpenCloseListFromStdateToEddate = [];
@@ -243,7 +243,7 @@ class OpenCloseSalonController extends Controller
         return $OXListOfOneDay;
     }
 
-    private function getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $couse_id)
+    public function getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $couse_id)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
 
