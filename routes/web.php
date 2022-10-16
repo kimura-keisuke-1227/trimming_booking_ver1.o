@@ -340,3 +340,6 @@ Route::get('/checkOpenClose/{salon}/{course}/{date}',[OpenCloseSalonController::
 Route::get('/switchOX/{salon}/{course}/{date}/{time}/{st_date}/{count}'
 ,[OpenCloseSalonController::class,'switchOX'])
 ->name('admin.switchOX');
+
+Route::get('/checkOpenClose/show',[OpenCloseSalonController::class,'index3'])
+->name('admin.checkOpenCloseWithDate.change');

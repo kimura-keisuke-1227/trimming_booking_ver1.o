@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\classes\Util;
 use App\Models\Salon;
 use App\Models\CourseMaster;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OpenCloseSalonController extends Controller
@@ -33,9 +34,25 @@ class OpenCloseSalonController extends Controller
     public function index2($salon,$course_id,$date)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start! with param salon_id:'. $salon . ' date:' . $date);
+
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
 
         return $this->getOXwithParam($salon,$course_id,$date);
+    }
+
+    public function index3(Request $request)
+    {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+        $salon_id = $request->salon;
+        $course_id=$request->course;
+        $date = $request ->st_date;
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
+
+        return redirect(route('admin.checkOpenCloseWithDate',[
+            'salon' =>    $salon_id, 
+            'course' => $course_id,
+            'date'=>$date,
+        ]));
     }
 
     /**
@@ -156,7 +173,28 @@ class OpenCloseSalonController extends Controller
 
     public function switchOX($salon,$course,$date,$time,$st_date,$count){
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+        if($count==0){
+            $openCloseSalon = OpenCloseSalon::where('salon_id',$salon)
+            ->where('course_id' , $course)
+            ->where('date', $date)
+            ->where('time',$time)
+            -> first();
 
+            Log::debug(__METHOD__.'('.__LINE__.') This time was closed and openCloseSalon data is :');
+            $openCloseSalon -> delete();
+            Log::debug($openCloseSalon);
+        } else{
+            Log::debug(__METHOD__.'('.__LINE__.') This time was opened so we are closing it!');
+            $openCloseSalon = new OpenCloseSalon();
+            $openCloseSalon -> salon_id =$salon;
+            $openCloseSalon -> course_id =$course;
+            $openCloseSalon -> date =$date;
+            $openCloseSalon -> time =$time;
+            $openCloseSalon -> isOpen = 0;
+
+            $openCloseSalon -> save();
+
+        }
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return redirect(Route('admin.checkOpenCloseWithDate',[
             'salon' => $salon,

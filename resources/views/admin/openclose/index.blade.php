@@ -7,7 +7,7 @@
 <div class="container">
 
 
-    <form action="{{Route('admin.getAcceptableCountWithSalonDate')}}" method="post">
+    <form action="{{Route('admin.checkOpenCloseWithDate.change')}}" method="get">
         @csrf
         <label for="salon"></label>
         <select name="salon" id="">
