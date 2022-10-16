@@ -22,7 +22,6 @@ use App\Mail\BookingNotificationForSalon;
 use App\Mail\CancelMailToUser;
 use App\Mail\NonMemberCancelNotificationToSalon;
 use App\Mail\CancelNotificationToSalon;
-use App\classes\BookingsCalc;
 use App\Mail\CancelNotificationToUser;
 use App\Mail\NonMemberCancelNotificationToNonmember;
 use App\Models\NonMemberBooking;

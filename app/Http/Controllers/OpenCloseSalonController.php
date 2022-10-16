@@ -6,6 +6,8 @@ use App\Http\Requests\StoreOpenCloseSalonRequest;
 use App\Http\Requests\UpdateOpenCloseSalonRequest;
 use App\Models\OpenCloseSalon;
 use App\classes\BookingsCalc;
+use Illuminate\Support\Facades\Log;
+use App\classes\Util;
 
 class OpenCloseSalonController extends Controller
 {
@@ -85,7 +87,14 @@ class OpenCloseSalonController extends Controller
         //
     }
 
-    public function test(){
+    public function getOX(){
+        Log::debug(__METHOD__.'('.__LINE__.') start!');
+
+        $openOrCloseAll = OpenCloseSalon::all();
+
+        Log::debug(__METHOD__.'('.__LINE__.')' . $openOrCloseAll);
         
+        Log::debug(__METHOD__.'('.__LINE__.') end!');
+        return $openOrCloseAll;
     }
 }
