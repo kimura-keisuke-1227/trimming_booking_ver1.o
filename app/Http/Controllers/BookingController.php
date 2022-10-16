@@ -743,6 +743,8 @@ class BookingController extends Controller
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
 
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today,2);
 
         Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
         return view('bookings.booking_calender', [
@@ -758,6 +760,8 @@ class BookingController extends Controller
             'capacities' => $capacities,
             'timesNum' => $timesNum,
             'message' => $message,
+            'today' => $today,
+            'maxBookingDate' =>$maxBookingDate
         ]);
     }
 
