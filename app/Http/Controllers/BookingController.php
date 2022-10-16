@@ -115,14 +115,14 @@ class BookingController extends Controller
             'salons' => $salons,
         ]);
 
-
+        
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('bookings.selectcourse', [
             'owner' => $owner,
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
-            'message_before' => $message_before
+            'message_before' => $message_before,
         ]);
     }
 
@@ -195,7 +195,8 @@ class BookingController extends Controller
 
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
-
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today,2);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('bookings.booking_calender', [
@@ -211,6 +212,9 @@ class BookingController extends Controller
             'capacities' => $capacities,
             'timesNum' => $timesNum,
             'message' => $message,
+            'today' => $today,
+            'maxBookingDate' => $maxBookingDate,
+            'ed_date' => $ed_date
         ]);
     }
 
@@ -746,6 +750,10 @@ class BookingController extends Controller
         $today = date('Y-m-d');
         $maxBookingDate = Util::getEndOfTheMonth($today,2);
 
+        if($ed_date>$maxBookingDate){
+            $ed_date = $maxBookingDate;
+        }
+
         Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
         return view('bookings.booking_calender', [
             'date' => $st_date,
@@ -761,6 +769,7 @@ class BookingController extends Controller
             'timesNum' => $timesNum,
             'message' => $message,
             'today' => $today,
+            'ed_date'=>$ed_date,
             'maxBookingDate' =>$maxBookingDate
         ]);
     }
