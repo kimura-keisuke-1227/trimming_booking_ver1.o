@@ -28,6 +28,7 @@ use App\Mail\NonMemberCancelNotificationToNonmember;
 use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
+use App\Http\Controllers\OpenCloseSalonController;
 
 //use App\Models\Dogtype;
 
@@ -167,6 +168,15 @@ class BookingController extends Controller
         $capacities =
             $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
 
+        /*
+        //2022_1016_2043 テスト
+        $openCloseSalonController = new OpenCloseSalonController();
+        $allOpenCloseSalonBySalonIdAndCourseId
+            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course->id);
+        $capacities =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon->id, $course->id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+        */
+        
         session([
             'course' => $course,
             'salon' => $salon,
