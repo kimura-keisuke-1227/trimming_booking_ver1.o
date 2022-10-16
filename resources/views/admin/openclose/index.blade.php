@@ -62,7 +62,7 @@
         'course' => $another_course_id,
         'date'=>$st_date,
         ])}}">コース切り替え</a>
-    <table class="table table-striped">
+    <table class="table table-striped pc_only">
         <tr>
             <th>日付</th>
             @foreach($days as $day)
@@ -70,6 +70,57 @@
                 @php
                     $week = array( "日", "月", "火", "水", "木", "金", "土" );
                     $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                    echo $dateStr; 
+                @endphp
+            </th>
+            @endforeach
+        </tr>
+        
+        @foreach($times as $time)
+        <tr>
+            <th>{{$time}}</th>
+            @foreach($days as $day)
+                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
+                @if($capacities[$day][$timesNum[$time]] == 1)
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">○</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == 2)
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">○</a></td>
+                @else
+                <td><a href="{{ Route('admin.switchOX',[
+                    'salon' => $selectedSalon,
+                    'course' => $course_id,
+                    'date' => $day,
+                    'time' => $timesNum[$time],
+                    'st_date' => $st_date,
+                    'count' => $capacities[$day][$timesNum[$time]],
+                    ])}}">×</a></td>
+                @endif
+            @endforeach
+        </tr>
+        @endforeach
+    </table>
+    <table class="table table-striped sp_only">
+        <tr>
+            <th>日付</th>
+            @foreach($days as $day)
+            <th>
+                @php
+                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                    $dateStr = date('d',strtotime($day)) .PHP_EOL.'('. $week[ date('w',strtotime($day))] . ')';
                     echo $dateStr; 
                 @endphp
             </th>
