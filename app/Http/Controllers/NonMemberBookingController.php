@@ -19,6 +19,7 @@ use App\Models\Dogtype;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NonMemberBookingMail;
 use App\Mail\NonMemberBookingMailToSalon;
+use App\Http\Controllers\OpenCloseSalonController;
 
 class NonMemberBookingController extends Controller
 {
@@ -217,6 +218,23 @@ class NonMemberBookingController extends Controller
 
         $capacities =
             $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+
+            $course_master_id = $course -> courseMaster -> id;
+            if($course_master_id==1){
+                $ed_time = 60*17+1;
+            } else{
+                $ed_time = 60*16+1;
+            }
+            $openCloseSalonController = new OpenCloseSalonController();
+            $course_master_id = $course -> courseMaster -> id;
+            $allOpenCloseSalonBySalonIdAndCourseId
+                =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
+            
+            Log::debug(__METHOD__.'('.__LINE__.') course_master_id: ' . $course_master_id);
+    
+            $capacities =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+
 
         return view('nonMember.nonMember_booking_calender',[
             'salon' => $salon,
