@@ -172,47 +172,77 @@ class NonMemberBookingController extends Controller
 
     public function startNonUserBookingSelectCalender(Request $request)
     {
+        $st_date = date('Y-m-d');
+        $salon_id = $request->salon;
+        $message = $request->message;
+        $course_id = $request -> course;
+
+        session([
+            'salon_id' => $salon_id,
+            'course_id' => $course_id,
+            'message' => $message,
+        ]);
+        
+        return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
+
+    }
+
+    public function startNonUserBookingSelectCalenderWithStdate(Request $request,$st_date){
+        
+        #return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
+        $salon_id = session('salon_id');
+        $course_id = session('course_id');
+        $message = session('message');
+        return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
+    }
+
+    private function getViewForNoUserCalender($salon_id,$course_id,$message,$st_date)
+    {
 
         $dogType = session('dogtype');
         $salons = session('salons');
-        $salon_id = $request->salon;
+       
+
         $salon = $salons->find($salon_id);
-        $message = $request->message;
-
-        $course_id = $request->course;
         $course = session('courses')->find($course_id);
-        Log::debug(__FUNCTION__ . ' course_id:' . $course_id);
-
         session([
             'salon' => $salon,
             'course' => $course,
             'message' => $message,
+            'salon_id' => $salon_id,
         ]);
 
+        session(['salon' => $salon]);
+
+        Log::debug(__FUNCTION__ . ' course_id:' . $course_id);
+        
+        Log::debug(__METHOD__.'('.__LINE__.') salon:');
+        Log::debug(session('salon'));
+        Log::debug(__METHOD__.'('.__LINE__.') salon_id:' . session('salon_id'));
         $pet_name = session('pet_name');
 
-        $today = date('Y-m-d');
+        
         $util = new Util();
 
-        $beforeDate = Util::addDays($today, -7);
-        $afterDate = Util::addDays($today, 7);
+        $beforeDate = Util::addDays($st_date, -7);
+        $afterDate = Util::addDays($st_date, 7);
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
         $step_time = Util::getSetting(30, 'step_time', true);
 
-        $st_date = $today;
         $ed_date = Util::addDays($afterDate, -1);
 
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
 
-        $st_date = $today;
         $ed_date = Util::addDays($afterDate, -1);
 
+        /*
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
+        */
 
         Log::debug(__FUNCTION__ . ' course' . $course_id);
 
@@ -240,6 +270,9 @@ class NonMemberBookingController extends Controller
             $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
 
 
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today,2);
+
         return view('nonMember.nonMember_booking_calender', [
             'salon' => $salon,
             'dog_type' => $dogType,
@@ -252,6 +285,8 @@ class NonMemberBookingController extends Controller
             'pet_name' => $pet_name,
             'course' => $course,
             'message' => $message,
+            'today' => $today,
+            'maxBookingDate' => $maxBookingDate,
         ]);
     }
 

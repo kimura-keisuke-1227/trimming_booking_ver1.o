@@ -30,13 +30,19 @@
      <p>{{$pet_name . '[' . $dog_type -> type . ']'}} </p>
      <p>{{$course -> getCourseInfo()}}</p>
      <p>{{$message}}</p>
+    @if ($before_date>=$today)
+    <a href="{{route('nonMember.test',['start_date'=>$before_date])}}">前週へ</a>
+    @endif
 
-    <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $before_date])}}">前週へ</a>
-    <a href="{{route('booking.selectCalender.salonAndDay' , ['salon' => $salon -> id, 'st_date' => $after_date])}}">次週へ</a>
+    @if ($after_date<=$maxBookingDate)
+    <a href="{{route('nonMember.test',['start_date'=>$after_date])}}">次週へ</a>
+        
+    @endif
     <table class="table table-striped">
         <tr>
             <th>日付</th>
             @foreach($days as $day)
+            @if($day<=$maxBookingDate)
             <th>
                 @php
                     $week = array( "日", "月", "火", "水", "木", "金", "土" );
@@ -44,17 +50,22 @@
                     echo $dateStr; 
                 @endphp
             </th>
+
+            @endif
             @endforeach
         </tr>
         
         @foreach($times as $time)
         <tr>
             <th>{{$time}}</th>
+            
             @foreach($days as $day)
-                @if($capacities[$day][$timesNum[$time]] > 0)
-                <td><a href="{{route('nonMember.booking.confirm' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
-                @else
-                <td>×</td>
+            @if($day<=$maxBookingDate)
+            @if($capacities[$day][$timesNum[$time]] > 0)
+            <td><a href="{{route('nonMember.booking.confirm' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
+            @else
+            <td>×</td>
+            @endif
                 @endif
             @endforeach
         </tr>

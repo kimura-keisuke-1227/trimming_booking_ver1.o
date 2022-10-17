@@ -169,11 +169,16 @@ Route::post('/nonMember/selectCourse',
 -> name('nonMember.beginBookingEntry');
 ;
 
+
+Route::get('/noMember/withStDate/{start_date}',[NonMemberBookingController::class,'startNonUserBookingSelectCalenderWithStdate'])
+-> name('nonMember.test');
+
 Route::post('/nonMember/SelectCalender',
 [NonMemberBookingController::class,'startNonUserBookingSelectCalender']
 )
 -> name('nonMember.booking.selectCalender');
 ;
+
 
 Route::get('/nonMember/confirm/{date}/{time}',
 [NonMemberBookingController::class,'confirmNonUserBookingSelectCalender']
