@@ -139,7 +139,7 @@ class BookingController extends Controller
         $salon = $salons->find($request->salon);
         session(['salon' => $salon]);
         $st_time = $salon->st_time;
-        $ed_time = $salon->ed_time;
+        //$ed_time = $salon->ed_time;
 
         $message = $request->message;
         session('message' , $message);
@@ -151,6 +151,13 @@ class BookingController extends Controller
         //初期値は本日より1週間分のデータを取得
         $st_date = date('Y-m-d');
         $ed_date =  $util->addDays($st_date, 6);
+
+        $course_master_id = $course -> courseMaster -> id;
+        if($course_master_id==1){
+            $ed_time = 60*17+1;
+        } else{
+            $ed_time = 60*16+1;
+        }
 
 
         $times = $util->getTimes($st_time, $ed_time, $step_time);
@@ -166,7 +173,6 @@ class BookingController extends Controller
         $bookingsCalc = new BookingsCalc();
 
         $salon_id = $salon->id;
-        $course_master_id = $course -> courseMaster -> id;
         $needed_time = $course -> minute;
         Log::debug(__METHOD__.'('.__LINE__.') salon_id:' . $salon_id);
 
@@ -699,7 +705,14 @@ class BookingController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.')');
         $util = new Util();
         $st_time = $salon->st_time;
-        $ed_time = $salon->ed_time;
+    
+        $course_master_id = $course -> courseMaster -> id;
+        if($course_master_id==1){
+            $ed_time = 60*17+1;
+        } else{
+            $ed_time = 60*16+1;
+        }
+
         $step_time = Util::getSetting(30,'step_time',true);
         Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time:'.$ed_time.' step_time:' .session('step_time'));
         
