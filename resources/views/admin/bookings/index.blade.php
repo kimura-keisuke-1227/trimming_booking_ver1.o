@@ -90,10 +90,12 @@
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
                 <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> <br>
-                {{$booking -> getBookingInfoForStaff()}} <br>
+                {{$booking -> pet -> name}} <br>
+                {{$booking -> getPetInfoForAdminMobile()}} <br>
                 @else
-                {{$booking -> getNonMemberOwner() }}<br>
-                {{$booking -> getPetNameOfNoMemberBooking() }}<br>
+                <a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a>}<br>
+                {{$booking -> getNonMemberPetName() }}<br>
+                {{$booking -> getNonMemberPetInfo() }}<br>
                 @endif
                 {{$booking -> course -> courseMaster -> course}}<br>
                 <a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">[詳細・キャンセル]</a> <br>

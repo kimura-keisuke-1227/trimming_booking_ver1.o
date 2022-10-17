@@ -64,8 +64,10 @@ class Booking extends Model
 
     public function getBookingInfoForStaff(){
         return  $this->pet->user->last_name .
-                $this->pet->name.
+                $this->pet->name. PHP_EOL.
                 '('.
+                $this->pet->dogtype -> type.
+                ' / '.
                 $this->pet->weight.
                 'kg / '.
                 Util::getAge(date('Y-m-d'),$this -> pet -> birthday) .
@@ -95,6 +97,18 @@ class Booking extends Model
         return $this -> message;
     }
 
+
+    public function getPetInfoForAdminMobile(){
+        return  
+        '('.
+        $this->pet->dogtype -> type.
+        ' / '.
+        $this->pet->weight.
+        'kg / '.
+        Util::getAge(date('Y-m-d'),$this -> pet -> birthday) .
+        ')'
+        ;
+    }
 
     /****************************************************************************************
     *
@@ -129,6 +143,19 @@ class Booking extends Model
 
         return $owner_last_nm   . $pet;
     }
+
+    public function getNonMemberPetName(){
+        $nonBookingInfo = $this -> getNonMemberBooking();
+
+        return $nonBookingInfo -> name;
+    }
+
+    public function getNonMemberPetInfo(){
+        $nonBookingInfo = $this -> getNonMemberBooking();
+        $dogType = $this -> course -> dogType ->type;
+        return '('.$dogType.' / '.$nonBookingInfo -> weight . 'kg)';
+    }
+
 
     public function getDogTypeAndCourse(){
         $nonBookingInfo = $this -> getNonMemberBooking();
