@@ -24,6 +24,9 @@
             <option value="{{$course -> id}}" 
             @if($course_id == $course -> id)
             selected
+            @php
+                $displayCourse = $course -> course;
+            @endphp
             @endif
             >{{$course -> course}}</option>
             @endforeach
@@ -35,7 +38,11 @@
     <br>
 
     <br>
-    <h3>{{$salons->find($selectedSalon)->salon_name}}</h3>
+    <h3>{{$salons->find($selectedSalon)->salon_name}}  
+        @php
+            echo $displayCourse;
+        @endphp
+    </h3>
 
     <a href="{{Route('admin.checkOpenCloseWithDate', [
         'salon' =>    $selectedSalon, 
