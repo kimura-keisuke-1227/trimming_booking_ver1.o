@@ -127,7 +127,7 @@
             <th>
                 @php
                     $week = array( "日", "月", "火", "水", "木", "金", "土" );
-                    $dateStr = date('d',strtotime($day)) .PHP_EOL.'('. $week[ date('w',strtotime($day))] . ')';
+                    $dateStr = date('m/',strtotime($day)) .PHP_EOL.date('d',strtotime($day)) .PHP_EOL.'('. $week[ date('w',strtotime($day))] . ')';
                     echo $dateStr; 
                 @endphp
             </th>
@@ -136,7 +136,8 @@
         
         @foreach($times as $time)
         <tr>
-            <th>{{$time}}</th>
+            <th id="{{$timesNum[$time]}}" >
+                {{ $time }}</th>
             @foreach($days as $day)
                 <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
                 @if($capacities[$day][$timesNum[$time]] == 1)
