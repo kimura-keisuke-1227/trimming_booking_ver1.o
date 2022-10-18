@@ -206,11 +206,15 @@ class Util
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
     }
 
-    public function getWhoCameBefore($date)
+    public static function getWhoCameBefore($date)
     {
         $users = User::all();
         $pets = Pet::all();
+        $staff = Auth::user();
+        Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Users and Pets info!' );
+        Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
         $allBookings = Booking::where('date', '<', $date)->get();
+        Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Bookings info before ' . $date);
 
         $usersCameBeforeList = [];
         foreach($users as $user){
@@ -229,5 +233,7 @@ class Util
         }
         Log::debug(__METHOD__.'('.__LINE__.') usersCameBeforeList:');
         Log::debug($usersCameBeforeList);
+
+        return $usersCameBeforeList;
     }
 }

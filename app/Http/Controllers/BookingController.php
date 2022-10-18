@@ -416,7 +416,7 @@ class BookingController extends Controller
     public function getAllBookingsOfSalonAndDate(Request $request)
     {
         $staff = Auth::user();
-        Log::info(__METHOD__ . ' starts by user_id(' . $staff->id . ')');
+        Log::info(__METHOD__.'('.__LINE__. ') starts by user_id(' . $staff->id . ')');
         $salons = Salon::all();
         $courses = CourseMaster::all();
 
@@ -432,13 +432,13 @@ class BookingController extends Controller
             $date = date('Y-m-d');
         }
 
-        $date = $request->date;
+        
         $bookings = Booking::where('date', $date)
             ->where('salon_id', $salon->id)
             ->orderBy('st_time')
             ->get();
 
-        Log::debug(__METHOD__ . 'salon_id:' . $salon->id . ' date:' . $date);
+        Log::debug(__METHOD__.'('.__LINE__. ') salon_id:' . $salon->id . ' date:' . $date);
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;
@@ -449,8 +449,10 @@ class BookingController extends Controller
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
 
+        Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
+        $usersCameBeforeList = Util::getWhoCameBefore($date);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
+        Log::info(__METHOD__.'('.__LINE__. ') ends by user_id(' . $staff->id . ')');
         return view('admin.bookings.index', [
             'bookings' => $bookings,
             'checkdate' => $util->getYMDWFromDbDate($date),
@@ -460,6 +462,7 @@ class BookingController extends Controller
             'timesNums' => $timesNum,
             'courses' => $courses,
             'step_time' => $step_time,
+            'usersCameBeforeList' => $usersCameBeforeList,
         ]);
     }
 

@@ -59,7 +59,15 @@
             <td>{{$booking -> getEndTime()}}</td>
             <td>{{$booking -> getEndTimeForOwner()}}</td>
             @if($booking -> pet_id !== 0)
-            <td><a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> </td>
+            <td><a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">
+                @if($usersCameBeforeList[$booking -> pet -> user->id] == 0)
+                    【初回来店】
+                @else
+                    【来店歴あり】
+                @endif
+                
+                {{$booking -> pet -> user -> getUserInfo()}}
+            </a> </td>
             <td>{{$booking -> pet -> getData()}}</td>
             @else
             <td><a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a></td>
@@ -85,10 +93,15 @@
             <td>
                 {{$booking -> date}} <br>
                 {{$booking -> getStartTime()}}　〜
-                {{$booking -> getEndTime()}}<br><br>
+                {{$booking -> getEndTime()}}<br>
                 (お客様表示終了時間)<br>
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
+                @if($usersCameBeforeList[$booking -> pet -> user->id] == 0)
+                    【初回来店】
+                @else
+                    【来店歴あり】
+                @endif
                 <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> <br>
                 {{$booking -> pet -> name}} <br>
                 {{$booking -> getPetInfoForAdminMobile()}} <br>
