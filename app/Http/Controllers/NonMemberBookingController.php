@@ -261,13 +261,10 @@ class NonMemberBookingController extends Controller
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $openCloseSalonController = new OpenCloseSalonController();
         $course_master_id = $course->courseMaster->id;
-        $allOpenCloseSalonBySalonIdAndCourseId
-            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
-
         Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master_id: ' . $course_master_id);
 
         $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
 
 
         $today = date('Y-m-d');
