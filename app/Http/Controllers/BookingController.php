@@ -945,4 +945,12 @@ class BookingController extends Controller
     public function testAddMonth($date,$addMonth){
         return Util::getEndOfTheMonth($date,$addMonth);
     }
+
+    public function testAutoClose(){
+        Log::debug(__METHOD__.'('.__LINE__.') starts!');
+        $util = new Util();
+        $util -> closeBooked(1,'2019-01-01',600,900,1);
+        Log::debug(__METHOD__.'('.__LINE__.') ends!');
+        return __METHOD__;
+    }
 }
