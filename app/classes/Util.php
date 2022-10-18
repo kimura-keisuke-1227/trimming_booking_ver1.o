@@ -2,6 +2,7 @@
 namespace app\classes;
 use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 
 class Util
 {
@@ -66,12 +67,18 @@ class Util
     }
     
     public static function getSetting($default, $setting_name, $isInt)
-    {
+    {   
+        $user = Auth::user();
 
+        Log::debug(__METHOD__.'('.__LINE__.') start!');
         $setting = Setting::where('setting_name',$setting_name) -> get();
-        Log::debug(__FUNCTION__ . ' setting:' . $setting);
-
+        Log::info(__FUNCTION__ .' user('. $user->id. ') get setting '. $setting_name. ' (' . $setting .')');
+        
+        
         $settingHere = $setting;
+        
+        //設定がなかった場合
+        Log::debug(__METHOD__.'('.__LINE__.') end ');
         if ($settingHere -> count() == 0) {
             return $default;
         }
