@@ -72,7 +72,14 @@ class Util
 
         Log::debug(__METHOD__.'('.__LINE__.') start!');
         $setting = Setting::where('setting_name',$setting_name) -> get();
-        Log::info(__FUNCTION__ .' user('. $user->id. ') get setting '. $setting_name. ' (' . $setting .')');
+
+        if(is_null($user)){
+            $reader = 'Non Member User';
+        } else{
+            $reader = $user->id;
+        }
+
+        Log::info(__FUNCTION__ .' user('. $reader . ') get setting '. $setting_name. ' (' . $setting .')');
         
         
         $settingHere = $setting;
