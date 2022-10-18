@@ -11,6 +11,8 @@
 開始時刻：{{ $st_time }}
 終了時刻：{{ $ed_time }}
 お客様向け終了予定時刻：{{ $ed_time_for_show }}
+電話番号:{{ $nonMemberBooking->phone }} 
+メールアドレス：{{ $nonMemberBooking->email }} 
 メッセージ:
 {{ $booking -> message }}
 

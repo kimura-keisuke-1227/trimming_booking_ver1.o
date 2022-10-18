@@ -9,6 +9,8 @@
 コース: {{ $course -> courseMaster -> course}}
 予約日: {{ $date}}
 開始時刻: {{ $st_time }}
+電話番号:{{ $user->phone }} 
+メールアドレス：{{ $user->email }} 
 メッセージ:
 {{ $message_text }}
 

@@ -10,6 +10,8 @@
 予約日：{{ $date }}
 開始時刻：{{ $st_time }}
 終了予定時刻：{{ $ed_time_for_show }}
+電話番号:{{ $nonMemberBooking->phone }} 
+メールアドレス：{{ $nonMemberBooking->email }} 
 メッセージ:
 {{ $booking -> message }}
 
