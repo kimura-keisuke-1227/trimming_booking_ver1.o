@@ -106,7 +106,7 @@
                     'st_date' => $st_date,
                     'count' => $capacities[$day][$timesNum[$time]],
                     ])}}">○</a></td>
-                @else
+                @elseif($capacities[$day][$timesNum[$time]] == 0)
                 <td><a href="{{ Route('admin.switchOX',[
                     'salon' => $selectedSalon,
                     'course' => $course_id,
@@ -115,6 +115,8 @@
                     'st_date' => $st_date,
                     'count' => $capacities[$day][$timesNum[$time]],
                     ])}}">×</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == -1)
+                <td>定休日</td>
                 @endif
             @endforeach
         </tr>
@@ -139,7 +141,6 @@
             <th id="{{$timesNum[$time]}}" >
                 {{ $time }}</th>
             @foreach($days as $day)
-                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
                 @if($capacities[$day][$timesNum[$time]] == 1)
                 <td><a href="{{ Route('admin.switchOX',[
                     'salon' => $selectedSalon,
@@ -158,7 +159,7 @@
                     'st_date' => $st_date,
                     'count' => $capacities[$day][$timesNum[$time]],
                     ])}}">○</a></td>
-                @else
+                @elseif($capacities[$day][$timesNum[$time]] == 0)
                 <td><a href="{{ Route('admin.switchOX',[
                     'salon' => $selectedSalon,
                     'course' => $course_id,
@@ -167,6 +168,8 @@
                     'st_date' => $st_date,
                     'count' => $capacities[$day][$timesNum[$time]],
                     ])}}">×</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == -1)
+                <td>定休日</td>
                 @endif
             @endforeach
         </tr>

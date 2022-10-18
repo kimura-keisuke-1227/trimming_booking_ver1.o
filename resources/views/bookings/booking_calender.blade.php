@@ -44,11 +44,13 @@
             <th>{{$time}}</th>
             @foreach($days as $day)
             @if ($day <=$maxBookingDate)            
-            @if($capacities[$day][$timesNum[$time]] > 0)
-            <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
-            @else
-            <td>×</td>
-            @endif
+                @if($capacities[$day][$timesNum[$time]] > 0)
+                <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == -1)
+                <td>定休日</td>
+                @elseif($capacities[$day][$timesNum[$time]] == 0)
+                <td>×</td>
+                @endif
             @endif
             @endforeach
         </tr>
@@ -85,11 +87,13 @@
             <th>{{$time}}</th>
             @foreach($days as $day)
             @if ($day <=$maxBookingDate)
-            @if($capacities[$day][$timesNum[$time]] > 0)
-            <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
-            @else
-            <td>×</td>
-            @endif
+                @if($capacities[$day][$timesNum[$time]] > 0)
+                <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
+                @elseif($capacities[$day][$timesNum[$time]] == -1)
+                <td>定休日</td>
+                @elseif($capacities[$day][$timesNum[$time]] == 0)
+                <td>×</td>
+                @endif
             @endif
             @endforeach
         </tr>
