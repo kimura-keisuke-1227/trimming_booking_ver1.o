@@ -3,6 +3,8 @@ namespace app\classes;
 use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use App\Models\OpenCloseSalon;
+use Illuminate\Support\Facades\DB;
 
 class Util
 {
@@ -158,7 +160,29 @@ class Util
     
     public function closeBooked($salon_id, $date,$st_time,$ed_time,$course_id){
         Log::debug(__METHOD__.'('.__LINE__.') start!');
+
+        $step_time = $this->getSetting(30,'step_time',true);
+
+        $insertsDatas = [];
+        for($time = $st_time ; $time<$ed_time; $time = $time + $step_time){
+            $openCloseSalon=[
+                'salon_id' => $salon_id,
+                'course_id' => $course_id,
+                'date' => $date,
+                'isOpen' => 0,
+                'time' => $time,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $insertsDatas[] = $openCloseSalon;
+        }
+
+        DB::table('open_close_salons') -> insert($insertsDatas);
+        Log::debug(__METHOD__.'('.__LINE__.') inserted datas!');
+        Log::debug($insertsDatas);
         
+
         Log::debug(__METHOD__.'('.__LINE__.') end!');
     }
 }
