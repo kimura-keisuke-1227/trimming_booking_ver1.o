@@ -7,7 +7,6 @@
     <p>{{$booking ->pet -> user -> getFullName()}}様</p>
     <p>{{$booking -> pet -> getData()}}</p>
     <p>{{$booking -> course -> getCourseInfo()}}</p>
-    <p>{{$booking -> date}}</p>
     <p>{{$booking -> getStartTime()}}</p>
     <p>{{$booking ->message}}</p>
 

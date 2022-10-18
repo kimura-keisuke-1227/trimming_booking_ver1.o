@@ -97,12 +97,13 @@
                 (お客様表示終了時間)<br>
                 {{$booking -> getEndTimeForOwner()}}<br>
                 @if($booking -> pet_id !== 0)
-                @if($usersCameBeforeList[$booking -> pet -> user->id] == 0)
-                    【初回来店】
-                @else
-                    【来店歴あり】
-                @endif
-                <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">{{$booking -> pet -> user -> getUserInfo()}}</a> <br>
+                <a href="{{Route('admin.showUserInfo',['userID'=>$booking -> pet -> user ->id])}}">
+                    @if($usersCameBeforeList[$booking -> pet -> user->id] == 0)
+                        【初回来店】
+                    @else
+                        【来店歴あり】
+                    @endif
+                    {{$booking -> pet -> user -> getUserInfo()}}</a> <br>
                 {{$booking -> pet -> name}} <br>
                 {{$booking -> getPetInfoForAdminMobile()}} <br>
                 @else
