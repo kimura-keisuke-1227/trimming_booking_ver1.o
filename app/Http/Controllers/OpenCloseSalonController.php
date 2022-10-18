@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\classes\Util;
 use App\Models\Salon;
 use App\Models\CourseMaster;
+use App\Models\RegularHoliday;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -212,21 +213,34 @@ class OpenCloseSalonController extends Controller
         $allOpenCloseSalonBySalonIdAndCourseId
         =  $this->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_id);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+        
+        $regularHolidays = RegularHoliday::where('salon_id',$salon_id) -> get();
+        
         $OpenCloseListFromStdateToEddate = [];
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
-            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$regularHolidays);
         }
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $OpenCloseListFromStdateToEddate;
     }
 
-    private function makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
+    private function makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$regularHolidays)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start! date:' . Util::getYMDWFromDbDate($date));
         $OXListOfOneDay = [];
 
+        $regularHoliday = $regularHolidays->where('dayOfWeek' , date('w',strtotime($date)));
+
+        $todayUsualAccept = -9999;
+        if($regularHoliday->isEmpty()){
+            $todayUsualAccept = 1;
+        } else{
+            $todayUsualAccept = 0;
+            
+        }
+
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
-            $OXListOfOneDay[$time] = 1;
+            $OXListOfOneDay[$time] = $todayUsualAccept;
         }
 
         $dateOpenCloseSalonBySalonIdAndCourseId
