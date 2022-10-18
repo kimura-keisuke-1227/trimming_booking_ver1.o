@@ -150,15 +150,13 @@ class OpenCloseSalonController extends Controller
 
 
         #Log::info(__METHOD__.'('.__LINE__.') user_id('.$user->id . ')getOpenCloseSalon all database.');
-        $allOpenCloseSalonBySalonIdAndCourseId
-            =  $this->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_id);
 
         $util = new Util();
         $days = $util->getDaysList($st_date, $ed_date);
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
 
-        $OXListOfStartToEndDate = $this->makeOpenCloseListFromStdateToEddate($salon_id, $course_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+        $OXListOfStartToEndDate = $this->makeOpenCloseListFromStdateToEddate($salon_id, $course_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
 
         return view('admin.openclose.index', [
