@@ -54,6 +54,7 @@ class NonMemberCancelNotificationToNonmember extends Mailable
 
         $mailFrom = 'support@conaffetto-saitama.com';
         $mailFrom = $salon -> email;
+        $mailFrom = Util::getSetting($salon->email,'mailFromSalon',false);
 
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')

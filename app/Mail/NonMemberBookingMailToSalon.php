@@ -37,7 +37,10 @@ class NonMemberBookingMailToSalon extends Mailable
         $ed_time = Util::minuteToTime($booking->ed_time);
         $ed_time_for_show = Util::minuteToTime($booking->ed_time_for_show);
         $date = Util::getYMDWFromDbDate($booking->date);
-        return $this->from($salon->email) 
+
+        $mailFrom = Util::getSetting($salon->email,'mailFromSalon',false);
+
+        return $this->from($mailFrom) 
         ->subject('会員でないユーザーから予約がありました。')
         ->text('email.bookingNotificationToStaff.bookingNotificationFromNoMember',[
             'nonMemberBooking' => $nonMemberBooking,

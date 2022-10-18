@@ -54,6 +54,7 @@ class CancelNotificationToUser extends Mailable
 
         $mailFrom = 'support@conaffetto-saitama.com';
         $mailFrom = $salon -> email;
+        $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
 
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')
