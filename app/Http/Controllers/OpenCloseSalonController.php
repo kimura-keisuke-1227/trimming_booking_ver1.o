@@ -183,11 +183,11 @@ class OpenCloseSalonController extends Controller
             ->where('date', $date)
             ->where('time',$time);
 
-            Log::debug(__METHOD__.'('.__LINE__.') This time was closed and openCloseSalon records are :');
+            Log::debug(__METHOD__.'('.__LINE__.') This time was closed  salon_id(' . $salon . ') course_id('.$course.') date('.$date .') time(' > $time .')' );
             $openCloseSalon -> delete();
     
         } else{
-            Log::debug(__METHOD__.'('.__LINE__.') This time was opened so we are closing it!');
+            Log::debug(__METHOD__.'('.__LINE__.') This time was opened so we are closing it! salon_id(' . $salon . ') course_id('.$course.') date('.$date .') time(' > $time .')' );
             $openCloseSalon = new OpenCloseSalon();
             $openCloseSalon -> salon_id =$salon;
             $openCloseSalon -> course_id =$course;
