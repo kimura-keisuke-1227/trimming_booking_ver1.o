@@ -235,7 +235,7 @@ class OpenCloseSalonController extends Controller
         if($regularHoliday->isEmpty()){
             $todayUsualAccept = 1;
         } else{
-            $todayUsualAccept = 0;
+            $todayUsualAccept = -1;
             
         }
 
