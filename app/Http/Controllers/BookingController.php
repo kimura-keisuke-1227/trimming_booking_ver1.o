@@ -181,9 +181,6 @@ class BookingController extends Controller
         //2022_1016_2043 テスト
         $openCloseSalonController = new OpenCloseSalonController();
         $course_master_id = $course -> courseMaster -> id;
-        $allOpenCloseSalonBySalonIdAndCourseId
-            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
-        
         Log::debug(__METHOD__.'('.__LINE__.') course_master_id: ' . $course_master_id);
         
         $salon_id = $salon -> id;
@@ -191,7 +188,7 @@ class BookingController extends Controller
         //$bookingsCalc->getCanBookList2($salon_id, $course_master_id, $st_date, $ed_date,$step_time,$st_time,$ed_time,$needed_time);
 
         $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
         
         session([
             'course' => $course,
@@ -745,12 +742,10 @@ class BookingController extends Controller
         $openCloseSalonController = new OpenCloseSalonController();
 
         Log::debug(__METHOD__.'('.__LINE__.')');
-        $allOpenCloseSalonBySalonIdAndCourseId
-        =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon->id, $course_master_id);
-        
+
         Log::debug(__METHOD__.'('.__LINE__.')');
         $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
 
         session([
             'course' => $course,

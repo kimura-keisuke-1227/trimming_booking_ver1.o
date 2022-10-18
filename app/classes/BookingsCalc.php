@@ -29,13 +29,10 @@ class BookingsCalc
         $openCloseSalonController = new OpenCloseSalonController();
 
         $openCloseSalonController = new OpenCloseSalonController();
-        $allOpenCloseSalonBySalonIdAndCourseId
-            =  $openCloseSalonController->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_master_id);
-
         Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master_id: ' . $course_master_id);
 
         $openCloseList =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId);
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
 
         #Log::debug(__METHOD__ . '(' . __LINE__ . ')  $openCloseList with salon_id:' . $salon_id . ' course_master_id:' .$course_master_id . ' st_date:' . $st_date .' ed_date:'.$ed_date );
         #Log::debug($openCloseList);
