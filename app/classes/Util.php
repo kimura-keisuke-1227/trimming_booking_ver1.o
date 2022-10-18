@@ -150,4 +150,15 @@ class Util
         
         return date("Y-m-t", strtotime($date. (string) $addMonth ."month"));
     }
+
+    public function saveAccessLog($user_id,$method,$message){
+        Log::debug(__METHOD__.'('.__LINE__.') start!');
+        Log::debug(__METHOD__.'('.__LINE__.') end!');
+    }
+    
+    public function closeBooked($salon_id, $date,$st_time,$ed_time,$course_id){
+        Log::debug(__METHOD__.'('.__LINE__.') start!');
+        
+        Log::debug(__METHOD__.'('.__LINE__.') end!');
+    }
 }
