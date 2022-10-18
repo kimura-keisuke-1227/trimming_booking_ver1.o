@@ -15,6 +15,7 @@ use App\Models\DefaultCapacity;
 use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
 use App\Models\Setting;
+use App\Models\CourseMaster;
 use App\Models\Dogtype;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NonMemberBookingMail;
@@ -63,6 +64,15 @@ class NonMemberBookingController extends Controller
         $booking->save();
         $booking_id = $booking->id;
         Log::info(__FUNCTION__ . 'Booking is saved for non member booking! booking_id is (' . $booking_id . ')');
+
+        //○×表を閉じる
+        Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by non member!');
+        $course_master = CourseMaster::find($course_id);
+        Log::info(__METHOD__ . '(' . __LINE__ . ') course_master:' . $course_master);
+
+        $util = new Util();
+        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->id);
+
 
         //非会員の予約を登録
         $nonMemberBooking = new NonMemberBooking();
