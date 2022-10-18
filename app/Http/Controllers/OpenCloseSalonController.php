@@ -209,8 +209,10 @@ class OpenCloseSalonController extends Controller
         return __METHOD__;
     }
 
-    public function makeOpenCloseListFromStdateToEddate($salon_id, $couse_id, $st_date, $ed_date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId)
+    public function makeOpenCloseListFromStdateToEddate($salon_id, $course_id, $st_date, $ed_date, $st_time, $ed_time, $step_time)
     {
+        $allOpenCloseSalonBySalonIdAndCourseId
+        =  $this->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_id);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
         $OpenCloseListFromStdateToEddate = [];
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
