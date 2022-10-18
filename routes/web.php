@@ -352,3 +352,4 @@ Route::get('/checkOpenClose/show',[OpenCloseSalonController::class,'index3'])
 Route::get('/test/addmonth/{date}/{addmonth}', [BookingController::class,'testAddMonth']);
 
 Route::get('/testautoClose', [BookingController::class,'testAutoClose']);
+Route::get('/testBeforeCame', [BookingController::class,'testGetTheUserCameBefore']);

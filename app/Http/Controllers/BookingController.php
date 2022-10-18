@@ -968,4 +968,13 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ') ends!');
         return __METHOD__;
     }
+
+    public function testGetTheUserCameBefore(){
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') starts!');
+        $util = new Util();
+        $date = '2000-10-01';
+        $util->getWhoCameBefore($date);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') ends!');
+        return __METHOD__;
+    }
 }
