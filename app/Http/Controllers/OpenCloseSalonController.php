@@ -13,6 +13,7 @@ use App\Models\CourseMaster;
 use App\Models\RegularHoliday;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OpenCloseSalonController extends Controller
 {
@@ -172,6 +173,10 @@ class OpenCloseSalonController extends Controller
             'before_start_day'=> $before_start_day,
             'next_start_day'=>$next_start_day,
             'course_id' => $course_id,
+            'st_date' => $st_date,
+            'ed_date'=> $ed_date,
+            'st_time' => $st_time,
+            'ed_time'=> $ed_time,
         ]);
     }
 
@@ -264,14 +269,71 @@ class OpenCloseSalonController extends Controller
     public function getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $couse_id)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
-
+        
         $user = Auth::user();
         #Log::info(__METHOD__.'('.__LINE__.') user_id('.$user->id . ')getOpenCloseSalon all database.');
         $allOpenCloseSalonBySalonIdAndCourseId = OpenCloseSalon::where('salon_id', $salon_id)
-            ->where('course_id', $couse_id)
-            ->get();
-
+        ->where('course_id', $couse_id)
+        ->get();
+        
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $allOpenCloseSalonBySalonIdAndCourseId;
+    }
+    
+    public function changeOXListAll(Request $request){
+        $staff = Auth::user();
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start! by staff(' . $staff->id.')');
+        $step_time = Util::getSetting(30,'step_time',true);
+
+        $st_date = $request->st_date;
+        $ed_date = $request->ed_date;
+        $st_time = $request->st_time;
+        $ed_time = $request->ed_time;
+        $salon_id = $request->salon_id;
+        $course_id = $request->course_id;
+        
+        Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time'. $ed_time);
+
+        $insertsDatas = [];
+        for($date = $st_date; $date<= $ed_date; $date = Util::addDays($date,1)){
+            for($time = $st_time;$time<$ed_time;$time=$time + $step_time){
+                $key = $date . '_' . (string) $time;
+                $openCloseSalon = $request->get($key);
+                Log::debug(__METHOD__.'('.__LINE__.') $request->'. $key .'('. $request->get($key) .')');
+                
+                if($openCloseSalon==0){
+                    $openCloseSalon = [
+                        'salon_id' => $salon_id,
+                        'course_id' => $course_id,
+                        'date' => $date,
+                        'isOpen' => 0,
+                        'time' => $time,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ];
+                    $insertsDatas[]=$openCloseSalon;
+                }
+            }
+        }
+        
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
+        
+        $deleteData = OpenCloseSalon::where('salon_id',$salon_id)
+        ->where('course_id',$course_id)
+        ->where('date','>=',$st_date)
+        ->where('date','<=',$ed_date)
+        ->get()
+        ;
+        
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')  is deleting deleteData salon_id=('.$salon_id.') course_id = (' . $course_id .') st_date(' . $st_date . ') ed_date(' .$ed_date .')');
+        Log::debug($deleteData);
+        
+        Log::debug(__METHOD__.'('.__LINE__.') $insertsDatas:' );
+        Log::debug($insertsDatas);
+        //最後に解禁する
+        #$deleteData->delete();
+        #DB::table('open_close_salons')->insert($insertsDatas);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
+        return __METHOD__;
     }
 }

@@ -69,59 +69,57 @@
         'course' => $another_course_id,
         'date'=>$st_date,
         ])}}">コース切り替え</a>
-    <table class="table table-striped pc_only">
-        <tr>
-            <th>日付</th>
-            @foreach($days as $day)
-            <th>
-                @php
-                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
-                    $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
-                    echo $dateStr; 
-                @endphp
-            </th>
+    <form action="{{Route('admin.changeOXlist.all')}}" method="POST">
+        @csrf
+        <table class="table table-striped pc_only">
+            <tr>
+                <th>日付</th>
+                @foreach($days as $day)
+                <th>
+                    @php
+                        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                        $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                        echo $dateStr; 
+                    @endphp
+                </th>
+                @endforeach
+            </tr>
+            
+            @foreach($times as $time)
+            <tr>
+                <th>{{$time}}</th>
+                @foreach($days as $day)
+                    <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
+                    @if($capacities[$day][$timesNum[$time]] == 1)
+                    <td id="td_{{$day}}_{{ $timesNum[$time]}}" class="{{$day}}_{{ $timesNum[$time]}} opened"> <p>○</p>
+                        <input id="opened_{{$day}}_{{$timesNum[$time]}}" type="hidden" class="opened_input" name="{{$day}}_{{$timesNum[$time]}}" id="" value="1">
+                    </td>
+                    @elseif($capacities[$day][$timesNum[$time]] == 2)
+                    <td id="td_{{$day}}_{{ $timesNum[$time]}}"  class="{{$day}}_{{ $timesNum[$time]}} opened"><p>○</p>
+                        <input id="opened_{{$day}}_{{$timesNum[$time]}}" type="hidden"  class="opened_input" name="{{$day}}_{{$timesNum[$time]}}" id="" value="1">
+                        
+                    </td>
+                    @elseif($capacities[$day][$timesNum[$time]] == 0)
+                    <td id="td_{{$day}}_{{ $timesNum[$time]}}"  class="{{$day}}_{{ $timesNum[$time]}} closed">
+                        <p>×</p>
+                        
+                        <input id="closed_{{$day}}_{{$timesNum[$time]}}" class="closed_input" type="hidden" name="{{$day}}_{{$timesNum[$time]}}" id="" value="0">
+                    </td>
+                    @elseif($capacities[$day][$timesNum[$time]] == -1)
+                    <td>定休日</td>
+                    @endif
+                @endforeach
+            </tr>
             @endforeach
-        </tr>
-        
-        @foreach($times as $time)
-        <tr>
-            <th>{{$time}}</th>
-            @foreach($days as $day)
-                <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
-                @if($capacities[$day][$timesNum[$time]] == 1)
-                <td><a href="{{ Route('admin.switchOX',[
-                    'salon' => $selectedSalon,
-                    'course' => $course_id,
-                    'date' => $day,
-                    'time' => $timesNum[$time],
-                    'st_date' => $st_date,
-                    'count' => $capacities[$day][$timesNum[$time]],
-                    ])}}">○</a></td>
-                @elseif($capacities[$day][$timesNum[$time]] == 2)
-                <td><a href="{{ Route('admin.switchOX',[
-                    'salon' => $selectedSalon,
-                    'course' => $course_id,
-                    'date' => $day,
-                    'time' => $timesNum[$time],
-                    'st_date' => $st_date,
-                    'count' => $capacities[$day][$timesNum[$time]],
-                    ])}}">○</a></td>
-                @elseif($capacities[$day][$timesNum[$time]] == 0)
-                <td><a href="{{ Route('admin.switchOX',[
-                    'salon' => $selectedSalon,
-                    'course' => $course_id,
-                    'date' => $day,
-                    'time' => $timesNum[$time],
-                    'st_date' => $st_date,
-                    'count' => $capacities[$day][$timesNum[$time]],
-                    ])}}">×</a></td>
-                @elseif($capacities[$day][$timesNum[$time]] == -1)
-                <td>定休日</td>
-                @endif
-            @endforeach
-        </tr>
-        @endforeach
-    </table>
+        </table>
+        <input type="date" name="st_date" value="{{$st_date}}">
+        <input type="date" name="ed_date" value="{{$ed_date}}">
+        <input type="integer" name="st_time" value="{{ $st_time }}">
+        <input type="integer" name="ed_time" value="{{$ed_time}}">
+        <input type="integer" name="salon_id" value="{{$selectedSalon}}">
+        <input type="integer" name="course_id" value="{{$course_id}}">
+        <button type="submit">登録</button>
+    </form>
     <table class="table table-striped sp_only">
         <tr>
             <th>日付</th>
@@ -178,6 +176,23 @@
  
     <a href="{{Route('admin.makebooking')}}">新規予約へ</a>
 </div>
+
+<script>
+    $(document).on("click",'.opened', function () {
+        console.log('opened was clicked!');
+        $(this).children('p').text("×");
+        $(this).children('input').val("0");
+        $(this).removeClass('opened');
+        $(this).addClass('closed');
+    });
+    $(document).on("click",'.closed', function () {
+        console.log('closed was clicked!');
+        $(this).children('p').text("○");
+        $(this).children('input').val("1");
+        $(this).removeClass('closed');
+        $(this).addClass('opened');
+    });
+</script>
 
 @endsection
 

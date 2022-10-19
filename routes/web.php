@@ -233,6 +233,9 @@ Route::get('/admin/checkcapacities',[BookingController::class,'getAcceptableCoun
 Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::class,'getAcceptableCountWithSalonDate'])
 -> Middleware('auth');
 
+Route::post('/admin/postOXList',[OpenCloseSalonController::class,'changeOXListAll'])
+->name('admin.changeOXlist.all');
+
 //ユーザーの確認
 Route::get('/admin/ownersInfo',[UserController::class,'index'])
 -> Middleware('auth');
