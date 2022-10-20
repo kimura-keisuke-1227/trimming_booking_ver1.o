@@ -161,6 +161,8 @@ class OpenCloseSalonController extends Controller
         $OXListOfStartToEndDate = $this->makeOpenCloseListFromStdateToEddate($salon_id, $course_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
 
+        $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
+
         return view('admin.openclose.index', [
             'st_date' => $st_date,
             'days' => $days,
@@ -177,6 +179,8 @@ class OpenCloseSalonController extends Controller
             'ed_date'=> $ed_date,
             'st_time' => $st_time,
             'ed_time'=> $ed_time,
+            'timesCount' => $timesCount,
+            'timeOfFirst' => $times[$st_time]
         ]);
     }
 

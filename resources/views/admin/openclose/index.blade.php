@@ -122,7 +122,9 @@
                     <input id="closed_{{$day}}_{{$timesNum[$time]}}" class="closed_input" type="hidden" name="{{$day}}_{{$timesNum[$time]}}" id="" value="0">
                 </td>
                 @elseif($capacities[$day][$timesNum[$time]] == -1)
-                <td>定休日</td>
+                @if ($time==$timeOfFirst)
+                            <td rowspan={{$timesCount}}>定休日</td>
+                        @endif
                 <input id="closed_{{$day}}_{{$timesNum[$time]}}" class="closed_input" type="hidden" name="{{$day}}_{{$timesNum[$time]}}" id="" value="-1">
                 @endif
                 @endforeach
