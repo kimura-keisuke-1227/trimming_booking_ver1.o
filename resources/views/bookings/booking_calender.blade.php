@@ -41,7 +41,9 @@
                 @if ($day <=$maxBookingDate) @if($capacities[$day][$timesNum[$time]]> 0)
                     <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
                     @elseif($capacities[$day][$timesNum[$time]] == -1)
-                    <td>定休日</td>
+                        @if ($time==$timeOfFirst)
+                            <td rowspan={{$timesCount}}>定休日</td>
+                        @endif
                     @elseif($capacities[$day][$timesNum[$time]] == 0)
                     <td>×</td>
                     @endif
@@ -81,7 +83,9 @@
                 @if ($day <=$maxBookingDate) @if($capacities[$day][$timesNum[$time]]> 0)
                     <td><a href="{{route('booking.selectCalender.date' , ['date' => $day, 'time' => $timesNum[$time]])}}">○</a></td>
                     @elseif($capacities[$day][$timesNum[$time]] == -1)
-                    <td>定休日</td>
+                        @if ($time==$timeOfFirst)
+                            <td rowspan={{$timesCount}}>定休日</td>
+                        @endif
                     @elseif($capacities[$day][$timesNum[$time]] == 0)
                     <td>×</td>
                     @endif
