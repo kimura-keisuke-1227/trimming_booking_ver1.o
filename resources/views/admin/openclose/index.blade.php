@@ -9,11 +9,6 @@
 
     <form action="{{Route('admin.checkOpenCloseWithDate.change')}}" method="get">
         @csrf
-        <div class="flex px-6 pb-4 border-b">
-            <div class="ml-auto">
-                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
-            </div>
-        </div>
         <label for="salon"></label>
         <select name="salon" id="">
             @foreach($salons as $salon)
@@ -74,6 +69,11 @@
         ])}}">コース切り替え</a>
     <form action="{{Route('admin.changeOXlist.all')}}" method="POST">
         @csrf
+        <div class="flex px-6 pb-4 border-b">
+            <div class="ml-auto">
+                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
+            </div>
+        </div>
         <table class="table table-striped">
             <tr>
                 <th>日付</th>
