@@ -322,18 +322,25 @@ class OpenCloseSalonController extends Controller
         ->where('course_id',$course_id)
         ->where('date','>=',$st_date)
         ->where('date','<=',$ed_date)
-        ->get()
+        #->get()
         ;
         
         Log::debug(__METHOD__ . '(' . __LINE__ . ')  is deleting deleteData salon_id=('.$salon_id.') course_id = (' . $course_id .') st_date(' . $st_date . ') ed_date(' .$ed_date .')');
-        Log::debug($deleteData);
+        #Log::debug($deleteData);
+        $deleteData->delete();
+        Log::debug(__METHOD__.'('.__LINE__.') deleted OX data!' );
         
         Log::debug(__METHOD__.'('.__LINE__.') $insertsDatas:' );
-        Log::debug($insertsDatas);
+        #Log::debug($insertsDatas);
+        DB::table('open_close_salons')->insert($insertsDatas);
+        Log::debug(__METHOD__.'('.__LINE__.') inserted data!' );
         //最後に解禁する
-        #$deleteData->delete();
-        #DB::table('open_close_salons')->insert($insertsDatas);
+
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
-        return __METHOD__;
+        return redirect(Route('admin.checkOpenCloseWithDate',[
+            'salon' =>    $salon_id, 
+            'course' => $course_id,
+            'date'=>$st_date,
+        ]));
     }
 }
