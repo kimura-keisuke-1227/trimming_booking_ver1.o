@@ -42,8 +42,6 @@ table {
 }
 
 th, td {
-  width: 300px;
-  height: 100px;
   vertical-align: middle;
   padding: 0 15px;
   border: 1px solid #ccc;
