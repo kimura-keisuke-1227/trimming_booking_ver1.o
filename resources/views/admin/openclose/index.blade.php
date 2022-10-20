@@ -70,7 +70,7 @@
     <form action="{{Route('admin.changeOXlist.all')}}" method="POST">
         @csrf
         <div class="flex px-6 pb-4 border-b">
-            <div class="ml-auto">
+            <div class="">
                 <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
             </div>
         </div>
@@ -126,7 +126,7 @@
         <input type="hidden" name="salon_id" value="{{$selectedSalon}}">
         <input type="hidden" name="course_id" value="{{$course_id}}">
         <div class="flex px-6 pb-4 border-b">
-            <div class="ml-auto">
+            <div class="">
                 <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
             </div>
         </div>
