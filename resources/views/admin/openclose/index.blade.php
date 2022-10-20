@@ -67,6 +67,7 @@
         'course' => $another_course_id,
         'date'=>$st_date,
         ])}}">コース切り替え</a>
+        <br><br>
     <form action="{{Route('admin.changeOXlist.all')}}" method="POST">
         @csrf
         <div class="flex px-6 pb-4 border-b">
