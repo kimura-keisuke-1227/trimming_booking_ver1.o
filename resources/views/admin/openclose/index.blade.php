@@ -120,7 +120,11 @@
         <input type="hidden" name="ed_time" value="{{$ed_time}}">
         <input type="hidden" name="salon_id" value="{{$selectedSalon}}">
         <input type="hidden" name="course_id" value="{{$course_id}}">
-        <button type="submit">登録</button>
+        <div class="flex px-6 pb-4 border-b">
+                        <div class="ml-auto">
+                            <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
+                        </div>
+                    </div>
     </form>
 
     <a href="{{Route('admin.makebooking')}}">新規予約へ</a>
