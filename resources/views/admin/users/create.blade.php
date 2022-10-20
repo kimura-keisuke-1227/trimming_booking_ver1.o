@@ -91,7 +91,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="email">過去に当店の利用がありますか？</label>
-                        <select name="beforeCame">
+                        <select name="cameBefore">
                             <option value="0">ない</option>
                             <option value="1">ある</option>
                         </select>
