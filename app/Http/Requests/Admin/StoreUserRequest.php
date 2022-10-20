@@ -32,7 +32,6 @@ class StoreUserRequest extends FormRequest
         'phone' => ['required', 'string', 'max:255','regex:/^0(\d-?\d{4}|\d{2}-?\d{3}|\d{3}-?\d{2}|\d{4}-?\d|\d0-?\d{4})-?\d{4}$/'],
         'default_salon' => ['integer'],
         'password' => ['required', 'string', 'min:8', 'confirmed'],
-        'cameBefore'=>['required']
         /*
         'image' => [
             'required',
