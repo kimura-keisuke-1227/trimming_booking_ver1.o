@@ -82,7 +82,7 @@
                         echo $dateStr; 
                     @endphp
                 </th>
-                <th class="pc_only">
+                <th class="sp_only">
                     @php
                         $week = array( "日", "月", "火", "水", "木", "金", "土" );
                         $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
