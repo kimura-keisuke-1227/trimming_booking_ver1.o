@@ -39,9 +39,13 @@ class Util
     public static function minuteToTime($timeNum)
     {
         $hour = (string) floor($timeNum / 60);
-        $minute = (string) ($timeNum % 60);
+        if($timeNum % 60==0){
+            $minute = '00';
+        } else{
+            $minute = (string) ($timeNum % 60);
+        }
 
-        return $hour . '時' . $minute . '分';
+        return $hour . ':' . $minute;
     }
 
     public static function minuteNumToTime($time)
@@ -127,6 +131,18 @@ class Util
         $times = [];
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
             $str_time = Util::minuteToTime($time);
+            $times[$time] = $str_time;
+            Log::debug(__METHOD__ . '(' . __LINE__ . ')');
+        }
+        return $times;
+    }
+
+    public function getTimesForSP($st_time, $ed_time, $step_time){
+        $times = [];
+        for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
+            $hour = (string) floor($time / 60);
+            $minute = (string) ($time % 60);
+            $str_time = $hour .':'. $minute;
             $times[$time] = $str_time;
             Log::debug(__METHOD__ . '(' . __LINE__ . ')');
         }
