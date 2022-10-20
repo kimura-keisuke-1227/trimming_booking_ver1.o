@@ -80,11 +80,20 @@
                 <th>日付</th>
                 @foreach($days as $day)
                 <th class="">
-                    @php
-                    $week = array( "日", "月", "火", "水", "木", "金", "土" );
-                    $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
-                    echo $dateStr;
-                    @endphp
+                    <p class="pc_only">
+                        @php
+                        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                        $dateStr = date('m/d',strtotime($day)) .'('. $week[ date('w',strtotime($day))] . ')';
+                        echo $dateStr;
+                        @endphp
+                    </p>
+                    <p class="sp_only">
+                        @php
+                        $week = array( "日", "月", "火", "水", "木", "金", "土" );
+                        $dateStr = date('m/',strtotime($day)).PHP_EOL.date('d',strtotime($day)).PHP_EOL .'('. $week[ date('w',strtotime($day))] . ')';
+                        echo $dateStr;
+                        @endphp
+                    </p>
                 </th>
 
                 @endforeach
