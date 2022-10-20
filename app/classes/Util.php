@@ -137,6 +137,17 @@ class Util
         return $times;
     }
 
+    public function getTimesCount($st_time, $ed_time, $step_time)
+    {   Log::debug(__METHOD__.'('.__LINE__.') starts!');
+        $timesCount = ($ed_time - $st_time)/ $step_time;
+        
+        $timesCount = ceil($timesCount);
+
+        Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time:' . $ed_time . ' step_time:' . $step_time . ' $timesCount'. $timesCount);
+        Log::debug(__METHOD__.'('.__LINE__.') ends!');
+        return $timesCount;
+    }
+
     public function getTimesForSP($st_time, $ed_time, $step_time){
         $times = [];
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
