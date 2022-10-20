@@ -162,16 +162,18 @@ class BookingController extends Controller
 
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
-
+        $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
         $days = $util->getDaysList($st_date, $ed_date);
 
+         /*
         $allBookings = Booking::all();
         $allDefaultCapacities = DefaultCapacity::all();
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
 
         $bookingsCalc = new BookingsCalc();
-
+        */
+        
         $salon_id = $salon->id;
         $needed_time = $course->minute;
         Log::debug(__METHOD__ . '(' . __LINE__ . ') salon_id:' . $salon_id);
@@ -200,6 +202,7 @@ class BookingController extends Controller
         $afterDate = Util::addDays($st_date, 7);
         $today = date('Y-m-d');
         $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+        $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('bookings.booking_calender', [
@@ -217,7 +220,9 @@ class BookingController extends Controller
             'message' => $message,
             'today' => $today,
             'maxBookingDate' => $maxBookingDate,
-            'ed_date' => $ed_date
+            'ed_date' => $ed_date,
+            'timesCount' =>$timesCount,
+            'timeOfFirst' => $times[$st_time]
         ]);
     }
 
@@ -767,6 +772,7 @@ class BookingController extends Controller
 
         $today = date('Y-m-d');
         $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+        $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
         if ($ed_date > $maxBookingDate) {
             $ed_date = $maxBookingDate;
@@ -788,7 +794,9 @@ class BookingController extends Controller
             'message' => $message,
             'today' => $today,
             'ed_date' => $ed_date,
-            'maxBookingDate' => $maxBookingDate
+            'maxBookingDate' => $maxBookingDate,
+            'timesCount' =>$timesCount,
+            'timeOfFirst' => $times[$st_time]
         ]);
     }
 
