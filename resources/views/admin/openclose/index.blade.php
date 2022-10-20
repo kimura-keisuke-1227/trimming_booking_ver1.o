@@ -114,12 +114,12 @@
             </tr>
             @endforeach
         </table>
-        <input type="date" name="st_date" value="{{$st_date}}">
-        <input type="date" name="ed_date" value="{{$ed_date}}">
-        <input type="integer" name="st_time" value="{{ $st_time }}">
-        <input type="integer" name="ed_time" value="{{$ed_time}}">
-        <input type="integer" name="salon_id" value="{{$selectedSalon}}">
-        <input type="integer" name="course_id" value="{{$course_id}}">
+        <input type="hidden" name="st_date" value="{{$st_date}}">
+        <input type="hidden" name="ed_date" value="{{$ed_date}}">
+        <input type="hidden" name="st_time" value="{{ $st_time }}">
+        <input type="hidden" name="ed_time" value="{{$ed_time}}">
+        <input type="hidden" name="salon_id" value="{{$selectedSalon}}">
+        <input type="hidden" name="course_id" value="{{$course_id}}">
         <button type="submit">登録</button>
     </form>
 
