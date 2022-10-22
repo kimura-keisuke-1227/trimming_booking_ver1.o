@@ -25,9 +25,12 @@
     </div>
 
     <br><br>
+    @if($countOfPets>0)
+
     <div class="ml-auto">
         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">コース選択へ</button>
     </div>
+    @endif
 
 </form>
 

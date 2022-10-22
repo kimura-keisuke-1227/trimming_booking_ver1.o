@@ -87,11 +87,15 @@ class BookingController extends Controller
         ]);
         $pets = Pet::where('owner_id', $owner->id)->get();
         session(['pets' => $pets]);
+        $countOfPets = $pets -> count();
+        
+        Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('bookings.selectpet', [
             'pets' => $pets,
             'owner' => $owner,
+            'countOfPets' => $countOfPets,
         ]);
     }
 
