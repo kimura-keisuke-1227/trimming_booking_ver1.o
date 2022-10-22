@@ -10,7 +10,7 @@
 予約日: {{ $date}}
 開始時刻: {{ $st_time }}
 電話番号:{{ $nonMemberBooking->phone }} 
-メールアドレス：{{ $nonMemberBooking->>email }} 
+メールアドレス：{{ $nonMemberBooking->email }} 
 メッセージ:
 {{ $message_text }}
 
