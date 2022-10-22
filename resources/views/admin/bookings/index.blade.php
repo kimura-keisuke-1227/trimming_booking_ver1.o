@@ -12,7 +12,11 @@
             <div class="flex">
                 <select id="salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="salon">
                     @foreach($salons as $salon)
-                    <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
+                    <option value="{{$salon -> id}}"
+                    @if ($salon->id==$selectedSalon->id)
+                        selected
+                    @endif
+                    >{{$salon -> salon_name}} </option>
                     @endforeach
                 </select>
                 <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
@@ -27,7 +31,7 @@
 
         <div class="mb-6">
             <label class="block text-sm font-medium mb-2" for="date">日付</label>
-            <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ $checkdate }}">
+            <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ $date }}">
         </div>
         <br>
         <br>
