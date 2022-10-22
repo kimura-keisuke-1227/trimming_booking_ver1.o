@@ -53,9 +53,9 @@ class PasswordController extends Controller
         try {
             $user = $this->userRepository->findFromEmail($request->email);
             $userToken = $this->userTokenRepository->updateOrCreateUserToken($user->id);
-            Log::info(__METHOD__ . '...ID:' . $user->id . 'のユーザーにパスワード再設定用メールを送信します。');
+            Log::notice(__METHOD__ . '...ID:' . $user->id . 'のユーザーにパスワード再設定用メールを送信します。');
             Mail::send(new UserResetPasswordMail($user, $userToken));
-            Log::info(__METHOD__ . '...ID:' . $user->id . 'のユーザーにパスワード再設定用メールを送信しました。');
+            Log::notice(__METHOD__ . '...ID:' . $user->id . 'のユーザーにパスワード再設定用メールを送信しました。');
         } catch(Exception $e) {
             Log::error(__METHOD__ . '...ユーザーへのパスワード再設定用メール送信に失敗しました。 request_email = ' . $request->email . ' error_message = ' . $e);
             return redirect()->route('password_reset.email.form')
