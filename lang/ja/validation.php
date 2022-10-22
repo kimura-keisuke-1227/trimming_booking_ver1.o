@@ -141,11 +141,17 @@ return [
         'first_name_kana' => '名（フリガナ　全角カタカナ）',
         'name'=> '名前',
         'email'=> 'メールアドレス',
+        'mail'=> 'メールアドレス',
         'phone'=> '電話番号',
         'password'=> 'パスワード',
         'weight' => '体重',
         'birthday' => '誕生日',
         'birthday' => '誕生日',
         'birthday' => '誕生日',
+        'owner_last_name' => '姓',
+        'owner_last_name_kana' => '姓（フリガナ　全角カタカナ）',
+        'owner_first_name' => '名',
+        'owner_first_name_kana' => '名（フリガナ　全角カタカナ）',
+        'pet_name' => 'ペット名'
     ],
 ];
