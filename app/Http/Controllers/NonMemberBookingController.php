@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NonMemberBookingMail;
 use App\Mail\NonMemberBookingMailToSalon;
 use App\Http\Controllers\OpenCloseSalonController;
+use Exception;
 
 class NonMemberBookingController extends Controller
 {
@@ -58,23 +59,25 @@ class NonMemberBookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
         $booking->message = $message;
-
+        
+        try{
+            $booking->save();
+            $booking_id = $booking->id;
+        } catch(Exception $e){
+            Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' raised when saving booking with non member!!');
+            return 'エラーが発生しました。お手数ですが、店舗に直接お電話ください。';
+        }
         Log::debug(__FUNCTION__ . ' $booking:' . $booking);
-
-        $booking->save();
-        $booking_id = $booking->id;
         Log::notice(__FUNCTION__ . 'Booking is saved for non member booking! booking_id is (' . $booking_id . ')');
 
         //○×表を閉じる
         Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by non member!');
-        Log::debug(__METHOD__.'('.__LINE__.') find CourseMaster with course_id(' .$course_id .') !');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') find CourseMaster with course_id(' . $course_id . ') !');
         $course_master = Course::find($course_id);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master:' . $course_master);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') $course_master->id:' . $course_master->course_master_id);
-
+        
         $util = new Util();
-        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
-
 
         //非会員の予約を登録
         $nonMemberBooking = new NonMemberBooking();
@@ -88,11 +91,32 @@ class NonMemberBookingController extends Controller
         $nonMemberBooking->phone = session('phone');
         $nonMemberBooking->name = session('pet_name');
         $nonMemberBooking->weight = session('weight');
+        try{
+            $nonMemberBooking->save();
+        }catch(Exception $e){
+            Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' raised when saving non member booking info with non member!!');
+            Log::debug(__METHOD__.'('.__LINE__.')');
+            $booking = Booking::find($booking_id);
+            $booking -> delete();
+
+            return 'エラーが発生しました。お手数ですが、店舗に直接お電話ください。';
+        }
+
         session([
             'nonMemberBooking' => $nonMemberBooking,
             'booking' => $booking,
         ]);
-        $nonMemberBooking->save();
+
+        try {
+            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
+        } catch (Exception $e) {
+            Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' raised when switching open close info with non member!!');
+            $booking = Booking::find($booking_id);
+            $booking -> delete();
+            $nonMemberBooking = NonMemberBooking::find($nonMemberBooking->id);
+            $nonMemberBooking -> delete();
+            return 'エラーが発生しました。お手数ですが、店舗に直接お電話ください。';
+        }
         Log::notice(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
 
         Mail::to(session('mail'))
@@ -187,33 +211,33 @@ class NonMemberBookingController extends Controller
         $st_date = date('Y-m-d');
         $salon_id = $request->salon;
         $message = $request->message;
-        $course_id = $request -> course;
+        $course_id = $request->course;
 
         session([
             'salon_id' => $salon_id,
             'course_id' => $course_id,
             'message' => $message,
         ]);
-        
-        return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
 
+        return $this->getViewForNoUserCalender($salon_id, $course_id, $message, $st_date);
     }
 
-    public function startNonUserBookingSelectCalenderWithStdate(Request $request,$st_date){
-        
+    public function startNonUserBookingSelectCalenderWithStdate(Request $request, $st_date)
+    {
+
         #return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
         $salon_id = session('salon_id');
         $course_id = session('course_id');
         $message = session('message');
-        return $this->getViewForNoUserCalender($salon_id,$course_id,$message,$st_date);
+        return $this->getViewForNoUserCalender($salon_id, $course_id, $message, $st_date);
     }
 
-    private function getViewForNoUserCalender($salon_id,$course_id,$message,$st_date)
+    private function getViewForNoUserCalender($salon_id, $course_id, $message, $st_date)
     {
 
         $dogType = session('dogtype');
         $salons = session('salons');
-       
+
 
         $salon = $salons->find($salon_id);
         $course = session('courses')->find($course_id);
@@ -227,13 +251,13 @@ class NonMemberBookingController extends Controller
         session(['salon' => $salon]);
 
         Log::debug(__FUNCTION__ . ' course_id:' . $course_id);
-        
-        Log::debug(__METHOD__.'('.__LINE__.') salon:');
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') salon:');
         Log::debug(session('salon'));
-        Log::debug(__METHOD__.'('.__LINE__.') salon_id:' . session('salon_id'));
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') salon_id:' . session('salon_id'));
         $pet_name = session('pet_name');
 
-        
+
         $util = new Util();
 
         $beforeDate = Util::addDays($st_date, -7);
@@ -261,7 +285,7 @@ class NonMemberBookingController extends Controller
         #$bookingsCalc = new BookingsCalc();
 
         #$capacities =
-         #   $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
+        #   $bookingsCalc->getCanBookList($allBookings, $allDefaultCapacities, $allRegularHoliday, $allTempCapacities, $salon, $step_time, $st_date, $ed_date, $course);
 
         $course_master_id = $course->courseMaster->id;
         if ($course_master_id == 1) {
@@ -280,7 +304,7 @@ class NonMemberBookingController extends Controller
 
 
         $today = date('Y-m-d');
-        $maxBookingDate = Util::getEndOfTheMonth($today,2);
+        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
 
         return view('nonMember.nonMember_booking_calender', [
             'salon' => $salon,
