@@ -105,7 +105,7 @@ return [
     'prohibited_if'        => ':attributeフィールドは、:otherが:valueの場合は禁止されています。',
     'prohibited_unless'    => ':attributeフィールドは、:otherが:valuesでない限り禁止されています。',
     'prohibits'            => ':attribute フィールドは、:other が存在することを禁止します。',
-    'regex'                => ':attributeには、有効な正規表現を指定してください。',
+    'regex'                => ':attributeには、有効な形式を指定してください。',
     'required'             => ':attributeは、必ず指定してください。',
     'required_array_keys'  => ':attributeフィールドには、：valuesのエントリを含める必要があります。',
     'required_if'          => ':otherが:valueの場合、:attributeを指定してください。',
@@ -135,9 +135,17 @@ return [
     ],
 
     'attributes' =>[
+        'last_name' => '姓',
+        'last_name_kana' => '姓（フリガナ　全角カタカナ）',
+        'first_name' => '名',
+        'first_name_kana' => '名（フリガナ　全角カタカナ）',
         'name'=> '名前',
         'email'=> 'メールアドレス',
         'phone'=> '電話番号',
         'password'=> 'パスワード',
+        'weight' => '体重',
+        'birthday' => '誕生日',
+        'birthday' => '誕生日',
+        'birthday' => '誕生日',
     ],
 ];

@@ -67,8 +67,8 @@ class PetController extends Controller
         
         $request -> validate([
             'name' =>['required', 'string' , 'max:255'],
-            'weight' => ['numeric'],
-            'birthday' =>['required'],
+            'weight' => ['numeric','min:0','max:255'],
+            'birthday' =>['required','before:today'],
         ]);
         
         #$form = $request -> all();
@@ -133,7 +133,18 @@ class PetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pet = Pet::findOrFail($id);
+        $updateData=$request -> validate([
+            'weight' => ['numeric','min:0','max:255'],
+            'birthday' =>['required','before:today'],
+        ]);
+
+        $pet->weight = $request->weight;
+        $pet->birthday = $request->birthday;
+
+        $pet->save();
+        return redirect(Route('pets.edit',['pet' => $pet]))
+        ->with('success','情報を修正しました。');
     }
 
     /**
