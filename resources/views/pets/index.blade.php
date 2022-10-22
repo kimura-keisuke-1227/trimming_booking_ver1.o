@@ -12,8 +12,8 @@
             <th>犬種</th>
             <th>体重(kg)</th>
             <th>生年月日</th>
+            <th></th>
             {{-- 
-                <th></th>
                  --}}
         </tr>
         @foreach($pets as $pet)
@@ -22,8 +22,8 @@
             <td>{{$pet -> dogtype -> type}}</td>
             <td>{{$pet -> weight}}</td>
             <td>{{$pet -> getPetBirthday()}}</td>
+            <td><a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正・削除]</a></td>
             {{-- 
-                <td><a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正・削除]</a></td>
                  --}}
         </tr>
         @endforeach
