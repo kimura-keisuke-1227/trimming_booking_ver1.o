@@ -241,6 +241,20 @@ class BookingController extends Controller
         $message =  session('message');
         $date = $request->date;
         $time = $request->time;
+
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+
+        //予約できるかチェック
+        if($date<$today){
+            Log::warning(__METHOD__.'('.__LINE__.') error $date<$today by user_id(' . $owner->id . ')');
+            return '無効な日付です。';
+        }
+        if($date>$maxBookingDate){
+            Log::warning(__METHOD__.'('.__LINE__.') error $date>$maxBookingDate by user_id(' . $owner->id . ')');
+            return '無効な日付です。';
+        }
+
         $timeStr = Util::minuteToTime($time);
         session([
             'date' => $date,
@@ -732,6 +746,18 @@ class BookingController extends Controller
         $owner = Auth::user();
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' starts by owner user_id(' . $owner->id . ')');
 
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+
+        if($st_date<$today){
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
+            ->with('success','無効な日付です。');
+        }
+        if($st_date>$maxBookingDate){
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
+            ->with('success','無効な日付です。');
+        }
+
         $pet =  session('pet');
         $course = session('course');
         $salon = session('salon');
@@ -800,8 +826,6 @@ class BookingController extends Controller
         $beforeDate = Util::addDays($st_date, -7);
         $afterDate = Util::addDays($st_date, 7);
 
-        $today = date('Y-m-d');
-        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
         $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
         if ($ed_date > $maxBookingDate) {
@@ -848,6 +872,7 @@ class BookingController extends Controller
     {
         $staff = Auth::user();
         Log::info(__METHOD__ . ' starts by owner user_id(' . $staff->id . ')');
+        
         $booking = new Booking();
         $owner = Auth::user();
 
