@@ -29,6 +29,7 @@ use App\Models\NonMemberBooking;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
 use App\Http\Controllers\OpenCloseSalonController;
+use Exception;
 
 //use App\Models\Dogtype;
 
@@ -540,27 +541,33 @@ class BookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
 
-        $booking->save();
-        Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
+        try{
+            $booking->save();
+            Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
+    
+            //○×表を閉じる
+            Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by staff(' . $staff . ')');
+            $course_master = CourseMaster::find($course_id);
+            $util = new Util();
+            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
+    
+    
+            Log::debug('管理者予約登録：(pet_id)' . $pet_id .
+                ' (course)' . $course_id .
+                '(date)' . $date  .
+                '(st_time)' . $st_time .
+                '(ed_time)' . $ed_time .
+                ('booking_status') . $booking_status);
+    
+            #Log::debug('ここでメールを送りたい。');
+            Mail::to('kim.ksuke@gmail.com')
+                ->send(new ContactAdminMail());
 
-        //○×表を閉じる
-        Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by staff(' . $staff . ')');
-        $course_master = CourseMaster::find($course_id);
-        $util = new Util();
-        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
 
+        }catch(Exception $e){
 
-        Log::debug('管理者予約登録：(pet_id)' . $pet_id .
-            ' (course)' . $course_id .
-            '(date)' . $date  .
-            '(st_time)' . $st_time .
-            '(ed_time)' . $ed_time .
-            ('booking_status') . $booking_status);
-
-        #Log::debug('ここでメールを送りたい。');
-        Mail::to('kim.ksuke@gmail.com')
-            ->send(new ContactAdminMail());
-
+            return 'エラーが発生しました。お手数ですが直接店舗にお電話ください。';
+        }    
         Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
         return redirect('/admin/makebooking')->with("success", "予約を登録しました");
     }
@@ -869,32 +876,41 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
         $booking->message = $message;
 
-        $booking->save();
-        Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
-
-        Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
-        Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
-
-        //○×表を閉じる
-        Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
-        $course_master = Course::find($course_id);
-        $util = new Util();
-        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
-
-        $pet = Pet::find($pet_id);
-        $pet->message = $message;
-        $pet->save();
-        Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
-
-        Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
-
-        Mail::to($owner->email)
-            ->send(new ContactAdminMail());
-        Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
-
-        Mail::to(session('salon')->email)
-            ->send(new BookingNotificationForSalon());
-        Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
+        try{
+            $booking->save();
+            Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
+    
+            Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
+            Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
+    
+            //○×表を閉じる
+            Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
+            $course_master = Course::find($course_id);
+            $util = new Util();
+            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
+    
+            $pet = Pet::find($pet_id);
+            $pet->message = $message;
+            
+            $pet->save();
+            Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
+    
+            Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
+    
+            Mail::to($owner->email)
+                ->send(new ContactAdminMail());
+            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
+    
+            Mail::to(session('salon')->email)
+                ->send(new BookingNotificationForSalon());
+            Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
+        }catch(Exception $e){
+            Log::debug(__METHOD__.'('.__LINE__.') catch Error: ' . $e);
+            Log::debug(__METHOD__.'('.__LINE__.') because of error, we are deleting booking ' . $e);
+            Log::debug(' booking:');
+            Log::debug($booking);
+            $booking -> delete();
+        }
 
         Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
         return redirect('/bookings')->with('success', '予約を登録をしました。');
