@@ -146,8 +146,6 @@ return [
         'password'=> 'パスワード',
         'weight' => '体重',
         'birthday' => '誕生日',
-        'birthday' => '誕生日',
-        'birthday' => '誕生日',
         'owner_last_name' => '姓',
         'owner_last_name_kana' => '姓（フリガナ　全角カタカナ）',
         'owner_first_name' => '名',
