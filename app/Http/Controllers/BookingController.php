@@ -267,12 +267,6 @@ class BookingController extends Controller
 
         $booking = Booking::find($bookingID);
 
-        if($booking -> date <= date('Y-m-d')){
-            Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access booking that is not able to be canceled! Booking id was ' . $bookingID .'!');
-            return redirect('/bookings')
-            ->with('error', 'キャンセルできない予約です。。');
-        }
-
         $owner_id = $owner->id;
         if (!is_null($booking) and !is_null($booking->pet)) {
             $booking_owner_id = $booking->pet->user->id;
@@ -286,6 +280,13 @@ class BookingController extends Controller
             Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access other owner"s booking id(' .$bookingID.')');
             return redirect('/bookings')
                 ->with('error', '該当の予約が存在しません。');
+        }
+        
+
+        if($booking -> date <= date('Y-m-d')){
+            Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access booking that is not able to be canceled! Booking id was ' . $bookingID .'!');
+            return redirect('/bookings')
+            ->with('error', 'キャンセルできない予約です。。');
         }
 
 
