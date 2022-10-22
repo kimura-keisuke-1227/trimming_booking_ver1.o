@@ -266,12 +266,23 @@ class BookingController extends Controller
 
         $booking = Booking::find($bookingID);
 
-        $owner_id = $owner->id;
-        if (!is_null($booking)) {
-            $booking_owner_id = $booking->pet->user->id;
+        if($booking -> date <= date('Y-m-d')){
+            Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access booking that is not able to be canceled! Booking id was ' . $bookingID .'!');
+            return redirect('/bookings')
+            ->with('error', 'キャンセルできない予約です。。');
         }
 
+        $owner_id = $owner->id;
+        if (!is_null($booking) and !is_null($booking->pet)) {
+            $booking_owner_id = $booking->pet->user->id;
+        } else{
+            Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access null booking or non Member booking id(' .$bookingID.')');
+            return redirect('/bookings')
+            ->with('error', '該当の予約が存在しません。');
+        }
+        
         if ((is_null($booking) or ($owner_id != $booking_owner_id))) {
+            Log::warning(__METHOD__.'('.__LINE__.') owner(' .$owner->id . ') tried to access other owner"s booking id(' .$bookingID.')');
             return redirect('/bookings')
                 ->with('error', '該当の予約が存在しません。');
         }
@@ -292,7 +303,7 @@ class BookingController extends Controller
 
         //キャンセルのメールを送りたい
         $booking->delete();
-        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
+        Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
         Log::info(' deleted booking:' . $booking);
 
         session([
@@ -348,8 +359,8 @@ class BookingController extends Controller
         Log::debug($booking);
 
         $booking->delete();
-        Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
-        Log::info(' deleted booking:' . $booking);
+        Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
+        Log::debug(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
 
         session([
@@ -370,8 +381,8 @@ class BookingController extends Controller
             $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking->delete();
-            Log::info(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
-            Log::info(' deleted nonMemberBooking:' . $nonMemberBooking);
+            Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
+            Log::debug(' deleted nonMemberBooking:' . $nonMemberBooking);
             Log::debug(__METHOD__ . ' non user email:' . $email);
 
             Mail::to($salon->email)
@@ -530,7 +541,7 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
 
         $booking->save();
-        Log::info(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
+        Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
 
         //○×表を閉じる
         Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by staff(' . $staff . ')');
@@ -565,7 +576,14 @@ class BookingController extends Controller
             $booking_owner_id = $booking->pet->user->id;
         }
 
+        if($booking->pet->id ==0){
+            Log::warning(__METHOD__.'('.__LINE__.') staff(' . $staff->id .') tried to open a booking info by illegal way!! ');
+            return redirect('/bookings')
+            ->with('error', '該当の予約が存在しません。');
+        }
+        
         if ((is_null($booking))) {
+            Log::warning(__METHOD__.'('.__LINE__.') staff(' . $staff->id .') tried to open a booking info by illegal way!! ');
             return redirect('/bookings')
                 ->with('error', '該当の予約が存在しません。');
         }
@@ -852,7 +870,7 @@ class BookingController extends Controller
         $booking->message = $message;
 
         $booking->save();
-        Log::info(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
+        Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
 
         Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
         Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
@@ -866,7 +884,7 @@ class BookingController extends Controller
         $pet = Pet::find($pet_id);
         $pet->message = $message;
         $pet->save();
-        Log::info(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
+        Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
 
         Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
 
