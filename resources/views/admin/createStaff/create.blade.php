@@ -70,24 +70,35 @@
                         <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
 
                         <div class="mb-6">
-                            <label class="block text-sm font-medium mb-2" for="last_name">名前</label>
+                            <label class="block text-sm font-medium mb-2" for="last_name">姓</label>
                             <input id="last_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name" value="{{ old('name') }}">
+                            <label class="block text-sm font-medium mb-2" for="first_name">名</label>
                             <input id="first_name" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name" value="{{ old('name') }}">
                         </div>
                         <div class="mb-6">
-                            <label class="block text-sm font-medium mb-2" for="first_name">フリガナ(全角カナ)</label>
+                            <label class="block text-sm font-medium mb-2" for="first_name_kana">姓　フリガナ(全角カナ)</label>
                             <input id="last_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="last_name_kana" value="{{ old('name') }}">
+                            <label class="block text-sm font-medium mb-2" for="last_name_kana">名　フリガナ(全角カナ)</label>
                             <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
                         </div>
 
+
                         <div class="mb-6">
-                            <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
-                            <select name="default_salon">
+                            <label class="block text-sm font-medium mb-2" for="default_salon">通常利用店舗</label>
+                            <div class="flex">
+                                <select id="default_salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="default_salon">
                                 @foreach($salons as $salon)
                                 <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                                <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
+
                         <input type="hidden" name="beforeCame" value="1">
 
                         <div class="mb-6">
@@ -97,6 +108,10 @@
                         <div class="mb-6">
                             <label class="block text-sm font-medium mb-2" for="email">電話番号</label>
                             <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ old('email') }}">
+                        </div>
+                        <div class="mb-6">
+
+                            <input id="cameBefore" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="hidden" name="cameBefore" value="1">
                         </div>
 
                         <div class="mb-6">
