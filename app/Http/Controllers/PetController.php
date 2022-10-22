@@ -68,6 +68,7 @@ class PetController extends Controller
         $request -> validate([
             'name' =>['required', 'string' , 'max:255'],
             'weight' => ['numeric'],
+            'birthday' =>['required'],
         ]);
         
         #$form = $request -> all();
