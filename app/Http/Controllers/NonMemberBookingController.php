@@ -69,10 +69,11 @@ class NonMemberBookingController extends Controller
         Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by non member!');
         Log::debug(__METHOD__.'('.__LINE__.') find CourseMaster with course_id(' .$course_id .') !');
         $course_master = Course::find($course_id);
-        Log::info(__METHOD__ . '(' . __LINE__ . ') course_master:' . $course_master);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master:' . $course_master);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') $course_master->id:' . $course_master->course_master_id);
 
         $util = new Util();
-        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->id);
+        $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
 
 
         //非会員の予約を登録
