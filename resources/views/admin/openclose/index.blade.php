@@ -6,32 +6,62 @@
 
 <div class="container">
 
+    <div class="py-4 bg-white rounded">
+        <form action="{{Route('admin.checkOpenCloseWithDate.change')}}" method="get">
+            @csrf
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="salon">店舗</label>
+                <div class="flex">
+                    <select id="salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="salon">
+                        @foreach($salons as $salon)
+                        <option value="{{$salon -> id}}"
+                        @if ($salon->id == $selectedSalon)
+                            selected
+                        @endif
+                        >{{$salon -> salon_name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="course">コース</label>
+                <div class="flex">
+                    <select id="course" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="course">
+                        @foreach($courses as $course)
+                        <option value="{{$course -> id}}"
+                        @if($course_id==$course -> id)
+                        selected
+                        @php
+                        $displayCourse = $course -> course;
+                        @endphp
+                        @endif
+                        
+                        >{{$course -> course}}</option>
+                        @endforeach
+                    </select>
+                    <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="name">日付</label>
+                <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="st_date" value="{{ $st_date }}">
+            </div>
+            <div class="ml-auto">
+                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">表示</button>
+            </div>
+        </form>
 
-    <form action="{{Route('admin.checkOpenCloseWithDate.change')}}" method="get">
-        @csrf
-        <label for="salon"></label>
-        <select name="salon" id="">
-            @foreach($salons as $salon)
-            <option value="{{$salon -> id}}" @if($salon->id == $selectedSalon)
-                selected
-                @endif
-                >{{$salon -> salon_name}}</option>
-            @endforeach
-        </select>
-        <select name="course" id="course">
-            @foreach($courses as $course)
-            <option value="{{$course -> id}}" @if($course_id==$course -> id)
-                selected
-                @php
-                $displayCourse = $course -> course;
-                @endphp
-                @endif
-                >{{$course -> course}}</option>
-            @endforeach
-        </select>
-        <input type="date" name="st_date" value="{{$st_date}}">
-        <input type="submit" value="表示">
-    </form>
+    </div>
 
     <br>
 
@@ -67,7 +97,7 @@
         'course' => $another_course_id,
         'date'=>$st_date,
         ])}}">コース切り替え</a>
-        <br><br>
+    <br><br>
     <form action="{{Route('admin.changeOXlist.all')}}" method="POST">
         @csrf
         <div class="flex px-6 pb-4 border-b">
@@ -123,8 +153,8 @@
                 </td>
                 @elseif($capacities[$day][$timesNum[$time]] == -1)
                 @if ($time==$timeOfFirst)
-                            <td rowspan={{$timesCount}}>定休日</td>
-                        @endif
+                <td rowspan={{$timesCount}}>定休日</td>
+                @endif
                 <input id="closed_{{$day}}_{{$timesNum[$time]}}" class="closed_input" type="hidden" name="{{$day}}_{{$timesNum[$time]}}" id="" value="-1">
                 @endif
                 @endforeach
