@@ -66,7 +66,7 @@ Route::post('/admin/users/',[UserController::class,'store']) -> name('admin.user
 Route::resource('/pets',
  PetController::class
 )
--> only(['index','create','store'])
+-> only(['index','create','store','edit'])
 -> Middleware('auth')
 ;
 
