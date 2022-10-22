@@ -438,6 +438,9 @@ class BookingController extends Controller
             ->get();
         session(['bookings' => $bookings]);
 
+        $today = date('Y-m-d');
+        $default_salon = $staff->default_salon;
+
         $bookings = $bookings
             ->sortBy(['salon_id'], ['date'], ['st_time']);
         $step_time = Util::getSetting(30, 'step_time', true);
@@ -445,6 +448,8 @@ class BookingController extends Controller
         return view('admin.bookings.index', [
             'bookings' => $bookings,
             'step_time' => $step_time,
+            'checkdate'=>$today,
+            'default_salon'=>$default_salon,
         ]);
     }
 
@@ -456,10 +461,14 @@ class BookingController extends Controller
         $salons = Salon::all();
         $courses = CourseMaster::all();
 
+        Log::debug(__METHOD__.'('.__LINE__.') $staff'.$staff);
+
         if ($request->has('salon')) {
             $salon = $salons->find($request->salon);
+            Log::debug(__METHOD__.'('.__LINE__.') $request has salon(' . $request->salon .')' );
         } else {
-            $salon = $salons->find(1);
+            $salon = $salons->find($staff->default_salon);
+            Log::debug(__METHOD__.'('.__LINE__.') $request does not have salon so put default salon('.$staff->default_salon.')');
         }
 
         if ($request->has('date')) {
@@ -489,6 +498,7 @@ class BookingController extends Controller
         $usersCameBeforeList = Util::getWhoCameBefore($date);
 
         Log::info(__METHOD__.'('.__LINE__. ') ends by user_id(' . $staff->id . ')');
+        Log::debug(__METHOD__.'('.__LINE__. ') $salon:' . $salon);
         return view('admin.bookings.index', [
             'bookings' => $bookings,
             'checkdate' => $util->getYMDWFromDbDate($date),
@@ -499,6 +509,7 @@ class BookingController extends Controller
             'courses' => $courses,
             'step_time' => $step_time,
             'usersCameBeforeList' => $usersCameBeforeList,
+            'date' => $date,
         ]);
     }
 
