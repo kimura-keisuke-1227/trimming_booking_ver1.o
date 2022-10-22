@@ -80,7 +80,7 @@ class PetController extends Controller
         $pet -> birthday = $request -> birthday;
         $pet -> weight = $request -> weight;
         $pet ->  save();
-        Log::info(__METHOD__ . ' owner user_id(' . $owner->id . ') saved a pet id(' . $pet -> id .')');
+        Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') saved a pet id(' . $pet -> id .')');
         
         Log::debug('登録ペット情報：(owner_id)' . $request -> owner_id . ' (pet_name)' . $request -> pet_name . '(dog_type)' . $request -> dogtype );
         
@@ -107,7 +107,20 @@ class PetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $owner = Auth::user();
+        Log::debug(__METHOD__.'('.__LINE__.') started by user('.$owner->id.')');
+        $pet = Pet::find($id);
+        
+        //存在しないペットや他人のペットを表示できないようにする。
+        if((is_null($pet)) or ($owner->id !== $pet->owner_id)){
+            Log::warning("message");(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
+            return '無効なページです。';
+        }
+        
+        Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
+        return view('pets.edit',[
+            'pet' => $pet
+        ]);
     }
 
     /**
