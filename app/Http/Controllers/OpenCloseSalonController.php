@@ -332,12 +332,12 @@ class OpenCloseSalonController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ')  is deleting deleteData salon_id=('.$salon_id.') course_id = (' . $course_id .') st_date(' . $st_date . ') ed_date(' .$ed_date .')');
         #Log::debug($deleteData);
         $deleteData->delete();
-        Log::debug(__METHOD__.'('.__LINE__.') deleted OX data!' );
+        Log::notice(__METHOD__.'('.__LINE__.') deleted OX data by staff(' . $staff->id.')' );
         
         Log::debug(__METHOD__.'('.__LINE__.') $insertsDatas:' );
         #Log::debug($insertsDatas);
         DB::table('open_close_salons')->insert($insertsDatas);
-        Log::debug(__METHOD__.'('.__LINE__.') inserted data!' );
+        Log::notice(__METHOD__.'('.__LINE__.') inserted data by staff(' . $staff->id.')' );
         //最後に解禁する
 
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
