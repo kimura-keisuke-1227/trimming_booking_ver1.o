@@ -175,7 +175,7 @@ class NonMemberBookingController extends Controller
 
         $courses = Course::where('dogtype_id', $dogtype->id)->get();
 
-
+        Log::info(__METHOD__.'('.__LINE__.') mail' . $mail .' phone:'.$phone);
 
         session([
             'dogtype' => $dogtype,
