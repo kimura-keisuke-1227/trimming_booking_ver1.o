@@ -113,8 +113,10 @@ class NonMemberBookingController extends Controller
             Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' raised when switching open close info with non member!!');
             $booking = Booking::find($booking_id);
             $booking -> delete();
+            Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' so deleted a booking('.$booking->id>')');
             $nonMemberBooking = NonMemberBooking::find($nonMemberBooking->id);
             $nonMemberBooking -> delete();
+            Log::warning(__METHOD__.'('.__LINE__.') Exception' . $e .' so deleted a non member info('.$nonMemberBooking->id.')');
             return 'エラーが発生しました。お手数ですが、店舗に直接お電話ください。';
         }
         Log::notice(__FUNCTION__ . 'NonMemberBooking is saved for non member booking!');
