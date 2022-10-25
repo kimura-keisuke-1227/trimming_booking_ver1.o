@@ -947,6 +947,7 @@ class BookingController extends Controller
             Log::debug(' booking:');
             Log::debug($booking);
             $booking -> delete();
+            return 'エラーが発生しました。';
         }
 
         Log::info(__METHOD__ . ' ends by owner user_id(' . $owner->id . ')');
