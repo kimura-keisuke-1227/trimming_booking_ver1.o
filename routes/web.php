@@ -356,3 +356,6 @@ Route::get('/test/addmonth/{date}/{addmonth}', [BookingController::class,'testAd
 
 Route::get('/testautoClose', [BookingController::class,'testAutoClose']);
 Route::get('/testBeforeCame', [BookingController::class,'testGetTheUserCameBefore']);
+
+Route::get('/cameBeforetest',
+[BookingController::class,'testUtilGetComeBefore']);
