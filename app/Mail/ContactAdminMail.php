@@ -58,7 +58,7 @@ class ContactAdminMail extends Mailable
 
         return $this->from($mailFrom) 
         ->subject('予約を受付けました。')
-        ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
+        ->text('email.bookingNotification.bookingNotificationToStaff',[
             'user' => $user,
             'pet' => $pet,
             'salon' => $salon,
