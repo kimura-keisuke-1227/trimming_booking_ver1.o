@@ -4,6 +4,7 @@
 <head>
     <title>@yield('title')</title>
     <meta charset="utf-8">
+    <meta name="robots" content="noindex" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
     <link rel="stylesheet" href="{{ asset('/css/admin/tailwind/tailwind.min.css')}}">
