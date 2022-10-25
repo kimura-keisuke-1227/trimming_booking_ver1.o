@@ -22,7 +22,7 @@
             <td>{{$pet -> dogtype -> type}}</td>
             <td>{{$pet -> weight}}</td>
             <td>{{$pet -> getPetBirthday()}}</td>
-            <td><a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正・削除]</a></td>
+            <td><a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正]</a></td>
             {{-- 
                  --}}
         </tr>
