@@ -263,4 +263,54 @@ class Util
 
         return $usersCameBeforeList;
     }
+
+    public static function getUserId(){
+        $user =Auth::user();
+        if(is_null($user)){
+            return 'not login user';
+        } else{
+            return $user->id;
+        }
+    }
+
+    public function getTheUserCameBefore($user_id,$date){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . $this->getUserId() .') with $user_id:' .$user_id . ' date:' . $date);
+        $user = User::find($user_id);
+
+        if(is_null($user)){
+            Log::info(__METHOD__.'('.__LINE__.') the user is null.');
+            Log::info(__METHOD__.'('.__LINE__.') end by user(' . $this->getUserId() .')');
+            return false;
+        }
+
+        $theUserCameBefore = false;
+
+        //ユーザーが来店ありと申告した場合はそのまま。　DBをこれ以上読む必要もないため早めにreturn
+        if($user->cameBefore == 1){
+            Log::debug(__METHOD__.'('.__LINE__.') the user came before when (s)he registered.');
+            $theUserCameBefore = true;
+            Log::info(__METHOD__.'('.__LINE__.') end by user(' . $this->getUserId() .')');
+            return $theUserCameBefore;
+        }
+        
+        //登録時点で来店がない場合には過去の予約を調べる
+        //予約データは飼い主ではなくペットに紐付いているため、まずはユーザーのペットを取得する。
+        $pets_id = Pet::select('id')->where('owner_id',$user_id)->get();
+        
+        //判定日よりも前に来店があるかどうかを数える。
+        $cameBeforeCount = Booking::where('date','<',$date)
+        ->whereIn('pet_id',$pets_id)
+        ->count();
+        
+        Log::debug(__METHOD__.'('.__LINE__.') $cameBeforeCount='.$cameBeforeCount) ;
+        
+        if($cameBeforeCount == 0){
+            $theUserCameBefore = false;
+        } else{
+            $theUserCameBefore = true;
+        }
+
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . $this->getUserId() .')');
+        return $theUserCameBefore;
+    }
 }
