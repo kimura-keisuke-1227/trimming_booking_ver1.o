@@ -56,9 +56,19 @@ class BookingNotificationForSalon extends Mailable
 
         $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
 
+        $util = new Util();
+        $theUserCameBefore = $util->getTheUserCameBefore($user->id,$date);
+
+        if($theUserCameBefore){
+            $theUserCameBefore = '来店履歴あり';
+        } else{
+            $theUserCameBefore = '来店履歴なし';
+
+        }
+
         return $this->from($mailFrom) 
         ->subject('予約がありました。')
-        ->text('email.bookingNotification.bookingNotification',[
+        ->text('email.bookingNotificationToStaff.bookingNotificationToStaff',[
             'user' => $user,
             'pet' => $pet,
             'salon' => $salon,
@@ -67,6 +77,7 @@ class BookingNotificationForSalon extends Mailable
             'date' => Util::dbDateToStrDate($date),
             'st_time' => Util::minuteToTime($st_time),
             'ed_time_for_show' => Util::minuteToTime($ed_time_for_show),
+            'theUserCameBefore' => $theUserCameBefore,
         ]);
     }
 }
