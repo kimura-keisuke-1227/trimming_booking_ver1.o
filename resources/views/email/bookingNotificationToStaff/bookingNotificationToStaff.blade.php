@@ -6,6 +6,7 @@
 ペットのお名前:{{ $pet -> name}}
 犬種:{{ $pet -> dogtype -> type}}
 予約店舗: {{ $salon -> salon_name }}
+新規・既存:
 コース: {{ $course -> courseMaster -> course}}
 予約日: {{ $date}}
 開始時刻: {{ $st_time }}
