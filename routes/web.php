@@ -55,7 +55,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']); 
 
 //ログアウト
-Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout')-> Middleware('auth');
 
 //ユーザー登録
 Route::get('/register',
@@ -234,7 +234,7 @@ Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::cla
 -> Middleware('auth');
 
 Route::post('/admin/postOXList',[OpenCloseSalonController::class,'changeOXListAll'])
-->name('admin.changeOXlist.all');
+->name('admin.changeOXlist.all')-> Middleware('auth');
 
 //ユーザーの確認
 Route::get('/admin/ownersInfo',[UserController::class,'index'])
@@ -273,7 +273,9 @@ Route::get('admin/ownerInfo/{userID}',[UserController::class,'show'])
 ->name('admin.showUserInfo');
 
 //スタッフ追加
-Route::get('/admin/createStaff',[BookingController::class,'gettest']);
+Route::get('/admin/createStaff',[BookingController::class,'gettest'])
+-> Middleware('auth')
+;
 
 Route::get('/admin/createStaff',
 [UserController::class,'createStaff']) -> name('admin.users.createStaff')
