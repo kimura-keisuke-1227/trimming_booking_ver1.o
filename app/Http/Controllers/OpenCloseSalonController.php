@@ -25,7 +25,7 @@ class OpenCloseSalonController extends Controller
     public function index()
     {
         $staff = Auth::user();
-        Log::debug(__METHOD__ . '(' . __LINE__ . ') start by staff('.$staff->id.')');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') start by staff('.Util::getUserId().')');
         $salon_id = $staff->default_salon;
         $date = date('Y-m-d');
         $course_id = 1;
