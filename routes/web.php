@@ -328,10 +328,12 @@ Route::get('/test/{salon_id}/{st_date}' ,
 
 Route::get('/admin/acceptable' , 
 [BookingController::class,'getAcceptableCount'])
+->middleware('auth')
 -> name('admin.allCapacities');
 
 Route::post('/admin/acceptable' , 
 [BookingController::class,'getAcceptableCountWithSalonDate'])
+->middleware('auth')
 -> name('admin.getAcceptableCountWithSalonDate');
 
 Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'testAdjust'])
@@ -342,16 +344,20 @@ Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'tes
 Route::get('/test3',[OpenCloseSalonController::class,'testOX']);
 
 Route::get('/checkOpenClose',[OpenCloseSalonController::class,'index'])
+->middleware('auth')
 ->name('admin.checkOpenClose');
 
 Route::get('/checkOpenClose/{salon}/{course}/{date}',[OpenCloseSalonController::class,'index2'])
+->middleware('auth')
 ->name('admin.checkOpenCloseWithDate');
 
 Route::get('/switchOX/{salon}/{course}/{date}/{time}/{st_date}/{count}'
 ,[OpenCloseSalonController::class,'switchOX'])
+->middleware('auth')
 ->name('admin.switchOX');
 
 Route::get('/checkOpenClose/show',[OpenCloseSalonController::class,'index3'])
+->middleware('auth')
 ->name('admin.checkOpenCloseWithDate.change');
 
 Route::get('/test/addmonth/{date}/{addmonth}', [BookingController::class,'testAddMonth']);
@@ -360,4 +366,5 @@ Route::get('/testautoClose', [BookingController::class,'testAutoClose']);
 Route::get('/testBeforeCame', [BookingController::class,'testGetTheUserCameBefore']);
 
 Route::get('/cameBeforetest',
-[BookingController::class,'testUtilGetComeBefore']);
+[BookingController::class,'testUtilGetComeBefore'])
+;
