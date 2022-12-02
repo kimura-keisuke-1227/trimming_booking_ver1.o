@@ -591,7 +591,7 @@ class BookingController extends Controller
 
 
         }catch(Exception $e){
-
+            Log::error($e);
             return 'エラーが発生しました。お手数ですが直接店舗にお電話ください。';
         }    
         Log::info(__METHOD__ . ' ends by user_id(' . $staff->id . ')');
@@ -942,6 +942,7 @@ class BookingController extends Controller
                 ->send(new BookingNotificationForSalon());
             Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
         }catch(Exception $e){
+            Log::error($e);
             Log::debug(__METHOD__.'('.__LINE__.') catch Error: ' . $e);
             Log::debug(__METHOD__.'('.__LINE__.') because of error, we are deleting booking ' . $e);
             Log::debug(' booking:');
