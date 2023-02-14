@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Pet;
+use App\Models\Salon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OpenCloseSalon;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,13 @@ class Util
 
         $dateStr = $dateStr . '(' . $week[date('w', strtotime($date))] . ')';
         return $dateStr;
+    }
+
+    public static function getCountSalons(){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $count_salons = Salon::count();
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+        return $count_salons;
     }
 
     public static function dbDateToStrDate($date)
