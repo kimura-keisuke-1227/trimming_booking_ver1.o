@@ -34,7 +34,6 @@
                         </div>
                         <br><br>
                     </div>
-                    </select>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="course">◆コースを選択してください。</label>
                         <div class="flex">
