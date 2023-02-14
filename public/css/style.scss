@@ -16,6 +16,10 @@
     font-size: 50px;
 }
 
+.not_show_one_salon{
+    display: none;
+}
+
 @media screen and (max-width: $const_responsive_size) {
     
     .pc_container{

@@ -108,8 +108,20 @@ class BookingController extends Controller
         $pets = session('pets');
         $pet_id = $request->pet;
         $pet = $pets->find($pet_id);
+
+        Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') pet_id:' . $pet_id);
+        Log::debug(__METHOD__.'('.__LINE__.')pets');
+        Log::debug($pets);
+
         $salons = Salon::all();
-        $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
+
+        if(is_null($pet)){
+            Log::error(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') : pet null error !!');
+            return redirect()->route('user.newBooking')
+            ->with("success", "ペット情報の読込に失敗しました。お手数ですが最初から予約をやり直してください。");
+        } else{
+            $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
+        }
         $message_before = $pet->message;
 
         Log::debug(__METHOD__ . '( before message is "' . $message_before . '"');
@@ -772,6 +784,11 @@ class BookingController extends Controller
         $pet =  session('pet');
         $course = session('course');
         $salon = session('salon');
+
+        if(is_null($salon)){
+            Log::error(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') Error sallon is null !!');
+            
+        }
 
         $st_time = $salon->st_time;
         $ed_time = $salon->ed_time;

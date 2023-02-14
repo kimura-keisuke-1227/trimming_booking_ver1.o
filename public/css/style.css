@@ -14,6 +14,10 @@
   font-size: 50px;
 }
 
+.not_show_one_salon {
+  display: none;
+}
+
 @media screen and (max-width: 780px) {
   .pc_container {
     margin-left: 0px;
@@ -48,7 +52,6 @@ th, td {
 }
 
 .fixed01 {
-  position: -webkit-sticky;
   position: sticky;
   left: 0;
 }
