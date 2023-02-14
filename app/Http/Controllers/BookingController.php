@@ -68,6 +68,8 @@ class BookingController extends Controller
             ->get();
         #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
 
+        $count_salons = Salon::count();
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') salons_count:' . $count_salons);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('bookings.index', [
