@@ -80,7 +80,7 @@
                         <input id="first_name_kana" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="first_name_kana" value="{{ old('name') }}">
                     </div>
 
-                    <div class="mb-6">
+                    <div class="mb-6 @if (count($salons) <=1) not_show_one_salon @endif">
                         <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
                         <select name="default_salon">
                             @foreach($salons as $salon)
