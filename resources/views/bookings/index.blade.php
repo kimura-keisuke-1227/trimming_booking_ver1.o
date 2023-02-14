@@ -13,7 +13,9 @@
             <td>開始時間</td>
             <td>終了時間</td>            
             <td>ペット名</td>
-            <td>店舗名</td>
+            <td @if ($count_salons<=1)
+                class="not_show_one_salon"
+            @endif>店舗名</td>
             <td>コース</td>
             <td></td>
         </tr>
@@ -31,7 +33,9 @@
                 <td>{{$booking -> getStartTime()}}</td>
                 <td>{{$booking -> getEndTimeForOwner()}}</td>                
                 <td>{{$booking -> pet -> getData()}}</td>
-                <td>{{$booking -> salon -> salon_name}}</td>
+                <td @if ($count_salons<=1)
+                class="not_show_one_salon"
+            @endif>{{$booking -> salon -> salon_name}}</td>
                 <td>{{$booking -> getCourse()}}</td>
                 <td>
                     @if($booking -> date > date('Y-m-d'))
