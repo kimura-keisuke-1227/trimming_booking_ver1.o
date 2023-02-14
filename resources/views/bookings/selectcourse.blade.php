@@ -15,7 +15,7 @@
             <div class="container">
                 <form action="{{Route('booking.selectCalender')}}" method="post">
                     @csrf
-                    <div class="mb-6">
+                    <div class="mb-6 @if (count($salons) <= 1)not_show_one_salon @endif">
                         <label class="block text-sm font-medium mb-2" for="salon">店舗を選択してください。</label>
                         <div class="flex">
                             <select id="salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="salon">
@@ -32,8 +32,8 @@
                                 </svg>
                             </div>
                         </div>
+                        <br><br>
                     </div>
-                    <br><br>
                     </select>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="course">◆コースを選択してください。</label>
