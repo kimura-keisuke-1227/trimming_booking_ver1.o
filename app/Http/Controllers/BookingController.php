@@ -80,7 +80,7 @@ class BookingController extends Controller
         ]);
     }
 
-    //予約するペットを選択する
+    //予約するペットを選択する2
     public function create()
     {
         $owner = Auth::user();
