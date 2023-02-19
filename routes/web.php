@@ -99,7 +99,7 @@ Route::delete('/bookingdelete/{bookingId}',
 
 //予約の新規登録画面
 Route::get('/new_booking',
-[BookingController::class,'create']
+[BookingController::class,'create2']
 ) -> Middleware('auth')
 -> name('user.newBooking');
 
