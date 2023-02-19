@@ -80,8 +80,8 @@ class BookingController extends Controller
         ]);
     }
 
-    //予約するペットを選択する2
-    public function create2()
+    //予約するペットを選択する
+    public function create()
     {
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
@@ -101,10 +101,6 @@ class BookingController extends Controller
             'owner' => $owner,
             'countOfPets' => $countOfPets,
         ]);
-    }
-
-    public function testfunc(){
-        
     }
 
     //コースを選択する
