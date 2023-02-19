@@ -81,7 +81,7 @@ class BookingController extends Controller
     }
 
     //予約するペットを選択する2
-    public function create()
+    public function create2()
     {
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
