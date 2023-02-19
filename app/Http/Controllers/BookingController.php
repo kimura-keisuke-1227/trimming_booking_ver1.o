@@ -103,6 +103,10 @@ class BookingController extends Controller
         ]);
     }
 
+    public function testfunc(){
+        
+    }
+
     //コースを選択する
     public function selectCourse(Request $request)
     {

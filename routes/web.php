@@ -104,6 +104,10 @@ Route::get('/new_booking',
 ) -> Middleware('auth')
 -> name('user.newBooking');
 */
+Route::get('/new_booking',
+[BookingController::class,'testfunc']
+) -> Middleware('auth')
+-> name('user.newBooking');
 
 Route::get('/selectcourse',
  [BookingController::class,'selectcourse']
