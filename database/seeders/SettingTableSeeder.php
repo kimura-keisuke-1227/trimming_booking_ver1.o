@@ -59,7 +59,7 @@ class SettingTableSeeder extends Seeder
             'order' => 60 ,
             'setting_name' => 'mailFromSalon' ,
             'explain' => '自動送信のメールアドレス' ,
-            'setting_string' =>  'trimmingsalonlink2@gmail.com',
+            'setting_string' =>  'support@trimmingsalon-link.com',
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
