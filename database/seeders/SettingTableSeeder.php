@@ -63,5 +63,13 @@ class SettingTableSeeder extends Seeder
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
+        $param = [
+            'order' => 70 ,
+            'setting_name' => 'salon_name_login' ,
+            'explain' => 'ログイン画面に表示するサロン名' ,
+            'setting_string' =>  'トリミングサロンLINK',
+            'isNumber' => false,
+        ];
+        DB::table('settings') -> insert($param);
     }
 }
