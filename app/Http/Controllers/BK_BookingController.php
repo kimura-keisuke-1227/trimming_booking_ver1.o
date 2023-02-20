@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Pet;
 use App\Models\Course;
 
-class BookingController extends Controller
+class BK_BookingController extends Controller
 {
     public function index(Request $request){
         $items = Booking::all();
