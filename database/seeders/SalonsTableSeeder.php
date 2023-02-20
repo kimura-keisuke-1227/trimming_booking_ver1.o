@@ -17,38 +17,15 @@ class SalonsTableSeeder extends Seeder
     {
         $param = [
             'salon_name' => '流星台店' ,
-            'prefecture' =>  '茨城県',
-            'address1' =>  'つくば市流星台',
-            'address2' =>  '123-456',
-            'phone' => '0120-444-444' ,
-            'email' => 'con.affetto.tsukuba@gmail.com' ,
-            'st_time' => 600 ,
-            'ed_time' => 1080 ,
-        ];
-        DB::table('salons') -> insert($param);
-
-        $param = [
-            'salon_name' => '万博公園店' ,
-            'prefecture' =>  '茨城県',
-            'address1' =>  'つくば市流星台',
-            'address2' =>  '234-567',
-            'phone' => '0120-444-444' ,
-            'email' => 'con.affetto.tsukuba@gmail.com' ,
-            'st_time' => 600 ,
-            'ed_time' => 1080 ,
-        ];
-        DB::table('salons') -> insert($param);
-
-        $param = [
-            'salon_name' => '越谷店' ,
             'prefecture' =>  '埼玉県',
-            'address1' =>  '越谷市東越谷',
-            'address2' =>  '345-678',
-            'phone' => '0120-444-444' ,
-            'email' => 'con.affetto.koshigaya@gmail.com' ,
+            'address1' =>  '越谷市',
+            'address2' =>  '123-456',
+            'phone' => '048-918-2163' ,
+            'email' => 'trimmingsalonlink2@gmail.com' ,
             'st_time' => 600 ,
-            'ed_time' => 1200 ,
+            'ed_time' => 1080 ,
         ];
         DB::table('salons') -> insert($param);
+
     }
 }
