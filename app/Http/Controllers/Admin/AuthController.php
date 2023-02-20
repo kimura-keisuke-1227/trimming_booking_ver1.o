@@ -14,8 +14,11 @@ class AuthController extends Controller
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $salon_name = Util::getSetting('サロン','salon_name_login',false);
+        Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') salon_name:'.$salon_name);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
-        return view('admin.login');
+        return view('admin.login',[
+            'salon_name' => $salon_name,
+        ]);
     }
 
     public function login(Request $request)
