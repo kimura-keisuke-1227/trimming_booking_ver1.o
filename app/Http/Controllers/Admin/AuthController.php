@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $salon_name = Util::getSetting('サロン','salon_name_login',false);
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return view('admin.login');
     }
 
