@@ -16,7 +16,7 @@ class SalonsTableSeeder extends Seeder
     public function run()
     {
         $param = [
-            'salon_name' => '流星台店' ,
+            'salon_name' => '茜店' ,
             'prefecture' =>  '埼玉県',
             'address1' =>  '越谷市',
             'address2' =>  '123-456',
