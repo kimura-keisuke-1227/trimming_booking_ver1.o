@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
             'default_salon' => 1,
         ];
         DB::table('users') -> insert($param);
-        
+        /*
         $password = '12345678';
         $password = Hash::make($password);
         $param =[
@@ -76,7 +76,7 @@ class UserTableSeeder extends Seeder
             'auth' => 0,
         ];
         DB::table('users') -> insert($param);
-
+        */
         
     }
 }
