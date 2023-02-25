@@ -43,4 +43,9 @@ class SalonController extends Controller
             'salon' => $salon,
         ]);
     }
+
+    public function create(){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+    }
 }
