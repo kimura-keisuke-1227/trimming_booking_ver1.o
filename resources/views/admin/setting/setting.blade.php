@@ -19,7 +19,7 @@
                     @if($setting -> isNumber)
                         <input type="number" name="{{$setting -> setting_name}}" value="{{$setting -> setting_int}}">
                     @else
-                        <input type="text" name="{{$setting -> setting_name}}" value="{{$setting -> setting_str}}">
+                        <input type="text" name="{{$setting -> setting_name}}" value="{{$setting -> setting_string}}">
                     @endif
                 </td>
             </tr>
