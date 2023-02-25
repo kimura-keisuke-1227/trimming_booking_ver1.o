@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title' , 'サロン設定修正')
+@section('title' , 'サロン登録')
 
 @section('content')
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('admin.salon.edit',['salon_id' => $salon -> id])}}" method="POST" enctype="multipart/form-data">
+            <form action="{{Route('admin.salon.create',[])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="flex px-6 pb-4 border-b">
