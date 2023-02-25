@@ -5,7 +5,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TempCapacityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\SalonController;
+use App\Http\Controllers\SalonController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
