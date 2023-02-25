@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TempCapacityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\SalonController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
@@ -249,6 +250,13 @@ Route::get('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBookingConfirm']
 ) -> Middleware('auth')
 -> name('admin.cancelConfirm');
+
+//サロン一覧の取得
+Route::get('/admin/salons',
+[SalonController::class,'index']
+) -> Middleware('auth')
+-> name('admin.salon.index');
+
 
 /*
 Route::post('/admin/cancel/{bookingId}',
