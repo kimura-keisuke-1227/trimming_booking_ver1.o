@@ -48,16 +48,16 @@
                         <input id="phone" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="phone" value="{{ $salon->phone }}">
                     </div>
                     <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">メールアドレス(予約通知用)</label>
+                        <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="email" value="{{ $salon->email }}">
+                    </div>
+                    <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">開店時間</label>
                         <input id="open_h" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="open_h" value="">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">閉店時間</label>
                         <input id="close_h" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="close_h" value="">
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">メールアドレス(予約通知用)</label>
-                        <input id="email" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="email" value="{{ $salon->email }}">
                     </div>
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">変更</button>
