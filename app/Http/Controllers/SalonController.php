@@ -22,7 +22,18 @@ class SalonController extends Controller
     }
 
     public function show($salon_id){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $salon = Salon::find($salon_id)->get();
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+
+        
+    }
+
+
+    public function edit($salon_id){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $salon = Salon::find($salon_id)->get();
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
         
     }
