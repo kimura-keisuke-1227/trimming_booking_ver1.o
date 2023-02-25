@@ -1,30 +1,19 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
-@section('title','ペット一覧')
+@section('title','サロン一覧')
 
 @section('content')
 
 <div class="container">
-    <p>こんにちは、<br class="sp_only">{{$owner -> getFullName()}}さん</p>
     <table class="table table-striped pc_only">
         <tr>
-            <th>名前</th>
-            <th>犬種</th>
-            <th>体重(kg)</th>
-            <th>生年月日</th>
-            <th></th>
-            {{-- 
-                 --}}
+            <th>サロン名</th>
+            <th>設定変更</th>
         </tr>
-        @foreach($pets as $pet)
+        @foreach($salons as $salon)
         <tr>
-            <td>{{$pet -> name}}</td>
-            <td>{{$pet -> dogtype -> type}}</td>
-            <td>{{$pet -> weight}}</td>
-            <td>{{$pet -> getPetBirthday()}}</td>
-            <td><a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正]</a></td>
-            {{-- 
-                 --}}
+            <td>{{$salon -> salon_name}}</td>
+            <td>{{$salon -> salon_name}}</td>
         </tr>
         @endforeach
 
@@ -32,14 +21,12 @@
 
     <table class="table table-striped sp_only">
         <tr>
-            <th>登録済みペット一覧</th>
+            <th>サロン一覧</th>
         </tr>
-        @foreach($pets as $pet)
-        <tr><td>
-            {{$pet -> dogtype -> type}} <br>
-            {{$pet -> getData()}} <br>
-            {{$pet -> birthday}} <br>
-        </td></tr>
+        @foreach($salons as $salon)
+        <tr>
+            <td>{{$salon -> salon_name}}</td>
+        </tr>
         @endforeach
     </table>
     <a href="{{ Route('user.dog_register')}}">ペット登録へ</a>
