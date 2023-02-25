@@ -51,4 +51,11 @@ class SalonController extends Controller
             
         ]);
     }
+
+    public function store(Request $request){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $salon =  new Salon;
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+        return redirect('/salons') -> with('success','サロンを登録をしました。');
+    }
 }
