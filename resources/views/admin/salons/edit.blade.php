@@ -6,11 +6,11 @@
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('admin.salon.edit',['salon_id' => $salon->id])}}" method="POST" enctype="multipart/form-data">
+            <form action="{{Route('admin.salon.edit',['salon_id' => 1])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="flex px-6 pb-4 border-b">
-                    <h3 class="text-xl font-bold">ペット情報</h3>
+                    <h3 class="text-xl font-bold">サロン情報</h3>
                 </div>
 
                 <div class="pt-4 px-6">
@@ -26,26 +26,25 @@
                     @endif
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
 
-
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">名前(変更不可)</label>
-                        <p>{{$pet->name}}</p>
+                        <label class="block text-sm font-medium mb-2" for="name">店舗名</label>
+                        <p>{{$salon->salon_name}}</p>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">犬種(変更不可)</label>
                         <div class="flex">
-                            <p>{{$pet->dogtype->type}}</p>
+                            <p></p>
 
                         </div>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="weight">体重(kg)</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" step="0.1" name="weight" value="{{ $pet->weight }}">
+                        <p>aaa</p>
                     </div>
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">誕生日</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="birthday" value="{{ $pet->birthday }}">
+                        <p>aaa</p>
                     </div>
 
                     <div class="ml-auto">
