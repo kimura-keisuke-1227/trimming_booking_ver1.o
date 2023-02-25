@@ -257,6 +257,12 @@ Route::get('/admin/salons',
 ) -> Middleware('auth')
 -> name('admin.salon.index');
 
+//サロン追加画面
+Route::get('/admin/salons/create',
+[SalonController::class,'create']
+) -> Middleware('auth')
+-> name('admin.salon.create');
+
 //サロン設定画面の取得
 Route::get('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
