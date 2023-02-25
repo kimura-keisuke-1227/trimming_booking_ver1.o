@@ -257,6 +257,12 @@ Route::get('/admin/salons',
 ) -> Middleware('auth')
 -> name('admin.salon.index');
 
+//サロン設定画面の取得
+Route::get('/admin/salons/{salon}',
+[SalonController::class,'edit']
+) -> Middleware('auth')
+-> name('admin.salon.edit');
+
 
 /*
 Route::post('/admin/cancel/{bookingId}',
