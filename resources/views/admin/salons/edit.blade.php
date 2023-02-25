@@ -28,25 +28,37 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">店舗名</label>
-                        <p>{{$salon->salon_name}}</p>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">犬種(変更不可)</label>
-                        <div class="flex">
-                            <p></p>
-
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="weight">体重(kg)</label>
-                        <p>aaa</p>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->salon_name }}">
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">誕生日</label>
-                        <p>aaa</p>
+                        <label class="block text-sm font-medium mb-2" for="name">都道府県</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->prefecture }}">
                     </div>
-
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">住所1</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->address1 }}">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">住所2</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->address2 }}">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">電話番号</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->phone }}">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">開店時間</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">閉店時間</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">メールアドレス(予約通知用)</label>
+                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ $salon->email }}">
+                    </div>
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">変更</button>
                     </div>
