@@ -258,7 +258,7 @@ Route::get('/admin/salons',
 -> name('admin.salon.index');
 
 //サロン設定画面の取得
-Route::get('/admin/salons/{salon}',
+Route::get('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
 ) -> Middleware('auth')
 -> name('admin.salon.edit');
