@@ -321,4 +321,14 @@ class Util
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . $this->getUserId() .')');
         return $theUserCameBefore;
     }
+
+    public function get4digitTime($intTime){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $hour = floor($intTime/60);
+        $min = $intTime%60;
+        Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $intTime='.$intTime.' $hour='. $hour . ' $min=' .$min);
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+        return $hour*100+$min;
+
+    }
 }
