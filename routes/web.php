@@ -245,8 +245,8 @@ Route::get('/admin/setting',[SettingController::class,'index'])
 ->name('admin.setting')
 -> Middleware('auth');
 
-Route::get('/admin/setting2',[SettingController::class,'update'])
-->name('admin.setting2')
+Route::post('/admin/setting',[SettingController::class,'update'])
+->name('admin.setting.update')
 -> Middleware('auth');
 
 //管理画面からの削除
