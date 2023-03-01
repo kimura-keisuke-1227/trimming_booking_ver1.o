@@ -348,4 +348,12 @@ class OpenCloseSalonController extends Controller
             'date'=>$st_date,
         ]));
     }
+
+    public static function temporaryClose($salon,$date){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        //とりあえず、該当サロン、日付のデータを1回消しておく
+
+        //該当日・サロンのデータを0(0:00)から1439(23:59)まで消しておく
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+    }
 }
