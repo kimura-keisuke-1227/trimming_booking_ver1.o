@@ -10,6 +10,8 @@ class SettingController extends Controller
     public function index(){
         $settings = Setting::orderBy('order')
         ->get();
+
+        session(['settingList' => $settings]);
  
         return view('admin.setting.setting',[
             'settings' => $settings
