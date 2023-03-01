@@ -323,6 +323,8 @@ class OpenCloseSalonController extends Controller
         
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
         
+
+        //一度データをクリアする(ただし、サロンと日付を注意)
         $deleteData = OpenCloseSalon::where('salon_id',$salon_id)
         ->where('course_id',$course_id)
         ->where('date','>=',$st_date)
