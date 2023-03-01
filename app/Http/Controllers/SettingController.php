@@ -9,21 +9,24 @@ use App\classes\Util;
 
 class SettingController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        Log::info(__METHOD__ . '(' . __LINE__ . ') start by user(' . Util::getUserId() . ')');
         $settings = Setting::orderBy('order')
         ->get();
-
+        
         session(['settingList' => $settings]);
- 
-        return view('admin.setting.setting',[
+        
+        Log::info(__METHOD__ . '(' . __LINE__ . ') end by user(' . Util::getUserId() . ')');
+        return view('admin.setting.setting', [
             'settings' => $settings
         ]);
     }
 
-    public function update(){
-        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
-        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+    public function update()
+    {
+        Log::info(__METHOD__ . '(' . __LINE__ . ') start by user(' . Util::getUserId() . ')');
+        Log::info(__METHOD__ . '(' . __LINE__ . ') end by user(' . Util::getUserId() . ')');
         return __METHOD__;
     }
-
 }
