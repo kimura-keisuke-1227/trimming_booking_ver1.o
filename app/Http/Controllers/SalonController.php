@@ -38,9 +38,13 @@ class SalonController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .')');
         Log::debug($salon);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
-
+        
+        $open = Util::get4digitTime($salon->st_time);
+        $close = Util::get4digitTime($salon->ed_time);
         return view('admin.salons.edit', [
             'salon' => $salon,
+            'open'=>$open,
+            'close'=>$close,
         ]);
     }
 
