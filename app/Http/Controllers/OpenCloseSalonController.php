@@ -323,7 +323,7 @@ class OpenCloseSalonController extends Controller
         
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end! by staff(' . $staff->id.')');
         
-        //設定日以前の開閉データは一律削除
+        //設定日以前の開閉データは一律削除　店舗は関係なく処理
         $daysForStockOXData = Util::getSetting(30,'delete_open_close_date_Xdays_before',true);
 
         $today = date('Y-m-d');
