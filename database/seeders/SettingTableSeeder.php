@@ -15,6 +15,16 @@ class SettingTableSeeder extends Seeder
      */
     public function run()
     {
+ 
+        $param = [
+            'order' => 10 ,
+            'setting_name' => 'showBookingsAfterNDays' ,
+            'explain' => 'ユーザーに○日前までの予約を表示する。' ,
+            'setting_int' =>  60,
+            'isNumber' => true,
+        ];
+        DB::table('settings') -> insert($param);
+
         $param = [
             'order' => 20 ,
             'setting_name' => 'step_time' ,
@@ -39,14 +49,7 @@ class SettingTableSeeder extends Seeder
             'isNumber' => true,
         ];
         DB::table('settings') -> insert($param);
-        $param = [
-            'order' => 10 ,
-            'setting_name' => 'showBookingsAfterNDays' ,
-            'explain' => 'ユーザーに○日前までの予約を表示する。' ,
-            'setting_int' =>  60,
-            'isNumber' => true,
-        ];
-        DB::table('settings') -> insert($param);
+
         $param = [
             'order' => 50 ,
             'setting_name' => 'mailSenderName' ,
@@ -69,6 +72,15 @@ class SettingTableSeeder extends Seeder
             'explain' => 'ログイン画面に表示するサロン名' ,
             'setting_string' =>  'トリミングサロンLINK',
             'isNumber' => false,
+        ];
+        DB::table('settings') -> insert($param);
+
+        $param = [
+            'order' => 80 ,
+            'setting_name' => 'delete_open_close_date_Xdays_before' ,
+            'explain' => '予約受付可否データの保存日数（日）' ,
+            'setting_int' =>  30,
+            'isNumber' => true,
         ];
         DB::table('settings') -> insert($param);
     }
