@@ -196,7 +196,7 @@ class BookingController extends Controller
         
         $salon_id = $salon->id;
         $needed_time = $course->minute;
-        Log::debug(__METHOD__ . '(' . __LINE__ . ') salon_id:' . $salon_id);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') salon_id:' . $salon_id . ' $needed_time='. $needed_time);
 
 
 
