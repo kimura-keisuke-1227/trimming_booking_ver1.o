@@ -6,6 +6,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
+use Illuminate\Support\Facades\Redis;
 
 class SettingController extends Controller
 {
@@ -23,7 +24,7 @@ class SettingController extends Controller
         ]);
     }
 
-    public function update()
+    public function update(Request $request)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ') start by user(' . Util::getUserId() . ')');
         Log::info(__METHOD__ . '(' . __LINE__ . ') end by user(' . Util::getUserId() . ')');
