@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{Route('admin.checkBookings.dateAndSalon')}}">
+    <form action="{{Route('admin.setting2')}}">
         @csrf
         <table class="table table-striped">
             <tr>
