@@ -322,7 +322,7 @@ class Util
         return $theUserCameBefore;
     }
 
-    public function get4digitTime($intTime){
+    public static function get4digitTime($intTime){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $hour = floor($intTime/60);
         $min = $intTime%60;
