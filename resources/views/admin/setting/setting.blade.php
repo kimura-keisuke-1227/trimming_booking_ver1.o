@@ -12,23 +12,25 @@
                 <th>設定内容</th>
                 <th>設定値</th>
             </tr>
-        @foreach($settings as $setting)
+            @foreach($settings as $setting)
             <tr>
                 <td>{{$setting->explain}}</td>
                 <td>
                     @if($setting -> isNumber)
-                        <input type="number" name="{{$setting -> setting_name}}" value="{{$setting -> setting_int}}">
+                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" name="weight" value="{{$setting->setting_int}}">
                     @else
-                        <input type="text" name="{{$setting -> setting_name}}" value="{{$setting -> setting_string}}">
+                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="weight" value="{{$setting->setting_string}}">
                     @endif
                 </td>
             </tr>
-        @endforeach
+            @endforeach
 
         </table>
-        <input type="submit" name="" id="" value="設定変更">
+        <div class="ml-auto">
+            <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">設定保存</button>
+        </div>
     </form>
- 
+
 </div>
 
 @endsection
