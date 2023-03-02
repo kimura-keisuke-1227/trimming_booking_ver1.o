@@ -59,7 +59,7 @@ class SettingController extends Controller
             if($modified){
                 try{
                     $now_setting->save();
-                    Log::notice(__METHOD__ . ' staff:user_id(' .Util::getUserId() . ') saved setting-id:' . $now_setting->id);
+                    Log::notice(__METHOD__ . ' staff:user_id(' .Util::getUserId() . ') saved setting-id:' . $now_setting->id .' setting name:' . $now_setting->setting_name) ;
                 }catch(Exception $e){
                     Log::error($e);
                     return 'エラーが発生しました。お手数ですが直接店舗にお電話ください。';
