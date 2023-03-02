@@ -37,12 +37,13 @@ class SettingController extends Controller
             $now_setting = Setting::find($setting->id);
             if($now_setting->isNumber==1){
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is numeric.');
+                $modified = ($setting->setting_int===1);
             } else{
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is not numeric.');
 
             }
             if($modified){
-                //
+                //modifiedの場合のみ更新
             }
         }
         
