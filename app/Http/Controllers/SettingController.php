@@ -35,6 +35,10 @@ class SettingController extends Controller
             $modified = true;
             Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') setting:id=' . $setting->id . ' setting:setting_name:' . $setting->setting_name);
             $now_setting = Setting::find($setting->id);
+            $set_value =  $request->get('setting-' . $setting->id);
+            Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') set_value:' .$set_value);
+
+
             if($now_setting->isNumber==1){
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is numeric.');
                 $modified = ($setting->setting_int===1);
