@@ -48,6 +48,15 @@ class SalonController extends Controller
         ]);
     }
 
+    public function update(Request $request){
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $request:');
+        Log::debug($request);
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+
+        return __METHOD__;
+    }
+
     public function create(){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
