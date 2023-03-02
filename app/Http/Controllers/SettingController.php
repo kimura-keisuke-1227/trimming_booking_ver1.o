@@ -35,19 +35,25 @@ class SettingController extends Controller
             $modified = true;
             Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') setting:id=' . $setting->id . ' setting:setting_name:' . $setting->setting_name);
             $now_setting = Setting::find($setting->id);
+            
+            // 設定idから設定リクエスト内容を取得
             $set_value =  $request->get('setting-' . $setting->id);
             Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') set_value:' .$set_value);
 
 
             if($now_setting->isNumber==1){
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is numeric.');
-                $modified = ($setting->setting_int===1);
+                $modified = ($now_setting->setting_int<>$request->get('setting-' . $now_setting->id));
+                Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') modified:' . $modified);
             } else{
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is not numeric.');
+                $modified = ($now_setting->setting_string<>$request->get('setting-' . $now_setting->id));
+                Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') modified:' . $modified);
 
             }
             if($modified){
                 //modifiedの場合のみ更新
+                Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') update!');
             }
         }
         
