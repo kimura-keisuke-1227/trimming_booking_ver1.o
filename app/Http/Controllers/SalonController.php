@@ -48,10 +48,12 @@ class SalonController extends Controller
         ]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $request:');
         Log::debug($request);
+
+        $salon = Salon::find($id);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
         return __METHOD__;
