@@ -27,10 +27,12 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ') start by user(' . Util::getUserId() . ')');
-        
+        Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $request:');
+        Log::debug($request);
         $setting_list = session('settingList');
 
         foreach($setting_list as $setting){
+            $modified = true;
             Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') setting:id=' . $setting->id . ' setting:setting_name:' . $setting->setting_name);
             $now_setting = Setting::find($setting->id);
             if($now_setting->isNumber==1){
@@ -38,6 +40,9 @@ class SettingController extends Controller
             } else{
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is not numeric.');
 
+            }
+            if($modified){
+                //
             }
         }
         
