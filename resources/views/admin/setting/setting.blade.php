@@ -17,9 +17,9 @@
                 <td>{{$setting->explain}}</td>
                 <td>
                     @if($setting -> isNumber)
-                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" name="weight" value="{{$setting->setting_int}}">
+                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" name="setting-{{$setting->id}}" value="{{$setting->setting_int}}">
                     @else
-                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="weight" value="{{$setting->setting_string}}">
+                    <input id="{{$setting->id}}" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="setting-{{$setting->id}}" value="{{$setting->setting_string}}">
                     @endif
                 </td>
             </tr>
