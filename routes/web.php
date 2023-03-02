@@ -245,7 +245,7 @@ Route::get('/admin/setting',[SettingController::class,'index'])
 ->name('admin.setting')
 -> Middleware('auth');
 
-Route::post('/admin/setting',[SettingController::class,'update'])
+Route::post('/admin/setting2',[SettingController::class,'update'])
 ->name('admin.setting.update')
 -> Middleware('auth');
 
