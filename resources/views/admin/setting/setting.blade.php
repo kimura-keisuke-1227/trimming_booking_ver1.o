@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{Route('admin.setting2')}}">
+    <form  method="post" action="{{Route('admin.setting.update')}}">
         @csrf
         <table class="table table-striped">
             <tr>
