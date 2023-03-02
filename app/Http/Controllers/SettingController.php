@@ -36,7 +36,7 @@ class SettingController extends Controller
             if($now_setting->isNumber==1){
                 Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is numeric.');
             } else{
-                Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is numeric.');
+                Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') This setting is not numeric.');
 
             }
         }
