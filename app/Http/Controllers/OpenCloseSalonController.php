@@ -326,6 +326,10 @@ class OpenCloseSalonController extends Controller
         //設定日以前の開閉データは一律削除　店舗は関係なく処理
         $daysForStockOXData = Util::getSetting(30,'delete_open_close_date_Xdays_before',true);
 
+        if($daysForStockOXData<0){
+            $daysForStockOXData=30;
+        }
+
         $today = date('Y-m-d');
         $dateForDelete = Util::addDays($today,-$daysForStockOXData);
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $daysForStockOXData=' . $daysForStockOXData .' dateForDelete=' .$dateForDelete);
@@ -333,7 +337,7 @@ class OpenCloseSalonController extends Controller
         $deleteData = OpenCloseSalon::where('date','<=',$dateForDelete)
         ->where('date','<=',$st_date);
         $deleteData->delete();
-        Log::notice(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') deleted old OX data from ' . $dateForDelete . '!!');
+        Log::notice(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') deleted old OX data from ' . $dateForDelete . ' and '. $st_date .'!!');
 
         //一度データをクリアする(ただし、サロンと日付を注意)
         $deleteData = OpenCloseSalon::where('salon_id',$salon_id)
