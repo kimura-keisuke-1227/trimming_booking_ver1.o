@@ -326,6 +326,7 @@ class OpenCloseSalonController extends Controller
         //設定日以前の開閉データは一律削除　店舗は関係なく処理
         $daysForStockOXData = Util::getSetting(30,'delete_open_close_date_Xdays_before',true);
 
+        //万が一マイナスの値が入っていた場合もデフォルトの30日にする。
         if($daysForStockOXData<0){
             $daysForStockOXData=30;
         }
