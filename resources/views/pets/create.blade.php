@@ -26,7 +26,7 @@
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">犬種を選択してください。<br>選択肢にない犬種については、店舗に直接お電話ください。</label>
+                        <label class="block text-sm font-medium mb-2" for="name">犬種を選択してください。<br><span class="warning_red">選択肢にない犬種については、店舗に直接お電話ください。</span></label>
                         <div class="flex">
                             <select id="dogtype" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="dogtype">
                                 @foreach($dogtypes as $dogtype)
