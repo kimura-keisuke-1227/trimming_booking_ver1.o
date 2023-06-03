@@ -18,6 +18,10 @@
   display: none;
 }
 
+.warning_red {
+  color: red;
+}
+
 @media screen and (max-width: 780px) {
   .pc_container {
     margin-left: 0px;

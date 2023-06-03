@@ -20,6 +20,10 @@
     display: none;
 }
 
+.warning_red{
+    color: red;
+}
+
 @media screen and (max-width: $const_responsive_size) {
     
     .pc_container{
