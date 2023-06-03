@@ -336,7 +336,7 @@ class OpenCloseSalonController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $daysForStockOXData=' . $daysForStockOXData .' dateForDelete=' .$dateForDelete);
 
         $deleteData = OpenCloseSalon::where('date','<=',$dateForDelete)
-        ->where('date','<=',$st_date);
+        ->where('date','<=',$st_date);  //あまり需要はないと思われるが、過去日を指定していた場合にはそこまでの日付も削除しないようにする。
         $deleteData->delete();
         Log::notice(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') deleted old OX data from ' . $dateForDelete . ' and '. $st_date .'!!');
 
