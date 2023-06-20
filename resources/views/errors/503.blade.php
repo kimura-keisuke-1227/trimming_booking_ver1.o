@@ -8,7 +8,7 @@
 </head>
 <body>
         <h1>只今メンテナンス中です。</h1>
-        <p>6月3日　21時から24時の間の予定です。</p>
+        <p>6月21日　1時から3時の間の予定です。</p>
     </body>
 </html>
 <!-- php artisan down --render="errors::503" -->
