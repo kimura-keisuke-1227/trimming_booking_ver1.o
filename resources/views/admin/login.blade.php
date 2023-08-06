@@ -6,7 +6,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="{{ asset('/css/tailwind/tailwind.min.css')}}">
-
+  <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
+  
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
   <script src="{{ asset('/js/main.js')}}"></script>
 </head>
@@ -99,6 +100,7 @@
               
               --}}
               
+          <br>
           <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
         </div>
       </div>
