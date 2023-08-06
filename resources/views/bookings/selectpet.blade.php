@@ -6,6 +6,10 @@
 
 <p>{{$owner -> getFullName()}}様。いつもご利用ありがとうございます。</p>
 
+<div class="warning_notification">
+    <p>※9月以降のご予約のお客様は<br>流星台と万博公園は新料金となります。</p>
+</div>
+
 <form action="{{Route('booking.selectCourse')}}" method="post">
     @csrf
     <div class="mb-6">
