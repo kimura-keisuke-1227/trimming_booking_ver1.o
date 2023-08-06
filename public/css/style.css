@@ -67,4 +67,7 @@ th, td {
   width: 100%;
   height: 100%;
   border: 1px solid #ccc;
+}
+.fixed01 .warning_notification {
+  color: red;
 }/*# sourceMappingURL=style.css.map */
