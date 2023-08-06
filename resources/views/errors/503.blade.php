@@ -8,7 +8,6 @@
 </head>
 <body>
         <h1>只今メンテナンス中です。</h1>
-        <p>2023年8月6日　22時30分から25時予定</p>
     </body>
 </html>
 <!-- php artisan down --render="errors::503" -->
