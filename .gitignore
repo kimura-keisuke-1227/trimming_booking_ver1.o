@@ -21,3 +21,5 @@ resources/.DS_Store
 resources/views/.DS_Store
 resources/views/admin/.DS_Store
 .DS_Store
+
+**/.DS_Store
