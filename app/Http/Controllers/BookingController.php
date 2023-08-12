@@ -177,14 +177,14 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return Util::getViewWithNotifications($view,$params);
 
-        return view($view, [
-            'owner' => $owner,
-            'pet' => $pet,
-            'courses' => $courses,
-            'salons' => $salons,
-            'message_before' => $message_before,
-            'messages' => $messages
-        ]);
+        // return view($view, [
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'courses' => $courses,
+        //     'salons' => $salons,
+        //     'message_before' => $message_before,
+        //     'messages' => $messages
+        // ]);
     }
 
     public function selectCalender(Request $request)
@@ -358,19 +358,19 @@ class BookingController extends Controller
             'message' => $message,
         ];
 
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return Util::getViewWithNotifications($view,$params);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view($view, [
-            'owner' => $owner,
-            'pet' => $pet,
-            'course' => $course,
-            'date' => $date,
-            'time' => $time,
-            'timeStr' => $timeStr,
-            'message' => $message,
-            'messages' => $messages,
-        ]);
+        // return view($view, [
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'course' => $course,
+        //     'date' => $date,
+        //     'time' => $time,
+        //     'timeStr' => $timeStr,
+        //     'message' => $message,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //削除する予約の確認画面
@@ -410,13 +410,13 @@ class BookingController extends Controller
             'booking' => $booking,
         ];
 
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return Util::getViewWithNotifications($view,$params);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view($view, [
-            'booking' => $booking,
-            'messages' => $messages,
-        ]);
+        // return view($view, [
+        //     'booking' => $booking,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //予約のキャンセル処理
