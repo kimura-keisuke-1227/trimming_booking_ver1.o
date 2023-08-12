@@ -200,7 +200,7 @@
                 <div class="pc_container">
                     
                     <div class="message">
-                        <p>メッセージをここに</p>
+                        <p>{{ $messages }}</p>
                     </div>
                     @yield('content')
 
