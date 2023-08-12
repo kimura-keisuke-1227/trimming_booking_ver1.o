@@ -16,8 +16,10 @@ use App\Models\Notification;
 
 class Util
 {
-    public static function getNotification(){
-        return Notification::all();
+    public static function getNotifications($page){
+        $notifications = Notification::where('page',$page)
+        ->get();
+        return $notifications;
     }
 
     public static function getYMDWFromDbDate($date)
