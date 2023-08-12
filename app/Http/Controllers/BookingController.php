@@ -8,7 +8,6 @@ use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Salon;
 use App\Models\User;
-use App\Models\Notification;
 use App\Models\DefaultCapacity;
 use App\Models\RegularHoliday;
 use App\Models\TempCapacity;
@@ -96,7 +95,7 @@ class BookingController extends Controller
         
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
-        $messages = Notification::all();
+        $messages = Util::getNotification();
 
         Log::debug(__METHOD__.'('.__LINE__.') $messages');
         Log::debug($messages);

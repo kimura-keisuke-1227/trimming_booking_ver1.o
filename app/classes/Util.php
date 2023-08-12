@@ -12,8 +12,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OpenCloseSalon;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Notification;
+
 class Util
 {
+    public static function getNotification(){
+        return Notification::all();
+    }
+
     public static function getYMDWFromDbDate($date)
     {
         $dateStr = date('Y年m月d日', strtotime($date));
