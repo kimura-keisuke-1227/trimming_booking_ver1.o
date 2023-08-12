@@ -200,7 +200,9 @@
                 <div class="pc_container">
                     
                     <div class="message">
-                        <p>{{ $messages }}</p>
+                       @foreach ($messages as $message)
+                           <p>{{$message -> contents}}</p>
+                       @endforeach
                     </div>
                     @yield('content')
 

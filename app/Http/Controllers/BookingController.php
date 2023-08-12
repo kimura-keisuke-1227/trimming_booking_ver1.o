@@ -106,7 +106,7 @@ class BookingController extends Controller
             'pets' => $pets,
             'owner' => $owner,
             'countOfPets' => $countOfPets,
-            'messages' => 'aaa',
+            'messages' => $messages,
         ]);
     }
 
