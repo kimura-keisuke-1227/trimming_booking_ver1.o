@@ -268,8 +268,8 @@ class BookingController extends Controller
         $view = 'bookings.booking_calender';
         $messages = Util::getNotifications( $view);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view($view, [
+        $params = "";
+        $params =[
             'date' => $st_date,
             'before_date' => $beforeDate,
             'after_date' => $afterDate,
@@ -287,8 +287,32 @@ class BookingController extends Controller
             'ed_date' => $ed_date,
             'timesCount' =>$timesCount,
             'timeOfFirst' => $times[$st_time],
-            'messages' => $messages,
-        ]);
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+
+
+        return Util::getViewWithNotifications($view,$params);
+        // return view($view, [
+        //     'date' => $st_date,
+        //     'before_date' => $beforeDate,
+        //     'after_date' => $afterDate,
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'course' => $course,
+        //     'salon' => $salon,
+        //     'times' => $times,
+        //     'days' => $days,
+        //     'capacities' => $capacities,
+        //     'timesNum' => $timesNum,
+        //     'message' => $message,
+        //     'today' => $today,
+        //     'maxBookingDate' => $maxBookingDate,
+        //     'ed_date' => $ed_date,
+        //     'timesCount' =>$timesCount,
+        //     'timeOfFirst' => $times[$st_time],
+        //     'messages' => $messages,
+        // ]);
     }
 
     public function confirmBooking(Request $request, $date, $time)
@@ -323,6 +347,18 @@ class BookingController extends Controller
 
         $view = 'bookings.confirm';
         $messages = Util::getNotifications($view);
+
+        $params =[
+            'owner' => $owner,
+            'pet' => $pet,
+            'course' => $course,
+            'date' => $date,
+            'time' => $time,
+            'timeStr' => $timeStr,
+            'message' => $message,
+        ];
+
+        return Util::getViewWithNotifications($view,$params);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view($view, [
@@ -369,6 +405,12 @@ class BookingController extends Controller
 
         $view = 'bookings.cancelConfirm';
         $messages = Util::getNotifications($view);
+
+        $params = [
+            'booking' => $booking,
+        ];
+
+        return Util::getViewWithNotifications($view,$params);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view($view, [
