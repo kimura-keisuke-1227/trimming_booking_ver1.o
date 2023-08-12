@@ -21,8 +21,13 @@ class NotificationController extends Controller
      */
     public function index()
     {
+        Log::debug(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $allNotifications = Notification::all();
 
+        Log::debug(__METHOD__.'('.__LINE__.') got all notifications:');
+        Log::debug($allNotifications);
+        
+        Log::debug(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return 'hoge';
     }
 
