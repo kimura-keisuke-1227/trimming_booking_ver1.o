@@ -72,11 +72,16 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ') salons_count:' . $count_salons);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.index', [
+
+        $view = 'bookings.index';
+        $messages = Util::getNotifications($view);
+
+        return view( $view, [
             'owner' => $owner,
             'bookings' => $bookings,
             'showBookingsAfterNDays' => $showBookingsAfterNDays,
             'count_salons' => $count_salons,
+            'messages' => $messages,
         ]);
     }
 
@@ -95,13 +100,14 @@ class BookingController extends Controller
         
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
-        $messages = Util::getNotifications('test');
+        $view = 'bookings.selectpet';
+        $messages = Util::getNotifications($view);
 
         Log::debug(__METHOD__.'('.__LINE__.') $messages');
         Log::debug($messages);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.selectpet', [
+        return view($view, [
             'pets' => $pets,
             'owner' => $owner,
             'countOfPets' => $countOfPets,
@@ -140,15 +146,18 @@ class BookingController extends Controller
             'courses' => $courses,
             'salons' => $salons,
         ]);
-
+        
+        $view = 'bookings.selectcourse';
+        $messages = Util::getNotifications($view);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.selectcourse', [
+        return view($view, [
             'owner' => $owner,
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
             'message_before' => $message_before,
+            'messages' => $messages
         ]);
     }
 
@@ -230,8 +239,11 @@ class BookingController extends Controller
         $maxBookingDate = Util::getEndOfTheMonth($today, 2);
         $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
+        $view = 'bookings.booking_calender';
+        $messages = Util::getNotifications( $view);
+
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.booking_calender', [
+        return view($view, [
             'date' => $st_date,
             'before_date' => $beforeDate,
             'after_date' => $afterDate,
@@ -248,7 +260,8 @@ class BookingController extends Controller
             'maxBookingDate' => $maxBookingDate,
             'ed_date' => $ed_date,
             'timesCount' =>$timesCount,
-            'timeOfFirst' => $times[$st_time]
+            'timeOfFirst' => $times[$st_time],
+            'messages' => $messages,
         ]);
     }
 
@@ -282,8 +295,11 @@ class BookingController extends Controller
             'time' => $time,
         ]);
 
+        $view = 'bookings.confirm';
+        $messages = Util::getNotifications($view);
+
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.confirm', [
+        return view($view, [
             'owner' => $owner,
             'pet' => $pet,
             'course' => $course,
@@ -291,6 +307,7 @@ class BookingController extends Controller
             'time' => $time,
             'timeStr' => $timeStr,
             'message' => $message,
+            'messages' => $messages,
         ]);
     }
 
@@ -324,10 +341,13 @@ class BookingController extends Controller
             ->with('error', 'キャンセルできない予約です。。');
         }
 
+        $view = 'bookings.cancelConfirm';
+        $messages = Util::getNotifications($view);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.cancelConfirm', [
-            'booking' => $booking
+        return view($view, [
+            'booking' => $booking,
+            'messages' => $messages,
         ]);
     }
 
