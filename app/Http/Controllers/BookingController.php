@@ -174,9 +174,9 @@ class BookingController extends Controller
             'message_before' => $message_before,
         ];
 
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return Util::getViewWithNotifications($view,$params);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view($view, [
             'owner' => $owner,
             'pet' => $pet,
