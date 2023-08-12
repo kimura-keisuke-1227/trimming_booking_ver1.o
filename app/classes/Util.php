@@ -19,6 +19,9 @@ class Util
     public static function getNotifications($page){
         $notifications = Notification::where('page',$page)
         ->get();
+
+        Log::debug(__METHOD__.'('.__LINE__.') notifications');
+        Log::debug($notifications);
         return $notifications;
     }
 
