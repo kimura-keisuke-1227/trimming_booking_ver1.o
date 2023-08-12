@@ -24,7 +24,10 @@
             <div class="pc_container">
 
                 <header>
-                    <h1>@yield('title')</h1>
+                    {{-- 
+                        <h1>@yield('title')</h1>
+                        
+                        --}}
                     {{--
                         <!-- <nav>
                             <ul>
@@ -192,7 +195,13 @@
                     <!-- ▼▼▼▼ページ毎の個別内容▼▼▼▼　-->
         
                 --}}
+
+                
                 <div class="pc_container">
+                    
+                    <div class="message">
+                        <p>メッセージをここに</p>
+                    </div>
                     @yield('content')
 
                 </div>
