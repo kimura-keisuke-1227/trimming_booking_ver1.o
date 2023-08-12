@@ -9,6 +9,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
 
+use App\Models\Notification;
+
+use Illuminate\Support\Facades\Log;
+use App\classes\Util;
+
 class NotificationController extends Controller
 {
     /**
@@ -16,7 +21,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $allNotifications = Notification::all();
     }
 
     /**
