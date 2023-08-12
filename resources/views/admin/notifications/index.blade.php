@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title','サロン一覧')
+@section('title','お知らせ一覧')
 
 @section('content')
 
