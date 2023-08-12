@@ -5,32 +5,34 @@
 @section('content')
 
 <div class="container">
+    <a href="">[新規お知らせ登録]</a>
     <table class="table table-striped pc_only">
         <tr>
-            <th>サロン名</th>
-            <th>設定変更</th>
+            <th>id</th>
+            <th>内容</th>
+            <th>表示ページ</th>
+            <th>表示開始</th>
+            <th>表示終了</th>
+            <th>変更</th>
+            <th>削除</th>
         </tr>
-        @foreach($salons as $salon)
+        @foreach($notifications as $notification)
         <tr>
-            <td>{{$salon -> salon_name}}</td>
-            <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">[設定]</a></td>
+            <td>{{$notification -> id}}</td>
+            <td>{{$notification -> contents}}</td>
+            <td>{{$notification -> page}}</td>
+            <td>{{$notification -> start_time}}</td>
+            <td>{{$notification -> end_time}}</td>
+            <td><a href="">変更</a></td>
+            <td><a href="">削除</a></td>
+            {{-- 
+                <!-- <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">[設定]</a></td> -->
+                
+                --}}
         </tr>
         @endforeach
 
     </table>
-
-    <table class="table table-striped sp_only">
-        <tr>
-            <th>サロン一覧</th>
-        </tr>
-        @foreach($salons as $salon)
-        <tr>
-            <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">{{$salon -> salon_name}}</a></td>
-        </tr>
-        @endforeach
-    </table>
-    <a href="{{ Route('admin.salon.create')}}">サロン登録へ</a>
-
 </div>
 @endsection
 
