@@ -16,6 +16,10 @@ use App\Models\Notification;
 
 class Util
 {
+    public static function getViewWithNotifications(){
+
+    }
+
     public static function getNotifications($page){
         $now = date('Y-m-d H:i');
         Log::debug(__METHOD__.'('.__LINE__.') $now:' . $now);
