@@ -74,15 +74,24 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
 
         $view = 'bookings.index';
-        $messages = Util::getNotifications($view);
+        // $messages = Util::getNotifications($view);
 
-        return view( $view, [
+        $params = [
             'owner' => $owner,
             'bookings' => $bookings,
             'showBookingsAfterNDays' => $showBookingsAfterNDays,
             'count_salons' => $count_salons,
-            'messages' => $messages,
-        ]);
+        ];
+
+        return Util::getViewWithNotifications($view,$params);
+
+        // return view( $view, [
+        //     'owner' => $owner,
+        //     'bookings' => $bookings,
+        //     'showBookingsAfterNDays' => $showBookingsAfterNDays,
+        //     'count_salons' => $count_salons,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //予約するペットを選択する
@@ -101,18 +110,26 @@ class BookingController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
         $view = 'bookings.selectpet';
-        $messages = Util::getNotifications($view);
+ 
+        // $messages = Util::getNotifications($view);
 
-        Log::debug(__METHOD__.'('.__LINE__.') $messages');
-        Log::debug($messages);
+        // Log::debug(__METHOD__.'('.__LINE__.') $messages');
+        // Log::debug($messages);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view($view, [
+        $params = [
             'pets' => $pets,
             'owner' => $owner,
             'countOfPets' => $countOfPets,
-            'messages' => $messages,
-        ]);
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+        return Util::getViewWithNotifications($view,$params);
+        // return view($view, [
+        //     'pets' => $pets,
+        //     'owner' => $owner,
+        //     'countOfPets' => $countOfPets,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //コースを選択する
@@ -149,6 +166,15 @@ class BookingController extends Controller
         
         $view = 'bookings.selectcourse';
         $messages = Util::getNotifications($view);
+        $params = [
+            'owner' => $owner,
+            'pet' => $pet,
+            'courses' => $courses,
+            'salons' => $salons,
+            'message_before' => $message_before,
+        ];
+
+        return Util::getViewWithNotifications($view,$params);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view($view, [
