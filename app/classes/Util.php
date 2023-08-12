@@ -17,7 +17,11 @@ use App\Models\Notification;
 class Util
 {
     public static function getNotifications($page){
+        $now = date('Y-m-d H:i');
+        Log::debug(__METHOD__.'('.__LINE__.') $now:' . $now);
         $notifications = Notification::where('page',$page)
+        ->where('start_time','<=',$now)
+        ->where('end_time','>=',$now)
         ->get();
 
         Log::debug(__METHOD__.'('.__LINE__.') notifications');
