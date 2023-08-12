@@ -16,8 +16,19 @@ use App\Models\Notification;
 
 class Util
 {
-    public static function getViewWithNotifications(){
-
+    public static function getViewWithNotifications($view,$params){
+        Log::info(__METHOD__.'('.__LINE__.') start!');
+        $new_params = $params;
+        $now = date('Y-m-d H:i');
+        
+        $notifications = Notification::where('page',$view)
+        ->where('start_time','<=',$now)
+        ->where('end_time','>=',$now)
+        ->get();
+        
+        $new_params['messages'] = $notifications;
+        Log::info(__METHOD__.'('.__LINE__.') end!');
+        return view($view,$new_params);
     }
 
     public static function getNotifications($page){
