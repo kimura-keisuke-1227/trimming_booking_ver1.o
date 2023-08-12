@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\DefaultCapacityController;
@@ -312,6 +313,15 @@ Route::post('/admin/createStaff',[UserController::class,'storeStaff'])
 Route::get('/admin/showNonMember/{bookingId}',[BookingController::class,'showNonMember'])
 ->name('admin.showNonMemberInfo')
 -> middleware('auth');
+
+Route::resource('/admin/notification',
+ NotificationController::class
+)
+// -> only(['index','create','store','edit','update'])
+-> Middleware('auth')
+;
+
+
 /*****************************************************************
 *
 *   パスワードリセット
