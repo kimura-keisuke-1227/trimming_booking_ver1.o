@@ -28,7 +28,12 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">表示画面選択</label>
-                        <input id="salon_name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="salon_name" value="">
+                        <select id="dogtype" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="dogtype">
+                                
+                                <option value="">ペット選択画面</option>
+                                
+                            </select>
+
                     </div>
 
                     <div class="mb-6">
