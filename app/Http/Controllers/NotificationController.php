@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+// use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\Request;
+// use Illuminate\Http\Response;
+
+use App\Http\Requests\StoreNotificationRequest;
+use App\Http\Requests\UpdateNotificationRequest;
 
 class NotificationController extends Controller
 {
@@ -27,7 +30,7 @@ class NotificationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreNotificationRequest $request)
     {
         //
     }
@@ -51,7 +54,7 @@ class NotificationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateNotificationRequest $request, string $id)
     {
         //
     }
