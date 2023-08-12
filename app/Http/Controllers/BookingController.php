@@ -95,7 +95,7 @@ class BookingController extends Controller
         
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
-        $messages = Util::getNotification();
+        $messages = Util::getNotifications('test');
 
         Log::debug(__METHOD__.'('.__LINE__.') $messages');
         Log::debug($messages);
