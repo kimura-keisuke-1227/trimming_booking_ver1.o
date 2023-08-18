@@ -11,7 +11,7 @@
         <p>※9月以降のご予約のお客様は<br>流星台と万博公園は新料金となります。</p>
     </div>
     <div class="normal_notification">
-        <p>新料金は<a href="https://www.conaffetto.net/menu/">こちら</a>をご確認ください</p>
+        <p>新料金は<a href="https://www.conaffetto.net/menu/" target="_blank">こちら</a>をご確認ください</p>
     </div>
 </div>
 
