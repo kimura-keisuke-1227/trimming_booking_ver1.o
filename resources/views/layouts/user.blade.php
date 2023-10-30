@@ -195,9 +195,14 @@
                 <div class="pc_container">
                     @isset($messages)
                         @if($messages->count()>0)
-                            @foreach ($messages as $message)
-                                <p>{{$message->text}}</p>
-                            @endforeach
+                            <div class="notification_box" style="border: solid">
+
+                                @foreach ($messages as $message)
+                                    <p style="{{$message->notification->style}}">
+                                        ・ {{$message->notification->text}}
+                                    </p>
+                                @endforeach
+                            </div>
                         @endif
                     @endif
                     

@@ -1099,6 +1099,11 @@ class BookingController extends Controller
     }
 
     public function getMessage(){
-        return Notification::all();
+        $message_setting = NotificationSetting::with('notification')
+        
+        ->get();
+        Log::debug(__METHOD__.'('.__LINE__.') $message_setting:');
+        Log::debug($message_setting);
+        return $message_setting;
     }
 }
