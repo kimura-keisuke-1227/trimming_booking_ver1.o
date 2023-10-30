@@ -6,14 +6,14 @@
 
 <p>{{$owner -> getFullName()}}様。いつもご利用ありがとうございます。</p>
 
-<div class="notification">
+<!-- <div class="notification">
     <div class="warning_notification">
         <p>※9月以降のご予約のお客様は<br>流星台と万博公園は新料金となります。</p>
     </div>
     <div class="normal_notification">
         <p>新料金は<a href="https://www.conaffetto.net/menu/" target="_blank">こちら</a>をご確認ください</p>
     </div>
-</div>
+</div> -->
 
 <form action="{{Route('booking.selectCourse')}}" method="post">
     @csrf
