@@ -193,6 +193,13 @@
         
                 --}}
                 <div class="pc_container">
+                   @isset($message)
+                        @if($message->count>0)
+                            <p>true</p>
+                        @endif
+                   @else
+                        <p>false</p>
+                   @endif
                     @yield('content')
 
                 </div>
