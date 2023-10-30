@@ -193,13 +193,14 @@
         
                 --}}
                 <div class="pc_container">
-                   @isset($message)
-                        @if($message->count>0)
-                            <p>true</p>
+                    @isset($messages)
+                        @if($messages->count()>0)
+                            @foreach ($messages as $message)
+                                <p>{{$message->text}}</p>
+                            @endforeach
                         @endif
-                   @else
-                        <p>false</p>
-                   @endif
+                    @endif
+                    
                     @yield('content')
 
                 </div>

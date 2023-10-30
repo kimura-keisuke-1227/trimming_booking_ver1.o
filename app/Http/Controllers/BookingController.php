@@ -26,9 +26,11 @@ use App\classes\BookingsCalc;
 use App\Mail\CancelNotificationToUser;
 use App\Mail\NonMemberCancelNotificationToNonmember;
 use App\Models\NonMemberBooking;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\ErrorHandler\Debug;
 use App\Http\Controllers\OpenCloseSalonController;
+use App\Models\NotificationSetting;
 use Exception;
 
 //use App\Models\Dogtype;
@@ -100,6 +102,7 @@ class BookingController extends Controller
             'pets' => $pets,
             'owner' => $owner,
             'countOfPets' => $countOfPets,
+            'messages' => $this->getMessage(),
         ]);
     }
 
@@ -1093,5 +1096,9 @@ class BookingController extends Controller
         $date = '2022-11-01';
 
         return $util->getTheUserCameBefore($user_id,$date);
+    }
+
+    public function getMessage(){
+        return Notification::all();
     }
 }
