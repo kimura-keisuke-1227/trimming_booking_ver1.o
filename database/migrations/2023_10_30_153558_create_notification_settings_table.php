@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('notification_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('text');
+            $table->integer('screen_code')->nullable();
+            $table->integer('notification_id');
+            $table->dateTime('begin');
+            $table->dateTime('end');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('notification_settings');
     }
 };
