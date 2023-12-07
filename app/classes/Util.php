@@ -246,26 +246,31 @@ class Util
         $usersCameBeforeList = [];
 
 
-        $todays_pets = Booking::query()
+        $todays_pets_id = Booking::query()
         ->where('date', '=', $date)
         ->where('salon_id', '=', $salon_id)
         ->get('pet_id');
 
 
         Log::debug(__METHOD__.'('.__LINE__.')'.'todays_pets:');
-        Log::debug($todays_pets);
+        Log::debug($todays_pets_id);
 
         $todays_owners = Pet::query()
-        ->whereIn('id',$todays_pets)
+        ->whereIn('id',$todays_pets_id)
         ->get('owner_id');
         Log::debug(__METHOD__.'('.__LINE__.')'.'todays_owners:');
         Log::debug($todays_owners);
 
 
 
-        return $usersCameBeforeList;
-        $users = User::all();
-        $pets = Pet::all();
+        // return $usersCameBeforeList;
+        $users = User::query()
+        ->whereIn('id',$todays_owners)
+        ->get()
+        ;
+        $pets = Pet::query()
+        ->whereIn('id',$todays_pets_id)
+        ;
         $staff = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Users and Pets info!' );
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
