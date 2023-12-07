@@ -513,7 +513,7 @@ class BookingController extends Controller
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
 
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
-        $usersCameBeforeList = Util::getWhoCameBefore($date);
+        $usersCameBeforeList = Util::getWhoCameBefore($date,$salon->id);
 
         Log::info(__METHOD__.'('.__LINE__. ') ends by user_id(' . $staff->id . ')');
         Log::debug(__METHOD__.'('.__LINE__. ') $salon:' . $salon);
@@ -1084,7 +1084,7 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ') starts!');
         $util = new Util();
         $date = '2000-10-01';
-        $util->getWhoCameBefore($date);
+        $util->getWhoCameBefore($date,1);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') ends!');
         return __METHOD__;
     }
