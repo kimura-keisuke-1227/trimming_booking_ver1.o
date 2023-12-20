@@ -269,12 +269,14 @@ class Util
         ->get()
         ;
         $pets = Pet::query()
-        ->whereIn('id',$todays_pets_id)
+        ->whereIn('owner_id',$todays_owners)
         ;
         $staff = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Users and Pets info!' );
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
-        $allBookings = Booking::where('date', '<', $date)->get();
+        $allBookings = Booking::where('date', '<', $date)
+        ->whereIn('pet_id',$todays_pets_id)
+        ->get();
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Bookings info before ' . $date);
 
         foreach($users as $user){
