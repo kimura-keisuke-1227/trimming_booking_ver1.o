@@ -2,19 +2,19 @@
 
 @section('content')
 <div class="container">
+    <select name="course" id="">
+        <option value="1">シャンプー</option>
+        <option value="2">シャンプー・カット</option>
+    </select>
     <table class="table table-striped">
         <tr>
-            <td>名前</td>
-            <td>アドレス</td>
-            <td>電話</td>
-            <td>生年月日</td>
+            <th>犬種</th>
+            <th>所要時間</th>
         </tr>
-        @foreach($users as $user)
+        @foreach ($courses as $course)
         <tr>
-            <td>{{$user -> getUserInfo()}}</td>
-            <td>{{$user -> email}}</td>
-            <td>{{$user -> phone}}</td>
-            <td>{{$user -> birthday}}</td>
+            <td>{{$course->minute}}</td>
+            <td>{{$course->minute}}</td>
         </tr>
         @endforeach
         
