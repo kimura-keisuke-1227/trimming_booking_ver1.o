@@ -6,6 +6,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Log;
+
+use App\Models\Salon;
+use App\Models\Course;
+
 class CourseController extends Controller
 {
     /**
