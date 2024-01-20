@@ -278,7 +278,7 @@ Route::get('/admin/salons/{salon_id}',
 Route::get('/admin/course',
 [CourseController::class,'index']
 ) -> Middleware('auth')
--> name('admin.salon.edit');
+-> name('admin.course.edit');
 
 
 /*
