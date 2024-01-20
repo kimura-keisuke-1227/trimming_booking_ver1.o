@@ -16,9 +16,15 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        //
+         $salons = Salon::all();
+         $course_master = Course::all();
+         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+         Log::debug($course_master);
+         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+         return 'hoge';
+
     }
 
     /**
