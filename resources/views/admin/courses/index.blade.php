@@ -9,12 +9,14 @@
     <table class="table table-striped">
         <tr>
             <th>犬種</th>
-            <th>所要時間</th>
+            <th>所要時間(分)</th>
+            <th>案内時間(分)</th>
         </tr>
         @foreach ($courses as $course)
         <tr>
             <td>{{$course->minute}}</td>
             <td>{{$course->minute}}</td>
+            <td>{{$course->minute_for_show}}</td>
         </tr>
         @endforeach
         
