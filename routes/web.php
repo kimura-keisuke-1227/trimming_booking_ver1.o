@@ -9,6 +9,7 @@ use App\Http\Controllers\SalonController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use GuzzleHttp\Middleware;
@@ -270,6 +271,12 @@ Route::get('/admin/salons/create',
 //サロン設定画面の取得
 Route::get('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
+) -> Middleware('auth')
+-> name('admin.course.index');
+
+//サロン設定画面の取得
+Route::get('/admin/course',
+[CourseController::class,'index']
 ) -> Middleware('auth')
 -> name('admin.salon.edit');
 
