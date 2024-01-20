@@ -274,11 +274,17 @@ Route::get('/admin/salons/{salon_id}',
 ) -> Middleware('auth')
 -> name('admin.course.index');
 
-//サロン設定画面の取得
+//コース設定画面の取得
 Route::get('/admin/course',
 [CourseController::class,'index']
 ) -> Middleware('auth')
 -> name('admin.course.edit');
+
+//コース設定画面の取得
+Route::post('/admin/course',
+[CourseController::class,'store']
+) -> Middleware('auth')
+-> name('admin.course.store');
 
 
 /*
