@@ -46,6 +46,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -70,6 +71,11 @@ class CourseController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
+        Log::debug($request);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return redirect()->route('admin.course.edit');
     }
 
     /**

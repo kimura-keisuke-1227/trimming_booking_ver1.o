@@ -282,7 +282,7 @@ Route::get('/admin/course',
 
 //コース設定画面の取得
 Route::post('/admin/course',
-[CourseController::class,'store']
+[CourseController::class,'update']
 ) -> Middleware('auth')
 -> name('admin.course.store');
 
