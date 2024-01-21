@@ -68,7 +68,7 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
