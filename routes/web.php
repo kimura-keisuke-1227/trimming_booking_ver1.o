@@ -286,6 +286,12 @@ Route::post('/admin/course',
 ) -> Middleware('auth')
 -> name('admin.course.store');
 
+//犬種の一覧
+Route::post('/admin/dogtypes',
+[CourseController::class,'index']
+) -> Middleware('auth')
+-> name('admin.dogtypes.index');
+
 
 /*
 Route::post('/admin/cancel/{bookingId}',

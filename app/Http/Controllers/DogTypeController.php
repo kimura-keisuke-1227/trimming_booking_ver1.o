@@ -17,7 +17,9 @@ class DogTypeController extends Controller
     {
         //
         $dogtypes = Dogtype::all();
-
+        return view('admin.dogtypes.index',[
+            'dogtypes' => $dogtypes,
+        ]);
     }
 
     /**
