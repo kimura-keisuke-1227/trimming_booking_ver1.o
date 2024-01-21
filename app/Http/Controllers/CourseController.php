@@ -71,8 +71,20 @@ class CourseController extends Controller
     public function update(Request $request)
     {
         //
+        $r =  $request;
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
+        $courses = Course::all();
+
+        foreach($courses as $course){
+            //  Log::debug(__METHOD__.'('.__LINE__.') id:' .(String)$course->id.')minute:' . (String)$request["minute_" . (String)$course->id]);
+
+             $course['minute'] = $request["minute_" . (String)$course->id];
+             $course['minute_for_show'] = $request["minute_for_show_" . (String)$course->id];
+             Log::debug(__METHOD__.'('.__LINE__.')'.'');
+             $course->save();
+        }
+
         Log::debug($request);
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return redirect()->route('admin.course.edit');
