@@ -10,6 +10,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DogTypeController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use GuzzleHttp\Middleware;
@@ -287,10 +288,15 @@ Route::post('/admin/course',
 -> name('admin.course.store');
 
 //犬種の一覧
-Route::post('/admin/dogtypes',
-[CourseController::class,'index']
+Route::get('/admin/dogtypes',
+[DogTypeController::class,'index']
 ) -> Middleware('auth')
 -> name('admin.dogtypes.index');
+
+Route::post('/admin/dogtypes',
+[DogTypeController::class,'store']
+) -> Middleware('auth')
+-> name('admin.dogtypes.store');
 
 
 /*

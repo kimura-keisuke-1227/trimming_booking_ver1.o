@@ -6,7 +6,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Models\Dogtype;
+use App\Models\CourseMaster;
 
 class DogTypeController extends Controller
 {
@@ -17,8 +20,10 @@ class DogTypeController extends Controller
     {
         //
         $dogtypes = Dogtype::all();
+        $courseMaster = CourseMaster::all();
         return view('admin.dogtypes.index',[
             'dogtypes' => $dogtypes,
+            'courseMasters' => $courseMaster,
         ]);
     }
 
@@ -35,7 +40,13 @@ class DogTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
+         Log::debug($request);
+
+         // 犬種の登録
+
+         //コースの登録
+        return redirect()->route('admin.dogtypes.index');
     }
 
     /**
