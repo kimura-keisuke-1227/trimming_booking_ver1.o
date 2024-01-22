@@ -39,6 +39,7 @@
             {{$pet -> dogtype -> type}} <br>
             {{$pet -> getData()}} <br>
             {{$pet -> birthday}} <br>
+            <a href="{{Route('pets.edit',['pet' => $pet])}}">[詳細・修正]</a>
         </td></tr>
         @endforeach
     </table>
