@@ -53,6 +53,21 @@
                     </div>
                 </div>
             </form>
+            <br>
+
+            <h4>施術履歴（カルテ）</h4>
+            <table>
+                <tr>
+                    <th>日付</th>
+                    <th>コース</th>
+                </tr>
+                @foreach ($kartes as $karte)
+                    <tr>
+                        <td>{{$karte->date}}</td>
+                        <td>コース</td>
+                    </tr>
+                @endforeach
+            </table>
         </div>
     </div>
 </section>
