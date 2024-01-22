@@ -52,4 +52,8 @@ class Pet extends Model
         return '誕生日あり';
 
     }
+
+    public function pets(){
+        return $this-> hasMany('App\Models\L\Karte');
+    }
 }
