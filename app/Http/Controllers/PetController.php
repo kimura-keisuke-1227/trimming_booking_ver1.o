@@ -128,7 +128,7 @@ class PetController extends Controller
         $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
         if(!$is_albe_to_see_the_pet ){
             Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
-            return '無効なページです。';
+            return redirect('/pets') -> with('error','無効なページです');
         }
         
         Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
@@ -168,7 +168,7 @@ class PetController extends Controller
         $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
         if(!$is_albe_to_see_the_pet ){
             Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
-            return '無効なページです。';
+            return redirect('/pets') -> with('error','無効なページです');
         }
         
         Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
