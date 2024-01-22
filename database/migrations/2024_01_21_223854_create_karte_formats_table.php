@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('karte_formats', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('format');
             $table->timestamps();
         });
     }

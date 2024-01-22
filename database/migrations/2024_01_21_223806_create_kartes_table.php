@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('kartes', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
+            $table->foreignId('pet_id');
+            $table->text('karte_for_staff');
+            $table->text('karte_for_owner');
             $table->timestamps();
         });
     }
