@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Dogtype;
+use App\Models\Karte;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -113,16 +114,24 @@ class PetController extends Controller
         $owner = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') started by user('.$owner->id.')');
         $pet = Pet::find($id);
-        
+        $kartes = Karte::query()
+            ->where('pet_id',$id)
+            ->orderBy('date','desc')
+            
+            ->get();
+         Log::debug(__METHOD__.'('.__LINE__.')'.'kartes:');
+         Log::debug($kartes);
+
         //存在しないペットや他人のペットを表示できないようにする。
         if((is_null($pet)) or ($owner->id !== $pet->owner_id)){
-            Log::warning("message");(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
+            Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
             return '無効なページです。';
         }
         
         Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
         return view('pets.edit',[
-            'pet' => $pet
+            'pet' => $pet,
+            'kartes' => $kartes,
         ]);
     }
 
