@@ -54,6 +54,7 @@
             <th>ペット</th>
             <th>コース</th>
             <th></th>
+            <th></th>
         </tr>
         @foreach($bookings as $booking)
         <tr>
@@ -83,6 +84,7 @@
                 
                 --}}
             <td><a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">詳細・キャンセル</a></td>
+            <td><a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">カルテ記入</a></td>
         </tr>
         @endforeach
 
@@ -117,6 +119,7 @@
                 @endif
                 {{$booking -> course -> courseMaster -> course}}<br>
                 <a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">[詳細・キャンセル]</a> <br>
+                <a href="{{Route('admin.cancelConfirm', ['bookingId' => $booking->id ])}}">カルテ記入</a> <br>
 
             </td>
         </tr>
