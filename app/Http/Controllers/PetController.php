@@ -103,6 +103,41 @@ class PetController extends Controller
         //
     }
 
+    public function show_by_staff($id)
+    {
+        //
+        $owner = Auth::user();
+        Log::debug(__METHOD__.'('.__LINE__.') started by user('.$owner->id.')');
+        $pet = Pet::find($id);
+        $kartes = Karte::query()
+            ->where('pet_id',$id)
+            ->orderBy('date','desc')
+            ->limit(12)
+            ->get();
+         Log::debug(__METHOD__.'('.__LINE__.')'.'kartes:');
+         Log::debug($kartes);
+
+        //存在しないペットや他人のペットを表示できないようにする。
+
+        $is_pet_owned_by_owner = true;
+        Log::debug("is_pet_owned_by_owner: " . $is_pet_owned_by_owner);
+
+        if(is_null($pet) or $owner->id !== $pet->owner_id){
+            $is_pet_owned_by_owner  = false;
+        }
+        $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
+        if(!$is_albe_to_see_the_pet ){
+            Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
+            return '無効なページです。';
+        }
+        
+        Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
+        return view('admin.pets.edit',[
+            'pet' => $pet,
+            'kartes' => $kartes,
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -123,9 +158,15 @@ class PetController extends Controller
          Log::debug($kartes);
 
         //存在しないペットや他人のペットを表示できないようにする。
-        $NOT_my_pet = (is_null($pet)) or ($owner->id !== $pet->owner_id);
-        
-        if($NOT_my_pet){
+
+        $is_pet_owned_by_owner = true;
+        Log::debug("is_pet_owned_by_owner: " . $is_pet_owned_by_owner);
+
+        if(is_null($pet) or $owner->id !== $pet->owner_id){
+            $is_pet_owned_by_owner  = false;
+        }
+        $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
+        if(!$is_albe_to_see_the_pet ){
             Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
             return '無効なページです。';
         }
