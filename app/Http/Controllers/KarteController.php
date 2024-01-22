@@ -13,7 +13,7 @@ class KarteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
         //
     }
@@ -21,23 +21,25 @@ class KarteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
         //
+        return view('admin.kartes.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreKarteRequest $request): RedirectResponse
+    public function store(StoreKarteRequest $request)
     {
         //
+        return 'hoge';
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Karte $karte): Response
+    public function show(Karte $karte)
     {
         //
     }
@@ -45,7 +47,7 @@ class KarteController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Karte $karte): Response
+    public function edit(Karte $karte)
     {
         //
     }
@@ -53,7 +55,7 @@ class KarteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKarteRequest $request, Karte $karte): RedirectResponse
+    public function update(UpdateKarteRequest $request, Karte $karte)
     {
         //
     }
@@ -61,7 +63,7 @@ class KarteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Karte $karte): RedirectResponse
+    public function destroy(Karte $karte)
     {
         //
     }

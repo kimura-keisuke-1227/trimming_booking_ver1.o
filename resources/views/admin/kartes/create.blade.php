@@ -9,12 +9,19 @@
 
         <div class="pt-4 px-4 overflow-x-auto">
             <div class="container">
-                <form action="{{Route('booking.selectCalender')}}" method="post">
+                <form action="{{Route('admin.karte.store')}}" method="post">
                     @csrf
-
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">飼い主</label>
+                        <p>{{$booking->id}}</p>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">ペット</label>
+                        <p></p>
+                    </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">カルテ記載</label>
-                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="message" rows="5"></textarea>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte" rows="20"></textarea>
                     </div>
 
                     <div class="ml-auto">

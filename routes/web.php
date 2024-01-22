@@ -10,6 +10,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\KarteController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use GuzzleHttp\Middleware;
@@ -286,6 +287,17 @@ Route::post('/admin/course',
 ) -> Middleware('auth')
 -> name('admin.course.store');
 
+//カルテ記載画面
+Route::get('/admin/karte/create',
+[KarteController::class,'create']
+) -> Middleware('auth')
+-> name('admin.karte.create');
+
+//カルテ記載画面
+Route::post('/admin/karte/create',
+[KarteController::class,'store']
+) -> Middleware('auth')
+-> name('admin.karte.store');
 
 /*
 Route::post('/admin/cancel/{bookingId}',
