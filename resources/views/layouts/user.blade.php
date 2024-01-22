@@ -167,9 +167,9 @@
                 --}}
                 @endif
                 @if(session()->has('error'))
+
                 {{--
-        
-                    <!-- ▼▼▼▼エラーメッセージ(全ページで共通)▼▼▼▼　-->
+                            <!-- ▼▼▼▼エラーメッセージ(全ページで共通)▼▼▼▼　-->
                 --}}
                 <div class="mb-4 text-right">
                     <div class="pl-6 pr-16 py-4 bg-white border-l-4 border-red-500 shadow-md rounded-r-lg inline-block ml-auto">
@@ -184,11 +184,11 @@
                         </div>
                     </div>
                 </div>
-                {{--
-        
-                    <!-- ▲▲▲▲登録完了メッセージ▲▲▲▲　-->
+                {{--        
+                    <!-- ▲▲▲▲エラーメッセージ(全ページで共通)▲▲▲▲　-->
                 --}}
                 @endif
+
                 {{--
                     <!-- ▼▼▼▼ページ毎の個別内容▼▼▼▼　-->
         
@@ -197,7 +197,6 @@
                     @isset($messages)
                         @if($messages->count()>0)
                             <div class="notification_box" style="border: solid">
-
                                 @foreach ($messages as $message)
                                     <p style="{{$message->notification->style}}">
                                         ・ {{$message->notification->text}}
