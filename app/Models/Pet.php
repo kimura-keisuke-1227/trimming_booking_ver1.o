@@ -56,4 +56,22 @@ class Pet extends Model
     public function pets(){
         return $this-> hasMany('App\Models\L\Karte');
     }
+
+    public function getPetInfoForAdminMobile(){
+        return  
+        $this -> user->last_name .
+        $this->name .
+        '('.
+        $this->dogtype -> type.
+        ' / '.
+        $this->weight.
+        'kg / '.
+        Util::getAge(date('Y-m-d'),$this -> birthday) .
+        ')'
+        ;
+    }
+
+    public function owner(){
+        return $this -> user -> last_name . $this -> user -> first_name ;
+    }
 }

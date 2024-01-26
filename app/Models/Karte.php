@@ -11,7 +11,7 @@ class Karte extends Model
 
     protected $fillable=['date','pet_id','karte_for_staff','karte_for_owner'];
 
-    public function pets(){
+    public function pet(){
         return $this -> belongsTo('App\Models\Pet' );
     }
 }
