@@ -63,7 +63,7 @@
                     @foreach ($kartes as $karte)
                         <tr>
                             <td>
-                                <a href="{{Route('admin.karte.show',['karte' => $karte])}}">{{$karte->date}}</a>
+                                    <a href="{{Route('admin.karte.show',['karte' => $karte])}}">{{$karte->karte_date()}}</a>
                             </td>
                         </tr>
                     @endforeach
