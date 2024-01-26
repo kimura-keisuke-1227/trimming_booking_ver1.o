@@ -336,10 +336,10 @@ Route::post('/admin/cancel/{bookingId}',
 */
 
 //カルテテンプレート表示
-Route::get('/admin/karte/template',
+Route::get('/admin/karte_template',
 [KarteFormatController::class,'index']
 ) -> Middleware('auth')
--> name('admin.karte.template.show');
+-> name('admin.karte.template.index');
 
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
