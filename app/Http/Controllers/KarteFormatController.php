@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKarteFormatRequest;
 use App\Http\Requests\UpdateKarteFormatRequest;
+use App\Models\Karte;
 use App\Models\KarteFormat;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -18,8 +19,11 @@ class KarteFormatController extends Controller
     public function index()
     {
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        $karteFormats = KarteFormat::all();
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return view('admin.kartes.templates.index');
+        return view('admin.kartes.templates.index',[
+            'karteFormats' =>  $karteFormats
+        ]);
     }
 
     /**
