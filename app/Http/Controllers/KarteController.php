@@ -59,13 +59,12 @@ class KarteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Karte $karte)
+    public function show_for_user(Karte $karte)
     {
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return view('admin.kartes.edit',[
             'karte' => $karte,
-            'karte_data' => Util::getYMDWFromDbDate($karte->date)
         ]);
     }
 
