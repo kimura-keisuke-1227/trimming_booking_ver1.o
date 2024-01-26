@@ -311,6 +311,12 @@ Route::get('/admin/karte/{karte}',
 [KarteController::class,'edit']
 ) -> Middleware('auth')
 -> name('admin.karte.show');
+
+//カルテ表示(スタッフ用)
+Route::post('/admin/karte/{karte}',
+[KarteController::class,'update']
+) -> Middleware('auth')
+-> name('admin.karte.update');
 /*
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']

@@ -9,7 +9,7 @@
 
         <div class="pt-4 px-4 overflow-x-auto">
             <div class="container">
-                <form action="{{Route('admin.karte.store')}}" method="post">
+                <form action="{{Route('admin.karte.update',['karte' => $karte])}}" method="post">
                     @csrf
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">飼い主</label>
