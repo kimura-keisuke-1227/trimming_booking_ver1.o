@@ -341,11 +341,17 @@ Route::get('/admin/karte_template',
 ) -> Middleware('auth')
 -> name('admin.karte.template.index');
 
-
+//カルテテンプレート編集
 Route::get('/admin/karte_template/{karteFormat}',
 [KarteFormatController::class,'edit']
 ) -> Middleware('auth')
 -> name('admin.karte.template.edit');
+
+//カルテテンプレート更新
+Route::post('/admin/karte_template/{karteFormat}',
+[KarteFormatController::class,'update']
+) -> Middleware('auth')
+-> name('admin.karte.template.update');
 
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
