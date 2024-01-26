@@ -341,6 +341,12 @@ Route::get('/admin/karte_template',
 ) -> Middleware('auth')
 -> name('admin.karte.template.index');
 
+
+Route::get('/admin/karte_template/{karteFormat}',
+[KarteFormatController::class,'edit']
+) -> Middleware('auth')
+-> name('admin.karte.template.edit');
+
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
 ) -> middleware('auth')
