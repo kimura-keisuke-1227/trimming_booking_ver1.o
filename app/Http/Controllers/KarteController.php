@@ -10,7 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Booking;
-
+use App\classes\Util;
 
 class KarteController extends Controller
 {
@@ -60,7 +60,10 @@ class KarteController extends Controller
      */
     public function show(Karte $karte)
     {
-        return 'hoge';
+        return view('admin.kartes.edit',[
+            'karte' => $karte,
+            'karte_data' => Util::getYMDWFromDbDate($karte->date)
+        ]);
     }
 
     /**
