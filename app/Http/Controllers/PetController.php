@@ -103,33 +103,33 @@ class PetController extends Controller
         //
     }
 
-    public function show_by_staff($id)
+    public function show_by_staff($pet_id)
     {
         //
         $owner = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') started by user('.$owner->id.')');
-        $pet = Pet::find($id);
+        $pet = Pet::find($pet_id);
         $kartes = Karte::query()
-            ->where('pet_id',$id)
+            ->where('pet_id',$pet_id)
             ->orderBy('date','desc')
             ->limit(12)
             ->get();
          Log::debug(__METHOD__.'('.__LINE__.')'.'kartes:');
          Log::debug($kartes);
 
-        //存在しないペットや他人のペットを表示できないようにする。
+        // //存在しないペットや他人のペットを表示できないようにする。
 
-        $is_pet_owned_by_owner = true;
-        Log::debug("is_pet_owned_by_owner: " . $is_pet_owned_by_owner);
+        // $is_pet_owned_by_owner = true;
+        // Log::debug("is_pet_owned_by_owner: " . $is_pet_owned_by_owner);
 
-        if(is_null($pet) or $owner->id !== $pet->owner_id){
-            $is_pet_owned_by_owner  = false;
-        }
-        $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
-        if(!$is_albe_to_see_the_pet ){
-            Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$id.') so refused!!' );
-            return redirect('/pets') -> with('error','無効なページです');
-        }
+        // if(is_null($pet) or $owner->id !== $pet->owner_id){
+        //     $is_pet_owned_by_owner  = false;
+        // }
+        // $is_albe_to_see_the_pet = $is_pet_owned_by_owner;
+        // if(!$is_albe_to_see_the_pet ){
+        //     Log::warning(__METHOD__.'('.__LINE__.') The user('.$owner->id.') tried to open pet('.$pet_id.') so refused!!' );
+        //     return redirect('/pets') -> with('error','無効なページです');
+        // }
         
         Log::debug(__METHOD__.'('.__LINE__.') ended by user('.$owner->id.')');
         return view('admin.pets.edit',[
