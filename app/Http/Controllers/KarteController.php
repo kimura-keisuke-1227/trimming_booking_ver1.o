@@ -49,10 +49,11 @@ class KarteController extends Controller
         $validated = $request->validated();
         Log::debug($validated);
 
-        Karte::create($validated);
+        $karte = Karte::create($validated);
 
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return 'hoge';
+        return redirect(Route('admin.karte.show',['karte' => $karte]))
+        ->with("success","登録しました");
     }
 
     /**
@@ -87,8 +88,20 @@ class KarteController extends Controller
     public function update(UpdateKarteRequest $request, Karte $karte)
     {
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
-        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return 'hoge';
+         Log::debug($request);
+         $validated = $request->validated();
+         Log::debug($validated);
+         
+         $karte -> fill([
+             'karte_for_staff' => $validated['karte_for_staff'],
+             'karte_for_owner' => $validated['karte_for_owner'],
+            ]);
+            
+        Log::debug(__METHOD__.'('.__LINE__.')'.'en1d!');
+        $karte->save($validated);
+        return redirect(Route('admin.karte.show',['karte' => $karte]))
+        ->with("success","登録しました");
+        // Route('admin.karte.show',['karte' => $karte])
     }
 
     /**
