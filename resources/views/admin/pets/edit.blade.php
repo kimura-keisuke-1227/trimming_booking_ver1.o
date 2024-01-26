@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('title' , 'ペット情報修正')
 
@@ -59,12 +59,10 @@
                 <table class="table_karte">
                     <tr>
                         <th>日付</th>
-                        <th>コース</th>
                     </tr>
                     @foreach ($kartes as $karte)
                         <tr>
                             <td>{{$karte->date}}</td>
-                            <td>コース</td>
                         </tr>
                     @endforeach
                 </table>
