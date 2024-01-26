@@ -288,7 +288,7 @@ Route::post('/admin/course',
 -> name('admin.course.store');
 
 //カルテ記載画面
-Route::get('/admin/karte/create',
+Route::get('/admin/karte/create/{bookingID}',
 [KarteController::class,'create']
 ) -> Middleware('auth')
 -> name('admin.karte.create');
