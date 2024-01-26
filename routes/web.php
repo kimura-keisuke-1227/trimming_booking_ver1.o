@@ -287,6 +287,13 @@ Route::post('/admin/course',
 ) -> Middleware('auth')
 -> name('admin.course.store');
 
+// ペット確認（管理者）
+Route::get('/admin/pet/{pet_id}',
+[PetController::class,'show_by_staff'])
+-> Middleware('auth')
+-> name('admin.pet.show');
+;
+
 //カルテ記載画面
 Route::get('/admin/karte/create/{bookingID}',
 [KarteController::class,'create']
