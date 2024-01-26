@@ -13,15 +13,25 @@
                     @csrf
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">飼い主</label>
-                        <p>{{$booking->id}}</p>
+                        <p>{{$booking->pet->user->getFullName()}} 様</p>
+                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="hidden" name="owner_id" value="{{ $booking->pet->user->id }}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">ペット</label>
-                        <p></p>
+                        <p>{{$booking->pet->getData()}}</p>
+                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="hidden" name="pet_id" value="{{ $booking->pet->id }}">
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="message">カルテ記載</label>
-                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte" rows="20"></textarea>
+                        <label class="block text-sm font-medium mb-2" for="message">日付</label>
+                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ $booking->date }}">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">カルテ(お客様向け)</label>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_owner" rows="20"></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">カルテ記載(スタッフのみ)</label>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_staff" rows="20"></textarea>
                     </div>
 
                     <div class="ml-auto">

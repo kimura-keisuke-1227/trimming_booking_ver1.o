@@ -7,6 +7,10 @@ use App\Http\Requests\UpdateKarteRequest;
 use App\Models\Karte;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
+
+use App\Models\Booking;
+
 
 class KarteController extends Controller
 {
@@ -21,10 +25,16 @@ class KarteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($booking_id)
     {
-        //
-        return view('admin.kartes.create');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'booking:');
+        Log::debug($booking_id);
+        $booking = Booking::find($booking_id);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return view('admin.kartes.create',[
+            'booking' => $booking,
+        ]);
     }
 
     /**
@@ -33,6 +43,10 @@ class KarteController extends Controller
     public function store(StoreKarteRequest $request)
     {
         //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'. '$request');
+        Log::debug($request);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return 'hoge';
     }
 
