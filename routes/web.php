@@ -11,6 +11,7 @@ use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\KarteController;
+use App\Http\Controllers\KarteFormatController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use GuzzleHttp\Middleware;
@@ -333,6 +334,12 @@ Route::post('/admin/cancel/{bookingId}',
 ) -> Middleware('auth')
 -> name('admin.cancel');
 */
+
+//カルテテンプレート表示
+Route::get('/admin/karte/template',
+[KarteFormatController::class,'index']
+) -> Middleware('auth')
+-> name('admin.karte.template.show');
 
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
