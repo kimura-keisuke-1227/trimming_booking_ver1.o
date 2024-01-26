@@ -306,6 +306,11 @@ Route::post('/admin/karte/create',
 ) -> Middleware('auth')
 -> name('admin.karte.store');
 
+//カルテ表示(スタッフ用)
+Route::get('/admin/karte/{karte_id}',
+[KarteController::class,'show']
+) -> Middleware('auth')
+-> name('admin.karte.show');
 /*
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
