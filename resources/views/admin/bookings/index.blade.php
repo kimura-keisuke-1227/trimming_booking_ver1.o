@@ -73,7 +73,7 @@
                 
                 {{$booking -> pet -> user -> getUserInfo()}}
             </a> </td>
-            <td><a href="{{Route('admin.pet.show',['pet_id'=>$booking->pet_id])}}">{{$booking -> pet -> getData()}}</a></td>
+            <td><a href="{{Route('admin.pet.show',['pet_id'=>$booking->pet_id])}}">{{$booking -> getPetInfoForAdminMobile()}}</a></td>
             @else
             <td><a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a></td>
             <td>{{$booking -> getPetNameOfNoMemberBooking() }}</td>
@@ -111,10 +111,10 @@
                         【来店歴あり】
                     @endif
                     {{$booking -> pet -> user -> getUserInfo()}}</a> <br>
-                {{$booking -> pet -> name}} <br>
-                {{$booking -> getPetInfoForAdminMobile()}} <br>
+                <a href="{{Route('admin.pet.show',['pet_id'=>$booking->pet_id])}}">{{$booking -> getPetInfoForAdminMobile()}}</a>
+                <br>
                 @else
-                <a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a>}<br>
+                <a href="{{Route('admin.showNonMemberInfo',['bookingId'=>$booking->id])}}">【非会員】{{$booking -> getNonMemberOwner() }}</a><br>
                 {{$booking -> getNonMemberPetName() }}<br>
                 {{$booking -> getNonMemberPetInfo() }}<br>
                 @endif
