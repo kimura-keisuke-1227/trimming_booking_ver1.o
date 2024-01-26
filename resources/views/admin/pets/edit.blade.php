@@ -6,9 +6,6 @@
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('pets.update',['pet' => $pet])}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">ペット情報</h3>
                 </div>
@@ -28,31 +25,24 @@
 
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">名前(変更不可)</label>
+                        <label class="block text-sm font-medium mb-2" for="name">名前</label>
                         <p>{{$pet->name}}</p>
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">犬種(変更不可)</label>
+                        <label class="block text-sm font-medium mb-2" for="name">犬種</label>
                         <div class="flex">
                             <p>{{$pet->dogtype->type}}</p>
 
                         </div>
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="weight">体重(kg)</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" step="0.1" name="weight" value="{{ $pet->weight }}">
+                        <label class="block text-sm font-medium mb-2" for="weight">体重　{{ $pet->weight }}(kg)</label>
                     </div>
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">誕生日</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="birthday" value="{{ $pet->birthday }}">
-                    </div>
-
-                    <div class="ml-auto">
-                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">変更</button>
+                        <label class="block text-sm font-medium mb-2" for="name">誕生日　{{ $pet->birthday }}</label>
                     </div>
                 </div>
-            </form>
             <br>
             <div class="pt-4 px-6" style="border:1px">
                 <h4>施術履歴（カルテ）</h4>
