@@ -13,11 +13,10 @@
                         <p>{{$karte->pet->getPetInfoForAdminMobile()}}</p>
                     </div>
                     <div class="mb-6">
-                        <p>{$karte->karte_date()}</p>
+                        <p>{{$karte->karte_date()}}</p>
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="message">カルテ</label>
-                        <p>{{ $karte->karte_for_owner }}</p>
+                        <textarea readonly name="" id="" cols="30" rows="10">{{ $karte->karte_for_owner }}</textarea>
                     </div>
             </div>
         </div>
