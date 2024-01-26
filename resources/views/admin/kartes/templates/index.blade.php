@@ -12,7 +12,7 @@
 
         @foreach($karteFormats as $karteFormat)
         <tr>
-            <td>{{$karteFormat-> title}}</td>
+            <td><a href="{{Route('admin.karte.template.edit',['karteFormat' => $karteFormat])}}">{{$karteFormat-> title}}</a></td>
         </tr>
         @endforeach
 
