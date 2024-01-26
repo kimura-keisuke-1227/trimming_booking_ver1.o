@@ -2,9 +2,6 @@
 @extends('layouts.admin')
 
 @section('title' , 'カルテ編集')
-@php
-use App\classes\Util;
-@endphp
 
 @section('content')
 <section>
@@ -25,7 +22,7 @@ use App\classes\Util;
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">日付</label>
                         <p>{{$karte_data}}</p>
-∂                    </div>
+                    </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">カルテ(お客様向け)</label>
                         <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_owner" rows="20">{{ $karte->karte_for_owner }}</textarea>
