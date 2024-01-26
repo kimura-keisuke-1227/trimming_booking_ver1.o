@@ -60,6 +60,8 @@ class KarteController extends Controller
      */
     public function show(Karte $karte)
     {
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return view('admin.kartes.edit',[
             'karte' => $karte,
             'karte_data' => Util::getYMDWFromDbDate($karte->date)
@@ -71,7 +73,12 @@ class KarteController extends Controller
      */
     public function edit(Karte $karte)
     {
-        //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return view('admin.kartes.edit',[
+            'karte' => $karte,
+            'karte_data' => Util::getYMDWFromDbDate($karte->date)
+        ]);
     }
 
     /**
