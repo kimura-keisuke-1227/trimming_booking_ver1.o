@@ -8,6 +8,8 @@ use App\Models\KarteFormat;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Log;
+
 class KarteFormatController extends Controller
 {
     /**
@@ -15,8 +17,9 @@ class KarteFormatController extends Controller
      */
     public function index()
     {
-        //
-        return 'hoge';
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return view('admin.kartes.templates.index');
     }
 
     /**
