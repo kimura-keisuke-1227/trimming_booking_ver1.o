@@ -55,7 +55,9 @@ class KarteFormatController extends Controller
      */
     public function edit(KarteFormat $karteFormat)
     {
-        //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return 'hoge';
     }
 
     /**
