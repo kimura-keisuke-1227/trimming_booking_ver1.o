@@ -55,16 +55,14 @@
             </form>
             <br>
             <div class="pt-4 px-6" style="border:1px">
-                <h4>施術履歴（カルテ）aaa</h4>
+                <h4>施術履歴（カルテ）</h4>
                 <table class="table_karte">
                     <tr>
                         <th>日付</th>
-                        <th>コース</th>
                     </tr>
                     @foreach ($kartes as $karte)
                         <tr>
-                            <td>{{$karte->date}}</td>
-                            <td>コース</td>
+                            <td><a href="{{Route('admin.karte.show',['karte' => $karte])}}">{{$karte->date}}</a></td>
                         </tr>
                     @endforeach
                 </table>
