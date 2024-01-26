@@ -55,7 +55,7 @@
             </form>
             <br>
             <div class="pt-4 px-6" style="border:1px">
-                <h4>施術履歴（カルテ）aaa</h4>
+                <h4>施術履歴（カルテ）</h4>
                 <table class="table_karte">
                     <tr>
                         <th>日付</th>
