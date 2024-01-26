@@ -57,7 +57,9 @@ class KarteFormatController extends Controller
     {
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return 'hoge';
+        return view('admin.kartes.templates.edit',[
+            'karteFormat' =>  $karteFormat
+        ]);
     }
 
     /**
