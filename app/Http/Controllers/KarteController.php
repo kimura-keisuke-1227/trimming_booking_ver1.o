@@ -60,7 +60,7 @@ class KarteController extends Controller
      */
     public function show(Karte $karte)
     {
-        //
+        return 'hoge';
     }
 
     /**
