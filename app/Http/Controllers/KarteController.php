@@ -86,7 +86,9 @@ class KarteController extends Controller
      */
     public function update(UpdateKarteRequest $request, Karte $karte)
     {
-        //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+        return 'hoge';
     }
 
     /**
