@@ -147,6 +147,8 @@ Route::post('/confirm',
 -> name('booking.confirm');
 ;
 
+
+
 //登録前の確認
 Route::post('/store',
 [BookingController::class,'store']
@@ -154,6 +156,14 @@ Route::post('/store',
 -> Middleware('auth')
 -> name('booking.store');
 ;
+
+
+//カルテ表示(飼い主用)
+Route::get('/karte/{karte}',
+[KarteController::class,'show_for_user']
+) -> Middleware('auth')
+-> name('owner.karte.show');
+
 /*****************************************************************
 *
 *   非会員用メニュー
