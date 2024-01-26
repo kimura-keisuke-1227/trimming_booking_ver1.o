@@ -22,7 +22,8 @@ class UpdateKarteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'karte_for_staff' => 'required|string',
+            'karte_for_owner' => 'required|string',
         ];
     }
 }
