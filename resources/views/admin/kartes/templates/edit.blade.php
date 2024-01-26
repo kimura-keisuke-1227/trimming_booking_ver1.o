@@ -5,6 +5,9 @@
 @section('content')
 
 <div class="container">
+<form action="{{Route('admin.karte.template.update',['karteFormat' => $karteFormat])}}" method="post">
+@csrf
+
     <h4>テンプレート名</h4>
     <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="message">{{$karteFormat->title}}</label>
@@ -14,6 +17,7 @@
     <div class="ml-auto">
         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
     </div>
+</form>
 
 </div>
 @endsection
