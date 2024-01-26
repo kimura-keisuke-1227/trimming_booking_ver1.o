@@ -308,7 +308,7 @@ Route::post('/admin/karte/create',
 
 //カルテ表示(スタッフ用)
 Route::get('/admin/karte/{karte}',
-[KarteController::class,'show']
+[KarteController::class,'edit']
 ) -> Middleware('auth')
 -> name('admin.karte.show');
 /*
