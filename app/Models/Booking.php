@@ -100,6 +100,8 @@ class Booking extends Model
 
     public function getPetInfoForAdminMobile(){
         return  
+        $this -> pet -> user->last_name .
+        $this->pet->name .
         '('.
         $this->pet->dogtype -> type.
         ' / '.
