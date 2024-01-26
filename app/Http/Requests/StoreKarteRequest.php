@@ -22,7 +22,10 @@ class StoreKarteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'date' => 'required|date',
+            'pet_id' => 'required|integer',
+            'karte_for_staff' => 'required|string',
+            'karte_for_owner' => 'required|string',
         ];
     }
 }
