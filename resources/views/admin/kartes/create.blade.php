@@ -14,7 +14,6 @@
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">飼い主</label>
                         <p>{{$booking->pet->user->getFullName()}} 様</p>
-                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="hidden" name="owner_id" value="{{ $booking->pet->user->id }}">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">ペット</label>
