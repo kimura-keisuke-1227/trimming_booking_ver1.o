@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class KarteFormat extends Model
 {
     use HasFactory;
+
+    protected $fillable=['format'];
 }

@@ -67,7 +67,17 @@ class KarteFormatController extends Controller
      */
     public function update(UpdateKarteFormatRequest $request, KarteFormat $karteFormat)
     {
-        //
+        Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
+
+        $karteFormat['format'] = "フォーマットテスト";
+        $validated = $request->validated();
+        $karteFormat -> fill([
+            'format' => $validated['format'],
+           ]);
+        $karteFormat->save();
+        return redirect(Route('admin.karte.template.index'))
+        ->with('success','フォーマットを更新しました。');
     }
 
     /**
