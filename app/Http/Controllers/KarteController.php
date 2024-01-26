@@ -45,7 +45,12 @@ class KarteController extends Controller
         //
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'. '$request');
-        Log::debug($request);
+        
+        $validated = $request->validated();
+        Log::debug($validated);
+
+        Karte::create($validated);
+
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return 'hoge';
     }
