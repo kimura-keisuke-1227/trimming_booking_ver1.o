@@ -2,6 +2,9 @@
 @extends('layouts.admin')
 
 @section('title' , 'カルテ編集')
+@php
+use App\classes\Util;
+@endphp
 
 @section('content')
 <section>
@@ -13,24 +16,23 @@
                     @csrf
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">飼い主</label>
-                        <p>{{$booking->pet->user->getFullName()}} 様</p>
+                        <p>{{$karte->pet->owner()}}様</p>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">ペット</label>
-                        <p>{{$booking->pet->getData()}}</p>
-                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="hidden" name="pet_id" value="{{ $booking->pet->id }}">
+                        <p>{{$karte->pet->getPetInfoForAdminMobile()}}</p>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">日付</label>
-                        <input id="date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="date" value="{{ $booking->date }}">
-                    </div>
+                        <p>{{$karte_data}}</p>
+∂                    </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">カルテ(お客様向け)</label>
-                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_owner" rows="20"></textarea>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_owner" rows="20">{{ $karte->karte_for_owner }}</textarea>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="message">カルテ記載(スタッフのみ)</label>
-                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_staff" rows="20"></textarea>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="karte_for_staff" rows="20">{{ $karte->karte_for_staff }}</textarea>
                     </div>
 
                     <div class="ml-auto">
