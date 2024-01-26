@@ -63,7 +63,7 @@ class KarteController extends Controller
     {
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return view('admin.kartes.edit',[
+        return view('kartes.show',[
             'karte' => $karte,
         ]);
     }
