@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\classes\Util;
+
 class Karte extends Model
 {
     use HasFactory;
@@ -13,5 +15,8 @@ class Karte extends Model
 
     public function pet(){
         return $this -> belongsTo('App\Models\Pet' );
+    }
+    public function karte_date(){
+        return Util::getYMDWFromDbDate($this->date);
     }
 }
