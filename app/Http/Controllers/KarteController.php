@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKarteRequest;
 use App\Http\Requests\UpdateKarteRequest;
 use App\Models\Karte;
+use App\Models\KarteFormat;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +31,17 @@ class KarteController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'booking:');
         Log::debug($booking_id);
+        $karte_formats = KarteFormat::all();
+        $karte_format_staff = $karte_formats->where("title","スタッフ用")->first();
+        $karte_format_owner = $karte_formats->where("title","お客様向け")->first();
+         Log::debug(__METHOD__.'('.__LINE__.')'.'$karte_format_staff');
+         Log::debug($karte_format_staff);
         $booking = Booking::find($booking_id);
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
         return view('admin.kartes.create',[
             'booking' => $booking,
+            'karte_format_staff' => $karte_format_staff,
+            'karte_format_owner' => $karte_format_owner,
         ]);
     }
 
