@@ -11,9 +11,14 @@ use App\Models\Salon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OpenCloseSalon;
 use Illuminate\Support\Facades\DB;
-
 class Util
 {
+    /**
+     * 日付データから、2024年1月28日（日）のような形式を返す
+     *
+     * @param [date] $date
+     * @return string
+     */
     public static function getYMDWFromDbDate($date)
     {
         $dateStr = date('Y年m月d日', strtotime($date));
@@ -30,6 +35,12 @@ class Util
         return $count_salons;
     }
 
+    /**
+     * 日付から　1/28(日)のような形式を返す
+     *
+     * @param [date] $date
+     * @return string
+     */
     public static function dbDateToStrDate($date)
     {
         $week = array("日", "月", "火", "水", "木", "金", "土");
@@ -44,6 +55,12 @@ class Util
         return $dateStr;
     }
 
+    /**
+     * 整数時間を時刻に変換し、●:●の形式で表示
+     *
+     * @param [int] $time
+     * @return string
+     */
     public static function minuteToTime($timeNum)
     {
         $hour = (string) floor($timeNum / 60);
@@ -56,6 +73,12 @@ class Util
         return $hour . ':' . $minute;
     }
 
+    /**
+     * 整数時間を時刻に変換し、●時●分の形式で表示
+     *
+     * @param [int] $time
+     * @return string
+     */
     public static function minuteNumToTime($time)
     {
         $hour = (string) floor($time / 60);
@@ -64,6 +87,13 @@ class Util
         return $hour . '時' . $minute . '分';
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [int] $hour ●時
+     * @param [int] $minute ●分
+     * @return int
+     */
     public static function timeToMinute($hour, $minute)
     {
         return $hour * 60 + $minute;

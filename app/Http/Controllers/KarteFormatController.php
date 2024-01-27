@@ -52,6 +52,7 @@ class KarteFormatController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * カルテのフォーマットを編集
      */
     public function edit(KarteFormat $karteFormat)
     {
@@ -64,6 +65,7 @@ class KarteFormatController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * カルテのフォーマットを編集したものを反映
      */
     public function update(UpdateKarteFormatRequest $request, KarteFormat $karteFormat)
     {
