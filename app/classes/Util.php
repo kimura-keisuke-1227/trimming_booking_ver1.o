@@ -99,6 +99,13 @@ class Util
         return $hour * 60 + $minute;
     }
 
+    /**
+     * もとに日付に整数で追加する日数を加算してN日後を日付で返す
+     *
+     * @param [date] $baseDay
+     * @param [int] $addDays
+     * @return date
+     */
     public static function addDays($baseDay, $addDays)
     {
 
@@ -154,6 +161,13 @@ class Util
         }
     }
 
+    /**
+     * 開始日と終了日を指定して、その間の日付のリストを返す
+     *
+     * @param [type] $st_date 開始日
+     * @param [type] $ed_date 終了日
+     * @return list
+     */
     public function getDaysList($st_date, $ed_date)
     {
         $days = [];
