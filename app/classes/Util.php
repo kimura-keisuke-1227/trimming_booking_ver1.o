@@ -207,6 +207,13 @@ class Util
         }
         return $timesNum;
     }
+    /**
+     * 日付と生年月日から年齢を計算
+     *
+     * @param [type] $date
+     * @param [type] $birthday
+     * @return string
+     */
     public static function getAge($date, $birthday)
     {
         $birthdayYear = date('Y', strtotime($birthday));
@@ -271,6 +278,14 @@ class Util
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
     }
 
+
+    /**
+     * 過去に来店歴がある人をリストで返す
+     *
+     * @param [type] $date
+     * @param [type] $salon_id
+     * @return list
+     */
     public static function getWhoCameBefore($date,$salon_id)
     {
         $usersCameBeforeList = [];
@@ -338,6 +353,13 @@ class Util
         }
     }
 
+    /**
+     * このユーザーが過去に来店歴が有るかどうかをチェック
+     *
+     * @param [type] $user_id　ユーザーID
+     * @param [type] $date 調べる日付　日付によっても結果は異なるはず。
+     * @return void
+     */
     public function getTheUserCameBefore($user_id,$date){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . $this->getUserId() .') with $user_id:' .$user_id . ' date:' . $date);
         $user = User::find($user_id);
@@ -379,6 +401,13 @@ class Util
         return $theUserCameBefore;
     }
 
+    /**
+     * 整数分を4桁の時間に変更
+     * (例)10：00を表す　600を 1000に変更
+     *
+     * @param [type] $intTime
+     * @return int
+     */
     public static function get4digitTime($intTime){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $hour = floor($intTime/60);
