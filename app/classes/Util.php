@@ -28,6 +28,11 @@ class Util
         return $dateStr;
     }
 
+    /**
+     * 店舗の数を取得。複数店舗の場合に選択する場合に追加
+     *
+     * @return int
+     */
     public static function getCountSalons(){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $count_salons = Salon::count();
@@ -130,6 +135,14 @@ class Util
         return $dateStr;
     }
 
+    /**
+     * 設定のDB値を返す
+     *
+     * @param [type] $default 設定がない場合のデフォルト
+     * @param [type] $setting_name　設定名
+     * @param [boolean] $isInt 整数型かどうか
+     * @return int str 
+     */
     public static function getSetting($default, $setting_name, $isInt)
     {
         $user = Auth::user();
@@ -178,6 +191,14 @@ class Util
         return $days;
     }
 
+    /**
+     * 整数時間のリストを返す。
+     *
+     * @param [type] $st_time 開店時間
+     * @param [type] $ed_time 終了時間
+     * @param [type] $step_time ○分ごとの設定
+     * @return list
+     */
     public function getTimes($st_time, $ed_time, $step_time)
     {
         $times = [];
@@ -189,10 +210,18 @@ class Util
         return $times;
     }
 
+    /**
+     * 予約の時間を何枠用意するか 30分枠で設定して8時間なら１６枠
+     *
+     * @param [type] $st_time
+     * @param [type] $ed_time
+     * @param [type] $step_time
+     * @return int
+     */
     public function getTimesCount($st_time, $ed_time, $step_time)
     {   Log::debug(__METHOD__.'('.__LINE__.') starts!');
         $timesCount = ($ed_time - $st_time)/ $step_time;
-        
+        // 切り上げる
         $timesCount = ceil($timesCount);
 
         Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time:' . $ed_time . ' step_time:' . $step_time . ' $timesCount'. $timesCount);
@@ -250,6 +279,13 @@ class Util
         return (string) $age . '歳';
     }
 
+    /**
+     * 月末のdayを取得
+     *
+     * @param [type] $date
+     * @param [type] $addMonth
+     * @return void
+     */
     public static function getEndOfTheMonth($date, $addMonth)
     {
 
