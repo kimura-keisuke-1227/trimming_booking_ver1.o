@@ -59,8 +59,15 @@ class NotificationController extends Controller
     public function store(StoreNotificationRequest $request)
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
-        return($request);
+        // return($request);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+
+        Notification::create([
+            'contents' => $request['content'],
+            'st_date' => $request['st_date'],
+            'ed_date' => $request['ed_date'],
+        ]);
+        
         return redirect()->route('notification.index')
         ->with("success", "【まだ】お知らせを保存しました。");
     }
