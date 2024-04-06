@@ -28,7 +28,7 @@ class NotificationController extends Controller
         Log::debug($allNotifications);
         
         Log::debug(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
-        return view('admin.notifications.create',[
+        return view('admin.notifications.index',[
             'notifications' => $allNotifications
         ]);
     }
