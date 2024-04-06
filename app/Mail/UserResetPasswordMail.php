@@ -48,7 +48,7 @@ class UserResetPasswordMail extends Mailable
         $mailAddressFromSalon = Util::getSetting('test@gmail.com','mailFromSalon',false);
         $mailSenderName = Util::getSetting('システムによる自動送信','mailSenderName',false);
 
-        $mailFrom = Util::getSetting('support@conaffetto-saitama.com','mailFromSalon',false);
+        $mailFrom = Util::getSetting(env('MAIL_FROM_ADDRESS'),'mailFromSalon',false);
 
         return $this->from($mailFrom, $mailSenderName)
             ->to($this->user->email)
