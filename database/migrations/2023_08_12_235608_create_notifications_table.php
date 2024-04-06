@@ -16,8 +16,8 @@ return new class extends Migration
             $table->text('contents');
             $table->foreignId('salon_id')->default(0);
             $table->string('page')->default('');
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->timestamp('st_date');
+            $table->timestamp('ed_date');
             $table->timestamps();
         });
     }
