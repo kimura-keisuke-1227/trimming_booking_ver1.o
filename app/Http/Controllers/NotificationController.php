@@ -63,7 +63,7 @@ class NotificationController extends Controller
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
         Notification::create([
-            'contents' => $request['content'],
+            'contents' => $request['contents'],
             'st_date' => $request['st_date'],
             'ed_date' => $request['ed_date'],
         ]);
