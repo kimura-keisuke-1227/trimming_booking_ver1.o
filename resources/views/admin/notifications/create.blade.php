@@ -38,7 +38,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">お知らせ内容</label>
-                        <input id="prefecture" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="text" value="aa">
+                        <input id="prefecture" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="content" value="aa">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">表示開始日時</label>
