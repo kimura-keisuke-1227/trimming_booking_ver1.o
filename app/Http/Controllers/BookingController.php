@@ -780,11 +780,11 @@ class BookingController extends Controller
 
         if($st_date<$today){
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
-            ->with('success','無効な日付です。');
+            ->with('error','無効な日付です。');
         }
         if($st_date>$maxBookingDate){
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
-            ->with('success','無効な日付です。');
+            ->with('error','無効な日付です。');
         }
 
         $pet =  session('pet');
