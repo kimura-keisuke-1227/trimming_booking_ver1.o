@@ -198,18 +198,23 @@
 
                 
                 <div class="pc_container">
-                    @if ($messages->count() > 0)
+                    @if(isset($messages))
+                        @if ($messages->count() > 0)
                         <div class="message" style="background-color: aqua;">
-                        <h5>お知らせ</h5>
-                        @foreach ($messages as $message)
-                                <ul>
-                                    <li>
-                                        <p>●{!! nl2br(e($message->contents)) !!}</p>
-                                    </li>
-                                </ul>
-                        @endforeach
+                            <h5>お知らせ</h5>
+                            @foreach ($messages as $message)
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                ({{$message->st_date->format('Y年m月d日')}})
+                                                <p>{!! nl2br(e($message->contents)) !!}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                            @endforeach
                         </div>
-                        
+                                
+                            @endif
                     @endif
                     @yield('content')
 
