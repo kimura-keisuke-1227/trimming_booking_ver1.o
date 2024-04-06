@@ -21,9 +21,10 @@ class Util
         $new_params = $params;
         $now = date('Y-m-d H:i');
         
-        $notifications = Notification::where('page',$view)
-        ->where('start_time','<=',$now)
-        ->where('end_time','>=',$now)
+        $notifications = Notification::query()
+        // ->where('page',$view)
+        ->where('st_date','<=',$now)
+        ->where('ed_date','>=',$now)
         ->get();
         
         $new_params['messages'] = $notifications;
@@ -34,9 +35,10 @@ class Util
     public static function getNotifications($page){
         $now = date('Y-m-d H:i');
         Log::debug(__METHOD__.'('.__LINE__.') $now:' . $now);
-        $notifications = Notification::where('page',$page)
-        ->where('start_time','<=',$now)
-        ->where('end_time','>=',$now)
+        $notifications = Notification::query()
+        ->where('page',$page)
+        ->where('st_date','<=',$now)
+        ->where('ed_date','>=',$now)
         ->get();
 
         Log::debug(__METHOD__.'('.__LINE__.') notifications');
