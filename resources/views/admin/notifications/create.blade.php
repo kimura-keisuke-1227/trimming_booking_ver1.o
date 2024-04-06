@@ -25,20 +25,11 @@
                     </div>
                     @endif
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
-
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">表示画面選択</label>
-                        <select id="dogtype" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="dogtype">
-                                
-                                <option value="">ペット選択画面</option>
-                                
-                            </select>
-
-                    </div>
-
+         
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">お知らせ内容</label>
-                        <input id="prefecture" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="contents" value="aa">
+                        <textarea id="prefecture"  rows="5" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="textarea" name="contents" value="">
+</textarea> 
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">表示開始日時</label>
