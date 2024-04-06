@@ -39,8 +39,8 @@ class NotificationController extends Controller
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         // $allNotifications = Notification::all();
-        $st_date = "2024-04-01";
-        $ed_date = "2024-04-01";
+        $st_date =date("Y-m-d");
+        $ed_date = Util::addDays($st_date,30);
 
         // Log::debug($allNotifications);
         
@@ -58,7 +58,7 @@ class NotificationController extends Controller
     public function store(StoreNotificationRequest $request)
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
-
+        return($request);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return redirect()->route('notification.index')
         ->with("success", "【まだ】お知らせを保存しました。");
