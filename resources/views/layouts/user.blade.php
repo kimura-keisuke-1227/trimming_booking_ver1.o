@@ -204,7 +204,7 @@
                         @foreach ($messages as $message)
                                 <ul>
                                     <li>
-                                        <p>●{{$message -> contents}}</p>
+                                        <p>●{!! nl2br(e($message->contents)) !!}</p>
                                     </li>
                                 </ul>
                         @endforeach
