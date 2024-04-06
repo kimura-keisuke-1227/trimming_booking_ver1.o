@@ -38,13 +38,17 @@ class NotificationController extends Controller
     public function create()
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
-        $allNotifications = Notification::all();
+        // $allNotifications = Notification::all();
+        $st_date = "2024-04-01";
+        $ed_date = "2024-04-01";
 
-        Log::debug($allNotifications);
+        // Log::debug($allNotifications);
         
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return view('admin.notifications.create',[
-            'notifications' => $allNotifications
+            // 'notifications' => $allNotifications
+            'st_date' => $st_date,
+            'ed_date' => $ed_date,
         ]);
     }
 
