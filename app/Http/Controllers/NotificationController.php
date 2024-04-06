@@ -21,13 +21,12 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        Log::debug(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        Log::info(__METHOD__.'('.__LINE__.') got all notifications:');
         $allNotifications = Notification::all();
 
-        Log::debug(__METHOD__.'('.__LINE__.') got all notifications:');
-        Log::debug($allNotifications);
         
-        Log::debug(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return view('admin.notifications.index',[
             'notifications' => $allNotifications
         ]);
@@ -38,7 +37,15 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        //
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+        $allNotifications = Notification::all();
+
+        Log::debug($allNotifications);
+        
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
+        return view('admin.notifications.create',[
+            'notifications' => $allNotifications
+        ]);
     }
 
     /**
@@ -46,7 +53,9 @@ class NotificationController extends Controller
      */
     public function store(StoreNotificationRequest $request)
     {
-        //
+        Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+
+        Log::debug($allNotifications);
     }
 
     /**
