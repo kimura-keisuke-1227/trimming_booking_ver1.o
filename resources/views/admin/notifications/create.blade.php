@@ -27,17 +27,17 @@
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
          
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">お知らせ内容</label>
-                        <textarea id="prefecture"  rows="5" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="textarea" name="contents" value="">
-</textarea> 
+                        <label class="block text-sm font-medium mb-2" for="contents">お知らせ内容</label>
+                        <textarea id="contents"  rows="5" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="textarea" name="contents" value="">
+                        </textarea> 
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">表示開始日時</label>
-                        <input id="address1" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="st_date" value="{{$st_date}}">
+                        <label class="block text-sm font-medium mb-2" for="st_date">表示開始日時</label>
+                        <input id="st_date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="st_date" value="{{$st_date}}">
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">表示終了日時</label>
-                        <input id="address2" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="ed_date" value="{{$ed_date}}">
+                        <label class="block text-sm font-medium mb-2" for="ed_date">表示終了日時</label>
+                        <input id="ed_date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="ed_date" value="{{$ed_date}}">
                     </div>
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">追加</button>
