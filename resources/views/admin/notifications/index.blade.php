@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-    <a href="">[新規お知らせ登録]</a>
+    <a href="{{Route('notification.create')}}">[新規お知らせ登録]</a>
     <table class="table table-striped pc_only">
         <tr>
             <th>id</th>
