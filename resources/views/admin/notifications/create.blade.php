@@ -38,7 +38,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">お知らせ内容</label>
-                        <input id="prefecture" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="content" value="aa">
+                        <input id="prefecture" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="contents" value="aa">
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">表示開始日時</label>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">表示終了日時</label>
-                        <input id="address2" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="st_date" value="{{$ed_date}}">
+                        <input id="address2" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="datetime-local" name="ed_date" value="{{$ed_date}}">
                     </div>
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">追加</button>
