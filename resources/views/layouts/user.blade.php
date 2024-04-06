@@ -198,12 +198,19 @@
 
                 
                 <div class="pc_container">
-                    
-                    <div class="message">
-                       @foreach ($messages as $message)
-                           <p>{{$message -> contents}}</p>
-                       @endforeach
-                    </div>
+                    @if ($messages->count() > 0)
+                        <div class="message" style="background-color: aqua;">
+                        <h5>お知らせ</h5>
+                        @foreach ($messages as $message)
+                                <ul>
+                                    <li>
+                                        <p>●{{$message -> contents}}</p>
+                                    </li>
+                                </ul>
+                        @endforeach
+                        </div>
+                        
+                    @endif
                     @yield('content')
 
                 </div>
