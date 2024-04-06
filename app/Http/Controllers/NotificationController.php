@@ -39,9 +39,10 @@ class NotificationController extends Controller
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         // $allNotifications = Notification::all();
-        $st_date =date("Y-m-d");
-        $ed_date = Util::addDays($st_date,30);
-
+        $st_date = date("Y-m-d" . " 00:00:00") ;
+        $ed_date = Util::addDays($st_date,30) . ' 23:59:59';
+        
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$st_date:' . $st_date .' $ed_date:' . $ed_date);
         // Log::debug($allNotifications);
         
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
