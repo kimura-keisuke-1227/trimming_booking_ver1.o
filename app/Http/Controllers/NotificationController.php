@@ -55,7 +55,7 @@ class NotificationController extends Controller
     {
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
 
-        Log::debug($allNotifications);
+        Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
     }
 
     /**
