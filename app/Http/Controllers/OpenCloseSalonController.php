@@ -288,6 +288,13 @@ class OpenCloseSalonController extends Controller
     public function changeOXListAll(Request $request){
         $staff = Auth::user();
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start! by staff(' . $staff->id.')');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'Request_header:');
+        Log::debug($request->headers);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
+        Log::debug($request);
+
+        $realIp = request()->ip();
+        Log::debug(__METHOD__.'('.__LINE__.')'.'IP:' . $realIp);
         $step_time = Util::getSetting(30,'step_time',true);
 
         $st_date = $request->st_date;
