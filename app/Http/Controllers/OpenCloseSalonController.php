@@ -305,7 +305,15 @@ class OpenCloseSalonController extends Controller
         $course_id = $request->course_id;
         
         Log::debug(__METHOD__.'('.__LINE__.') st_time:' . $st_time . ' ed_time'. $ed_time);
-
+        
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "管理者による◯×変更[{$method_name}]";
+        $check_log_detail = "{$st_date}から{$ed_time} サロン:{$salon_id} コース:{$course_id}";
+        Util::recordAccessLog($user_info,$check_log_summary,$check_log_detail);
+        
         $insertsDatas = [];
         for($date = $st_date; $date<= $ed_date; $date = Util::addDays($date,1)){
             for($time = $st_time;$time<$ed_time;$time=$time + $step_time){
