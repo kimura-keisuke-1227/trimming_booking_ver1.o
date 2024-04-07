@@ -38,7 +38,7 @@ class Util
         $now = date('Y-m-d H:i');
         Log::debug(__METHOD__.'('.__LINE__.') $now:' . $now);
         $notifications = Notification::query()
-        ->where('page',$page)
+        // ->where('page',$page)
         ->where('st_date','<=',$now)
         ->where('ed_date','>=',$now)
         ->get();

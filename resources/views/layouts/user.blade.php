@@ -207,7 +207,7 @@
                                     <ul>
                                         <li>
                                             <div>
-                                                ({{$message->st_date->format('Y年m月d日')}})
+                                                ({{$message->st_date}})
                                                 <p>{!! nl2br(e($message->contents)) !!}</p>
                                             </div>
                                         </li>
