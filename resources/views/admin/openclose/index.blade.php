@@ -102,7 +102,7 @@
         @csrf
         <div class="flex px-6 pb-4 border-b">
             <div class="">
-                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">空き枠登録</button>
+                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md" onclick='return confirm("登録しますか？")'>空き枠登録</button>
             </div>
         </div>
         <table class="table table-striped">
@@ -169,7 +169,7 @@
         <input type="hidden" name="course_id" value="{{$course_id}}">
         <div class="flex px-6 pb-4 border-b">
             <div class="">
-                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">空き枠登録</button>
+                <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md"  onclick='return confirm("登録しますか？")'>空き枠登録</button>
             </div>
         </div>
     </form>
