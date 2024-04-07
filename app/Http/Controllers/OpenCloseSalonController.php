@@ -59,7 +59,7 @@ class OpenCloseSalonController extends Controller
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "管理者による◯×一覧表示[{$method_name}]";
         $check_log_detail = "{$date}から サロン:{$salon_id} コース:{$course_id}";
-        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$request);
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         
@@ -325,7 +325,7 @@ class OpenCloseSalonController extends Controller
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "管理者による◯×変更[{$method_name}]";
         $check_log_detail = "{$st_date}から{$ed_time} サロン:{$salon_id} コース:{$course_id}";
-        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$request);
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
         
         $insertsDatas = [];
         for($date = $st_date; $date<= $ed_date; $date = Util::addDays($date,1)){
@@ -340,6 +340,7 @@ class OpenCloseSalonController extends Controller
                         'course_id' => $course_id,
                         'date' => $date,
                         'isOpen' => 0,
+                        'check_log_id' => $access_log_id->id,
                         'time' => $time,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
@@ -382,7 +383,7 @@ class OpenCloseSalonController extends Controller
         Log::notice(__METHOD__.'('.__LINE__.') deleted OX data by staff(' . $staff->id.')' );
         
         Log::debug(__METHOD__.'('.__LINE__.') $insertsDatas:' );
-        #Log::debug($insertsDatas);
+        Log::debug($insertsDatas);
         DB::table('open_close_salons')->insert($insertsDatas);
         Log::notice(__METHOD__.'('.__LINE__.') inserted data by staff(' . $staff->id.')' );
         //最後に解禁する
