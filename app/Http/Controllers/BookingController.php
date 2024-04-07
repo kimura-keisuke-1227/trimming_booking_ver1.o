@@ -60,14 +60,19 @@ class BookingController extends Controller
         //BookingController::bookingCheck();
 
         $showBookingsAfterNDays = Util::getSetting(30, 'showBookingsAfterNDays', true);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$showBookingsAfterNDays:' . Util::addDays(date('Y-m-d'), $showBookingsAfterNDays));
         $bookings = Booking::with('pet.user')
             ->with('course.coursemaster')
             ->with('pet.dogtype')
             ->where('date', '>', Util::addDays(date('Y-m-d'), -$showBookingsAfterNDays))
             ->where('pet_id', '>', 0)
             ->orderBy('date')
-            ->orderBy('st_time')
-            ->get();
+            ->orderBy('st_time');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'SQL:' . $bookings->toSql());
+        Log::debug($bookings->getBindings());
+        $bookings = $bookings->get();
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$bookings:');
+        Log::debug($bookings);
         #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
 
         $count_salons = Util::getCountSalons();
