@@ -353,7 +353,7 @@ class Util
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
     }
 
-    public function closeBooked($salon_id, $date, $st_time, $ed_time, $course_id)
+    public function closeBooked($salon_id, $date, $st_time, $ed_time, $course_id,$access_log_id)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
 
@@ -366,6 +366,7 @@ class Util
                 'course_id' => $course_id,
                 'date' => $date,
                 'isOpen' => 0,
+                'check_log_id' => $access_log_id->id,
                 'time' => $time,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
