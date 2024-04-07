@@ -11,8 +11,21 @@ use App\Models\Salon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OpenCloseSalon;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\CheckLog;
+
 class Util
 {
+    public static function recordAccessLog($summary,$detail){
+        Log::info(__METHOD__.'('.__LINE__.')'.'start!');
+        CheckLog::create([
+            CheckLog::STR_COLUMN_NAME_OF_USER_INFO => 'a',
+            CheckLog::STR_COLUMN_NAME_OF_SUMMARY => 'a',
+            CheckLog::STR_COLUMN_NAME_OF_DETAIL => 'a',
+        ]);
+        Log::info(__METHOD__.'('.__LINE__.')'.'end!');
+    }
+
     /**
      * 日付データから、2024年1月28日（日）のような形式を返す
      *
