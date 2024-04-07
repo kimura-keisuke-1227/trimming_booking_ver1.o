@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use app\Models\CheckLog;
+
 return new class extends Migration
 {
     /**
@@ -11,8 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('check_logs', function (Blueprint $table) {
+        Schema::create(CheckLog::STR_TABLE_NAME_OF_CHECK_LOGS, function (Blueprint $table) {
             $table->id();
+            $table->string(CheckLog::STR_COLUMN_NAME_OF_USER_INFO);
+            $table->string(CheckLog::STR_COLUMN_NAME_OF_SUMMARY);
+            $table->string(CheckLog::STR_COLUMN_NAME_OF_DETAIL);
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('check_logs');
+        Schema::dropIfExists(CheckLog::STR_TABLE_NAME_OF_CHECK_LOGS);
     }
 };
