@@ -61,16 +61,23 @@ class BookingController extends Controller
 
         $showBookingsAfterNDays = Util::getSetting(30, 'showBookingsAfterNDays', true);
         Log::debug(__METHOD__.'('.__LINE__.')'.'$showBookingsAfterNDays:' . Util::addDays(date('Y-m-d'), $showBookingsAfterNDays));
-        $bookings = Booking::with('pet.user')
+        
+        $bookings = Booking::query()
+            ->with('pet.user')
             ->with('course.coursemaster')
             ->with('pet.dogtype')
             ->where('date', '>', Util::addDays(date('Y-m-d'), -$showBookingsAfterNDays))
             ->where('pet_id', '>', 0)
             ->orderBy('date')
             ->orderBy('st_time');
+        
+        // SQLの中身を確認
         Log::debug(__METHOD__.'('.__LINE__.')'.'SQL:' . $bookings->toSql());
         Log::debug($bookings->getBindings());
         $bookings = $bookings->get();
+        
+        
+        // 取得した予約データを確認
         Log::debug(__METHOD__.'('.__LINE__.')'.'$bookings:');
         Log::debug($bookings);
         #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
