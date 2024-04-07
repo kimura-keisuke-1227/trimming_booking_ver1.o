@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('open_close_salons', function (Blueprint $table) {
-            $table->foreignId('check_log_id')->after('isOpen')->nullable();
+            $table->foreignId('access_log_id')->after('isOpen')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('open_close_salons', function (Blueprint $table) {
-            $table->dropColumn('check_log_id');
+            $table->dropColumn('access_log_id');
         });
     }
 };

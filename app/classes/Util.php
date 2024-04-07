@@ -366,7 +366,7 @@ class Util
                 'course_id' => $course_id,
                 'date' => $date,
                 'isOpen' => 0,
-                'check_log_id' => $access_log_id->id,
+                'access_log_id' => $access_log_id->id,
                 'time' => $time,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
