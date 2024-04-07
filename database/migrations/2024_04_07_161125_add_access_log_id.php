@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('open_close_salons', function (Blueprint $table) {
             $table->foreignId('access_log_id')->after('isOpen')->nullable();
-            $table->foreignId('user_id')->after('access_log_id')->nullable();
+            $table->string('user_id')->after('access_log_id')->nullable();
         });
     }
 
