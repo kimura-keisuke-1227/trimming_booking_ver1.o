@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create(CheckLog::STR_TABLE_NAME_OF_CHECK_LOGS, function (Blueprint $table) {
             $table->id();
+            $table->foreignId(CheckLog::STR_COLUMN_NAME_OF_USER_ID,CheckLog::INT_LENGTH_OF_USER_INFO);
+            $table->string(CheckLog::STR_COLUMN_NAME_OF_METHOD,CheckLog::INT_LENGTH_OF_USER_METHOD);
             $table->string(CheckLog::STR_COLUMN_NAME_OF_USER_INFO,CheckLog::INT_LENGTH_OF_USER_INFO);
             $table->string(CheckLog::STR_COLUMN_NAME_OF_SUMMARY,CheckLog::INT_LENGTH_OF_SUMMARY);
             $table->text(CheckLog::STR_COLUMN_NAME_OF_DETAIL);
