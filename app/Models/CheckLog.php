@@ -13,4 +13,9 @@ class CheckLog extends Model
     const STR_COLUMN_NAME_OF_USER_INFO = 'user_info';
     const STR_COLUMN_NAME_OF_SUMMARY = 'summary';
     const STR_COLUMN_NAME_OF_DETAIL = 'detail';
+    const STR_COLUMN_NAME_OF_REQUEST = 'request';
+
+    protected $fillable = [
+        'user_info','summary','detail','request'
+    ];
 }
