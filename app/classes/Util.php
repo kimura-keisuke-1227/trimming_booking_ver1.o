@@ -19,13 +19,16 @@ class Util
     public static function recordAccessLog($user_info,$summary,$detail,$sent_request){
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
 
-        CheckLog::create([
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$user(' . $user_info .') summary:' . $summary);
+
+        $id = CheckLog::create([
             CheckLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
             CheckLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
             CheckLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
             CheckLog::STR_COLUMN_NAME_OF_REQUEST => $sent_request->getContent(),
         ]);
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
+        return $id;
     }
 
     /**
