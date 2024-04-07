@@ -74,12 +74,26 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ') salons_count:' . $count_salons);
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.index', [
+
+        $view = 'bookings.index';
+        // $messages = Util::getNotifications($view);
+
+        $params = [
             'owner' => $owner,
             'bookings' => $bookings,
             'showBookingsAfterNDays' => $showBookingsAfterNDays,
             'count_salons' => $count_salons,
-        ]);
+        ];
+
+        return Util::getViewWithNotifications($view,$params);
+
+        // return view( $view, [
+        //     'owner' => $owner,
+        //     'bookings' => $bookings,
+        //     'showBookingsAfterNDays' => $showBookingsAfterNDays,
+        //     'count_salons' => $count_salons,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //予約するペットを選択する
@@ -97,13 +111,27 @@ class BookingController extends Controller
         
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.selectpet', [
+        $view = 'bookings.selectpet';
+ 
+        // $messages = Util::getNotifications($view);
+
+        // Log::debug(__METHOD__.'('.__LINE__.') $messages');
+        // Log::debug($messages);
+
+        $params = [
             'pets' => $pets,
             'owner' => $owner,
             'countOfPets' => $countOfPets,
-            'messages' => $this->getMessage(),
-        ]);
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+        return Util::getViewWithNotifications($view,$params);
+        // return view($view, [
+        //     'pets' => $pets,
+        //     'owner' => $owner,
+        //     'countOfPets' => $countOfPets,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //コースを選択する
@@ -137,16 +165,28 @@ class BookingController extends Controller
             'courses' => $courses,
             'salons' => $salons,
         ]);
-
-
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.selectcourse', [
+        
+        $view = 'bookings.selectcourse';
+        $messages = Util::getNotifications($view);
+        $params = [
             'owner' => $owner,
             'pet' => $pet,
             'courses' => $courses,
             'salons' => $salons,
             'message_before' => $message_before,
-        ]);
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+        return Util::getViewWithNotifications($view,$params);
+
+        // return view($view, [
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'courses' => $courses,
+        //     'salons' => $salons,
+        //     'message_before' => $message_before,
+        //     'messages' => $messages
+        // ]);
     }
 
     public function selectCalender(Request $request)
@@ -227,8 +267,11 @@ class BookingController extends Controller
         $maxBookingDate = Util::getEndOfTheMonth($today, 2);
         $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.booking_calender', [
+        $view = 'bookings.booking_calender';
+        $messages = Util::getNotifications( $view);
+
+        $params = "";
+        $params =[
             'date' => $st_date,
             'before_date' => $beforeDate,
             'after_date' => $afterDate,
@@ -245,8 +288,33 @@ class BookingController extends Controller
             'maxBookingDate' => $maxBookingDate,
             'ed_date' => $ed_date,
             'timesCount' =>$timesCount,
-            'timeOfFirst' => $times[$st_time]
-        ]);
+            'timeOfFirst' => $times[$st_time],
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+
+
+        return Util::getViewWithNotifications($view,$params);
+        // return view($view, [
+        //     'date' => $st_date,
+        //     'before_date' => $beforeDate,
+        //     'after_date' => $afterDate,
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'course' => $course,
+        //     'salon' => $salon,
+        //     'times' => $times,
+        //     'days' => $days,
+        //     'capacities' => $capacities,
+        //     'timesNum' => $timesNum,
+        //     'message' => $message,
+        //     'today' => $today,
+        //     'maxBookingDate' => $maxBookingDate,
+        //     'ed_date' => $ed_date,
+        //     'timesCount' =>$timesCount,
+        //     'timeOfFirst' => $times[$st_time],
+        //     'messages' => $messages,
+        // ]);
     }
 
     public function confirmBooking(Request $request, $date, $time)
@@ -279,8 +347,10 @@ class BookingController extends Controller
             'time' => $time,
         ]);
 
-        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.confirm', [
+        $view = 'bookings.confirm';
+        $messages = Util::getNotifications($view);
+
+        $params =[
             'owner' => $owner,
             'pet' => $pet,
             'course' => $course,
@@ -288,7 +358,21 @@ class BookingController extends Controller
             'time' => $time,
             'timeStr' => $timeStr,
             'message' => $message,
-        ]);
+        ];
+
+        Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
+        return Util::getViewWithNotifications($view,$params);
+
+        // return view($view, [
+        //     'owner' => $owner,
+        //     'pet' => $pet,
+        //     'course' => $course,
+        //     'date' => $date,
+        //     'time' => $time,
+        //     'timeStr' => $timeStr,
+        //     'message' => $message,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //削除する予約の確認画面
@@ -321,11 +405,20 @@ class BookingController extends Controller
             ->with('error', 'キャンセルできない予約です。。');
         }
 
+        $view = 'bookings.cancelConfirm';
+        $messages = Util::getNotifications($view);
+
+        $params = [
+            'booking' => $booking,
+        ];
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return view('bookings.cancelConfirm', [
-            'booking' => $booking
-        ]);
+        return Util::getViewWithNotifications($view,$params);
+
+        // return view($view, [
+        //     'booking' => $booking,
+        //     'messages' => $messages,
+        // ]);
     }
 
     //予約のキャンセル処理

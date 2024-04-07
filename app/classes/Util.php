@@ -12,10 +12,42 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OpenCloseSalon;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Notification;
+
 use App\Models\CheckLog;
 
 class Util
 {
+    public static function getViewWithNotifications($view,$params){
+        Log::info(__METHOD__.'('.__LINE__.') start!');
+        $new_params = $params;
+        $now = date('Y-m-d H:i');
+        
+        $notifications = Notification::query()
+        // ->where('page',$view)
+        ->where('st_date','<=',$now)
+        ->where('ed_date','>=',$now)
+        ->get();
+        
+        $new_params['messages'] = $notifications;
+        Log::info(__METHOD__.'('.__LINE__.') end!');
+        return view($view,$new_params);
+    }
+
+    public static function getNotifications($page){
+        $now = date('Y-m-d H:i');
+        Log::debug(__METHOD__.'('.__LINE__.') $now:' . $now);
+        $notifications = Notification::query()
+        ->where('page',$page)
+        ->where('st_date','<=',$now)
+        ->where('ed_date','>=',$now)
+        ->get();
+
+        Log::debug(__METHOD__.'('.__LINE__.') notifications');
+        Log::debug($notifications);
+        return $notifications;
+    }
+
     public static function recordAccessLog($user_info,$summary,$detail,$sent_request){
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
 
