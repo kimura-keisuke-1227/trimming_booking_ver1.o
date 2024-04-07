@@ -163,9 +163,11 @@ class Util
      */
     public static function addDays($baseDay, $addDays)
     {
-
-        $time = '+' . $addDays . 'day';
-        return date('Y-m-d', strtotime($time, strtotime($baseDay)));
+        Log::debug(__METHOD__.'('.__LINE__.')'.'baseDay:' . $baseDay .' $addDays:' . $addDays);
+        $time =  $addDays . 'day';
+        $result = date('Y-m-d', strtotime($time, strtotime($baseDay)));
+        Log::debug(__METHOD__.'('.__LINE__.')'.'result:' . $result);
+        return $result;
     }
 
     /*
