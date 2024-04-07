@@ -690,12 +690,18 @@ class BookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
 
+        // 操作記録をDBに
+        $user =Auth::user();
+        $realIp = request()->ip();
+ 
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+
         try{
             $util = new Util();
             $access_log_st_time = $util->minuteNumToTime($st_time);
             $access_log_ed_time = $util->minuteNumToTime($ed_time);
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存";
-            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
+            $util::recordAccessLog(__METHOD__,$user_info ,"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
             $booking->save();
             Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
     
@@ -703,9 +709,9 @@ class BookingController extends Controller
             Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by staff(' . $staff . ')');
             $course_master = CourseMaster::find($course_id);
             $util = new Util();
-            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう◯×の更新:";
-            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
+            $access_log_id = $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
+            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id,$access_log_id);
     
     
             Log::debug('管理者予約登録：(pet_id)' . $pet_id .
@@ -1060,12 +1066,18 @@ class BookingController extends Controller
             Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
             Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
     
+            // 操作記録をDBに
+            $user =Auth::user();
+            $realIp = request()->ip();
+ 
+            $user_info = "user_id({$user->id}) IP[{$realIp}]";
+
             //○×表を閉じる
             Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
             $course_master = Course::find($course_id);
-            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう◯×の更新:{$message}}";
-            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"予約に伴う◯×の更新",$access_log_detail,$request);
+            $access_log_id = $util::recordAccessLog(__METHOD__,$user_info,"予約に伴う◯×の更新",$access_log_detail,$request);
+            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id,$access_log_id);
     
             $pet = Pet::find($pet_id);
             $pet->message = $message;
@@ -1193,7 +1205,7 @@ class BookingController extends Controller
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') starts!');
         $util = new Util();
-        $util->closeBooked(1, '2019-01-01', 600, 720, 1);
+        $util->closeBooked(1, '2019-01-01', 600, 720, 1,999);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') ends!');
         return __METHOD__;
     }
