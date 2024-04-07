@@ -65,10 +65,11 @@
             <br><br>
             <p>メールアドレス・パスワードを入力して<br>ログインしてください。</p>
             <br>
-
-            @foreach ($notifications as $message)
-              <p>{{ $message -> contents}}</p>
-            @endforeach
+            {{--
+                @foreach ($notifications as $message)
+                  <p>{{ $message -> contents}}</p>
+                @endforeach
+              --}}
 
             @if($errors->any())
             <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
