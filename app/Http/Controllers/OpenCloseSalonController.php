@@ -341,6 +341,8 @@ class OpenCloseSalonController extends Controller
                         'date' => $date,
                         'isOpen' => 0,
                         'access_log_id' => $access_log_id->id,
+                        'user_id' => $user->id,
+                        'user_info' => $user_info,
                         'time' => $time,
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s'),
