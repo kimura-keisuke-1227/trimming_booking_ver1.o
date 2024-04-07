@@ -358,6 +358,10 @@ class Util
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
 
         $step_time = $this->getSetting(30, 'step_time', true);
+        // 操作記録をDBに
+        $user =Auth::user();
+        $realIp = request()->ip();
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
 
         $insertsDatas = [];
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
@@ -367,6 +371,8 @@ class Util
                 'date' => $date,
                 'isOpen' => 0,
                 'access_log_id' => $access_log_id->id,
+                'user_id' => $user->id,
+                'user_info' => $user_info,
                 'time' => $time,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
