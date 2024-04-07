@@ -48,12 +48,14 @@ class Util
         return $notifications;
     }
 
-    public static function recordAccessLog($user_info,$summary,$detail,$sent_request){
+    public static function recordAccessLog($method_name,$user_info,$summary,$detail,$sent_request){
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
-
-        Log::debug(__METHOD__.'('.__LINE__.')'.'$user(' . $user_info .') summary:' . $summary);
+        $user_id = Util::getUserId();
+        Log::debug(__METHOD__.'('.__LINE__.')'.'user_id:' .$user_id.' $user(' . $user_info .') summary:' . $summary);
 
         $id = CheckLog::create([
+            CheckLog::STR_COLUMN_NAME_OF_USER_ID => $user_id,
+            CheckLog::STR_COLUMN_NAME_OF_METHOD => $method_name,
             CheckLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
             CheckLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
             CheckLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
