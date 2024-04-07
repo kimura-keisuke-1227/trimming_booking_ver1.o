@@ -16,12 +16,13 @@ use App\Models\CheckLog;
 
 class Util
 {
-    public static function recordAccessLog($summary,$detail){
+    public static function recordAccessLog($user_info,$summary,$detail){
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
+
         CheckLog::create([
-            CheckLog::STR_COLUMN_NAME_OF_USER_INFO => 'a',
-            CheckLog::STR_COLUMN_NAME_OF_SUMMARY => 'a',
-            CheckLog::STR_COLUMN_NAME_OF_DETAIL => 'a',
+            CheckLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
+            CheckLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
+            CheckLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
         ]);
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
     }
