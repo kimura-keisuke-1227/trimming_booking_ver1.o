@@ -46,10 +46,23 @@ class OpenCloseSalonController extends Controller
     public function index3(Request $request)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
+
         $salon_id = $request->salon;
         $course_id=$request->course;
         $date = $request ->st_date;
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "管理者による◯×一覧表示[{$method_name}]";
+        $check_log_detail = "{$date}から サロン:{$salon_id} コース:{$course_id}";
+        $access_log_id = Util::recordAccessLog($user_info,$check_log_summary,$check_log_detail,$request);
+
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
+        
 
         return redirect(route('admin.checkOpenCloseWithDate',[
             'salon' =>    $salon_id, 
