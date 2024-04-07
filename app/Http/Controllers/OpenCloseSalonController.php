@@ -319,7 +319,7 @@ class OpenCloseSalonController extends Controller
             for($time = $st_time;$time<$ed_time;$time=$time + $step_time){
                 $key = $date . '_' . (string) $time;
                 $openCloseSalon = $request->get($key);
-                Log::debug(__METHOD__.'('.__LINE__.') $request->'. $key .'('. $request->get($key) .')');
+                $check_log_id = Log::debug(__METHOD__.'('.__LINE__.') $request->'. $key .'('. $request->get($key) .')');
                 
                 if($openCloseSalon==0){
                     $openCloseSalon = [
