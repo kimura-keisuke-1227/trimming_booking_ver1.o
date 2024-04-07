@@ -691,6 +691,11 @@ class BookingController extends Controller
         $booking->salon_id = $salon_id;
 
         try{
+            $util = new Util();
+            $access_log_st_time = $util->minuteNumToTime($st_time);
+            $access_log_ed_time = $util->minuteNumToTime($ed_time);
+            $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存";
+            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
             $booking->save();
             Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
     
@@ -699,6 +704,8 @@ class BookingController extends Controller
             $course_master = CourseMaster::find($course_id);
             $util = new Util();
             $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
+            $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう◯×の更新:";
+            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
     
     
             Log::debug('管理者予約登録：(pet_id)' . $pet_id .
@@ -1042,6 +1049,11 @@ class BookingController extends Controller
         $booking->message = $message;
 
         try{
+            $util = new Util();
+            $access_log_st_time = $util->minuteNumToTime($st_time);
+            $access_log_ed_time = $util->minuteNumToTime($ed_time);
+            $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存:{$message}}";
+            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"予約に伴う予約の保存",$access_log_detail,$request);
             $booking->save();
             Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
     
@@ -1051,8 +1063,9 @@ class BookingController extends Controller
             //○×表を閉じる
             Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
             $course_master = Course::find($course_id);
-            $util = new Util();
             $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id);
+            $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう◯×の更新:{$message}}";
+            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"予約に伴う◯×の更新",$access_log_detail,$request);
     
             $pet = Pet::find($pet_id);
             $pet->message = $message;
