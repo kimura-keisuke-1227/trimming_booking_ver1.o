@@ -62,11 +62,13 @@ class BookingController extends Controller
         $showBookingsAfterNDays = Util::getSetting(30, 'showBookingsAfterNDays', true);
         Log::debug(__METHOD__.'('.__LINE__.')'.'$showBookingsAfterNDays:' . Util::addDays(date('Y-m-d'), $showBookingsAfterNDays));
         
+        $booking_list_st_date = Util::addDays(date('Y-m-d'), -$showBookingsAfterNDays);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'getting booking list, with $booking_list_st_date:' . $booking_list_st_date);
         $bookings = Booking::query()
             ->with('pet.user')
             ->with('course.coursemaster')
             ->with('pet.dogtype')
-            ->where('date', '>', Util::addDays(date('Y-m-d'), -$showBookingsAfterNDays))
+            ->where('date', '>=', $booking_list_st_date)
             ->where('pet_id', '>', 0)
             ->orderBy('date')
             ->orderBy('st_time');
@@ -74,6 +76,19 @@ class BookingController extends Controller
         // SQLの中身を確認
         Log::debug(__METHOD__.'('.__LINE__.')'.'SQL:' . $bookings->toSql());
         Log::debug($bookings->getBindings());
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーによる自身の予約一覧の表示[{$method_name}]";
+        $check_log_detail = $bookings;
+        $request_from_user = "{$booking_list_st_date}より後の予約データを取得。";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+        
+
         $bookings = $bookings->get();
         
         
