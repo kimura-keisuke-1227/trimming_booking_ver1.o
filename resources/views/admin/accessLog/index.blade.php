@@ -10,15 +10,16 @@
             <th>日次</th>
             
         </tr>
-        @foreach ($list_accessLog as $accessLog)
+        @foreach ($list_accessLog as $accesslog)
         <tr>
-            <td>{{$accessLog->id}}</td>
-            <td><a href="{{ Route('accesslog.show',['accesslog' => $accessLog]) }}">{{$accessLog->summary}}</a></td>
-            <td>{{$accessLog->user_info}}</td>
-            <td>{{$accessLog->created_at}}</td>
+            <td>{{$accesslog->id}}</td>
+            <td><a href="{{ Route('accesslog.show',['accesslog' => $accesslog->id]) }}">{{$accesslog->summary}}</a></td>
+            <td>{{$accesslog->user_info}}</td>
+            <td>{{$accesslog->created_at}}</td>
         </tr>
         @endforeach
     </table>
+    {{ $list_accessLog->links() }}
     <div class="ml-auto">
         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
     </div>

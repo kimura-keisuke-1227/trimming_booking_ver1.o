@@ -32,8 +32,8 @@ class AccessLogController extends Controller
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
 
         $access_log_list = AccessLog::query()
-        ->orderBy('created_at','desc')
-        ->get();
+        ->latest('created_at')
+        ->paginate(50);
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
         return view('admin.accessLog.index',[
             'list_accessLog' => $access_log_list,
@@ -59,9 +59,15 @@ class AccessLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AccessLog $AccessLog): Response
+    public function show(AccessLog $accesslog)
     {
-        //
+        Log::info(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'AccessLog');
+        Log::debug($accesslog);
+        Log::info(__METHOD__.'('.__LINE__.')'.'end!');
+        return view('admin.accessLog.show',[
+            'AccessLog' => $accesslog,
+        ]);
     }
 
     /**
