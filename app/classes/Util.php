@@ -52,6 +52,7 @@ class Util
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
         $user_id = Util::getUserId();
         Log::debug(__METHOD__.'('.__LINE__.')'.'user_id:' .$user_id.' $user(' . $user_info .') summary:' . $summary);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'detail:' . $detail);
 
         if(! $sent_request==""){
             $log_request = $sent_request;
