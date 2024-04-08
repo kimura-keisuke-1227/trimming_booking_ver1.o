@@ -23,6 +23,18 @@ class PetController extends Controller
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pets = Pet::where('owner_id' , $owner -> id) -> get();
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーによるペット一覧の取得[{$method_name}]";
+        $check_log_detail = "";
+        $request_from_user = request();
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+        
         
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
         return view('pets.index',[
