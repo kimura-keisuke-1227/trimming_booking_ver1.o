@@ -53,13 +53,19 @@ class Util
         $user_id = Util::getUserId();
         Log::debug(__METHOD__.'('.__LINE__.')'.'user_id:' .$user_id.' $user(' . $user_info .') summary:' . $summary);
 
+        if(! $sent_request==""){
+            $log_request = $sent_request;
+        } else{
+            $log_request = "";
+        }
+
         $id = CheckLog::create([
             CheckLog::STR_COLUMN_NAME_OF_USER_ID => $user_id,
             CheckLog::STR_COLUMN_NAME_OF_METHOD => $method_name,
             CheckLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
             CheckLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
             CheckLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
-            CheckLog::STR_COLUMN_NAME_OF_REQUEST => $sent_request->getContent(),
+            CheckLog::STR_COLUMN_NAME_OF_REQUEST => $log_request,
         ]);
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
         return $id;
