@@ -83,8 +83,8 @@ class BookingController extends Controller
         $realIp = request()->ip();
 
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
-        $check_log_summary = "ユーザーによる自身の予約一覧の表示[{$method_name}]" . "{$booking_list_st_date}より後の予約データを取得。" ;
-        $check_log_detail = $bookings;
+        $check_log_summary = "ユーザーによる自身の予約一覧の表示[{$method_name}]";
+        $check_log_detail =  "{$booking_list_st_date}より後の予約データを取得。";
         $request_from_user = "";
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
         
