@@ -288,7 +288,7 @@ Route::get('/admin/salons/{salon_id}',
 -> name('admin.salon.edit');
 
 //サロン設定画面の更新
-Route::post('/admin/salons/{salon_id}',
+Route::put('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
 ) -> Middleware('auth')
 -> name('admin.salon.update');
