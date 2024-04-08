@@ -277,9 +277,11 @@ class BookingController extends Controller
 
         $course_master_id = $course->courseMaster->id;
         if ($course_master_id == 1) {
-            $ed_time = 60 * 17 + 1;
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE1",15)'. env("FINAL_BOOKING_TIME_COURSE1"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE1",17) + 1;
         } else {
-            $ed_time = 60 * 16 + 1;
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE2",15)'. env("FINAL_BOOKING_TIME_COURSE2"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE2",21) + 1;
         }
 
 
