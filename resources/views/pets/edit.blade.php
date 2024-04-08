@@ -54,20 +54,21 @@
                 </div>
             </form>
             <br>
-            <div class="pt-4 px-6" style="border:1px">
-                <h4>施術履歴（カルテ）</h4>
-                <table class="table_karte">
-                    <tr>
-                        <th>日付</th>
-                    </tr>
-                    @foreach ($kartes as $karte)
+            @if ($kartes->count() >0 )
+                <div class="pt-4 px-6" style="border:1px">
+                    <h4>施術履歴（カルテ）</h4>
+                    <table class="table_karte">
                         <tr>
-                            <td><a href="{{Route('owner.karte.show',['karte' => $karte])}}">{{$karte->karte_date()}}</a></td>
+                            <th>日付</th>
                         </tr>
-                    @endforeach
-                </table>
-
-            </div>
+                        @foreach ($kartes as $karte)
+                            <tr>
+                                <td><a href="{{Route('owner.karte.show',['karte' => $karte])}}">{{$karte->karte_date()}}</a></td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 </section>
