@@ -30,7 +30,7 @@ class OpenCloseSalonController extends Controller
         $date = date('Y-m-d');
         $course_id = 1;
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
-
+        
         return $this->getOXwithParam($salon_id,$course_id,$date);
     }
 
@@ -62,12 +62,14 @@ class OpenCloseSalonController extends Controller
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
-        
+
+        $flg_to_confirm_when_open_close = env('CONFIRM_OPEN_CLOSE',false);
 
         return redirect(route('admin.checkOpenCloseWithDate',[
             'salon' =>    $salon_id, 
             'course' => $course_id,
             'date'=>$date,
+            'flg_to_confirm_when_open_close' => $flg_to_confirm_when_open_close,
         ]));
     }
 
@@ -177,6 +179,9 @@ class OpenCloseSalonController extends Controller
 
         $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
 
+        // 保存時の確認有無
+        $flg_to_confirm_when_open_close = env('CONFIRM_OPEN_CLOSE',false);
+
         return view('admin.openclose.index', [
             'st_date' => $st_date,
             'days' => $days,
@@ -194,7 +199,8 @@ class OpenCloseSalonController extends Controller
             'st_time' => $st_time,
             'ed_time'=> $ed_time,
             'timesCount' => $timesCount,
-            'timeOfFirst' => $times[$st_time]
+            'timeOfFirst' => $times[$st_time],
+            'flg_to_confirm_when_open_close' => $flg_to_confirm_when_open_close,
         ]);
     }
 
