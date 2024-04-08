@@ -74,18 +74,22 @@ class CourseController extends Controller
         //
         $r =  $request;
         Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
-        Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
-        $courses = Course::all();
-
+        
         // 操作記録をDBに
         $user =Auth::user();
         $method_name = __METHOD__;
         $realIp = request()->ip();
-
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $request_from_user = request();
+
+        Log::info(__METHOD__.'('.__LINE__.')'.'Access to DB for get Course info.');
+        $check_log_summary = "[自動]スタッフによるコースの時間変更のためのDBアクセス[{$method_name}]";
+        $check_log_detail = "";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+        $courses = Course::all();
+
         $check_log_summary = "スタッフによるコースの時間変更[{$method_name}]";
         $check_log_detail = "";
-        $request_from_user = request();
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
 
         foreach($courses as $course){
