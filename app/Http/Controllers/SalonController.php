@@ -55,8 +55,25 @@ class SalonController extends Controller
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $request:');
         Log::debug($request);
+        $validated = $request->validated();
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$input');
+        Log::debug($validated);
 
+        $st_time = ($request['st_time'] - $request['st_time']%100)/100 * 60 + $request['st_time']%100;
+        $ed_time = ($request['ed_time'] - $request['ed_time']%100)/100 * 60 + $request['ed_time']%100;
+      
         $salon = Salon::find($id);
+        $salon['salon_name'] = $request['salon_name'];
+        $salon['prefecture'] = $request['prefecture'];
+        $salon['address1']   = $request['address1'];
+        $salon['address2']   = $request['address2'];
+        $salon['phone']      = $request['phone'];
+        $salon['email']      = $request['email'];
+        $salon['st_time']    = $st_time;
+        $salon['ed_time']    = $ed_time;
+
+        $salon->save();
+
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
         return __METHOD__;
