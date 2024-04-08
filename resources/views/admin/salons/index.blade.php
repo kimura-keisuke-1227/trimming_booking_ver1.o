@@ -14,6 +14,9 @@
         <tr>
             <td>{{$salon -> salon_name}}</td>
             <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">[設定]</a></td>
+            {{-- 
+                
+                --}}
         </tr>
         @endforeach
 
@@ -25,7 +28,11 @@
         </tr>
         @foreach($salons as $salon)
         <tr>
-            <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">{{$salon -> salon_name}}</a></td>
+            {{-- 
+                <td><a href="{{ Route('admin.salon.edit',['salon_id' => $salon])}}">{{$salon -> salon_name}}</a></td>
+            --}}
+            <td><p>{{$salon -> salon_name}}</p></td>
+
         </tr>
         @endforeach
     </table>
