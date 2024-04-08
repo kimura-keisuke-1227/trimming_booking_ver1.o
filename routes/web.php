@@ -285,7 +285,13 @@ Route::get('/admin/salons/create',
 Route::get('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
 ) -> Middleware('auth')
--> name('admin.course.index');
+-> name('admin.salon.edit');
+
+//サロン設定画面の更新
+Route::post('/admin/salons/{salon_id}',
+[SalonController::class,'edit']
+) -> Middleware('auth')
+-> name('admin.salon.update');
 
 //コース設定画面の取得
 Route::get('/admin/course',
