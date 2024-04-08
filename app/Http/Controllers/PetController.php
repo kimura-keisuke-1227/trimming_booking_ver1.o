@@ -9,6 +9,7 @@ use App\Models\Dogtype;
 use App\Models\Karte;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\classes\Util;
 
 class PetController extends Controller
 {
@@ -75,6 +76,14 @@ class PetController extends Controller
         ]);
         
         #$form = $request -> all();
+                // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーによるペットの登録[{$method_name}]";
+        
         
         #unset($form['_token']);
         $owner = Auth::user();
@@ -83,6 +92,8 @@ class PetController extends Controller
         $pet -> dogtype_id = $request -> dogtype;
         $pet -> birthday = $request -> birthday;
         $pet -> weight = $request -> weight;
+        $check_log_detail = $pet;
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
         $pet ->  save();
         Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') saved a pet id(' . $pet -> id .')');
         
@@ -195,6 +206,17 @@ class PetController extends Controller
 
         $pet->weight = $request->weight;
         $pet->birthday = $request->birthday;
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーによるペット情報の変更[{$method_name}]";
+        $check_log_detail = $pet;
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+        
 
         $pet->save();
         return redirect(Route('pets.edit',['pet' => $pet]))
