@@ -8,12 +8,13 @@
             <th>概要</th>
             <th>ユーザー</th>
             <th>日次</th>
+            
         </tr>
         @foreach ($list_accessLog as $accessLog)
         <tr>
             <td>{{$accessLog->id}}</td>
-            <td>{{$accessLog->summary}}</td>
-            <td>{{$accessLog->id}}</td>
+            <td><a href="{{ Route('accesslog.show',['accesslog' => $accessLog]) }}">{{$accessLog->summary}}</a></td>
+            <td>{{$accessLog->user_info}}</td>
             <td>{{$accessLog->created_at}}</td>
         </tr>
         @endforeach
