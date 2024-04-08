@@ -440,6 +440,17 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $booking = Booking::findOrFail($id);
 
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーによる予約キャンセル[{$method_name}]";
+        $check_log_detail = $booking;
+        $request_from_user = '';
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+
         //キャンセルのメールを送りたい
         $booking->delete();
         Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
@@ -701,7 +712,7 @@ class BookingController extends Controller
             $access_log_st_time = $util->minuteNumToTime($st_time);
             $access_log_ed_time = $util->minuteNumToTime($ed_time);
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存";
-            $util::recordAccessLog(__METHOD__,$user_info ,"[スタッフ]予約に伴う◯×の更新",$access_log_detail,$request);
+            $util::recordAccessLog(__METHOD__,$user_info ,"[スタッフ]予約に伴う予約の登録",$access_log_detail,$request);
             $booking->save();
             Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
     
@@ -1081,6 +1092,9 @@ class BookingController extends Controller
     
             $pet = Pet::find($pet_id);
             $pet->message = $message;
+
+            $access_log_detail = "pet:{$pet->id} (owner{$pet->user->id}) の予約時のメッセージ保存。";
+            $util::recordAccessLog(__METHOD__,'user_id;' . $util->getUserId(),"予約時のメッセージの変更",$access_log_detail,$request);
             
             $pet->save();
             Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');

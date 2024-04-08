@@ -13,6 +13,7 @@ use App\Models\Notification;
 
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -62,6 +63,18 @@ class NotificationController extends Controller
         // return($request);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるによるお知らせの登録[{$method_name}]";
+        $check_log_detail = "{$request['st_date']} から {$request['ed_date']} までのお知らせ。{$request['contents']}";
+        $request_from_user = '';
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+        
+
         Notification::create([
             'contents' => $request['contents'],
             'st_date' => $request['st_date'],
@@ -69,7 +82,7 @@ class NotificationController extends Controller
         ]);
         
         return redirect()->route('notification.index')
-        ->with("success", "【まだ】お知らせを保存しました。");
+        ->with("success", "お知らせを保存しました。");
     }
 
     /**
