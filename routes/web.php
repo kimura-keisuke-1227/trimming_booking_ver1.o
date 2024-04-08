@@ -15,6 +15,7 @@ use App\Http\Controllers\KarteController;
 use App\Http\Controllers\KarteFormatController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
+use App\Http\Controllers\AccessLogController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -399,6 +400,10 @@ Route::resource('/admin/notification',
 -> Middleware('auth')
 ;
 
+Route::resource('/admin/accesslog', AccessLogController::class)
+-> only(['index','show'])
+-> Middleware('auth')
+;
 
 /*****************************************************************
 *
