@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Notification;
 
-use App\Models\CheckLog;
+use App\Models\AccessLog;
 
 class Util
 {
@@ -60,13 +60,13 @@ class Util
             $log_request = "";
         }
 
-        $id = CheckLog::create([
-            CheckLog::STR_COLUMN_NAME_OF_USER_ID => $user_id,
-            CheckLog::STR_COLUMN_NAME_OF_METHOD => $method_name,
-            CheckLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
-            CheckLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
-            CheckLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
-            CheckLog::STR_COLUMN_NAME_OF_REQUEST => $log_request,
+        $id = AccessLog::create([
+            AccessLog::STR_COLUMN_NAME_OF_USER_ID => $user_id,
+            AccessLog::STR_COLUMN_NAME_OF_METHOD => $method_name,
+            AccessLog::STR_COLUMN_NAME_OF_USER_INFO => $user_info,
+            AccessLog::STR_COLUMN_NAME_OF_SUMMARY => $summary,
+            AccessLog::STR_COLUMN_NAME_OF_DETAIL => $detail,
+            AccessLog::STR_COLUMN_NAME_OF_REQUEST => $log_request,
         ]);
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
         return $id;

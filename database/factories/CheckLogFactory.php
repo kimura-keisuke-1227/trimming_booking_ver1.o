@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CheckLog>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AccessLog>
  */
-class CheckLogFactory extends Factory
+class AccessLogFactory extends Factory
 {
     /**
      * Define the model's default state.
