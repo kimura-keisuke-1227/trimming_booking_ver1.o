@@ -157,9 +157,9 @@ class OpenCloseSalonController extends Controller
         $st_time = $salon->st_time;
         $course_master_id = $course_id;
         if($course_master_id==1){
-            $ed_time = 60*17+1;
+            $ed_time = 60*env("FINAL_BOOKING_TIME_COURSE1",17)+1;
         } else{
-            $ed_time = 60*16+1;
+            $ed_time = 6060*env("FINAL_BOOKING_TIME_COURSE1",16)+1+1;
         }
         Log::info(__METHOD__ . '(' . __LINE__ . ') get setting info of step_time from DB!');
         $step_time = Util::getSetting(30, 'step_time', true);
