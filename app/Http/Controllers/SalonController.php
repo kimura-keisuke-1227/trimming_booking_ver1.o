@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salon;
 
+use App\Http\Requests\StoreSalonRequest;
+use App\Http\Requests\UpdateSalonRequest;
+
 use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
@@ -48,7 +51,7 @@ class SalonController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
+    public function update(UpdateSalonRequest $request, $id){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') $request:');
         Log::debug($request);
@@ -67,7 +70,7 @@ class SalonController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(StoreSalonRequest $request){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         $salon =  new Salon;
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
