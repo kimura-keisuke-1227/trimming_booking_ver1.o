@@ -37,7 +37,7 @@ class SalonController extends Controller
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') salon_id:' . $salon_id);
 
-        $salon = Salon::find($salon_id)->first();
+        $salon = Salon::find($salon_id);
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .')');
         Log::debug($salon);
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
@@ -76,7 +76,8 @@ class SalonController extends Controller
 
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
-        return __METHOD__;
+        return redirect(Route('admin.salon.edit',['salon_id' => $salon]))
+        ->with('success','情報を更新しました。');
     }
 
     public function create(){
