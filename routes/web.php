@@ -289,7 +289,7 @@ Route::get('/admin/salons/{salon_id}',
 
 //サロン設定画面の更新
 Route::put('/admin/salons/{salon_id}',
-[SalonController::class,'edit']
+[SalonController::class,'update']
 ) -> Middleware('auth')
 -> name('admin.salon.update');
 
