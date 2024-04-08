@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Auth;
+use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\Salon;
@@ -76,6 +77,17 @@ class CourseController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.')'.'$request:');
         $courses = Course::all();
 
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるコースの時間変更[{$method_name}]";
+        $check_log_detail = "";
+        $request_from_user = request();
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+
         foreach($courses as $course){
             //  Log::debug(__METHOD__.'('.__LINE__.') id:' .(String)$course->id.')minute:' . (String)$request["minute_" . (String)$course->id]);
 
@@ -87,7 +99,8 @@ class CourseController extends Controller
 
         Log::debug($request);
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
-        return redirect()->route('admin.course.edit');
+        return redirect()->route('admin.course.edit')
+            ->with('success','更新しました。');
     }
 
     /**
