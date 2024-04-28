@@ -281,7 +281,7 @@ class BookingController extends Controller
             $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE1",17) + 1;
         } else {
             Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE2",15)'. env("FINAL_BOOKING_TIME_COURSE2"));
-            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE2",21) + 1;
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE2",16) + 1;
         }
 
 
