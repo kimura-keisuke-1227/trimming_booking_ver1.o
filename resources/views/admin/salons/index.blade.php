@@ -36,7 +36,10 @@
         </tr>
         @endforeach
     </table>
-    <a href="{{ Route('admin.salon.create')}}">サロン登録へ</a>
+
+    {{-- 
+        <a href="{{ Route('admin.salon.create')}}">サロン登録へ</a>
+    --}}
 
 </div>
 @endsection
