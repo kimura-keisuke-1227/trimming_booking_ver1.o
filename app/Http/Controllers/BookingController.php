@@ -296,9 +296,9 @@ class BookingController extends Controller
         $allTempCapacities = TempCapacity::all();
         $allRegularHoliday = RegularHoliday::all();
 
-        $bookingsCalc = new BookingsCalc();
         */
         
+        $bookingsCalc = new BookingsCalc();
         $salon_id = $salon->id;
         $needed_time = $course->minute;
         Log::debug(__METHOD__ . '(' . __LINE__ . ') salon_id:' . $salon_id . ' $needed_time='. $needed_time);
@@ -314,8 +314,12 @@ class BookingController extends Controller
         //$needed_time = $course->minute;
         //$bookingsCalc->getCanBookList2($salon_id, $course_master_id, $st_date, $ed_date,$step_time,$st_time,$ed_time,$needed_time);
 
-        $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
+        Log::info(__METHOD__.'('.__LINE__.')'.'start_to_calc_capacities');
+        
+        $capacities = $bookingsCalc->getCanBookList3($salon,$st_date,$ed_date,$needed_time,$course);
+
+        // $capacities =
+        //     $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
 
         session([
             'course' => $course,
@@ -1028,8 +1032,15 @@ class BookingController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ')');
 
         Log::debug(__METHOD__ . '(' . __LINE__ . ')');
-        $capacities =
-            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
+
+        $bookingsCalc = new BookingsCalc();
+        Log::info(__METHOD__.'('.__LINE__.')'.'call bookingsCalc->getCanBookList3');
+        $capacities = $bookingsCalc->getCanBookList3($salon,$st_date,$ed_date,$needed_time,$course);
+
+        // $capacities =
+        //     $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
+        // $capacities =
+        //     $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id, $course_master_id, $st_date, $ed_date, $st_time, $ed_time, $step_time);
 
         session([
             'course' => $course,

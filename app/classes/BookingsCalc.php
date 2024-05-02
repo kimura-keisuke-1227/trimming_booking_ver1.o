@@ -439,4 +439,70 @@ class BookingsCalc
 
         return $acceptableCounts;
     }
+
+
+    public function getCanBookList3($salon,$st_date,$ed_date,$needed_minutes,$course){
+        Log::info(__METHOD__.'('.__LINE__.')'.'start!');
+        Log::debug(__METHOD__.'('.__LINE__.')'.'$salon_id:' . $salon->id);
+
+        $openCloseSalonController = new OpenCloseSalonController();
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master_id: ' );
+        $course_master_id =  $course->course_master_id;
+        $st_time = $salon->st_time;
+        $ed_time = $salon->ed_time;
+
+        if($course_master_id==1){
+            $booking_ed_time = env("FINAL_BOOKING_TIME_COURSE1",17)*60+1;
+        }elseif($course_master_id==2){
+            $booking_ed_time = env("FINAL_BOOKING_TIME_COURSE2",16)*60+1;
+        }
+
+        $step_time = Util::getSetting(30, 'step_time', true);
+
+        $openCloseList =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon->id,$course_master_id, $st_date, $ed_date, $st_time, $salon->ed_time, $step_time);
+
+        // Log::debug(__METHOD__.'('.__LINE__.')'.'openCloseList');
+        // Log::debug($openCloseList);
+        
+        $capacities = [];
+        for($date=$st_date;$date<=$ed_date;$date = Util::addDays($date, 1)){
+            $today_capacity =[];
+            $today_openclose = $openCloseList[$date];
+            Log::debug(__METHOD__.'('.__LINE__.')'.'today_openclose');
+            Log::debug($today_openclose);
+            for($time=$st_time;$time<=$booking_ed_time;$time=$time+$step_time){
+                Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $time);
+                // カット終了時間が閉店時間を超えていたら×で次へ
+                Log::debug(__METHOD__.'('.__LINE__.')'.'close_time:' . $ed_time .' now_time:' .$time . ' needed_time:'. $needed_minutes);
+                if($time+$needed_minutes>$ed_time){
+                    $today_capacity[$time] = 0;
+                    Log::debug(__METHOD__.'('.__LINE__.')'.'time is over!');
+                    continue;
+                }
+                Log::info(__METHOD__.'('.__LINE__.')'.'start_to_check_time! time:' . $time);
+                
+                $temp_capacity = 1;
+
+                for($checkTime=$time;$checkTime<$time+$needed_minutes;$checkTime=$checkTime+$step_time){
+                    Log::debug(__METHOD__.'('.__LINE__.')'.'checktime:' . $checkTime);
+                    $capacity_of_check = $today_openclose[$checkTime];
+                    Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $checkTime . ' ' .$capacity_of_check);
+                    if($capacity_of_check==0){
+                        $temp_capacity=0;
+                        Log::debug(__METHOD__.'('.__LINE__.')'.'break');
+                        break;
+                    }
+                }
+                
+                $today_capacity[$time] = $temp_capacity;
+            }
+            Log::debug(__METHOD__.'('.__LINE__.')'.'today_capacity');
+            Log::debug($today_capacity);
+            $capacities[$date] =  $today_capacity;
+        }
+        Log::info(__METHOD__.'('.__LINE__.')'.'end!');
+        Log::debug($capacities);
+        return $capacities;
+    }
 }
