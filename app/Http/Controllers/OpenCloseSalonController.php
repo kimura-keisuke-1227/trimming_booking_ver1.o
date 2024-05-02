@@ -158,11 +158,13 @@ class OpenCloseSalonController extends Controller
         $next_start_day = Util::addDays($ed_date, 1);
         $st_time = $salon->st_time;
         $course_master_id = $course_id;
-        if($course_master_id==1){
-            $ed_time = 60*17+1;
-        } else{
-            $ed_time = 60*16+1;
-        }
+        // if($course_master_id==1){
+        //     $ed_time = 60*17+1;
+        // } else{
+        //     $ed_time = 60*16+1;
+        // }
+
+        $ed_time = $salon->ed_time;
         Log::info(__METHOD__ . '(' . __LINE__ . ') get setting info of step_time from DB!');
         $step_time = Util::getSetting(30, 'step_time', true);
 
