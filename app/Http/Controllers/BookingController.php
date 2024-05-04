@@ -998,10 +998,20 @@ class BookingController extends Controller
             $ed_time = 60 * 16 + 1;
         }
 
+        if ($course_master_id == 1) {
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE1",15)'. env("FINAL_BOOKING_TIME_COURSE1"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE1",17) + 1;
+        } else {
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE2",15)'. env("FINAL_BOOKING_TIME_COURSE2"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE2",16) + 1;
+        }
+
         $step_time = Util::getSetting(30, 'step_time', true);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') st_time:' . $st_time . ' ed_time:' . $ed_time . ' step_time:' . session('step_time'));
 
         $times = $util->getTimes($st_time, $ed_time, $step_time);
+        Log::debug(__METHOD__.'('.__LINE__.')'.'times:');
+        Log::debug($times);
         Log::debug(__METHOD__ . '(' . __LINE__ . ')');
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
         Log::debug(__METHOD__ . '(' . __LINE__ . ')');
