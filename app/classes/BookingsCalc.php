@@ -6,7 +6,9 @@ use App\Models\Salon;
 use Illuminate\Support\Facades\Log;
 use App\classes\Util;
 use App\Models\TempCapacity;
+use App\Models\RegularHoliday;
 use App\Http\Controllers\OpenCloseSalonController;
+use Illuminate\Support\Facades\Redis;
 
 class BookingsCalc
 {
@@ -464,15 +466,48 @@ class BookingsCalc
 
         // Log::debug(__METHOD__.'('.__LINE__.')'.'openCloseList');
         // Log::debug($openCloseList);
+
+        $regular_holidais_of_the_salon = RegularHoliday::query()
+            ->where('salon_id',$salon->id)
+            ->get();
+
+        Log::debug(__METHOD__.'('.__LINE__.')'.'regular_holidais_of_the_salon');
+        Log::debug($regular_holidais_of_the_salon);
+
+        // 定休日の曜日を格納する配列
+        $list_of_holiday = [];
+        foreach($regular_holidais_of_the_salon as $holiday){
+            array_push($list_of_holiday,$holiday["dayOfWeek"] );
+        }
         
+
+        Log::debug(__METHOD__.'('.__LINE__.')'.'list_of_holiday');
+        Log::debug($list_of_holiday);
+        // 予約の可否を格納する配列初期値
         $capacities = [];
+
+
+        // 確認日の最初から最後までのループ
         for($date=$st_date;$date<=$ed_date;$date = Util::addDays($date, 1)){
             $today_capacity =[];
             $today_openclose = $openCloseList[$date];
             Log::debug(__METHOD__.'('.__LINE__.')'.'today_openclose');
             Log::debug($today_openclose);
+
+            $day_of_week = date("w",strtotime($date));
+            Log::debug(__METHOD__.'('.__LINE__.')'.'$date:' . $date . ' day_of_week:' . $day_of_week);
+
+            // 開店時間から予約受付終了時間までのループ
             for($time=$st_time;$time<=$booking_ed_time;$time=$time+$step_time){
                 Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $time);
+
+                // 定休日なら-1を代入して次へ
+                if(in_array($day_of_week, $list_of_holiday)){
+                    Log::debug(__METHOD__.'('.__LINE__.')'.'holiday:' . $date);
+                    $today_capacity[$time] = -1;
+                    continue;
+                }
+
                 // カット終了時間が閉店時間を超えていたら×で次へ
                 Log::debug(__METHOD__.'('.__LINE__.')'.'close_time:' . $ed_time .' now_time:' .$time . ' needed_time:'. $needed_minutes);
                 if($time+$needed_minutes>$ed_time){
