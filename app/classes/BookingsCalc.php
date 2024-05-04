@@ -508,6 +508,25 @@ class BookingsCalc
                     continue;
                 }
 
+                //過ぎた日付なら×
+                $today = date("Y-m-d");
+                Log::debug(__METHOD__.'('.__LINE__.')'.'H:' .date('H'));
+                if($date<$today){
+                    $today_capacity[$time] = 0;
+                    Log::debug(__METHOD__.'('.__LINE__.')'.'The date is past!');
+                    continue;
+                }
+
+                // 当日でも、すでに過ぎた時間なら×
+                $over_time = Util::timeToMinute(date("H"), date("i")) + env("TIME_TO_BOOK_BEFORE_X_MINUTE",60);
+ 
+                Log::debug(__METHOD__.'('.__LINE__.') $time:' . $time.' $over_time:' . Util::minuteToTime($over_time));
+                if($date==$today && $time<$over_time){
+                    $today_capacity[$time] = 0;
+                    Log::debug(__METHOD__.'('.__LINE__.')'.'The_time_is_to_late!');
+                    continue;
+                }
+
                 // カット終了時間が閉店時間を超えていたら×で次へ
                 Log::debug(__METHOD__.'('.__LINE__.')'.'close_time:' . $ed_time .' now_time:' .$time . ' needed_time:'. $needed_minutes);
                 if($time+$needed_minutes>$ed_time){
