@@ -237,6 +237,8 @@ class BookingController extends Controller
         $ed_date =  $util->addDays($st_date, 6);
 
         $course_master_id = $course->courseMaster->id;
+
+        // コースごとの終了時間を習得
         if ($course_master_id == 1) {
             Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE1",15)'. env("FINAL_BOOKING_TIME_COURSE1"));
             $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE1",17) + 1;
@@ -246,6 +248,7 @@ class BookingController extends Controller
         }
 
 
+        // カレンダーの生成に必要な各種データを習得
         $times = $util->getTimes($st_time, $ed_time, $step_time);
         $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
         $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
