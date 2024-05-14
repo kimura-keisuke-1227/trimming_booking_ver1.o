@@ -83,12 +83,10 @@ class BookingController extends Controller
         
 
         $bookings = $bookings->get();
-        
-        
+
         // 取得した予約データを確認
         Log::debug(__METHOD__.'('.__LINE__.')'.'$bookings:');
         Log::debug($bookings);
-        #Log::debug(__METHOD__ . ' $bookings:' . $bookings);
 
         $count_salons = Util::getCountSalons();
         Log::debug(__METHOD__ . '(' . __LINE__ . ') salons_count:' . $count_salons);
@@ -96,7 +94,6 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
 
         $view = 'bookings.index';
-        // $messages = Util::getNotifications($view);
 
         $params = [
             'owner' => $owner,
@@ -109,7 +106,7 @@ class BookingController extends Controller
     }
 
     //予約するペットを選択する
-    public function create()
+    public function selectPet()
     {
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
@@ -128,12 +125,10 @@ class BookingController extends Controller
         $check_log_detail = "";
         $request_from_user = request();
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
-        
 
         $pets = Pet::where('owner_id', $owner->id)->get();
         session(['pets' => $pets]);
         $countOfPets = $pets -> count();
-        
         Log::debug(__METHOD__.'('.__LINE__.') #$countOfPets(' . $countOfPets .')');
 
         $view = 'bookings.selectpet';
@@ -216,7 +211,6 @@ class BookingController extends Controller
 
     public function selectCalender(Request $request)
     {
-
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pet =  session('pet');
@@ -227,7 +221,6 @@ class BookingController extends Controller
         $salon = $salons->find($request->salon);
         session(['salon' => $salon]);
         $st_time = $salon->st_time;
-        //$ed_time = $salon->ed_time;
 
         $message = $request->message;
         session('message', $message);
