@@ -177,7 +177,7 @@ class BookingController extends Controller
             ->with("error", "ペット情報の読込に失敗しました。お手数ですが最初から予約をやり直してください。");
         } else{
             // 操作記録をDBに
-            $user =Auth::user();
+            $user =$owner;
             $method_name = __METHOD__;
             $realIp = request()->ip();
 
