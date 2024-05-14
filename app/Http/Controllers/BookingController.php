@@ -214,6 +214,33 @@ class BookingController extends Controller
 
     public function selectCalender(Request $request)
     {
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        $salons = session('salons');
+        $salon = $salons->find($request->salon);
+        
+        $util = new Util();
+        $today = date('Y-m-d');
+        $ed_date =  $util->addDays($today, 6);
+
+        $pet =  session('pet');
+        
+        $courses = session('courses');
+        $course = $courses->find($request->course);
+        $needed_time = $course->minute;
+        
+        $view_for_show = $this->getCalenderView($salon,$today,$ed_date,$pet,$needed_time,$course);
+        $message = $request->message;
+
+        session([
+            'course' => $course,
+            'salon' => $salon,
+            'message' => $message,
+        ]);
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return $view_for_show;
+
+
         $owner = Auth::user();
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pet =  session('pet');
@@ -859,13 +886,15 @@ class BookingController extends Controller
         ]);
     }
 
-    public function selectCalenderSalonAndDate(Request $request, $salon, $st_date)
+    public function selectCalenderSalonAndDate(Request $request, $salon_id, $st_date)
     {
         $owner = Auth::user();
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' starts by owner user_id(' . $owner->id . ')');
+        
 
         $today = date('Y-m-d');
         $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+        $salon = session('salon');
 
         if($st_date<$today){
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
@@ -875,6 +904,22 @@ class BookingController extends Controller
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
             ->with('error','無効な日付です。');
         }
+
+        $util = new Util();
+        $ed_date =  $util->addDays($st_date, 6);
+
+        $pet = session('pet');
+
+        $courses = session('courses');
+        $course = session('course');
+        $needed_time = $course->minute;
+
+
+        $view_for_show = $this->getCalenderView($salon,$st_date,$ed_date,$pet,$needed_time,$course);
+        return $view_for_show;
+
+
+
 
         $pet =  session('pet');
         $course = session('course');
@@ -1144,5 +1189,66 @@ class BookingController extends Controller
      *   テスト用
      *
      ***************************************************************/
+    private function getCalenderView($salon,$st_date,$ed_date,$pet,$needed_time,$course){
+        $owner = Auth::user();
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
 
+        $view = 'bookings.booking_calender';
+        
+        $beforeDate = Util::addDays($st_date, -7);
+        $afterDate = Util::addDays($st_date, 7);
+        
+        $bookingsCalc = new BookingsCalc();
+        $capacities = $bookingsCalc->getCanBookList3($salon,$st_date,$ed_date,$needed_time,$course);
+
+        // カレンダーの表示開始時間時間
+        $st_time = $salon->st_time;
+
+        // コースごとの終了時間を習得
+        // シャンプーかシャンプーカットか
+        $course_master_id = $course->courseMaster->id;
+        
+        if ($course_master_id == 1) {
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE1",15)'. env("FINAL_BOOKING_TIME_COURSE1"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE1",17) + 1;
+        } else {
+            Log::debug(__METHOD__.'('.__LINE__.')'.'env("FINAL_BOOKING_TIME_COURSE2",15)'. env("FINAL_BOOKING_TIME_COURSE2"));
+            $ed_time = 60 * env("FINAL_BOOKING_TIME_COURSE2",16) + 1;
+        }
+
+        // カレンダーの生成に必要な各種データを習得
+
+        $step_time = Util::getSetting(30, 'step_time', true);
+        $util = new Util();
+        $times = $util->getTimes($st_time, $ed_time, $step_time);
+        $timesNum = $util->getTimesNum($st_time, $ed_time, $step_time);
+        $timesCount = $util->getTimesCount($st_time, $ed_time, $step_time);
+        $days = $util->getDaysList($st_date, $ed_date);
+
+        $message = "";
+        $today = date('Y-m-d');
+        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+
+        $params =[
+            'date' => $st_date,
+            'before_date' => $beforeDate,
+            'after_date' => $afterDate,
+            'owner' => $owner,
+            'pet' => $pet,
+            'course' => $course,
+            'salon' => $salon,
+            'times' => $times,
+            'days' => $days,
+            'capacities' => $capacities,
+            'timesNum' => $timesNum,
+            'message' => $message,
+            'today' => $today,
+            'maxBookingDate' => $maxBookingDate,
+            'ed_date' => $ed_date,
+            'timesCount' =>$timesCount,
+            'timeOfFirst' => $times[$st_time],
+        ];
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return view($view,$params);
+    }
 }
