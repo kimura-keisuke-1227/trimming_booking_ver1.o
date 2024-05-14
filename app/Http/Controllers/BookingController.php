@@ -1040,6 +1040,9 @@ class BookingController extends Controller
         $booking = new Booking();
         $owner = Auth::user();
 
+        $salon = session('salon');
+        $course = session('course');
+
         $date = session('date');
         $st_time = session('time');
         $cut_time = session('course')->minute;
@@ -1065,6 +1068,50 @@ class BookingController extends Controller
         $booking->booking_status = $booking_status;
         $booking->salon_id = $salon_id;
         $booking->message = $message;
+
+        // 現在日付を保存前にチェック
+        $today = date('Y-m-d');
+        // $today = date('2024-05-25');
+
+        if($date<$today){
+            Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '無効な日付で予約が試みられました。');
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
+            ->with('error','無効な日付です。');
+        }
+
+        $maxBookingDate = Util::getEndOfTheMonth($today, 2);
+
+        if($date>$maxBookingDate){
+            Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '無効な日付で予約が試みられました。');
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
+            ->with('error','無効な日付です。');
+        }
+
+        $now_time = date('H')*60 + date('i');
+        // $now_time =19*60;
+        
+        if($date==$today && $now_time+60>$st_time){
+            Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '予約可能時刻を過ぎて登録リクエストがあったのでやり直しました。');
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
+            ->with('error','予約可能時刻を過ぎました。');
+        }
+
+        //予約可能だが、重複をチェック
+        $openCloseSalonController = new OpenCloseSalonController();
+        $step_time = Util::getSetting(30, 'step_time', true);
+        $openCloseList =
+            $openCloseSalonController->makeOpenCloseListFromStdateToEddate($salon_id,  $course->course_master_id, $date, $date, $st_time, $ed_time, $step_time);
+
+        $bookingsCalc = new BookingsCalc();
+        $can_book = $bookingsCalc -> check_can_book_the_time($date,$st_time,$course->minute,$openCloseList);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'can_book;' . $can_book);
+
+
+        if(!$can_book){
+            Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '予約可能時刻を過ぎて登録リクエストがあったのでやり直しました。');
+            return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>session('salon'),'st_date'=>$today]))
+            ->with('error','他のお客様が先に予約をされました。申し訳ありませんが別の日時をご予約ください。');
+        }
 
         try{
             $util = new Util();
