@@ -174,7 +174,7 @@ class BookingController extends Controller
         if(is_null($pet)){
             Log::error(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') : pet null error !!');
             return redirect()->route('user.newBooking')
-            ->with("success", "ペット情報の読込に失敗しました。お手数ですが最初から予約をやり直してください。");
+            ->with("error", "ペット情報の読込に失敗しました。お手数ですが最初から予約をやり直してください。");
         } else{
             // 操作記録をDBに
             $user =Auth::user();
