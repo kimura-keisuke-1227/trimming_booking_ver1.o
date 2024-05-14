@@ -150,7 +150,6 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         $pets = session('pets');
         $pet_id = $request->pet;
-        $pet = $pets->find($pet_id);
 
         // ペットの情報を再度習得
         $pet = Pet::query()
