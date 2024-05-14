@@ -542,20 +542,15 @@ class BookingsCalc
                     continue;
                 }
                 Log::info(__METHOD__.'('.__LINE__.')'.'start_to_check_time! time:' . $time);
-                
+
                 $temp_capacity = 1;
 
-                for($checkTime=$time;$checkTime<$time+$needed_minutes;$checkTime=$checkTime+$step_time){
-                    Log::debug(__METHOD__.'('.__LINE__.')'.'checktime:' . $checkTime);
-                    $capacity_of_check = $today_openclose[$checkTime];
-                    Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $checkTime . ' ' .$capacity_of_check);
-                    if($capacity_of_check==0){
-                        $temp_capacity=0;
-                        Log::debug(__METHOD__.'('.__LINE__.')'.'break');
-                        break;
-                    }
+                $can_book = $this->check_can_book_the_time($date,$time,$needed_minutes,$openCloseList);
+
+                if(!$can_book){
+                    $temp_capacity = 0;
                 }
-                
+
                 $today_capacity[$time] = $temp_capacity;
             }
             Log::debug(__METHOD__.'('.__LINE__.')'.'today_capacity');
@@ -565,5 +560,30 @@ class BookingsCalc
         Log::info(__METHOD__.'('.__LINE__.')'.'end!');
         Log::debug($capacities);
         return $capacities;
+    }
+
+    private function check_can_book_the_time($date,$time,$needed_minutes,$openCloseList){
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+
+        // 本日の◯×を取り出す
+        $today_openclose = $openCloseList[$date];
+
+        $step_time = Util::getSetting(30, 'step_time', true);
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . '$today_openclose:');
+        Log::debug($today_openclose);
+
+        for($checkTime=$time;$checkTime<$time+$needed_minutes;$checkTime=$checkTime+$step_time){
+            Log::debug(__METHOD__.'('.__LINE__.')'.'checktime:' . $checkTime);
+            $capacity_of_check = $today_openclose[$checkTime];
+            Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $checkTime . ' ' .$capacity_of_check);
+            if($capacity_of_check==0){
+                Log::debug(__METHOD__.'('.__LINE__.')'.'break');
+                return false;
+            }
+        }
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return true;
     }
 }
