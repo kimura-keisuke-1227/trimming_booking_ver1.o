@@ -562,7 +562,7 @@ class BookingsCalc
         return $capacities;
     }
 
-    private function check_can_book_the_time($date,$time,$needed_minutes,$openCloseList){
+    public function check_can_book_the_time($date,$time,$needed_minutes,$openCloseList){
         Log::debug(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
 
         // 本日の◯×を取り出す
