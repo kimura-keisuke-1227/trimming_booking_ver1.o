@@ -209,7 +209,7 @@ class BookingController extends Controller
         ];
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return Util::getViewWithNotifications($view,$params);
+        return view($view,$params);
     }
 
     public function selectCalender(Request $request)
