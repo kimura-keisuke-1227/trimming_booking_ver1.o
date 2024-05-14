@@ -102,7 +102,7 @@ class BookingController extends Controller
             'count_salons' => $count_salons,
         ];
 
-        return Util::getViewWithNotifications($view,$params);
+        return view($view,$params);
     }
 
     //予約するペットを選択する
@@ -140,7 +140,7 @@ class BookingController extends Controller
         ];
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
-        return Util::getViewWithNotifications($view,$params);
+        return view($view,$params);
     }
 
     //コースを選択する
@@ -152,9 +152,13 @@ class BookingController extends Controller
         $pet_id = $request->pet;
         $pet = $pets->find($pet_id);
 
+        // ペットの情報を再度習得
+        $pet = Pet::query()
+        ->find($pet_id);
+
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') pet_id:' . $pet_id);
-        Log::debug(__METHOD__.'('.__LINE__.')pets');
-        Log::debug($pets);
+        // Log::debug(__METHOD__.'('.__LINE__.')pets');
+        // Log::debug($pets);
 
         // 操作記録をDBに
         $user =Auth::user();
