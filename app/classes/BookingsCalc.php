@@ -447,6 +447,13 @@ class BookingsCalc
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
         Log::debug(__METHOD__.'('.__LINE__.')'.'$salon_id:' . $salon->id);
 
+        // 開始日のチェック
+        $today = date('Y-m-d');
+        if($st_date<$today){
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . '$st_date:' . $st_date . 'is past, changed into today:' . $today );
+            $st_date = $today;
+        }
+
         $openCloseSalonController = new OpenCloseSalonController();
         Log::debug(__METHOD__ . '(' . __LINE__ . ') course_master_id: ' );
         $course_master_id =  $course->course_master_id;
