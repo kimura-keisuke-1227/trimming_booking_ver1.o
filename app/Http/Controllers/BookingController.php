@@ -1084,7 +1084,7 @@ class BookingController extends Controller
         if($date>$maxBookingDate){
             Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '無効な日付で予約が試みられました。');
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
-            ->with('error','無効な日付です。');
+            ->with('error','無効な日付です。申し訳ありませんが別の日時をご予約ください。');
         }
 
         $now_time = date('H')*60 + date('i');
@@ -1093,7 +1093,7 @@ class BookingController extends Controller
         if($date==$today && $now_time+60>$st_time){
             Log::warning(__METHOD__ . '(' . __LINE__ . ')' . '予約可能時刻を過ぎて登録リクエストがあったのでやり直しました。');
             return redirect(Route('booking.selectCalender.salonAndDay',['salon'=>$salon,'st_date'=>$today]))
-            ->with('error','予約可能時刻を過ぎました。');
+            ->with('error','予約可能時刻を過ぎました。申し訳ありませんが別の日時をご予約ください。');
         }
 
         //予約可能だが、重複をチェック

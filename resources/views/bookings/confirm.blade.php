@@ -11,6 +11,7 @@
     <p>{{$message}}</p>
 
     <p>上記下の内容で予約を行いますか？</p>
+    <p>(注意)予約可能時間を過ぎた場合や、空き状況が変化した場合予約が出来ない場合があります。</p>
 
     <form action="{{Route('booking.store')}}" method="post">
         @csrf
