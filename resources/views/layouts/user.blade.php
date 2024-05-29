@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{asset('/css/style.css')}}" >
     @php
         use app\classes\Util;
-        $google_Tag = Util::getSetting("hoge", "google_tag", false);
+        $google_Tag = Util::getSetting("", "google_tag", false);
         echo($google_Tag);
     @endphp
 </head>
