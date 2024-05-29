@@ -69,8 +69,8 @@ class SalonController extends Controller
         $salon['address2']   = $request['address2'];
         $salon['phone']      = $request['phone'];
         $salon['email']      = $request['email'];
-        $salon['st_time']    = $st_time;
-        $salon['ed_time']    = $ed_time;
+        // $salon['st_time']    = $st_time;
+        // $salon['ed_time']    = $ed_time;
 
         $salon->save();
 
