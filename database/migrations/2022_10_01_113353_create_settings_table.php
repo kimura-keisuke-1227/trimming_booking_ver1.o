@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('setting_name') -> unique();
             $table->string('explain');
             $table->integer('setting_int') -> nullable();
-            $table->string('setting_string') -> nullable();
+            $table->text('setting_string') -> nullable();
             $table->boolean('isNumber');
             $table->timestamps();
         });
