@@ -31,6 +31,7 @@
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="summary">操作者情報</label>
                         <p>{{$AccessLog->user_info}}</p>
+                        <p>メールアドレス：{{$AccessLog->user->email}}</p>
                     </div>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="summary">概要</label>
