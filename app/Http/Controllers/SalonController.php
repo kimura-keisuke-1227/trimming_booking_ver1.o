@@ -19,6 +19,17 @@ class SalonController extends Controller
 
     public function index(){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
+
+        // 操作記録をDBに
+        $staff = Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$staff->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるサロン一覧取得";
+        $check_log_detail = "staff_id:{$staff->id} {$staff->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,"");
+
         $salons = Salon::all();
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
         return view('admin.salons.index', [
@@ -38,6 +49,16 @@ class SalonController extends Controller
     public function edit($salon_id){
         Log::info(__METHOD__.'('.__LINE__.') start by user(' . Util::getUserId() .')');
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .') salon_id:' . $salon_id);
+
+        // 操作記録をDBに
+        $staff = Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$staff->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるサロン編集画面呼び出し";
+        $check_log_detail = "staff_id:{$staff->id} {$staff->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$salon_id);
 
         $salon = Salon::find($salon_id);
         Log::debug(__METHOD__.'('.__LINE__.') user(' . Util::getUserId() .')');
