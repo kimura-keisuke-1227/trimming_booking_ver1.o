@@ -100,7 +100,7 @@ class CourseController extends Controller
              $course['minute_for_show'] = $request["minute_for_show_" . (String)$course->id];
              Log::debug(__METHOD__.'('.__LINE__.')'.'');
              $course->save();
-             $check_log_detail = $check_log_detail . '(' . $course->id . ') [minute:' .$course['minute']  . ' minute_for_show:'.$course['minute_for_show']  .']';
+             $check_log_detail = $check_log_detail . ' '. $course->dogtype->type . '(' . $course->courseMaster->course. ') [minute:' .$course['minute']  . ' minute_for_show:'.$course['minute_for_show']  .']';
         }
 
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
