@@ -30,6 +30,36 @@ class UserTableSeeder extends Seeder
             'default_salon' => 1,
         ];
         DB::table('users') -> insert($param);
+
+        $password = 'kimurapass';
+        $password = Hash::make($password);
+        $param =[
+            'last_name' => '木村',
+            'last_name_kana' => 'カンリ',
+            'first_name' => '管理',
+            'first_name_kana' => 'シャ',
+            'email' => 'kim.ksuke@gmail.com' ,
+            'phone' => '0120-000-000' ,
+            'auth' => 1,
+            'password' => $password,
+            'default_salon' => 1,
+        ];
+        DB::table('users') -> insert($param);
+        
+        $password = 'kimurapass';
+        $password = Hash::make($password);
+        $param =[
+            'last_name' => '木村',
+            'last_name_kana' => 'カンリ',
+            'first_name' => '飼い主',
+            'first_name_kana' => 'シャ',
+            'email' => 'keisukekimura.create@gmail.com' ,
+            'phone' => '0120-000-000' ,
+            'auth' => 0,
+            'password' => $password,
+            'default_salon' => 1,
+        ];
+        DB::table('users') -> insert($param);
         /*
         $password = '12345678';
         $password = Hash::make($password);
