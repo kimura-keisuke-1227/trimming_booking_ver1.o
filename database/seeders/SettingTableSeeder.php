@@ -62,7 +62,7 @@ class SettingTableSeeder extends Seeder
             'order' => 60 ,
             'setting_name' => 'mailFromSalon' ,
             'explain' => '自動送信のメールアドレス' ,
-            'setting_string' =>  'support@trimmingsalon-link.com',
+            'setting_string' =>  '',
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
@@ -70,7 +70,7 @@ class SettingTableSeeder extends Seeder
             'order' => 70 ,
             'setting_name' => 'salon_name_login' ,
             'explain' => 'ログイン画面に表示するサロン名' ,
-            'setting_string' =>  'トリミングサロンLINK',
+            'setting_string' =>  'トリミングサロン',
             'isNumber' => false,
         ];
         DB::table('settings') -> insert($param);
