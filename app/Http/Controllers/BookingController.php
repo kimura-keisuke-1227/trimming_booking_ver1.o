@@ -1170,7 +1170,20 @@ class BookingController extends Controller
             $access_log_ed_time = $util->minuteNumToTime($ed_time);
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存:{$message}}";
             $util::recordAccessLog(__METHOD__,$user_info,"予約に伴う予約の保存",$access_log_detail,$request);
+
+            // 操作記録をDBに
+            $user =Auth::user();
+            $method_name = __METHOD__;
+            $realIp = request()->ip();
+
+            $user_info = "user_id({$user->id}) IP[{$realIp}]";
+            $check_log_summary = "ユーザーからの予約登録";
+            $check_log_detail = "予約ID:{$booking->id} 削除 :日付:{$booking->date} 開始時刻:{$booking->st_time}";
+            $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+
+            // 予約を保存
             $booking->save();
+            
             Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
     
             Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
