@@ -505,6 +505,17 @@ class BookingController extends Controller
         $request_from_user = request();
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
 
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザーからの予約キャンセル";
+        $check_log_detail = "予約ID:{$booking->id} 削除 :日付:{$booking->date} 開始時刻:{$booking->st_time}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$id);
+        
+
         //キャンセルのメールを送りたい
         $booking->delete();
         Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
@@ -527,6 +538,7 @@ class BookingController extends Controller
 
         $user = Auth::user();
         Log::debug('User ' . $user->id . 'canceled booking_id=' . $id . ' ' . $booking->getBookingInfo());
+
 
 
         Log::info(__METHOD__ . ' ends by user_id(' . $owner->id . ')');
@@ -561,6 +573,16 @@ class BookingController extends Controller
         Log::info(__METHOD__ . ' starts by staff user_id(' . $staff->id . ')');
         $booking = Booking::find($bookingID);
         Log::debug($booking);
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "管理者からの予約キャンセル";
+        $check_log_detail = "予約ID:{$booking->id} 削除 :日付:{$booking->date} 開始時刻:{$booking->st_time}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$id);
 
         $booking->delete();
         Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
