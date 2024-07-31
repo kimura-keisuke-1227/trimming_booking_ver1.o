@@ -7,7 +7,7 @@
             <th>id</th>
             <th>概要</th>
             <th>ユーザー</th>
-            <th>日次</th>
+            <th>日時</th>
             
         </tr>
         @foreach ($list_accessLog as $accesslog)
