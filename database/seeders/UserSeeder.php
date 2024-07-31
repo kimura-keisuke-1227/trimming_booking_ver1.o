@@ -31,6 +31,35 @@ class UserSeeder extends Seeder
         ];
         DB::table('users') -> insert($param);
 
+        $password = 'kimurapass';
+        $password = Hash::make($password);
+        $param =[
+            'last_name' => '木村',
+            'last_name_kana' => '圭佑',
+            'first_name' => 'キムラ',
+            'first_name_kana' => 'ケイスケ',
+            'email' => 'kim.ksuke@gmail.com' ,
+            'phone' => '0120-000-000' ,
+            'password' => $password,
+            'default_salon' => 1,
+            'auth' => 1,
+        ];
+
+
+        $password = 'kimurapass';
+        $password = Hash::make($password);
+        $param =[
+            'last_name' => '木村',
+            'last_name_kana' => '圭佑',
+            'first_name' => 'キムラ',
+            'first_name_kana' => 'ケイスケ',
+            'email' => 'kim.ksuke@gmail.com' ,
+            'phone' => '0120-000-000' ,
+            'password' => $password,
+            'default_salon' => 1,
+            'auth' => 0,
+        ];
+
         
     }
 }
