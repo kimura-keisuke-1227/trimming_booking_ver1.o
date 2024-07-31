@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateSalonRequest;
 use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Auth;
+
 class SalonController extends Controller
 {
     //
@@ -73,6 +75,16 @@ class SalonController extends Controller
         // $salon['ed_time']    = $ed_time;
 
         $salon->save();
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるサロン情報の変更[{$method_name}]";
+        $check_log_detail = $salon['salon_name'] . ' ' .$salon['prefecture'] . ' ' .$salon['address1'] . ' ' .$salon['phone'] . ' ' .$salon['email'];
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
