@@ -81,6 +81,7 @@ class CourseController extends Controller
         $realIp = request()->ip();
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $request_from_user = request();
+        $request_from_user = $request;
 
         Log::info(__METHOD__.'('.__LINE__.')'.'Access to DB for get Course info.');
         $check_log_summary = "[自動]スタッフによるコースの時間変更のためのDBアクセス[{$method_name}]";
@@ -90,7 +91,7 @@ class CourseController extends Controller
 
         $check_log_summary = "スタッフによるコースの時間変更[{$method_name}]";
         $check_log_detail = "";
-        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
+        
 
         foreach($courses as $course){
             //  Log::debug(__METHOD__.'('.__LINE__.') id:' .(String)$course->id.')minute:' . (String)$request["minute_" . (String)$course->id]);
@@ -99,7 +100,10 @@ class CourseController extends Controller
              $course['minute_for_show'] = $request["minute_for_show_" . (String)$course->id];
              Log::debug(__METHOD__.'('.__LINE__.')'.'');
              $course->save();
+             $check_log_detail = $check_log_detail . '(' . $course->id . ') [minute:' .$course['minute']  . ' minute_for_show:'.$course['minute_for_show']  .']';
         }
+
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
 
         Log::debug($request);
         Log::debug(__METHOD__.'('.__LINE__.')'.'end!');
