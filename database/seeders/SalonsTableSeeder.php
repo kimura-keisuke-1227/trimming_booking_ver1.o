@@ -16,12 +16,12 @@ class SalonsTableSeeder extends Seeder
     public function run()
     {
         $param = [
-            'salon_name' => '茜店' ,
-            'prefecture' =>  '埼玉県',
-            'address1' =>  '越谷市',
+            'salon_name' => 'テスト店舗' ,
+            'prefecture' =>  '広島県',
+            'address1' =>  'テスト市',
             'address2' =>  '123-456',
-            'phone' => '048-918-2163' ,
-            'email' => 'trimmingsalonlink2@gmail.com' ,
+            'phone' => '0120-444-444' ,
+            'email' => 'kim.ksuke@gmail.com' ,
             'st_time' => 600 ,
             'ed_time' => 1080 ,
         ];
