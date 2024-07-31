@@ -582,7 +582,7 @@ class BookingController extends Controller
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "管理者からの予約キャンセル";
         $check_log_detail = "予約ID:{$booking->id} 削除 :日付:{$booking->date} 開始時刻:{$booking->st_time}";
-        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$id);
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$bookingID);
 
         $booking->delete();
         Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
