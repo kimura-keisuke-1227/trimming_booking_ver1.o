@@ -25,4 +25,8 @@ class AccessLog extends Model
         'user_info','summary','detail','request',
         'user_id','method'
     ];
+
+    public function user(){
+        return $this -> belongsTo('App\Models\User');
+    }
 }

@@ -12,9 +12,9 @@
         </tr>
         @foreach ($list_accessLog as $accesslog)
         <tr>
-            <td>{{$accesslog->email}}</td>
+            <td>{{$accesslog->id}}</td>
             <td><a href="{{ Route('accesslog.show',['accesslog' => $accesslog->id]) }}">{{$accesslog->summary}}</a></td>
-            <td>{{$accesslog->user_info}}</td>
+            <td>{{$accesslog->user->email}}</td>
             <td>{{$accesslog->created_at}}</td>
         </tr>
         @endforeach
