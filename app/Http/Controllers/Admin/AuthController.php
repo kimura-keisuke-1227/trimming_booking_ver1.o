@@ -55,6 +55,16 @@ class AuthController extends Controller
 
     public function logout(Request $request)
 {
+    // 操作記録をDBに
+    $logout_user = Auth::user();
+    $method_name = __METHOD__;
+    $realIp = request()->ip();
+
+    $user_info = "user_id({$logout_user->id}) IP[{$realIp}]";
+    $check_log_summary = "ログアウト";
+    $check_log_detail = "logout_user:{$logout_user->id} {$logout_user->email}";
+    $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$logout_user->id);
+    
     // ログアウト処理
     Auth::logout();
     // 現在使っているセッションを無効化(セキュリティ対策のため)

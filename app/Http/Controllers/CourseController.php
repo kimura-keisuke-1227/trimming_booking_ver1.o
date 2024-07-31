@@ -20,7 +20,17 @@ class CourseController extends Controller
      */
     public function index()
     {
-         $salons = Salon::all();
+        // 操作記録をDBに
+        $staff = Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$staff->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるコース情報表示";
+        $check_log_detail = "staff_id:{$staff->id} {$staff->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$staff->id); 
+        
+        $salons = Salon::all();
          $courses = Course::all();
          $courseMasters = CourseMaster::all();
          Log::debug(__METHOD__.'('.__LINE__.')'.'start!');

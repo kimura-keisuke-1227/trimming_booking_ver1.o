@@ -10,6 +10,8 @@ use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use  App\Http\Requests\Admin\StoreUserRequest;
+use Illuminate\Support\Facades\Auth;
+use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -21,6 +23,17 @@ class UserController extends Controller
      */
     public function index()
     {
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによる顧客リスト表示";
+        $check_log_detail = "";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"get_all_users");
+        
+        
         $users = User::all();
 
         return view('admin.owners.index',[
@@ -58,7 +71,17 @@ class UserController extends Controller
         $validated['password'] =Hash::make($validated['password']);
         Log::debug($validated);
         $validated['auth'] =0;
-        User::create($validated);
+        $user = User::create($validated);
+
+        // 操作記録をDBに
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "ユーザー登録";
+        $check_log_detail = "user_id:{$user->id} {$user->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$request);
+        
 
         #return back() -> with('success','会員登録をしました。');
         return redirect('login') -> with('success','会員登録をしました。');
@@ -91,7 +114,14 @@ class UserController extends Controller
         $user -> save();
         Log::info(__METHOD__.'(end)');
         #return back() -> with('success','会員登録をしました。');
+        // 操作記録をDBに
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
 
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフ登録";
+        $check_log_detail = "user_id:{$user->id} {$user->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$request);
 
         return redirect('login') -> with('success','スタッフ登録をしました。');
     }
@@ -104,6 +134,17 @@ class UserController extends Controller
      */
     public function show(User $user ,$userID)
     {
+        // 操作記録をDBに
+        $staff = Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$staff->id}) IP[{$realIp}]";
+        $check_log_summary = "スタッフによるユーザー詳細情報表示";
+        $check_log_detail = "staff_id:{$staff->id} {$staff->email}";
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$userID);
+
+
         $user = User::find($userID);
         $cameBefore = false;
         
