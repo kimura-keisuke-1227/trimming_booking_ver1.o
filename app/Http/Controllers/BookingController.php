@@ -707,6 +707,9 @@ class BookingController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
         $usersCameBeforeList = Util::getWhoCameBefore($date,$salon->id);
 
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'usersCameBeforeList');
+        Log::debug($usersCameBeforeList);
+
         Log::info(__METHOD__.'('.__LINE__. ') ends by user_id(' . $staff->id . ')');
         Log::debug(__METHOD__.'('.__LINE__. ') $salon:' . $salon);
         return view('admin.bookings.index', [
@@ -1191,11 +1194,29 @@ class BookingController extends Controller
     
 
             //○×表を閉じる
-            Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
-            $course_master = Course::find($course_id);
-            $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう◯×の更新:{$message}}";
-            $access_log_id = $util::recordAccessLog(__METHOD__,$user_info,"予約に伴う◯×の更新",$access_log_detail,$request);
-            $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id,$access_log_id);
+            $salon = Salon::find($salon_id);
+            if(!$salon->is_close_all_courses){
+                Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
+                $course_master = Course::find($course_id);
+                Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'close_only_selected_course ' . $course_master->courseMaster->course);
+                Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'course_master');
+                Log::debug($course_master);
+                $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう{$course_master->courseMaster->course} コースの◯×の更新:{$message}}";
+                $access_log_id = $util::recordAccessLog(__METHOD__,$user_info,"予約に伴う◯×の更新",$access_log_detail,$request);
+                $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->course_master_id,$access_log_id);
+            } else{
+                Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'close_all_courses!');
+                Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by user(' . $staff . ')');
+                $course_masters = CourseMaster::all();
+                Log::debug(__METHOD__ . '(' . __LINE__ . ')' . '$course_masters');
+                Log::debug($course_masters);
+                foreach($course_masters as $course_master){
+                    $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約にともなう{$course_master->course} コースの◯×の更新:{$message}}";
+                    Log::info(__METHOD__ . '(' . __LINE__ . ')' . $access_log_detail);
+                    $access_log_id = $util::recordAccessLog(__METHOD__,$user_info,"予約に伴う◯×の更新",$access_log_detail,$request);
+                    $util->closeBooked($salon_id, $date, $st_time, $ed_time, $course_master->id,$access_log_id);
+                }
+            }
     
             $pet = Pet::find($pet_id);
             $pet->message = $message;

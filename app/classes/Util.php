@@ -406,6 +406,8 @@ class Util
      */
     public static function getWhoCameBefore($date,$salon_id)
     {
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
         $usersCameBeforeList = [];
 
 
@@ -433,7 +435,12 @@ class Util
         ;
         $pets = Pet::query()
         ->whereIn('owner_id',$todays_owners)
+        ->get()
         ;
+
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . '$pets:');
+        // Log::debug($pets);
+
         $staff = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Users and Pets info!' );
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
@@ -443,9 +450,19 @@ class Util
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Bookings info before ' . $date);
 
         foreach($users as $user){
+            Log::debug(__METHOD__ . '(' . __LINE__ . ') user_id:' . $user->id);
             $count = $user->cameBefore;
+
+            if($count){
+                $usersCameBeforeList[$user->id] = $count;
+                Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'continue_because_this_user_had_come_when_sign_up!');
+                continue;
+            }
+
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'begin_search_in_pets_of_user');
             $pets_of_user = $pets->where('owner_id',$user->id);
             foreach($pets_of_user as $pet_of_user){
+                Log::debug(__METHOD__ . '(' . __LINE__ . ') pet' . $pet_of_user->name);
                 $count = $count + $allBookings->where('pet_id',$pet_of_user->id) -> count();
 
                 Log::debug(__METHOD__.'('.__LINE__.') user('. $user->id .') pet_id(' .$pet_of_user->id.') count:'.$count);
@@ -459,6 +476,7 @@ class Util
         Log::debug(__METHOD__.'('.__LINE__.') usersCameBeforeList:');
         Log::debug($usersCameBeforeList);
 
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return $usersCameBeforeList;
     }
 
