@@ -132,14 +132,34 @@
 
                 @endforeach
             </tr>
+            <tr>
+                <th></th>
+                @foreach($days as $day)
+                <th class="all_open" data-date="{{$day}}">
+                    全部◯
+                </th>
+
+                @endforeach
+            </tr>
+            <tr>
+                <th></th>
+                @foreach($days as $day)
+                <th class="all_close" data-date="{{$day}}">
+                    全部×
+                </th>
+
+                @endforeach
+            </tr>
+
 
             @foreach($times as $time)
             <tr>
                 <th>{{$time}}</th>
                 @foreach($days as $day)
                 <!-- <td>{{$capacities[$day][$timesNum[$time]]}}</td> -->
+       
                 @if($capacities[$day][$timesNum[$time]] == 1)
-                <td id="td_{{$day}}_{{ $timesNum[$time]}}" class="{{$day}}_{{ $timesNum[$time]}} opened">
+                <td id="td_{{$day}}_{{ $timesNum[$time]}}" class="{{$day}} {{$day}}_{{ $timesNum[$time]}} opened">
                     <p>○</p>
                     <input id="opened_{{$day}}_{{$timesNum[$time]}}" type="hidden" class="opened_input" name="{{$day}}_{{$timesNum[$time]}}" id="" value="1">
                 </td>
@@ -150,7 +170,7 @@
 
                 </td>
                 @elseif($capacities[$day][$timesNum[$time]] == 0)
-                <td id="td_{{$day}}_{{ $timesNum[$time]}}" class="{{$day}}_{{ $timesNum[$time]}} closed">
+                <td id="td_{{$day}}_{{ $timesNum[$time]}}" class="{{$day}} {{$day}}_{{ $timesNum[$time]}} closed">
                     <p>×</p>
 
                     <input id="closed_{{$day}}_{{$timesNum[$time]}}" class="closed_input" type="hidden" name="{{$day}}_{{$timesNum[$time]}}" id="" value="0">
@@ -199,6 +219,38 @@
         $(this).children('input').val("1");
         $(this).removeClass('closed');
         $(this).addClass('opened');
+    });
+
+    $(document).on("click", '.all_close', function() {
+        const dateClass = this.dataset.date;
+        console.log(dateClass);
+
+        // Select all elements with both the class name of this.dataset.date and 'opened'
+        const elements = $(`.${dateClass}.opened`);
+
+        // Perform actions on each selected element
+        elements.each(function() {
+            $(this).children('p').text("×"); // Change text of <p> child
+            $(this).children('input').val("0"); // Set value of <input> child
+            $(this).removeClass('opened'); // Remove 'opened' class
+            $(this).addClass('closed'); // Add 'closed' class
+        });
+    });
+
+    $(document).on("click", '.all_open', function() {
+        const dateClass = this.dataset.date;
+        console.log(dateClass);
+
+        // Select all elements with both the class name of this.dataset.date and 'opened'
+        const elements = $(`.${dateClass}.closed`);
+
+        // Perform actions on each selected element
+        elements.each(function() {
+            $(this).children('p').text("◯"); // Change text of <p> child
+            $(this).children('input').val("1"); // Set value of <input> child
+            $(this).removeClass('closed'); // Remove 'opened' class
+            $(this).addClass('opened'); // Add 'closed' class
+        });
     });
 </script>
 
