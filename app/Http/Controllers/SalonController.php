@@ -92,10 +92,16 @@ class SalonController extends Controller
         $salon['address2']   = $request['address2'];
         $salon['phone']      = $request['phone'];
         $salon['email']      = $request['email'];
+        $salon['is_close_all_courses']      = $request['is_close_all_courses'];
         // $salon['st_time']    = $st_time;
         // $salon['ed_time']    = $ed_time;
 
         $salon->save();
+
+        $is_close_all_courses_val = '選択コースのみ';
+        if($salon['is_close_all_courses']){
+            $is_close_all_courses_val = '全コースクローズ';
+        }
 
         // 操作記録をDBに
         $user =Auth::user();
@@ -104,7 +110,7 @@ class SalonController extends Controller
 
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "スタッフによるサロン情報の変更[{$method_name}]";
-        $check_log_detail = $salon['salon_name'] . ' ' .$salon['prefecture'] . ' ' .$salon['address1'] . ' ' .$salon['phone'] . ' ' .$salon['email'];
+        $check_log_detail = $salon['salon_name'] . ' ' .$salon['prefecture'] . ' ' .$salon['address1'] . ' ' .$salon['phone'] . ' ' .$salon['email'] . '　[全コース自動クローズ]'. $is_close_all_courses_val;
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
