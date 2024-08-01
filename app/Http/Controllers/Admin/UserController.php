@@ -80,7 +80,7 @@ class UserController extends Controller
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "ユーザー登録";
         $check_log_detail = "user_id:{$user->id} {$user->email}";
-        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$request);
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,"");
         
 
         #return back() -> with('success','会員登録をしました。');
