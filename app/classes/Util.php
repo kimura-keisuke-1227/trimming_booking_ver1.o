@@ -433,6 +433,7 @@ class Util
         ;
         $pets = Pet::query()
         ->whereIn('owner_id',$todays_owners)
+        ->get()
         ;
         $staff = Auth::user();
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') got all Users and Pets info!' );
