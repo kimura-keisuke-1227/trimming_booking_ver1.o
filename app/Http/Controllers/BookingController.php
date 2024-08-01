@@ -707,9 +707,6 @@ class BookingController extends Controller
         Log::debug(__METHOD__.'('.__LINE__.') sraff(' . $staff->id .') is getting all Bookings info before ' . $date);
         $usersCameBeforeList = Util::getWhoCameBefore($date,$salon->id);
 
-        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'usersCameBeforeList');
-        Log::debug($usersCameBeforeList);
-
         Log::info(__METHOD__.'('.__LINE__. ') ends by user_id(' . $staff->id . ')');
         Log::debug(__METHOD__.'('.__LINE__. ') $salon:' . $salon);
         return view('admin.bookings.index', [
