@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create(Holiday::CONST_STR_TABLE_NAME_OF_HOLIDAYS, function (Blueprint $table) {
             $table->id();
             $table->foreignId(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID);
-            $table->foreignId(Holiday::CONST_STR_COLUMN_NAME_OF_DATE);
+            $table->date(Holiday::CONST_STR_COLUMN_NAME_OF_DATE);
             $table->timestamps();
         });
     }
