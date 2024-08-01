@@ -136,7 +136,7 @@
                 <th></th>
                 @foreach($days as $day)
                 <th class="all_open" data-date="{{$day}}">
-                    全部◯
+                    全部○
                 </th>
 
                 @endforeach
@@ -246,7 +246,7 @@
 
         // Perform actions on each selected element
         elements.each(function() {
-            $(this).children('p').text("◯"); // Change text of <p> child
+            $(this).children('p').text("○"); // Change text of <p> child
             $(this).children('input').val("1"); // Set value of <input> child
             $(this).removeClass('closed'); // Remove 'opened' class
             $(this).addClass('opened'); // Add 'closed' class
