@@ -3,19 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Holiday;
+use App\Models\Salon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Log;
 class HolidayController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index($salon_id)
     {
-        //
+        $salons = Salon::all();
+        $holidays = Holiday::where(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID,$salon_id)
+        ->orderBy(Holiday::CONST_STR_COLUMN_NAME_OF_DATE)
+        ->get();
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'holidays');
+        Log::debug($holidays);
+        return view('admin.horiday.index',[
+            'holidays' => $holidays,
+            'salons' => $salons,
+            'salon_id'  => $salon_id,
+        ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

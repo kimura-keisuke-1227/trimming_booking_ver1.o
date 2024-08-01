@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Models\RegularHoliday;
+use App\Models\Salon;
 
 class HolydayController extends Controller
 {
@@ -15,11 +16,13 @@ class HolydayController extends Controller
      */
     public function index($salon_id)
     {
+        $salons = Salon::all();
         $regularHolidays = RegularHoliday::where('salon_id',$salon_id)
         ->orderBy('st_date')
         ->get();
         return view('admin.horiday.index',[
-            'regularHolidays' => $regularHolidays
+            'regularHolidays' => $regularHolidays,
+            'salons' => $salons,
         ]);
     }
 

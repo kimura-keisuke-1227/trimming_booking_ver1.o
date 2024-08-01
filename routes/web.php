@@ -16,7 +16,7 @@ use App\Http\Controllers\KarteFormatController;
 use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use App\Http\Controllers\AccessLogController;
-use App\Http\Controllers\HolydayController;
+use App\Http\Controllers\HolidayController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -409,7 +409,7 @@ Route::resource('/admin/accesslog', AccessLogController::class)
 
 // ペット確認（管理者）
 Route::get('/admin/holiday/{salon_id}',
-[HolydayController::class,'index'])
+[HolidayController::class,'index'])
 -> Middleware('auth')
 -> name('admin.holiday');
 ;

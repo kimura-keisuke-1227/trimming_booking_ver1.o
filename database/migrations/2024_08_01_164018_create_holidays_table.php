@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID);
             $table->date(Holiday::CONST_STR_COLUMN_NAME_OF_DATE);
+            $table->string(Holiday::CONST_STR_COLUMN_NAME_OF_COMMENT)->nullable();
             $table->timestamps();
         });
     }
