@@ -8,6 +8,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\Http\Requests\SingleHolidayRqeuest;
+use App\Http\Requests\MultipleHolidayRqeuest;
+use Exception;
 use Illuminate\Support\Facades\Log;
 class HolidayController extends Controller
 {
@@ -47,12 +50,25 @@ class HolidayController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($salon_id, Request $request)
+    public function store($salon_id, SingleHolidayRqeuest $request)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         Log::debug($request);
+        $holiday = new Holiday();
+        
+        try{
+
+            $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID] =$salon_id;
+            $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_DATE] = $request['single_date'];
+            $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_COMMENT] = $request['single_comment'];
+            
+            $holiday->save();
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'saved_hodliday salon:' . $salon_id .' date:' . $request['single_date'] .' comment:' . $request['single_comment'] );
+        }catch(Exception $e){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')error_occurred_when_save_single_holiday:' . $e);
+        }
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-        return __METHOD__;
+        return redirect(route('admin.holiday',['salon_id'=>$salon_id]));
     }
 
     /**
