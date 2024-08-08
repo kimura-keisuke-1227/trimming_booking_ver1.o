@@ -34,7 +34,7 @@
                         <input id="single_comment" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="single_comment">
                     </div>
                     <div class="ml-auto">
-                        <button name="single_holiday" type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
+                        <button name="single_holiday" type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md"onclick="return confirm('登録します。よろしいですか？')">登録</button>
                     </div>
                 </div>
             </form>
@@ -93,7 +93,7 @@
                         <input id="single_comment" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="single_comment">
                     </div>
                     <div class="ml-auto">
-                        <button name="multiple_holidays" type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
+                        <button name="multiple_holidays" type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md" onclick="return confirm('登録します。よろしいですか？')">登録</button>
                     </div>
                 </div>
             </form>
