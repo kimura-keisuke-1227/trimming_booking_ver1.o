@@ -38,7 +38,10 @@ class HolidayController extends Controller
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         $salon = Salon::find($salon_id);
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-        return view('admin.holiday.create' , ['salon_id' => $salon_id ]);
+        return view('admin.holiday.create' , [
+            'salon_id' => $salon_id ,
+            'salon' => $salon,
+        ]);
     }
 
     /**
