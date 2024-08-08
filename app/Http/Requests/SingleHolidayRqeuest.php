@@ -11,7 +11,7 @@ class SingleHolidayRqeuest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class SingleHolidayRqeuest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'single_date' => 'required|date',
+            'single_comment' => 'required|string',
         ];
     }
 }
