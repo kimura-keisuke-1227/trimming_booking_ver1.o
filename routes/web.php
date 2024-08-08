@@ -407,11 +407,18 @@ Route::resource('/admin/accesslog', AccessLogController::class)
 ;
 
 
-// ペット確認（管理者）
+// 休日の一覧
 Route::get('/admin/holiday/{salon_id}',
 [HolidayController::class,'index'])
 -> Middleware('auth')
 -> name('admin.holiday');
+;
+
+// 休日の一覧
+Route::get('/admin/holiday/{salon_id}/create',
+[HolidayController::class,'crate'])
+-> Middleware('auth')
+-> name('admin.holiday.create');
 ;
 
 /*****************************************************************
