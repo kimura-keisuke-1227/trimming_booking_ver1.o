@@ -11,7 +11,7 @@ class MultipleHolidayRqeuest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class MultipleHolidayRqeuest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'st_date' => 'required|date',
+            'ed_date' => 'required|date',
+            'single_comment' => 'required|string',
         ];
     }
 }
