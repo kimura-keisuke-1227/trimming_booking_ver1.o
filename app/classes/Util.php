@@ -370,6 +370,16 @@ class Util
         $realIp = request()->ip();
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
 
+        // データの重複をさせないために一旦削除
+        $open_close_to_delete = OpenCloseSalon::query()
+            ->where('salon_id', $salon_id)
+            ->where('course_id', $course_id)
+            ->where('date', $date)
+            ->where('time', '>=', $st_time)
+            ->where('time', '<', $ed_time);
+        
+        $open_close_to_delete->delete();
+
         $insertsDatas = [];
         for ($time = $st_time; $time < $ed_time; $time = $time + $step_time) {
             $openCloseSalon = [
