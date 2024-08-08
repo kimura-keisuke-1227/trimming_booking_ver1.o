@@ -47,9 +47,12 @@ class HolidayController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store($salon_id, Request $request)
     {
-        //
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        Log::debug($request);
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return __METHOD__;
     }
 
     /**
