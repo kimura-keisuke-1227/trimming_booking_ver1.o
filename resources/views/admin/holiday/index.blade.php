@@ -29,11 +29,13 @@
         <tr>
             <!-- <th>id</th> -->
             <th>日付</th>
+            <th>コメント</th>
             <th>削除</th>
         </tr>
         @foreach($holidays as $holiday)
         <tr>
             <td>{{$holiday -> date_str()}}</td>
+            <td>{{$holiday -> comment}}</td>
             <td><a href="">[削除]</a></td>
         </tr>
         @endforeach
