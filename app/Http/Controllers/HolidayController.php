@@ -22,7 +22,7 @@ class HolidayController extends Controller
         ->get();
         Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'holidays');
         Log::debug($holidays);
-        return view('admin.horiday.index',[
+        return view('admin.holiday.index',[
             'holidays' => $holidays,
             'salons' => $salons,
             'salon_id'  => $salon_id,
@@ -38,7 +38,7 @@ class HolidayController extends Controller
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         $salon = Salon::find($salon_id);
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-        return __METHOD__;
+        return view('admin.holiday.create' , ['salon_id' => $salon_id ]);
     }
 
     /**
