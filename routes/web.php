@@ -414,11 +414,18 @@ Route::get('/admin/holiday/{salon_id}',
 -> name('admin.holiday');
 ;
 
-// 休日の一覧
+// 休日の追加画面
 Route::get('/admin/holiday/{salon_id}/create',
 [HolidayController::class,'create'])
 -> Middleware('auth')
 -> name('admin.holiday.create');
+;
+
+// 休日の追加保存
+Route::post('/admin/holiday/{salon_id}/create',
+[HolidayController::class,'store'])
+-> Middleware('auth')
+-> name('admin.holiday.store');
 ;
 
 /*****************************************************************
