@@ -7,7 +7,7 @@
 <div class="container">
 <label class="block text-sm font-medium mb-2" for="salon">{{ $salon->salon_name }}</label>
         <div class="mb-6 ">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{Route('admin.holiday.store', ['salon_id' => $salon_id ])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">単一日休日登録</h3>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="mb-6 ">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{Route('admin.holiday.store', ['salon_id' => $salon_id ])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">複数休日登録</h3>
@@ -68,9 +68,9 @@
                         <input id="ed_date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="ed_date" min="2000-01-01" max="2100-12-31" >
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">曜日</label>
+                        <label class="block text-sm font-medium mb-2" for="day_of_week">曜日</label>
                         <div class="flex">
-                            <select id="dogtype" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="dogtype">
+                            <select id="day_of_week" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="day_of_week">
                                 
                                 <option value=1>月曜日</option>
                                 <option value=2>火曜日</option>
