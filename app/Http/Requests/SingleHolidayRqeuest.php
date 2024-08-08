@@ -21,9 +21,22 @@ class SingleHolidayRqeuest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'single_date' => 'required|date',
-            'single_comment' => 'required|string',
-        ];
+        if ($this->has('single_holiday')) {
+            return [
+                'single_date' => 'required|date',
+                'single_comment' => 'required|string',
+            ];
+        }
+
+        if ($this->has('multiple_holidays')) {
+            return [
+                'st_date' => 'required|date',
+                'ed_date' => 'required|date|after_or_equal:st_date',
+                'day_of_week' => 'required|integer|min:1|max:7',
+                'single_comment' => 'nullable|string',
+            ];
+        }
+
+        return [];
     }
 }
