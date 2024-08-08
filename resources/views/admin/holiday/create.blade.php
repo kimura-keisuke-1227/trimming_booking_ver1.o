@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container">
-<label class="block text-sm font-medium mb-2" for="salon">店舗を選択してください。</label>
+<label class="block text-sm font-medium mb-2" for="salon">{{ $salon->salon_name }}</label>
         <div class="mb-6 ">
             <label class="block text-sm font-medium mb-2" for="salon">店舗を選択してください。</label>
             <div class="flex">
