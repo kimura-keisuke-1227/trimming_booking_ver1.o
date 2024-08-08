@@ -416,7 +416,7 @@ Route::get('/admin/holiday/{salon_id}',
 
 // 休日の一覧
 Route::get('/admin/holiday/{salon_id}/create',
-[HolidayController::class,'crate'])
+[HolidayController::class,'create'])
 -> Middleware('auth')
 -> name('admin.holiday.create');
 ;
