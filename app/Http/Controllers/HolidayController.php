@@ -33,9 +33,12 @@ class HolidayController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create($salon_id)
     {
-        //
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        $salon = Salon::find($salon_id);
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return __METHOD__;
     }
 
     /**
