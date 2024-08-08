@@ -40,7 +40,7 @@
 
     </table>
 
-    <a href="">休日データの追加</a>
+    <a href="{{route('admin.holiday.create' , ['salon_id' => $salon_id ])}}">休日データの追加</a>
   
 
     {{-- 
