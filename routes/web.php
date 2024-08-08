@@ -428,13 +428,6 @@ Route::post('/admin/holiday/{salon_id}/create',
 -> name('admin.holiday.store');
 ;
 
-// 休日の追加保存(複数日)
-Route::post('/admin/holiday/{salon_id}/create',
-[HolidayController::class,'store_multi_holidays'])
--> Middleware('auth')
--> name('admin.holiday.store');
-;
-
 /*****************************************************************
 *
 *   パスワードリセット
