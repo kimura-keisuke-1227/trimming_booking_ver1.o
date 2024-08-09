@@ -22,12 +22,25 @@ class HolidayController extends Controller
      */
     public function index($salon_id)
     {
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+        
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "店休日一覧表示";
+        $check_log_detail = "サロン:{$salon_id}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"get");
+
         $salons = Salon::all();
         $holidays = Holiday::where(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID,$salon_id)
         ->orderBy(Holiday::CONST_STR_COLUMN_NAME_OF_DATE)
         ->get();
         Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'holidays');
         Log::debug($holidays);
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return view('admin.holiday.index',[
             'holidays' => $holidays,
             'salons' => $salons,
