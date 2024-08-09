@@ -23,6 +23,7 @@
     </table>
     <br><br>
     <a href="{{route('admin.holiday.create' , ['salon_id' => $salon_id ])}}">休日データの追加</a>
+    <p>90日より前のデータは表示されません。</p>
     </div>
         <table class="table table-striped">
         <tr>

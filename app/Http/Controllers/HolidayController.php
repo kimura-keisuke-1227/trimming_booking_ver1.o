@@ -34,10 +34,16 @@ class HolidayController extends Controller
         $check_log_detail = "サロン:{$salon_id}";
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"get");
 
+        $today = date('Y-m-d');;
+
+        $date_of_60_days_ago = Util::addDays($today,-90);
+
         $salons = Salon::all();
-        $holidays = Holiday::where(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID,$salon_id)
-        ->orderBy(Holiday::CONST_STR_COLUMN_NAME_OF_DATE)
-        ->get();
+        $holidays = Holiday::query()
+            ->where(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID,$salon_id)
+            ->where(Holiday::CONST_STR_COLUMN_NAME_OF_DATE,">=",$date_of_60_days_ago)
+            ->orderBy(Holiday::CONST_STR_COLUMN_NAME_OF_DATE)
+            ->get();
         Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'holidays');
         Log::debug($holidays);
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
