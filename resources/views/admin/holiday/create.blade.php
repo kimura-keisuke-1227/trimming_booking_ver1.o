@@ -79,6 +79,7 @@
                                 <option value=5>金曜日</option>
                                 <option value=6>土曜日</option>
                                 <option value=7>日曜日</option>
+                                <option value=999>すべての日</option>
                                 
                             </select>
                             <div class="pointer-events-none transform -translate-x-full flex items-center px-2 text-gray-500">
