@@ -171,7 +171,7 @@ class HolidayController extends Controller
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
             // 日付を曜日に
             $date_day_of_week = date('w', strtotime($date));
-            if ($date_day_of_week==999 || $date_day_of_week == $day_of_week){
+            if ($day_of_week==999 || $date_day_of_week == $day_of_week){
                 try{
                     $holiday = new Holiday();
                     $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID] =$salon_id;
