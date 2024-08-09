@@ -91,6 +91,26 @@
         </div>
     </div>
 </section>
+<section class="py-8">
+    <div class="container px-4 mx-auto">
+        <div class="py-4 bg-white rounded">
+            <form action="{{Route('admin.salon.mailtest',['salon_id' => $salon -> id])}}" method="get" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="flex px-6 pb-4 border-b">
+                    <h3 class="text-xl font-bold">メール送信テスト</h3>
+                </div>
+
+                <div class="pt-4 px-6">
+                   <p>メールアドレスを保存後に実行してください。</p>
+                    <div class="ml-auto">
+                        <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">メール送信テスト</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('footer')
