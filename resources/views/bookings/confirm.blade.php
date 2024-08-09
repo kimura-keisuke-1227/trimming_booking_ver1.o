@@ -14,7 +14,9 @@
 
     <form action="{{Route('booking.store')}}" method="post">
         @csrf
-        <input type="submit" name="" id="" value="予約する">
+        <div class="ml-auto">
+            <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">予約する</button>
+        </div>
     </form>
 </div>
 @endsection
