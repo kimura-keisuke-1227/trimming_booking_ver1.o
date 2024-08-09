@@ -518,7 +518,7 @@ class BookingController extends Controller
 
         //キャンセルのメールを送りたい
         $booking->delete();
-        Log::notice(__METHOD__ . ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
+        Log::notice(__METHOD__.'('.__LINE__. ')'.  ' owner user_id(' . $owner->id . ') deleted booking id(' . $booking->id . ')');
         Log::info(' deleted booking:' . $booking);
 
         session([
@@ -585,7 +585,7 @@ class BookingController extends Controller
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$bookingID);
 
         $booking->delete();
-        Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
+        Log::notice(__METHOD__.'('.__LINE__. ')'.  ' staff user_id(' . $staff->id . ') deleted booking id(' . $booking->id . ')');
         Log::debug(' deleted booking:' . $booking);
         Log::debug(__METHOD__ . ' booking deleted ID:' . $bookingID . ' by user ID(' . $staff->id . ')');
 
@@ -607,7 +607,7 @@ class BookingController extends Controller
             $email = $nonMemberBooking->email;
             Log::debug(__METHOD__ . ' Deleting non member booking:' . $nonMemberBooking);
             $nonMemberBooking->delete();
-            Log::notice(__METHOD__ . ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
+            Log::notice(__METHOD__.'('.__LINE__. ')'.  ' staff user_id(' . $staff->id . ') deleted nonMember Booking id(' . $nonMemberBooking->id . ')');
             Log::debug(' deleted nonMemberBooking:' . $nonMemberBooking);
             Log::debug(__METHOD__ . ' non user email:' . $email);
 
@@ -790,7 +790,7 @@ class BookingController extends Controller
             $access_log_detail = "{$date} - {$access_log_st_time} から{$access_log_ed_time} までの予約の保存";
             $util::recordAccessLog(__METHOD__,$user_info ,"[スタッフ]予約に伴う予約の登録",$access_log_detail,$request);
             $booking->save();
-            Log::notice(__METHOD__ . ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
+            Log::notice(__METHOD__.'('.__LINE__. ')'. ' staff:user_id(' . $staff->id . ') saved booking. Booking ID is (' . $booking->id . ')');
     
             //○×表を閉じる
             Log::info(__METHOD__ . '(' . __LINE__ . ') get course master to close OX by staff(' . $staff . ')');
@@ -1184,7 +1184,7 @@ class BookingController extends Controller
             // 予約を保存
             $booking->save();
             
-            Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
+            Log::notice(__METHOD__.'('.__LINE__. ')' . '  owner user_id(' . $owner->id . ') saved Booking, id(' . $booking->id . ')');
     
             Log::debug(__FUNCTION__ . ' 予約登録：(pet_id)' . session('pet')->id . ' (course)' . session('course')->id . '(date)' . session('date')) . '(st_time)' . $st_time . '(ed_time)' . $ed_time . ('booking_status') . $booking_status;
             Log::debug(__METHOD__ . ' start save default message of pet id(' . $pet_id . ') -> "' . $message);
@@ -1222,17 +1222,17 @@ class BookingController extends Controller
             $util::recordAccessLog(__METHOD__,$user_info,"予約時のメッセージの変更",$access_log_detail,$request);
             
             $pet->save();
-            Log::notice(__METHOD__ . '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
+            Log::notice(__METHOD__.'('.__LINE__. ')'.  '  owner user_id(' . $owner->id . ') saved message, pet id(' . $pet->id . ')');
     
-            Log::debug(__METHOD__ . ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
+            Log::debug(__METHOD__.'('.__LINE__. ')'. ' end save default message of pet id(' . $pet_id . ') -> "' . $message);
     
             Mail::to($owner->email)
                 ->send(new ContactAdminMail());
-            Log::debug(__METHOD__ . 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
+            Log::debug(__METHOD__.'('.__LINE__. ')'. 'system sent a message to user(' . $owner->id . ') whose mail address ="' .  $owner->email . '"');
     
             Mail::to(session('salon')->email)
                 ->send(new BookingNotificationForSalon());
-            Log::debug(__METHOD__ . 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
+            Log::debug(__METHOD__.'('.__LINE__. ')'. 'system sent a message to salon (' . session('salon')->id . ') whose mail address ="' .  session('salon')->email . '"');
         }catch(Exception $e){
             Log::error($e);
             Log::debug(__METHOD__.'('.__LINE__.') catch Error: ' . $e);
