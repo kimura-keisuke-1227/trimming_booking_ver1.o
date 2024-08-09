@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 use App\classes\Util;
-
+use Exception;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -52,9 +52,16 @@ class MailTestMail extends Mailable
 
         // $salon = session('salon');
 
-        $mailFrom = '';
-        // $mailFrom = $salon -> email;
-        $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
+        // $mailFrom = '';
+        // // $mailFrom = $salon -> email;
+        // $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
+
+        $mailFrom = Util::getMailFrom();
+
+        if(!$mailFrom){
+            throw new Exception("There is NO e-mail from system.");
+        }
+
 
         return $this->from($mailFrom) 
         ->subject('サロンのメールアドレスへの送信テスト。')

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\classes\Util;
+use Exception;
 
 class NonMemberBookingMailToSalon extends Mailable
 {
@@ -38,7 +39,14 @@ class NonMemberBookingMailToSalon extends Mailable
         $ed_time_for_show = Util::minuteToTime($booking->ed_time_for_show);
         $date = Util::getYMDWFromDbDate($booking->date);
 
-        $mailFrom = Util::getSetting($salon->email,'mailFromSalon',false);
+        // $mailFrom = Util::getSetting($salon->email,'mailFromSalon',false);
+
+        $mailFrom = Util::getMailFrom();
+
+        if(!$mailFrom){
+            throw new Exception("There is NO e-mail from system.");
+        }
+
 
         return $this->from($mailFrom) 
         ->subject('会員でないユーザーから予約がありました。')

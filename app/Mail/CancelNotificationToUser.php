@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Salon;
@@ -52,9 +52,16 @@ class CancelNotificationToUser extends Mailable
        
         Log::debug(__METHOD__ . ' message：' . $message);
 
-        $mailFrom = 'support@conaffetto-saitama.com';
-        $mailFrom = $salon -> email;
-        $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
+        // $mailFrom = 'support@conaffetto-saitama.com';
+        // $mailFrom = $salon -> email;
+        // $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
+
+        $mailFrom = Util::getMailFrom();
+
+        if(!$mailFrom){
+            throw new Exception("There is NO e-mail from system.");
+        }
+
 
         return $this->from($mailFrom) 
         ->subject('予約をキャンセルしました。')

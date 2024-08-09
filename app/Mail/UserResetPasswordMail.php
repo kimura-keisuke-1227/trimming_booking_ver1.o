@@ -10,6 +10,7 @@ Use App\Models\UserToken;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use App\classes\Util;
+use Exception;
 
 class UserResetPasswordMail extends Mailable
 {
@@ -48,7 +49,14 @@ class UserResetPasswordMail extends Mailable
         $mailAddressFromSalon = Util::getSetting('test@gmail.com','mailFromSalon',false);
         $mailSenderName = Util::getSetting('システムによる自動送信','mailSenderName',false);
 
-        $mailFrom = Util::getSetting(env('MAIL_FROM_ADDRESS'),'mailFromSalon',false);
+        // $mailFrom = Util::getSetting(env('MAIL_FROM_ADDRESS'),'mailFromSalon',false);
+
+        $mailFrom = Util::getMailFrom();
+
+        if(!$mailFrom){
+            throw new Exception("There is NO e-mail from system.");
+        }
+
 
         return $this->from($mailFrom, $mailSenderName)
             ->to($this->user->email)

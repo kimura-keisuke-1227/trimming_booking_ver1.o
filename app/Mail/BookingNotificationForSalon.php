@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 use App\classes\Util;
-
+use Exception;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -50,11 +50,17 @@ class BookingNotificationForSalon extends Mailable
 
         Log::debug(__METHOD__ . ' message：' . $message);
 
-        $salon = session('salon');
-        $mailFrom = 'support@conaffetto-saitama.com';
-        $mailFrom = $salon -> email;
+        // $salon = session('salon');
+        // $mailFrom = 'support@conaffetto-saitama.com';
+        // $mailFrom = $salon -> email;
 
-        $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
+        $mailFrom = Util::getMailFrom();
+
+        if(!$mailFrom){
+            throw new Exception("There is NO e-mail from system.");
+        }
+
+        $mailFrom = Util::getMailFrom();
 
         $util = new Util();
         $theUserCameBefore = $util->getTheUserCameBefore($user->id,$date);
