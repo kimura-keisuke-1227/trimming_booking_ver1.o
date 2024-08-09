@@ -50,7 +50,7 @@ class BookingNotificationForSalon extends Mailable
 
         Log::debug(__METHOD__ . ' message：' . $message);
 
-        // $salon = session('salon');
+        $salon = session('salon');
         // $mailFrom = 'test@testmail.com';
         // $mailFrom = $salon -> email;
 
