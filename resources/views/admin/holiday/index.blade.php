@@ -24,7 +24,7 @@
     <br><br>
     <a href="{{route('admin.holiday.create' , ['salon_id' => $salon_id ])}}">休日データの追加</a>
     </div>
-        <table class="table table-striped pc_only">
+        <table class="table table-striped">
         <tr>
             <!-- <th>id</th> -->
             <th>日付</th>
