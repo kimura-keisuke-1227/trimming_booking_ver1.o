@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailTest;
+
 class SalonController extends Controller
 {
     //
@@ -138,6 +141,10 @@ class SalonController extends Controller
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         $salon = Salon::find($salon_id);
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+
+            
+        Mail::to(session('salon')->email)
+            ->send(new MailTest());
         return redirect(Route('admin.salon.edit',['salon_id' => $salon]))
         ->with('success',$salon->email .'にテスト用メールを送信しました。');
     }
