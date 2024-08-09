@@ -13,7 +13,7 @@ use App\classes\Util;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class MailTest extends Mailable
+class MailTestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -52,13 +52,13 @@ class MailTest extends Mailable
 
         // $salon = session('salon');
 
-        $mailFrom = 'support@conaffetto-saitama.com';
+        $mailFrom = '';
         // $mailFrom = $salon -> email;
         $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
 
         return $this->from($mailFrom) 
-        ->subject('予約を受付けました。')
-        ->text('email.bookingNotification.bookingNotificationToStaff',[
+        ->subject('サロンのメールアドレスへの送信テスト。')
+        ->text('email.salonMailChangeTest.mailSendingTest',[
         ]);
     }
 }
