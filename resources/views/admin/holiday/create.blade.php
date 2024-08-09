@@ -45,21 +45,11 @@
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">複数休日登録</h3>
-                    <p>開始日・終了日の間で指定された曜日を一括で休日に指定します。開始日・終了日を含みます。</p>
+                    
                 </div>
-
+                
                 <div class="pt-4 px-6">
-                    <!-- ▼▼▼▼エラーメッセージ▼▼▼▼　-->
-                    @if($errors->any())
-                    <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                            <li class="text-red-400">{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
+                    <p>開始日・終了日の間で指定された曜日を一括で休日に指定します。開始日・終了日を含みます。</p>
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="st_date">開始日</label>
                         <input id="st_date" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="st_date" min="2000-01-01" max="2100-12-31" >
