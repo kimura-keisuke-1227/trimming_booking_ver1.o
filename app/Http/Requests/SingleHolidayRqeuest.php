@@ -32,7 +32,7 @@ class SingleHolidayRqeuest extends FormRequest
             return [
                 'st_date' => 'required|date',
                 'ed_date' => 'required|date|after_or_equal:st_date',
-                'day_of_week' => 'required|integer|min:1|max:7',
+                'day_of_week' => 'required|integer|min:1|max:1000',
                 'single_comment' => 'nullable|string',
             ];
         }
