@@ -428,6 +428,13 @@ Route::post('/admin/holiday/{salon_id}/create',
 -> name('admin.holiday.store');
 ;
 
+// 休日の削除
+Route::get('/admin/holiday/create/{holiday_id}',
+[HolidayController::class,'destroy'])
+-> Middleware('auth')
+-> name('admin.holiday.destroy');
+;
+
 /*****************************************************************
 *
 *   パスワードリセット
