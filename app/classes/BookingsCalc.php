@@ -8,6 +8,7 @@ use App\classes\Util;
 use App\Models\TempCapacity;
 use App\Models\RegularHoliday;
 use App\Http\Controllers\OpenCloseSalonController;
+use App\Models\Holiday;
 use Illuminate\Support\Facades\Redis;
 
 class BookingsCalc
@@ -481,8 +482,17 @@ class BookingsCalc
         }
         
 
-        Log::debug(__METHOD__.'('.__LINE__.')'.'list_of_holiday');
-        Log::debug($list_of_holiday);
+        $holidays = Holiday::query()
+            ->where(Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID,$salon->id)
+            ->whereBetween(Holiday::CONST_STR_COLUMN_NAME_OF_DATE, [$st_date, $ed_date])
+            ->get();
+
+        $holidayDates = $holidays->pluck('date')->toArray(); // 'date'カラムの値を配列として取得
+
+
+        Log::debug(__METHOD__.'('.__LINE__.')'.'holidays');
+        Log::debug($holidays);
+
         // 予約の可否を格納する配列初期値
         $capacities = [];
 
@@ -502,7 +512,7 @@ class BookingsCalc
                 Log::debug(__METHOD__.'('.__LINE__.')'.$date .' ' . $time);
 
                 // 定休日なら-1を代入して次へ
-                if(in_array($day_of_week, $list_of_holiday)){
+                if(in_array($date, $holidayDates)){
                     Log::debug(__METHOD__.'('.__LINE__.')'.'holiday:' . $date);
                     $today_capacity[$time] = -1;
                     continue;
