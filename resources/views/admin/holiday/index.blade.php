@@ -10,7 +10,11 @@
 
         @foreach($salons as $salon)
         <tr>
-            <td>{{$salon -> salon_name}}</td>
+            <td>
+                @if ($salon->id == $salon_id)
+                    【選択中】
+                @endif    
+            {{$salon -> salon_name}}</td>
             <td><a href="{{Route('admin.holiday',['salon_id' => $salon->id])}}">[設定を開く]</a></td>
         </tr>
         @endforeach
