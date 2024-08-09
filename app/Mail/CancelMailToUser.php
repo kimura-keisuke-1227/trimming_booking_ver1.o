@@ -52,7 +52,7 @@ class CancelMailToUser extends Mailable
        
         Log::debug(__METHOD__ . ' message：' . $message);
 
-        // $mailFrom = 'support@conaffetto-saitama.com';
+        // $mailFrom = 'test@testmail.com';
         // $mailFrom = $salon -> email;
         // $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
 

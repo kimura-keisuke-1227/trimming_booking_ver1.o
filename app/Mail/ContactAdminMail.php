@@ -53,7 +53,7 @@ class ContactAdminMail extends Mailable
 
         $salon = session('salon');
 
-        // $mailFrom = 'support@conaffetto-saitama.com';
+        // $mailFrom = 'test@testmail.com';
         // $mailFrom = $salon -> email;
         // $mailFrom = Util::getSetting($mailFrom,'mailFromSalon',false);
 
