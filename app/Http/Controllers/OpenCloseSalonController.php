@@ -11,6 +11,7 @@ use App\classes\Util;
 use App\Models\Salon;
 use App\Models\CourseMaster;
 use App\Models\RegularHoliday;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ class OpenCloseSalonController extends Controller
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
 
         return $this->getOXwithParam($salon,$course_id,$date);
+        
     }
 
     public function index3(Request $request)
@@ -244,28 +246,41 @@ class OpenCloseSalonController extends Controller
         =  $this->getAllOpenCloseSalonBySalonIdAndCourseId($salon_id, $course_id);
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start!');
         
-        $regularHolidays = RegularHoliday::where('salon_id',$salon_id) -> get();
+        // 柔軟な休日設定のために変更　2024-08-09
+        // $regularHolidays = RegularHoliday::where('salon_id',$salon_id) -> get();
+        
+        $holidays = Holiday::query()
+        ->where('salon_id',$salon_id)
+        ->whereBetween('date',[$st_date,$ed_date])
+        -> get();
+
         
         $OpenCloseListFromStdateToEddate = [];
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)) {
-            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$regularHolidays);
+            $OpenCloseListFromStdateToEddate[$date] = $this->makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$holidays);
         }
         Log::debug(__METHOD__ . '(' . __LINE__ . ') end!');
         return $OpenCloseListFromStdateToEddate;
     }
 
-    private function makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$regularHolidays)
+    private function makeOXListOfOneDay($date, $st_time, $ed_time, $step_time, $allOpenCloseSalonBySalonIdAndCourseId,$holidays)
     {
         Log::debug(__METHOD__ . '(' . __LINE__ . ') start! date:' . Util::getYMDWFromDbDate($date));
         $OXListOfOneDay = [];
 
-        $regularHoliday = $regularHolidays->where('dayOfWeek' , date('w',strtotime($date)));
+        // $regularHoliday = $regularHolidays->where('dayOfWeek' , date('w',strtotime($date)));
 
+
+        // 日付の配列を取得
+        $dates = array_column($holidays->toArray(), 'date');
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') dates');
+        Log::debug($dates);
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') date' . $date);
         $todayUsualAccept = -9999;
-        if($regularHoliday->isEmpty()){
-            $todayUsualAccept = 1;
-        } else{
+        if(in_array($date, $dates)){
             $todayUsualAccept = -1;
+        } else{
+            $todayUsualAccept = 1;
             
         }
 
