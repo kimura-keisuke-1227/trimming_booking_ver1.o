@@ -33,7 +33,11 @@
         <tr>
             <td>{{$holiday -> date_str()}}</td>
             <td>{{$holiday -> comment}}</td>
-            <td><a href="{{Route('admin.holiday.destroy',['holiday'=>$holiday])}}">[削除]</a></td>
+            <td>
+                <a href="{{ route('admin.holiday.destroy', ['holiday' => $holiday]) }}" 
+                onclick="return confirm('削除しますか？')">[削除]</a>
+            </td>
+
         </tr>
         @endforeach
 
