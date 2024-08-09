@@ -548,6 +548,6 @@ class Util
     }
 
     public static function getMailFrom(){
-        return env('MAIL_ADDRESS_FROM_SYSTEM');
+        return env('MAIL_FROM_ADDRESS');
     }
 }
