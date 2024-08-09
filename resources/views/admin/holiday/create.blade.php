@@ -45,6 +45,7 @@
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">複数休日登録</h3>
+                    <p>開始日・終了日の間で指定された曜日を一括で休日に指定します。開始日・終了日を含みます。</p>
                 </div>
 
                 <div class="pt-4 px-6">
