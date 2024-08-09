@@ -546,4 +546,8 @@ class Util
         return $hour*100+$min;
 
     }
+
+    public static function getMailFrom(){
+        return env('MAIL_ADDRESS_FROM_SYSTEM');
+    }
 }
