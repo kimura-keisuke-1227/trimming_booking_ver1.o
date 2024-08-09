@@ -295,6 +295,12 @@ Route::put('/admin/salons/{salon_id}',
 ) -> Middleware('auth')
 -> name('admin.salon.update');
 
+//サロン設定画面の取得
+Route::get('/admin/salons/mailtest/{salon_id}',
+[SalonController::class,'mailtest']
+) -> Middleware('auth')
+-> name('admin.salon.mailtest');
+
 //コース設定画面の取得
 Route::get('/admin/course',
 [CourseController::class,'index']
