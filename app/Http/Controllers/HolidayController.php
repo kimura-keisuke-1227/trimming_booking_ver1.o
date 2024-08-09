@@ -110,9 +110,31 @@ class HolidayController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Holiday $holiday): RedirectResponse
+    public function destroy(Holiday $holiday)
     {
-        //
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+        
+        $holiday_id = $holiday->id;
+        $salon_id = $holiday->salon_id;
+        $date = $holiday->date;
+        $comment = $holiday->comment;
+        
+        Log::debug(__METHOD__ . '(' . __LINE__ . ')' . 'holiday_id:' . $holiday_id .' salon:' . $salon_id . ' date:' . $date . ' comment:' . $comment);
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "店休日の削除";
+        $check_log_detail = "日付:{$date} サロン:{$salon_id} コメント:{$comment}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"get");
+
+        $holiday->delete();
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.holiday',['salon_id' => $salon_id]))
+            ->with('success','店休日を削除しました。');
     }
 
     private function registerSingleHoliday($salon_id,$request){
