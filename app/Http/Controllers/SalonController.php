@@ -135,6 +135,10 @@ class SalonController extends Controller
     }
 
     public function mailtest($salon_id){
-
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        $salon = Salon::find($salon_id);
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.salon.edit',['salon_id' => $salon]))
+        ->with('success',$salon->email .'にテスト用メールを送信しました。');
     }
 }
