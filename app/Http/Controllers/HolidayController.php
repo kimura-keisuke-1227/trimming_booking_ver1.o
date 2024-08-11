@@ -276,7 +276,7 @@ class HolidayController extends Controller
             $realIp = request()->ip();
             
             $check_log_summary = "複数店休日の登録に伴う自動的な◯×データの削除";
-            $check_log_detail = "日付:{$date} サロンID:{$salon_id}";
+            $check_log_detail = "開始日付:{$st_date} 終了日付:{$ed_date} サロンID:{$salon_id}";
             $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
             $list_of_open_close->delete();
