@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 
 use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
+use App\Models\OpenCloseSalon;
 
 use App\Http\Requests\SingleHolidayRqeuest;
 use App\Http\Requests\MultipleHolidayRqeuest;
@@ -187,6 +188,31 @@ class HolidayController extends Controller
         }catch(Exception $e){
             Log::error(__METHOD__ . '(' . __LINE__ . ')error_occurred_when_save_single_holiday:' . $e);
         }
+
+        // 当日の◯×データ削除
+        try{
+            $list_of_open_close = OpenCloseSalon::query()
+                ->where('date',$date)
+                ->where('salon_id',$salon_id)
+            ;
+            
+            // 操作記録をDBに
+            $user =Auth::user();
+            $method_name = __METHOD__;
+            $realIp = request()->ip();
+            
+            $check_log_summary = "単一店休日の登録に伴う自動的な◯×データの削除";
+            $check_log_detail = "日付:{$date} サロンID:{$salon_id}";
+            $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+
+            $list_of_open_close->delete();
+            
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'automatically_deleted_open_close_info_for_single_holiday! salon:' . $salon_id .' date:' . $date);
+            
+
+        }catch(Exception $e){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')error_occurred_when_deleting_open_close_list:' . $e);
+        }
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
     }
 
@@ -209,10 +235,15 @@ class HolidayController extends Controller
 
         $holiday = new Holiday();
 
+        $list_of_holiday = [];
+        
         for ($date = $st_date; $date <= $ed_date; $date = Util::addDays($date, 1)){
             // 日付を曜日に
             $date_day_of_week = date('w', strtotime($date));
             if ($day_of_week==999 || $date_day_of_week == $day_of_week){
+                
+                // 休日リストを追加
+                array_push($list_of_holiday,$date);
                 try{
                     $holiday = new Holiday();
                     $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_SALON_ID] =$salon_id;
@@ -222,14 +253,39 @@ class HolidayController extends Controller
                     $holiday->save();
 
                     Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'saved_hodliday salon:' . $salon_id .' date:' . $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_DATE] .' comment:' . $holiday[Holiday::CONST_STR_COLUMN_NAME_OF_COMMENT] );
-
                 }catch(Exception $e){
                     Log::error(__METHOD__ . '(' . __LINE__ . ')error_occurred_when_save_single_holiday:' . $e);
                 }
+
+
             }else{
                 Log::info(__METHOD__ . '(' . __LINE__ . ') skipped ' . $date);
             }
 
+        }
+
+        try{
+            $list_of_open_close = OpenCloseSalon::query()
+                ->whereIn('date',$list_of_holiday)
+                ->where('salon_id',$salon_id)
+            ;
+            
+            // 操作記録をDBに
+            $user =Auth::user();
+            $method_name = __METHOD__;
+            $realIp = request()->ip();
+            
+            $check_log_summary = "複数店休日の登録に伴う自動的な◯×データの削除";
+            $check_log_detail = "日付:{$date} サロンID:{$salon_id}";
+            $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+
+            $list_of_open_close->delete();
+            
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'automatically_deleted_open_close_info_for_multiple_holiday! salon:' . $salon_id .' date:' . $date);
+            
+
+        }catch(Exception $e){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')error_occurred_when_deleting_open_close_list:' . $e);
         }
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
     }
