@@ -16,6 +16,8 @@
                 <th>コース</th>
                 <th>所要時間(分)</th>
                 <th>案内時間(分)</th>
+                <th>有効・無効</th>
+                <th></th>
             </tr>
             @foreach ($courses as $course)
             <tr>
@@ -23,6 +25,20 @@
                 <td>{{$course->courseMaster->course}}</td>
                 <td><input id="minute_{{ $course->id }}" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" name="minute_{{ $course->id }}"  value="{{$course->minute}}" min="0"></td>
                 <td><input id="minute_for_show_{{ $course->id }}" class="block w-half px-4 py-3 mb-2 text-sm bg-white border rounded" type="number" name="minute_for_show_{{ $course->id }}"  value="{{$course->minute_for_show}}" min="0"></td>
+                <td>
+                    @if ($course->flg_show)
+                        有効
+                    @else
+                        ×
+                    @endif
+                </td>
+                <td>
+                    @if ($course->flg_show)
+                        [無効化]
+                    @else
+                        [有効化]
+                    @endif
+                </td>
             </tr>
             @endforeach
         </table>
