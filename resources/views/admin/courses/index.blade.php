@@ -33,11 +33,13 @@
                     @endif
                 </td>
                 <td>
+                    <a href="{{Route('admin.course.switch',$course)}}">
                     @if ($course->flg_show)
                         [無効化]
                     @else
                         [有効にする]
                     @endif
+                    </a>
                 </td>
             </tr>
             @endforeach

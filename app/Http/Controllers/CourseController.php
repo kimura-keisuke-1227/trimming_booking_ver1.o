@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
+use Exception;
+
 use App\Models\Salon;
 use App\Models\Course;
 use App\Models\CourseMaster;
@@ -127,5 +129,48 @@ class CourseController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function switch_course($id){
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
+        $coruse = Course::query()
+        ->find($id);
+        ;
+
+        $course_text = $coruse->dogtype->type . ' ' . $coruse->courseMaster->course;
+        
+        if($coruse->flg_show){
+            $check_log_detail = "コース:{$course_text}を無効に切替。";
+            $coruse['flg_show'] = false;
+            $success_message = "{$course_text}の無効化に";
+        }else{
+            $check_log_detail = "犬種:{$course_text}を有効に切替。";
+            $coruse['flg_show'] = true;
+            $success_message = "{$course_text}の有効化に";
+        }
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "コースの有効無効切り替え";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"switch_show_flg:{$id}");
+
+
+
+        try{
+            $coruse->save();
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . "Successfully_switch_show_flg_of:" . $course_text);
+        } catch(Exception $e){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')' . " Error_occurred_when_switch_show_flg_of_course:"  . $course_text.' '.$e);
+            return redirect(Route('admin.course.edit'))
+            ->with('error',"{$success_message}に失敗しました。");
+        }
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.course.edit'))
+        ->with('success',"{$success_message}に成功しました。");
     }
 }
