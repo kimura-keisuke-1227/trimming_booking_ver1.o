@@ -61,7 +61,7 @@
         <div class="flex max-w-md mx-auto flex-col text-center">
           <div class="mt-12 mb-8 p-8 bg-white rounded shadow">
             <h1 class="mb-6 text-3xl">{!!$salon_name !!}<br>予約システム</h1>
-            <a href="{{ route('admin.users.create')}}" class="new_entry">新規登録はこちらから</a>
+            <a href="{{ route('admin.users.create') }}" style="color: blue;">新規登録はこちらから</a>
             <br><br>
             <p>メールアドレス・パスワードを入力して<br>ログインしてください。</p>
             <br>
