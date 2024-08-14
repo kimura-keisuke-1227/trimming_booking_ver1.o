@@ -214,7 +214,9 @@ class BookingController extends Controller
             $check_log_detail = "dog_type:{$pet->dogtype->type} のコース情報を取得";
             $request_from_user = request();
             $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request_from_user);
-            $courses = Course::where('dogtype_id', $pet->dogtype_id)->get();
+            $courses = Course::where('dogtype_id', $pet->dogtype_id)
+            ->where('flg_show',true)
+            ->get();
         }
         $message_before = $pet->message;
 
