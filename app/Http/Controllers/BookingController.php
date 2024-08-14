@@ -218,6 +218,13 @@ class BookingController extends Controller
             ->where('flg_show',true)
             ->get();
         }
+
+        if($courses->count()==0){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')' . ' this_dog_type_has_no_course!!');
+            return redirect('/new_booking')
+            ->with('error','大変申し訳ございません。ただいま、この犬種の予約可能なコースがございません。御手数ですが店舗に直接お電話をお願いいたします。');
+        }
+
         $message_before = $pet->message;
 
         Log::debug(__METHOD__ . '( before message is "' . $message_before . '"');
