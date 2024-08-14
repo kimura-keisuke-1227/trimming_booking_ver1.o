@@ -1,15 +1,16 @@
 @extends('layouts.user')
 
-@section('title' , '基本コース登録')
+@section('title' , '基本コース編集')
 
 @section('content')
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('admin.course_master.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{Route('admin.course_master.update',$id)}}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="flex px-6 pb-4 border-b">
-                    <h3 class="text-xl font-bold">基本コース登録</h3>
+                    <h3 class="text-xl font-bold">基本コース編集</h3>
                 </div>
 
                 <div class="pt-4 px-6">
@@ -27,7 +28,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="course">基本コース名</label>
-                        <input id="course" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="course" value="{{ old('name') }}">
+                        <input id="course" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="course" value="{{ $course_master->course }}">
                     </div>
                      <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>

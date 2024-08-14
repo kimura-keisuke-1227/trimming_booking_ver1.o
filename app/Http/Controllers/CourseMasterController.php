@@ -122,17 +122,49 @@ class CourseMasterController extends Controller
     public function edit(string $id)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        $course_master = CourseMaster::find($id);
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return view('admin.courseMasters.edit',[
+            'id' => $id,
+            'course_master' => $course_master,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, string $id)
     {
-        //
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $course = $request['course'];
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "基本コースの編集";
+        $check_log_detail = "基本コース:{$course}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+        
+        $course_master = CourseMaster::find($id);
+
+        $course_master['course'] = $course;
+
+        try{
+            $course_master->save();
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'Successfully_update_a_new_course_when_create_a_course_master.');
+        } catch(Exception $e){                
+            Log::error(__METHOD__ . '(' . __LINE__ . ')' . 'Error_occurred_when_update_a_new_course_when_create_a_course_master. ' . $e);
+            return redirect(Route('admin.course_master.index'))
+                ->with('error','基本コースの編集に失敗しました。');
+        }
+
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.course_master.index'))
+            ->with('success','基本コースを更新しました。');
     }
 
     /**
