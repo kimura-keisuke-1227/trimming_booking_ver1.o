@@ -119,11 +119,12 @@ class CourseMasterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id): Response
+    public function edit(string $id)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-        return __METHOD__;
+        return view('admin.courseMasters.edit',[
+        ]);
     }
 
     /**
