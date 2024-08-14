@@ -11,6 +11,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NonMemberBookingController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseMasterController;
 use App\Http\Controllers\KarteController;
 use App\Http\Controllers\KarteFormatController;
 use App\Http\Controllers\DefaultCapacityController;
@@ -448,6 +449,19 @@ Route::get('/admin/holiday/destroy/{holiday}',
 -> name('admin.holiday.destroy');
 ;
 
+
+
+Route::resource('admin/course_master', CourseMasterController::class)
+    ->middleware('auth')
+    ->names([
+        'index' => 'admin.course_master.index',
+        'create' => 'admin.course_master.create',
+        'store' => 'admin.course_master.store',
+        'show' => 'admin.course_master.show',
+        'edit' => 'admin.course_master.edit',
+        'update' => 'admin.course_master.update',
+        'destroy' => 'admin.course_master.destroy',
+    ]);
 
 Route::resource('admin/dogtype', DogtypeController::class)
     ->middleware('auth')
