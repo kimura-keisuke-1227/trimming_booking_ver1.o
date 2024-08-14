@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 use App\Models\Dogtype;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\classes\Util;
 
 class DogtypeController extends Controller
 {
@@ -32,6 +34,7 @@ class DogtypeController extends Controller
     public function create()
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return view('admin.dogtypes.create');
     }
@@ -41,7 +44,22 @@ class DogtypeController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect(Route('dogtype.index'))
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
+                // 操作記録をDBに
+                $user =Auth::user();
+                $method_name = __METHOD__;
+                $realIp = request()->ip();
+        
+                $type = $request['type'];
+        
+                $user_info = "user_id({$user->id}) IP[{$realIp}]";
+                $check_log_summary = "犬種の登録";
+                $check_log_detail = "犬種:{$type}";
+                $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.dogtype.index'))
         ->with('success','犬種を登録しました。');
     }
 
