@@ -123,7 +123,7 @@ class DogtypeController extends Controller
         }
 
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-        return redirect(Route('admin.dogtype.index'))
+        return redirect(Route('admin.course.edit'))
         ->with('success','犬種を登録しました。コース情報を確認してください。');
     }
 
