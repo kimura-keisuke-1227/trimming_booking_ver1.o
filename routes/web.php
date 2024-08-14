@@ -454,6 +454,14 @@ Route::resource('admin/dogtype', DogtypeController::class)
         'update' => 'admin.dogtype.update',
         'destroy' => 'admin.dogtype.destroy',
     ]);
+
+// 休日の追加保存
+Route::get('/admin/dogtype/switch_flg/{dogtype}',
+[DogtypeController::class,'switch_flg_show'])
+-> Middleware('auth')
+-> name('admin.dogtype.switch_flg_show');
+;
+
 /*****************************************************************
 *
 *   パスワードリセット
