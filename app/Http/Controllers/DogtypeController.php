@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Models\Dogtype;
+use App\Models\Course;
+use App\Models\CourseMaster;
+
 use App\Http\Requests\StoreDogtypeRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
 use Exception;
+use SebastianBergmann\LinesOfCode\Counter;
 
 class DogtypeController extends Controller
 {
@@ -89,14 +93,38 @@ class DogtypeController extends Controller
             Log::info(__METHOD__ . '(' . __LINE__ . ')' . "Successfully_create_a_new_dog_type:" . $type .' order:' . $new_order);
 
         } catch(Exception $e){
-            Log::info(__METHOD__ . '(' . __LINE__ . ')' . " Error_occurred_when_create_a_new_dog_type:" .$e);
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . "Error_occurred_when_create_a_new_dog_type:" .$e);
             return redirect(Route('admin.dogtype.index'))
             ->with('error','犬種の登録が失敗しました。');
         }
 
+        $courseMasters = CourseMaster::all();
+
+        // 犬種追加で、コースも合わせてデフォルト作成
+        $dogtype_id = $dog_type->id;
+
+        foreach($courseMasters as $courseMaster){
+            $course = new Course();
+            $course['course_master_id'] = $courseMaster['id'];
+            $course['dogtype_id'] = $dogtype_id;
+            $course['minute'] = 60*24;
+            $course['minute_for_show'] = 60*24;
+            $course['price'] = 99999;
+            $course['flg_show'] = false;
+            $course['st_date'] = "2020-01-01";
+
+            try{
+                $course->save();
+                Log::info(__METHOD__ . '(' . __LINE__ . ')' . 'Successfully_create_a_new_course_when_create_a_dogtype.');
+            } catch(Exception $e){                
+                Log::error(__METHOD__ . '(' . __LINE__ . ')' . 'Error_occurred_when_create_a_new_course_when_create_a_dogtype. ' . $e);
+            }
+
+        }
+
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return redirect(Route('admin.dogtype.index'))
-        ->with('success','犬種を登録しました。');
+        ->with('success','犬種を登録しました。コース情報を確認してください。');
     }
 
     /**
