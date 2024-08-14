@@ -32,8 +32,12 @@ class CourseController extends Controller
         $check_log_detail = "staff_id:{$staff->id} {$staff->email}";
         $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$staff->id); 
         
-        $salons = Salon::all();
-         $courses = Course::all();
+        // $salons = Salon::all();
+         $courses = Course::query()
+         ->orderBy('dogtype_id')
+         ->orderBy('course_master_id')
+         ->get();
+         
          $courseMasters = CourseMaster::all();
          Log::debug(__METHOD__.'('.__LINE__.')'.'start!');
          Log::debug($courses);
