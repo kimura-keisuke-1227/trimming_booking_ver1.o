@@ -10,11 +10,12 @@ use App\Models\Dogtype;
 
 use Illuminate\Support\Facades\Log;
 
-class DogtyoeController extends Controller
+class DogtypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
@@ -40,7 +41,8 @@ class DogtyoeController extends Controller
      */
     public function store(Request $request)
     {
-        return __METHOD__;
+        return redirect(Route('dogtype.index'))
+        ->with('success','犬種を登録しました。');
     }
 
     /**

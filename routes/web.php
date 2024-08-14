@@ -17,7 +17,7 @@ use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use App\Http\Controllers\AccessLogController;
 use App\Http\Controllers\HolidayController;
-use App\Http\Controllers\DogtyoeController;
+use App\Http\Controllers\DogtypeController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -443,10 +443,17 @@ Route::get('/admin/holiday/destroy/{holiday}',
 ;
 
 
-Route::resource('admin/dogtype', DogtyoeController::class)
--> Middleware('auth')
-;
-
+Route::resource('admin/dogtype', DogtypeController::class)
+    ->middleware('auth')
+    ->names([
+        'index' => 'admin.dogtype.index',
+        'create' => 'admin.dogtype.create',
+        'store' => 'admin.dogtype.store',
+        'show' => 'admin.dogtype.show',
+        'edit' => 'admin.dogtype.edit',
+        'update' => 'admin.dogtype.update',
+        'destroy' => 'admin.dogtype.destroy',
+    ]);
 /*****************************************************************
 *
 *   パスワードリセット
