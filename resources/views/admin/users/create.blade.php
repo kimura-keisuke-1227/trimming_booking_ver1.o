@@ -82,7 +82,8 @@
 
                     <div class="mb-6 @if (count($salons) <=1) not_show_one_salon @endif">
                         <label class="block text-sm font-medium mb-2" for="email">通常利用店舗</label>
-                        <select name="default_salon">
+     
+                        <select id="default_salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="default_salon">
                             @foreach($salons as $salon)
                             <option value="{{$salon -> id}}">{{$salon -> salon_name}}</option>
                             @endforeach
@@ -91,7 +92,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="cameBefore">過去に当店の利用がありますか？</label>
-                        <select name="cameBefore">
+                        <select id="default_salon" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="cameBefore">
                             <option value="0">ない</option>
                             <option value="1">ある</option>
                         </select>
