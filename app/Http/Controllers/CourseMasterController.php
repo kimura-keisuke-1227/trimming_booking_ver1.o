@@ -6,6 +6,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Log;
+use Exception;
+
 use App\Models\CourseMaster;
 
 class CourseMasterController extends Controller
@@ -15,6 +18,8 @@ class CourseMasterController extends Controller
      */
     public function index()
     {
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         $course_masters = CourseMaster::all();
         return view('admin.courseMasters.index',[
             'courseMasters' => $course_masters,
@@ -24,9 +29,12 @@ class CourseMasterController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
-        //
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return view('admin.courseMasters.create',[
+        ]);
     }
 
     /**
