@@ -21,6 +21,18 @@ class DogtypeController extends Controller
     public function index()
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "[管理者]犬種一覧の表示";
+        $check_log_detail = "犬種一覧取得";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+
+
         $dogtypes = Dogtype::all();
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return view('admin.dogtypes.index',[
@@ -46,17 +58,17 @@ class DogtypeController extends Controller
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         
-                // 操作記録をDBに
-                $user =Auth::user();
-                $method_name = __METHOD__;
-                $realIp = request()->ip();
-        
-                $type = $request['type'];
-        
-                $user_info = "user_id({$user->id}) IP[{$realIp}]";
-                $check_log_summary = "犬種の登録";
-                $check_log_detail = "犬種:{$type}";
-                $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $type = $request['type'];
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "犬種の登録";
+        $check_log_detail = "犬種:{$type}";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
 
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return redirect(Route('admin.dogtype.index'))
