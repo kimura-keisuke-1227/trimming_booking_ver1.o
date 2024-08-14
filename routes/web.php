@@ -443,7 +443,9 @@ Route::get('/admin/holiday/destroy/{holiday}',
 ;
 
 
-Route::resource('dogtype', DogtyoeController::class);
+Route::resource('admin/dogtype', DogtyoeController::class)
+-> Middleware('auth')
+;
 
 /*****************************************************************
 *
