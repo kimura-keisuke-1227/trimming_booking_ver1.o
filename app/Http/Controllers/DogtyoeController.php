@@ -6,6 +6,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\Models\Dogtype;
+
+use Illuminate\Support\Facades\Log;
+
 class DogtyoeController extends Controller
 {
     /**
@@ -13,8 +17,12 @@ class DogtyoeController extends Controller
      */
     public function index()
     {
-        //
-        return __METHOD__;
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        $dogtypes = Dogtype::all();
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return view('admin.dogtypes.index',[
+            'dogtypes' => $dogtypes,
+        ]);
     }
 
     /**
