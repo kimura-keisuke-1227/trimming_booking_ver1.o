@@ -122,8 +122,51 @@ class DogtypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
-        //
+
+    }
+
+    public function switch_flg_show($id){
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
+        
+        $dog_type = Dogtype::query()
+        ->find($id);
+        ;
+
+        $type = $dog_type->type;
+        
+        if($dog_type->flg_show){
+            $check_log_detail = "犬種:{$type}を無効に切替。";
+            $dog_type['flg_show'] = false;
+            $success_message = "{$type}の無効化に";
+        }else{
+            $check_log_detail = "犬種:{$type}を有効に切替。";
+            $dog_type['flg_show'] = true;
+            $success_message = "{$type}の有効化に";
+        }
+
+        // 操作記録をDBに
+        $user =Auth::user();
+        $method_name = __METHOD__;
+        $realIp = request()->ip();
+
+        $user_info = "user_id({$user->id}) IP[{$realIp}]";
+        $check_log_summary = "犬種の有効無効切り替え";
+        $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"switch_show_flg:{$id}");
+
+
+
+        try{
+            $dog_type->save();
+            Log::info(__METHOD__ . '(' . __LINE__ . ')' . "Successfully_switch_show_flg_of:" . $type);
+        } catch(Exception $e){
+            Log::error(__METHOD__ . '(' . __LINE__ . ')' . " Error_occurred_when_switch_show_flg_of_dog_type:"  . $type.' '.$e);
+            return redirect(Route('admin.dogtype.index'))
+            ->with('error',"{$success_message}に失敗しました。");
+        }
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.dogtype.index'))
+        ->with('success',"{$success_message}に成功しました。");
     }
 }
