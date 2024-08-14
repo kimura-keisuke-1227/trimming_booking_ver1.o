@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>犬種一覧</h2>
-    <form action="{{Route('admin.course.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{Route('admin.dogtype.index')}}" method="post" enctype="multipart/form-data">
         @csrf
         <table class="table table-striped">
             <tr>
@@ -21,7 +21,15 @@
                 @else
                     ×
                 @endif</td>
-                <td><a href="">[無効化]</a></td>
+                <td>
+                    <a href="{{Route('admin.dogtype.switch_flg_show',$dogtype->id)}}">
+                        @if ($dogtype->flg_show)
+                            [無効化]
+                        @else
+                            [有効化]
+                        @endif
+                    </a>
+                </td>
             </tr>
             @endforeach
         </table>
