@@ -16,7 +16,7 @@
             </tr>
             @foreach ($courseMasters as $courseMaster)
             <tr>
-                <td>{{$courseMaster->course}}</td>
+                <td><a href="{{Route('admin.course_master.edit', $courseMaster)}}">{{$courseMaster->course}}</a></td>
             </tr>
             @endforeach
         </table>
