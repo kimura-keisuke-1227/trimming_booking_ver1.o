@@ -17,6 +17,7 @@ use App\Http\Controllers\DefaultCapacityController;
 use App\Http\Controllers\OpenCloseSalonController;
 use App\Http\Controllers\AccessLogController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\DogtyoeController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -440,6 +441,9 @@ Route::get('/admin/holiday/destroy/{holiday}',
 -> Middleware('auth')
 -> name('admin.holiday.destroy');
 ;
+
+
+Route::resource('dogtype', DogtyoeController::class);
 
 /*****************************************************************
 *
