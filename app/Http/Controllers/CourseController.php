@@ -33,10 +33,13 @@ class CourseController extends Controller
         $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,$staff->id); 
         
         // $salons = Salon::all();
-         $courses = Course::query()
-         ->orderBy('dogtype_id')
-         ->orderBy('course_master_id')
-         ->get();
+        $courses = Course::query()
+            ->join('dogtypes', 'courses.dogtype_id', '=', 'dogtypes.id') // Dogtypeテーブルと結合
+            ->orderBy('dogtypes.order') // Dogtypeのorderカラムで並び替え
+            ->orderBy('course_master_id') // その後、course_master_idで並び替え
+            ->select('courses.*') // コースの全カラムを選択
+            ->get();
+    
          
          $courseMasters = CourseMaster::all();
          Log::debug(__METHOD__.'('.__LINE__.')'.'start!');

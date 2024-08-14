@@ -13,7 +13,8 @@ class Course extends Model
         return $this -> belongsTo('App\Models\CourseMaster');
     }
     public function dogtype(){
-        return $this -> belongsTo('App\Models\Dogtype');
+        return $this -> belongsTo('App\Models\Dogtype')
+        ->orderBy('order', 'asc'); // 'asc' は昇順、'desc' は降順
     }
 
     public function getCourseInfo(){
