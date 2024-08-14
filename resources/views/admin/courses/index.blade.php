@@ -36,7 +36,7 @@
                     @if ($course->flg_show)
                         [無効化]
                     @else
-                        [有効化]
+                        [有効にする]
                     @endif
                 </td>
             </tr>
