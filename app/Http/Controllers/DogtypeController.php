@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Models\Dogtype;
-
+use App\Http\Requests\StoreDogtypeRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
@@ -55,7 +55,7 @@ class DogtypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDogtypeRequest $request)
     {
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' start!');
         
