@@ -6,7 +6,7 @@
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form action="{{Route('admin.dogtype.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{Route('admin.course_master.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">基本コース登録</h3>
