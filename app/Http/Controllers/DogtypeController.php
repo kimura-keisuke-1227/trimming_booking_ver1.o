@@ -87,14 +87,16 @@ class DogtypeController extends Controller
         try{
             $dog_type->save();
             Log::info(__METHOD__ . '(' . __LINE__ . ')' . "Successfully_create_a_new_dog_type:" . $type .' order:' . $new_order);
-            Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
-            return redirect(Route('admin.dogtype.index'))
-            ->with('success','犬種を登録しました。');
+
         } catch(Exception $e){
             Log::info(__METHOD__ . '(' . __LINE__ . ')' . " Error_occurred_when_create_a_new_dog_type:" .$e);
             return redirect(Route('admin.dogtype.index'))
             ->with('error','犬種の登録が失敗しました。');
         }
+
+        Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
+        return redirect(Route('admin.dogtype.index'))
+        ->with('success','犬種を登録しました。');
     }
 
     /**
