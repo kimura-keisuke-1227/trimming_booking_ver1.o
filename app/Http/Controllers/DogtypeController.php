@@ -34,7 +34,9 @@ class DogtypeController extends Controller
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"");
 
 
-        $dogtypes = Dogtype::all();
+        $dogtypes = Dogtype::query()
+        ->orderBy('order')
+        ->get();
         Log::info(__METHOD__ . '(' . __LINE__ . ')' . ' end!');
         return view('admin.dogtypes.index',[
             'dogtypes' => $dogtypes,
