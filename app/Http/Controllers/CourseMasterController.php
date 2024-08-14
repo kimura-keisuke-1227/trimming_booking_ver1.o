@@ -15,8 +15,10 @@ class CourseMasterController extends Controller
      */
     public function index()
     {
-        $course_master = CourseMaster::all();
-        return __METHOD__;
+        $course_masters = CourseMaster::all();
+        return view('admin.courseMasters.index',[
+            'courseMasters' => $course_masters,
+        ]);
     }
 
     /**
