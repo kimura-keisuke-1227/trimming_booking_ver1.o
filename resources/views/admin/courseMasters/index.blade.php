@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title' , '基本コース一覧')
+
 @section('content')
 <div class="container">
     {{-- 
@@ -20,7 +22,9 @@
             </tr>
             @endforeach
         </table>
+        <a href="{{Route('admin.course_master.create')}}"></a>
     </form>
+    <a href="{{Route('admin.course_master.create')}}">[基本コース追加]</a>
 
 </div>
 @endsection
