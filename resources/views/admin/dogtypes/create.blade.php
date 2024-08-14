@@ -26,8 +26,8 @@
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
 
                     <div class="mb-6">
-                        <label class="block text-sm font-medium mb-2" for="name">犬種名</label>
-                        <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="name" value="{{ old('name') }}">
+                        <label class="block text-sm font-medium mb-2" for="type">犬種名</label>
+                        <input id="type" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="type" value="{{ old('name') }}">
                     </div>
                      <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
