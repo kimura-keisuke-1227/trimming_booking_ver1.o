@@ -6,14 +6,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\Models\CourseMaster;
+
 class CourseMasterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        //
+        $course_master = CourseMaster::all();
+        return __METHOD__;
     }
 
     /**
