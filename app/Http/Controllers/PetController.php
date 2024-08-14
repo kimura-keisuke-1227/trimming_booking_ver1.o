@@ -54,7 +54,10 @@ class PetController extends Controller
         Log::info(__METHOD__ . ' starts by user_id(' . $owner->id . ')');
         
         // $dogTypes = Dogtype::all();
-        $dogTypes = Dogtype::where("flg_show",true)->get();
+        $dogTypes = Dogtype::query()
+            ->where("flg_show",true)
+            ->orderBy('order')
+            ->get();
 
         session([
             'dogtypes' => $dogTypes
