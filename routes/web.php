@@ -314,6 +314,12 @@ Route::post('/admin/course',
 ) -> Middleware('auth')
 -> name('admin.course.store');
 
+//コース設定画面の取得
+Route::get('/admin/course/{course}',
+[CourseController::class,'switch_course']
+) -> Middleware('auth')
+-> name('admin.course.switch');
+
 // ペット確認（管理者）
 Route::get('/admin/pet/{pet_id}',
 [PetController::class,'show_by_staff'])
