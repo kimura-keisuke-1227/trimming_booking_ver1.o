@@ -34,7 +34,7 @@
             @endforeach
         </table>
     </form>
-
+    <a href="{{Route('admin.dogtype.create')}}">[犬種登録]</a>
 </div>
 @endsection
 
