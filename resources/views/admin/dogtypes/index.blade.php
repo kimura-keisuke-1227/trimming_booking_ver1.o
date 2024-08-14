@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <h2>犬種一覧</h2>
     <form action="{{Route('admin.course.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <table class="table table-striped">
