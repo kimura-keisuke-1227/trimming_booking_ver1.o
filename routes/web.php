@@ -55,7 +55,7 @@ Route::get('/',function(){
 Route::get('/admin',function(){
     return view('admin.index');
 })
--> middleware('auth')
+-> middleware('checkAdminAuth','auth',)
 -> name('admin.route')
 ;
 
@@ -224,235 +224,232 @@ Route::get('/admin/allbookings',[BookingController::class,'getTodayAllBookings']
 */
 //店舗と日付を指定しての予約表示
 Route::get('/admin/allbookings',[BookingController::class,'getAllBookingsOfSalonAndDate'])
--> Middleware('auth')
+-> Middleware('auth','checkAdminAuth')
 -> name('admin.checkBookings.dateAndSalon');
 
 Route::get('/admin/makebooking',[BookingController::class,'adminMakeBooking'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.makebooking');
 Route::post('/admin/makebooking',[BookingController::class,'adminMakeBookingSave'])
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 //臨時予約枠調整
 Route::get('/admin/capacitysetting',[TempCapacityController::class,'index'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.adjustCapacity');
 Route::get('/admin/newtempcapacitycreate',[TempCapacityController::class,'create'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.newtempcapacitycreate');
 Route::post('/admin/newtempcapacitycreate',[TempCapacityController::class,'store'])
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 
 //空き枠数の確認
 Route::get('/admin/checkcapacities',[BookingController::class,'getAcceptableCount'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.checkCapacity');
 
 Route::get('/admin/checkcapacities/{salon_id}/{st_date}',[BookingController::class,'getAcceptableCountWithSalonDate'])
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 Route::post('/admin/postOXList',[OpenCloseSalonController::class,'changeOXListAll'])
-->name('admin.changeOXlist.all')-> Middleware('auth');
+->name('admin.changeOXlist.all')-> middleware('auth','checkAdminAuth');
 
 //ユーザーの確認
 Route::get('/admin/ownersInfo',[UserController::class,'index'])
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 Route::get('/admin/setting',[SettingController::class,'index'])
 ->name('admin.setting')
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 Route::post('/admin/setting2',[SettingController::class,'update'])
 ->name('admin.setting.update')
--> Middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 //管理画面からの削除
 Route::get('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBookingConfirm']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.cancelConfirm');
 
 //サロン一覧の取得
 Route::get('/admin/salons',
 [SalonController::class,'index']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.salon.index');
 
 //サロン追加画面
 Route::get('/admin/salons/create',
 [SalonController::class,'create']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.salon.create');
 
 //サロン設定画面の取得
 Route::get('/admin/salons/{salon_id}',
 [SalonController::class,'edit']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.salon.edit');
 
 //サロン設定画面の更新
 Route::put('/admin/salons/{salon_id}',
 [SalonController::class,'update']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.salon.update');
 
 //サロン設定画面の取得
 Route::get('/admin/salons/mailtest/{salon_id}',
 [SalonController::class,'mailtest']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.salon.mailtest');
 
 //コース設定画面の取得
 Route::get('/admin/course',
 [CourseController::class,'index']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.course.edit');
 
 //コース設定画面の取得
 Route::post('/admin/course',
 [CourseController::class,'update']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.course.store');
 
 //コース設定画面の取得
 Route::get('/admin/course/{course}',
 [CourseController::class,'switch_course']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.course.switch');
 
 // ペット確認（管理者）
 Route::get('/admin/pet/{pet_id}',
 [PetController::class,'show_by_staff'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.pet.show');
 ;
 
 //カルテ記載画面
 Route::get('/admin/karte/create/{bookingID}',
 [KarteController::class,'create']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.create');
 
 //カルテ記載画面
 Route::post('/admin/karte/create',
 [KarteController::class,'store']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.store');
 
 //カルテ表示(スタッフ用)
 Route::get('/admin/karte/{karte}',
 [KarteController::class,'edit']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.show');
 
 //カルテ表示(スタッフ用)
 Route::post('/admin/karte/{karte}',
 [KarteController::class,'update']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.update');
 /*
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.cancel');
 */
 
 //カルテテンプレート表示
 Route::get('/admin/karte_template',
 [KarteFormatController::class,'index']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.template.index');
 
 //カルテテンプレート編集
 Route::get('/admin/karte_template/{karteFormat}',
 [KarteFormatController::class,'edit']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.template.edit');
 
 //カルテテンプレート更新
 Route::post('/admin/karte_template/{karteFormat}',
 [KarteFormatController::class,'update']
-) -> Middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.karte.template.update');
 
 Route::post('/admin/cancel/{bookingId}',
 [BookingController::class,'adminDeleteBooking']
-) -> middleware('auth')
+) -> middleware('auth','checkAdminAuth')
 -> name('admin.cancel');
 
 Route::get('/admin/bookingDetail/{bookingId}',
     [BookingController::class,'adminShowBookingDetail'])
-->middleware('auth')
+->middleware('auth','checkAdminAuth')
 ->name('admin.showBookingDetail');
 
 //会員情報確認
 Route::get('admin/ownerInfo/{userID}',[UserController::class,'show'])
-->middleware('auth')
+->middleware('auth','checkAdminAuth')
 ->name('admin.showUserInfo');
 
 //スタッフ追加
 Route::get('/admin/createStaff',[BookingController::class,'gettest'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 ;
 
 Route::get('/admin/createStaff',
 [UserController::class,'createStaff']) -> name('admin.users.createStaff')
-->middleware('auth');
+->middleware('auth','checkAdminAuth');
 Route::post('/admin/createStaff',[UserController::class,'storeStaff']) 
 -> name('admin.users.storeStaff')
--> middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 //予約画面から非会員の情報を取得
 Route::get('/admin/showNonMember/{bookingId}',[BookingController::class,'showNonMember'])
 ->name('admin.showNonMemberInfo')
--> middleware('auth');
+-> middleware('auth','checkAdminAuth');
 
 Route::resource('/admin/notification',
  NotificationController::class
 )
 // -> only(['index','create','store','edit','update'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 ;
 
 Route::resource('/admin/accesslog', AccessLogController::class)
 -> only(['index','show'])
--> Middleware('auth')
+-> middleware('checkAdminAuth','auth')
 ;
 
 
 // 休日の一覧
 Route::get('/admin/holiday/{salon_id}',
 [HolidayController::class,'index'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.holiday');
 ;
 
 // 休日の追加画面
 Route::get('/admin/holiday/{salon_id}/create',
 [HolidayController::class,'create'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.holiday.create');
 ;
 
 // 休日の追加保存
 Route::post('/admin/holiday/{salon_id}/create',
 [HolidayController::class,'store'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.holiday.store');
 ;
 
 // 休日の削除
 Route::get('/admin/holiday/destroy/{holiday}',
 [HolidayController::class,'destroy'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.holiday.destroy');
 ;
 
-
-
-Route::resource('admin/course_master', CourseMasterController::class)
-    ->middleware('auth')
+Route::resource('admin/course_master', CourseMasterController::class)   
     ->names([
         'index' => 'admin.course_master.index',
         'create' => 'admin.course_master.create',
@@ -461,10 +458,11 @@ Route::resource('admin/course_master', CourseMasterController::class)
         'edit' => 'admin.course_master.edit',
         'update' => 'admin.course_master.update',
         'destroy' => 'admin.course_master.destroy',
-    ]);
+    ])
+    ->middleware('checkAdminAuth','auth');
 
 Route::resource('admin/dogtype', DogtypeController::class)
-    ->middleware('auth')
+    ->middleware('checkAdminAuth','auth')
     ->names([
         'index' => 'admin.dogtype.index',
         'create' => 'admin.dogtype.create',
@@ -478,7 +476,7 @@ Route::resource('admin/dogtype', DogtypeController::class)
 // 休日の追加保存
 Route::get('/admin/dogtype/switch_flg/{dogtype}',
 [DogtypeController::class,'switch_flg_show'])
--> Middleware('auth')
+-> middleware('auth','checkAdminAuth')
 -> name('admin.dogtype.switch_flg_show');
 ;
 
@@ -538,7 +536,7 @@ Route::get('/admin/close/{salonId}/{date}/{time}',[BookingController::class,'tes
 Route::get('/test3',[OpenCloseSalonController::class,'testOX']);
 
 Route::get('/checkOpenClose',[OpenCloseSalonController::class,'index'])
-->middleware('auth')
+->middleware('auth','checkAdminAuth')
 ->name('admin.checkOpenClose');
 
 Route::get('/checkOpenClose/{salon}/{course}/{date}',[OpenCloseSalonController::class,'index2'])
