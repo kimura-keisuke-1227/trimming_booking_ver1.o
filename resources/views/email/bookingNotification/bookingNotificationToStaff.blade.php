@@ -5,14 +5,13 @@
 【予約内容】
 ペットのお名前:{{ $pet -> name}}
 犬種:{{ $pet -> dogtype -> type}}
-
-予約店舗: {{ $salon -> salon_name }}
-店舗電話番号: {{ $salon -> phone }}
-
 コース: {{ $course -> courseMaster -> course}}
 予約日: {{ $date}}
 開始時刻: {{ $st_time }}
 終了予定時刻：{{ $ed_time_for_show }}
+
+予約店舗: {{ $salon -> salon_name }}
+店舗電話番号: {{ $salon -> phone }}
 
 <お客様情報>
 電話番号:{{ $user->phone }} 
