@@ -22,13 +22,13 @@ class Util
         Log::info(__METHOD__.'('.__LINE__.') start!');
         $new_params = $params;
         $now = date('Y-m-d H:i');
-        
+
         $notifications = Notification::query()
         // ->where('page',$view)
         ->where('st_date','<=',$now)
         ->where('ed_date','>=',$now)
         ->get();
-        
+
         $new_params['messages'] = $notifications;
         Log::info(__METHOD__.'('.__LINE__.') end!');
         return view($view,$new_params);
@@ -48,9 +48,20 @@ class Util
         return $notifications;
     }
 
-    public static function recordAccessLog($method_name,$user_info,$summary,$detail,$sent_request){
+    public static function recordAccessLog($method_name,$user_info,$summary,$detail,$sent_request,  $user_id = null){
         Log::info(__METHOD__.'('.__LINE__.')'.'start!');
         $user_id = Util::getUserId();
+
+        // 引数で$user_idがnullの場合、Util::getUserId()を使う
+        if (!is_numeric($user_id)) {
+            $user_id = Util::getUserId();
+        }
+
+        // 再チェック
+        if(!is_numeric($user_id)){
+            $user_id = 0;
+        }
+
         Log::debug(__METHOD__.'('.__LINE__.')'.'user_id:' .$user_id.' $user(' . $user_info .') summary:' . $summary);
         Log::debug(__METHOD__.'('.__LINE__.')'.'detail:' . $detail);
 
@@ -202,7 +213,7 @@ class Util
      * @param [type] $default 設定がない場合のデフォルト
      * @param [type] $setting_name　設定名
      * @param [boolean] $isInt 整数型かどうか
-     * @return int str 
+     * @return int str
      */
     public static function getSetting($default, $setting_name, $isInt)
     {
@@ -377,7 +388,7 @@ class Util
             ->where('date', $date)
             ->where('time', '>=', $st_time)
             ->where('time', '<', $ed_time);
-        
+
         $open_close_to_delete->delete();
 
         $insertsDatas = [];
@@ -476,7 +487,7 @@ class Util
     public static function getUserId(){
         $user =Auth::user();
         if(is_null($user)){
-            return 'not login user';
+            return -1;
         } else{
             return $user->id;
         }
@@ -508,18 +519,18 @@ class Util
             Log::info(__METHOD__.'('.__LINE__.') end by user(' . $this->getUserId() .')');
             return $theUserCameBefore;
         }
-        
+
         //登録時点で来店がない場合には過去の予約を調べる
         //予約データは飼い主ではなくペットに紐付いているため、まずはユーザーのペットを取得する。
         $pets_id = Pet::select('id')->where('owner_id',$user_id)->get();
-        
+
         //判定日よりも前に来店があるかどうかを数える。
         $cameBeforeCount = Booking::where('date','<',$date)
         ->whereIn('pet_id',$pets_id)
         ->count();
-        
+
         Log::debug(__METHOD__.'('.__LINE__.') $cameBeforeCount='.$cameBeforeCount) ;
-        
+
         if($cameBeforeCount == 0){
             $theUserCameBefore = false;
         } else{
