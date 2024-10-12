@@ -32,8 +32,8 @@ class UserController extends Controller
         $check_log_summary = "スタッフによる顧客リスト表示";
         $check_log_detail = "";
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,"get_all_users");
-        
-        
+
+
         $users = User::all();
 
         return view('admin.owners.index',[
@@ -80,8 +80,8 @@ class UserController extends Controller
         $user_info = "user_id({$user->id}) IP[{$realIp}]";
         $check_log_summary = "ユーザー登録";
         $check_log_detail = "user_id:{$user->id} {$user->email}";
-        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,"");
-        
+        $access_log_id = Util::recordAccessLog($method_name,$user_info,$check_log_summary,$check_log_detail,"",$user->id);
+
 
         #return back() -> with('success','会員登録をしました。');
         return redirect('login') -> with('success','会員登録をしました。');
@@ -147,21 +147,21 @@ class UserController extends Controller
 
         $user = User::find($userID);
         $cameBefore = false;
-        
+
         if($user->cameBefore ==1){
             $cameBefore = true;
             Log::info(__METHOD__ . ' This user('. $user->id .') came before she or he registered.');
-            
+
         } else{
             Log::info(__METHOD__ . ' This user('. $user->id .') did not came before she or he registered.');
-            
+
             //飼い主に紐づくペットを取得→その予約の内、当日より前のものを取得して数える。
             $pets = Pet::select('id')->where('owner_id',$user->id) -> get();
             $bookings = Booking::whereIn('pet_id', $pets)->where('date','<',date('Y-m-d')) -> get();
-            
+
             Log::debug(__METHOD__ . '(pets)' . $pets);
             Log::debug(__METHOD__ . '(bookings)' . $bookings);
-            
+
             if($bookings->count()>0){
                 $cameBefore = true;
                 Log::info(__METHOD__ . ' This user('. $user->id .') came before because of checking Booking data.');
@@ -169,17 +169,17 @@ class UserController extends Controller
                 Log::info(__METHOD__ . ' This user('. $user->id .') did not came before because of checking Booking data.');
 
             }
-            
+
         }
-        
+
         if($cameBefore){
             $cameBefore = '来店歴あり';
-            
+
         } else{
-            
+
             $cameBefore = '来店歴なし';
         }
-        
+
         return view('admin.users.show',[
             'user' => $user,
             'cameBefore' => $cameBefore
