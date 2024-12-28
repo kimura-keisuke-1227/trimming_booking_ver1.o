@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\classes\Util;
 
+use Illuminate\Support\Facades\Log;
+
 class Pet extends Model
 {
     use HasFactory;
@@ -69,6 +71,11 @@ class Pet extends Model
         Util::getAge(date('Y-m-d'),$this -> birthday) .
         ')'
         ;
+    }
+
+    public function getAge($date){
+        Log::debug(__METHOD__ . '(' . __LINE__ . ') date:' . $date);
+        return Util::getAge($date,$this -> birthday);
     }
 
     public function owner(){

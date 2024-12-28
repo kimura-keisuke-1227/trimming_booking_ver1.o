@@ -79,6 +79,7 @@ class BookingNotificationForSalon extends Mailable
             'pet' => $pet,
             'salon' => $salon,
             'course' => $course,
+            'yoyaku_date' => $date,
             'message_text' => $message,
             'date' => Util::dbDateToStrDate($date),
             'st_time' => Util::minuteToTime($st_time),

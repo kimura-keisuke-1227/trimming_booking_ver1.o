@@ -55,6 +55,13 @@
                         <input id="name" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="date" name="birthday" value="{{ old('birthday') }}">
                     </div>
 
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="message">病歴</label>
+                        <p>病歴などがあればご記入ください。</p>
+                        <p>ない場合は「なし」とご記入ください。</p>
+                        <textarea id="message" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="medical_history" rows="5">{{ old('medical_history') }}</textarea>
+                    </div>
+
                     <div class="ml-auto">
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">登録</button>
                     </div>

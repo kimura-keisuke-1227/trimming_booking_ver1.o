@@ -5,6 +5,8 @@
 【予約内容】
 ペットのお名前:{{ $pet -> name}}
 犬種:{{ $pet -> dogtype -> type}}
+年齢:{{ $pet->getAge($yoyaku_date) }}
+病歴:{{ $pet -> medical_history}}
 予約店舗: {{ $salon -> salon_name }}
 新規・既存:{{ $theUserCameBefore }}
 コース: {{ $course -> courseMaster -> course}}
