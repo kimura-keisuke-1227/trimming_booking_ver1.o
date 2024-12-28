@@ -58,7 +58,7 @@ class Util
         }
 
         // 再チェック
-        if(!is_numeric($user_id)){
+        if(!is_numeric($user_id) or $user_id<0){
             $user_id = 0;
         }
 
