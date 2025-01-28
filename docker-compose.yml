@@ -59,6 +59,8 @@ services:
             PMA_USER: '${DB_USERNAME}'
             PMA_PASSWORD: '${DB_PASSWORD}'
             PMA_HOST: mysql
+            MEMORY_LIMIT: 128M
+            UPLOAD_LIMIT: 64M
         networks:
             - sail
 networks:

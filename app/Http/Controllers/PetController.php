@@ -88,6 +88,7 @@ class PetController extends Controller
             'name' =>['required', 'string' , 'max:255'],
             'weight' => ['numeric','min:0','max:255'],
             'birthday' =>['required','before:today'],
+            'medical_history' =>['required'],
         ]);
         
         #$form = $request -> all();
@@ -107,6 +108,7 @@ class PetController extends Controller
         $pet -> dogtype_id = $request -> dogtype;
         $pet -> birthday = $request -> birthday;
         $pet -> weight = $request -> weight;
+        $pet -> medical_history = $request -> medical_history;
         $check_log_detail = $pet;
         $access_log_id = Util::recordAccessLog(__METHOD__,$user_info,$check_log_summary,$check_log_detail,$request);
         $pet ->  save();

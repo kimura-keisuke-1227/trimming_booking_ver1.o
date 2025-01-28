@@ -42,6 +42,11 @@
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="name">誕生日　{{ $pet->birthday }}</label>
                     </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2" for="name">病歴</label>
+                        <p>{{$pet->medical_history}}</p>
+                    </div>
                 </div>
             <br>
             <div class="pt-4 px-6" style="border:1px">
