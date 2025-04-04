@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="{{ asset('/css/tailwind/tailwind.min.css')}}">
   <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
-  
+
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
   <script src="{{ asset('/js/main.js')}}"></script>
 </head>
@@ -68,8 +68,8 @@
             {{--
                 @foreach ($notifications as $message)
                   <p>{{ $message -> contents}}</p>
-                @endforeach
-              --}}
+            @endforeach
+            --}}
 
             @if($errors->any())
             <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
@@ -100,18 +100,20 @@
               <button type="submit" class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded">ログイン</button>
             </form>
           </div>
-          
-            {{-- 
+
+          {{--
               <a href="{{ route('nonMember.beginBooking')}}">登録なしに予約する方はこちら</a>
-              
-              --}}
-              
+
+          --}}
+
           <br>
           <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
 
           @foreach ($salons as $salon)
-          <button type="submit" class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded">{{ $salon->salon_name }}</button>
-          <br>
+            <a href="tel:{{ $salon->phone }}" class="block w-full p-4 text-center text-xs text-white font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded">
+              {{ $salon->salon_name }}
+            </a>
+            <br>
           @endforeach
         </div>
       </div>
