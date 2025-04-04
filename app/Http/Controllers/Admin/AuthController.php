@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\classes\Util;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\Salon;
+
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -18,10 +20,12 @@ class AuthController extends Controller
         Log::info(__METHOD__.'('.__LINE__.') end by user(' . Util::getUserId() .')');
 
         $notifications = Util::getNotifications('login');
+        $salons = Salon::all();
 
         return view('admin.login',[
             'salon_name' => $salon_name,
             'notifications' => $notifications,
+            'salons' => $salons
         ]);
     }
 
